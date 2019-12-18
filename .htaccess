@@ -1,0 +1,9 @@
+RewriteEngine On
+
+RewriteRule ^error/?$ error.php [L]
+RewriteRule ^jScript/([0-9a-zA-Z\-\\/_\.\=]+)/?$ jsP.php?file=$1 [L]
+RewriteRule ^cScript/([0-9a-zA-Z\-\\/_\.\=]+)/?$ cssP.php?file=$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?page=$1 [L,QSA]

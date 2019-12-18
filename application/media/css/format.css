@@ -1,0 +1,138 @@
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,code,del,dfn,em,img,q,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,textarea,input,select
+{
+    border:0;
+    vertical-align:baseline;
+    margin:0;
+    padding:0;
+}
+
+img
+{
+    border:none;
+}
+
+._cb
+{
+    clear: both;
+}
+
+._oFlow
+{
+    overflow: hidden;
+}
+
+._fLeft
+{
+    float:left;
+}
+
+._fRight
+{
+    float:right;
+}
+
+._btnMode
+{
+    cursor: pointer!important;
+}
+
+._pRelative
+{
+    position: relative;
+}
+
+._bottomZero
+{
+    position: absolute;
+    bottom:0;
+}
+
+._pAbsolute
+{
+    position: absolute;
+}
+
+._inLine li, ._inLine
+{
+    display: inline;
+}
+
+._m5
+{
+    margin: 5px;
+}
+
+._m10
+{
+    margin: 10px;
+}
+
+._ml10
+{
+    margin-left: 10px;
+}
+
+._ml20
+{
+    margin-left: 20px;
+}
+
+._ml30
+{
+    margin-left: 30px;
+}
+
+._mr10
+{
+    margin-right: 10px;
+}
+
+._mb10
+{
+    margin-bottom: 10px;
+}
+
+._mt10
+{
+    margin-top: 10px;
+}
+
+._mt30
+{
+    margin-top: 30px;
+}
+
+._mt40
+{
+    margin-top: 40px;
+}
+
+._mt50
+{
+    margin-top: 50px;
+}
+
+._mt60
+{
+    margin-top: 60px;
+}
+
+._m5
+{
+    margin: 5px;
+}
+
+._w300
+{
+    width: 300px !important;
+}
+
+._minw640
+{
+    min-width: 640px !important;
+}
+
+._wa
+{
+    width: auto !important;
+}

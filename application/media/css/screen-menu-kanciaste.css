@@ -1,0 +1,38 @@
+/* reset marginesów oraz dopełnień */
+html, body, ul, li { margin: 0; padding: 0;}
+
+/* reset wysokości linii i fontu */
+h1, h2, ul, li, p { margin: 0; padding: 0; font-size: 1em; line-height: 1.5em;}
+
+/* ustawienia globalne */
+body { font: 0.625em/1.5em tahoma, verdana, arial, sans-serif;}
+
+/* szerokość strony */
+.content {width: 960px;}
+
+/* header */
+#header {
+	position: relative;
+	height: 165px;
+	border-bottom: 1px solid #fff;
+	background: #272321 url(../images/header-tlo.jpg) no-repeat;
+	}
+	
+#header h1 {
+	position: absolute;
+	top: 69px;
+	left: 55px;
+	overflow: hidden;
+	}
+	
+#header h1 a {
+	display: block;
+	width: 254px;
+	height: 78px;
+	background: url(../images/logo.png) no-repeat;
+	text-indent: -666em;
+	}
+#header ul { overflow: hidden; position: absolute; bottom: 0; left: 353px; list-style: none;}
+#header ul li { float: left; margin-right: 1px;}
+#header ul li a { display: block; padding: 11px 26px 10px; color: #333; font: bold 1.1em tahoma, verdana, arial, sans-serif; text-decoration: none; background: #eaeaea url(../images/inactive.gif) top left repeat-x; border-bottom: 1px #272321 solid;}
+#header ul li a:hover { background: #fff url(../images/active.gif) top left repeat-x; border-bottom: 1px #fff solid;}

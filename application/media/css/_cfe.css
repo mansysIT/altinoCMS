@@ -1,0 +1,25 @@
+.checkbox, .radio
+{
+	width: 19px;
+	height: 25px;
+	padding: 0 5px 0 0;
+	background: url(../images/checkbox.png) no-repeat;
+	display: block;
+	clear: left;
+	float: left;
+}
+.radio
+{
+	background: url(../images/radio.png) no-repeat;
+}
+.select
+{
+	position: absolute;
+	width: 203px;
+	height: 25px;
+	padding: 9px 0px 0 8px;
+	color: #606060;
+	background: url(../images/select.png) no-repeat;
+	overflow: hidden;
+    text-shadow: 1px 1px 1px #FFFFFF;
+}

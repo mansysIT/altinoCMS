@@ -1,0 +1,632 @@
+/* ###
+
+:: APP CONTROLLER :: MAKE IMAGE DIR RELATIVE :: ../images/ ::
+
+### */
+
+/* reset marginesów oraz dopełnień */
+html, body, ul, li { margin: 0; padding: 0;}
+
+/* reset wysokości linii i fontu */
+h1, h2, ul, li, p { margin: 0; padding: 0; font-size: 1em; line-height: 1.5em;}
+
+/* ustawienia globalne */
+body { font: 0.625em/1.5em tahoma, verdana, arial, sans-serif; background-color: #f3f3f3;}
+
+br.clear {
+    clear: both;
+}
+
+/* szerokość strony */
+.content {width: 960px;}
+
+/* resetowanie ramek obrazków */
+a img {border: none;}
+
+/* News FLASH */
+#slider {
+  font: 1.1em arial, tahoma, sans-serif;
+  color: #333132;
+  width: 325px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.scroll {
+  height: 50px;
+  overflow: auto;
+  position: relative; /* fix IE */
+  clear: left;
+}
+
+.scrollContainer div.panel {
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 297px;
+}
+
+.scrollButtons:hover {
+    cursor: pointer;
+}
+
+.left {
+    margin-left: 20px;
+}
+
+.right {
+    margin-left: 2px;
+}
+
+/* język */
+
+#lang-changer
+{
+    position:absolute;
+    top:7px;
+    left:420px;
+    width: 150px;
+    font-family: Arial;
+    color: white;
+}
+
+#lang-changer img
+{
+    vertical-align: middle;
+    margin-left: 3px;
+}
+
+/* logowanie */
+
+#login-form {
+    position:absolute;
+    /* top: <-90, 0> */
+    top:-90px;
+    left:620px;
+    width: 200px;
+    height: 120px;
+    -moz-border-radius-bottomleft: 8px;
+    -moz-border-radius-bottomright: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: #cacaca;
+    background-image: url("../images/admin.png");
+    background-position: -5px 90px;
+    background-repeat: no-repeat;
+}
+
+#login-form span.title {
+    font-family: Arial, "Trebuchet MS", Verdana, Times;
+    font-weight: bold;
+    font-size: 11px;
+    color: #333132;
+    position: relative;
+    display: block;
+    top: 18px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#login-form #login-input {
+    margin-top: 3px;
+    margin-left: 20px;
+}
+
+#login-form input {
+    width: 160px;
+    height: 20px;
+}
+
+#login-form #password-input {
+    width: 120px;
+    margin-left: 20px;
+}
+
+#login-form #login-submit {
+    width: 40px;
+    height: 27px;
+    margin-left: -3px;
+    vertical-align: top;
+}
+
+#login-form span.options {
+    position: relative;
+    top: 2px;
+    left: 20px;
+    padding-top: 10px;
+    font-family: "Trebuchet MS", Verdana, Times, Arial;
+    font-style: normal;
+    font-size: 1.1em;
+    color: #333132;
+}
+
+#login-form span.options a {
+    color: #333132;
+    text-decoration: none;
+}
+
+#login-form span.options a:hover {
+    text-decoration: underline;
+}
+
+/* header */
+#header {
+	position: relative;
+	height: 165px;
+	border-bottom: 1px solid #fff;
+	background: #272321 url(../images/header-tlo.jpg) no-repeat;
+	}
+	
+#header h1 {
+	position: absolute;
+	top: 69px;
+	left: 55px;
+	overflow: hidden;
+	}
+	
+#header h1 a {
+	display: block;
+	width: 254px;
+	height: 78px;
+	background: url(../images/logo.png) no-repeat;
+	text-indent: -666em;
+	}
+	
+#header ul { 
+	overflow: hidden; 
+	position: absolute; 
+	bottom: 0; 
+	left: 353px; 
+	list-style: none;
+}
+#header ul li { 
+	float: left; 
+	margin-right: 1px; 
+	background: url(../images/menu-left.gif) top left no-repeat;
+}
+#header ul li a { 
+	display: block; 
+	padding: 11px 26px 10px; 
+	color: #000; 
+	font: bold 1.1em tahoma, verdana, arial, sans-serif; 
+	text-decoration: none; 
+	background: url(../images/menu-right.gif) top right no-repeat;
+}
+
+/* slogan */
+#slogan {
+	background: #3297cf url(../images/tlo-main-powielane.jpg) repeat-x; 
+	border-bottom: 1px #fff solid;
+	position: relative;
+	}
+#slogan .content {
+	background: url(../images/tlo-main.jpg) top left no-repeat;
+	height: 231px;
+	}
+#slogan .content #motto {	
+	position: absolute;
+	top: 80px;
+	left: 388px;
+	overflow: hidden;
+	}
+	
+#slogan .content #motto a {
+	display: block;
+	width: 332px;
+	height: 91px;
+	text-indent: -666em;
+	background: url(../images/slogan.png) no-repeat;
+	}
+
+/* main */
+#main {
+	background: #fff url(../images/main-bg.gif) top left repeat-x;
+	border-bottom: #d5d8d6 1px solid;
+	}
+#main .content {
+	overflow: hidden;
+	}
+#main .column {
+	float: left;
+	margin-left: 63px;
+	}
+#main .box {
+	width: 325px;
+	padding: 28px 14px 14px;
+	margin-bottom: 34px;
+	}
+    
+#main .box p {
+	font: 1.1em arial, tahoma, sans-serif;
+	color: #333132
+	}
+#main .box.szary {
+	background: #8b8181 url(../images/main-box-rouded.gif) 0 100% no-repeat;
+	}
+#main .box.szary h2 { 
+	display: none;
+}
+#main .box.szary p {
+	color: #fff;
+	}
+	
+#main .box.firma h2 {
+	background: url(../images/o-firmie.gif) no-repeat;
+	text-indent: -666em;
+	width: 359px;
+	height: 52px;
+}
+#main .box.kwalifikacje h2 {
+	background: url(../images/najwyzsze.gif) no-repeat;
+	text-indent: -666em;
+	width: 359px;
+	height: 52px;
+}
+#main .box.biznes h2 {
+	background: url(../images/rozwijamy.gif) no-repeat;
+	text-indent: -666em;
+	width: 359px;
+	height: 52px;
+}
+
+#main .box.kwalifikacje {
+	background: url(../images/zegar.gif) 0 30px no-repeat;
+	padding-left: 110px;
+	}
+#main .box.biznes {
+	background: url(../images/rece.gif) 0 30px no-repeat;
+	padding-left: 110px;
+	margin-top: -25px
+	}
+
+#main .wiecej {
+	text-align: right;
+	}
+#main .wiecej a {
+	text-decoration: none;
+	font-weight: bold;
+	color: #999;
+	background: url(../images/strzalka-wiecej.gif) 100% 50% no-repeat;
+	padding-right: 15px;
+	display: block;
+	outline: none;
+	}
+
+/* footer */
+#footer {
+	background: #f3f3f3;
+	}
+#footer #footer-image {
+	float: left;
+	margin: 16px 48px 10px 71px;
+	}
+#footer ul {
+	list-style: none;
+	width: 555px;
+	overflow: hidden;
+	padding-top: 40px;
+	}
+#footer ul li {
+	float: left;
+	margin: 0 19px;
+	border-right: 1px #686868 solid;
+	}
+#footer ul li a {
+	display: block;
+	width: 122px;
+	padding: 0 12px;
+	font: 1em verdana, sans-serif;
+	background: url(../images/strzalka-footer.gif) 0 50% no-repeat;
+	color: #686868;
+	text-decoration: none;
+	}
+#footer #footer-copyright {
+	clear: left;
+	padding: 19px 0 19px 67px;
+	font: bold 1.1em tahoma, verdana, arial, sans-serif;
+	color: #cacaca;
+	background: url(../images/cien-footer.gif) top left no-repeat;
+	}
+
+/* PODSTRONA - artykuły */
+
+#art-header {
+    margin-top: 60px;
+    width: 111px;
+    height: 12px;
+}
+
+#slogan.artykuly {
+	background: #33ca21 url(../images/top-tlo-artykuly.jpg) repeat-x;
+	}
+#slogan.artykuly .content {
+	height: 140px;
+	background: url(../images/top-artykuly.jpg) no-repeat;
+	}
+	
+#slogan .content #motto.motto-artykuly {
+	top: 40px;
+	left: 405px;
+}
+
+#slogan .content #motto.motto-artykuly a {
+	background: url(../images/motto-produkty.png) no-repeat;
+}
+
+.artykul {
+    font-family: Verdana, "Trebuchet MS", Times, Arial;
+    font-style: normal;
+    font-size: 1.1em;
+    color: #333132;
+}
+
+.artykul:last-child {
+    margin-bottom: 40px;
+}
+
+.ratingView {
+    height: 20px;
+    padding: 5px;
+    margin-top: 10px;
+    padding-top: 6px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border:1px solid #dddddd;
+}
+
+h3.title {
+    font-family: "Trebuchet MS", Times, Arial;
+    font-style: italic;
+    font-size: 1.5em;
+    border-left: 4px solid #d6b820;
+    padding-left: 5px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+}
+
+p.sub-title {
+    font-family: "Trebuchet MS", Times, Arial;
+    font-size: 1em;
+    color: #808080;
+    margin-bottom: 10px;
+}
+
+#main .box-artykuly {
+	width: 700px;
+	margin:0 auto;
+}
+
+#hr {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width:700px;
+}
+
+#art-tools {
+    width:696px;
+    min-height: 22px;
+    padding-top:4px;
+    padding-right:4px;
+    text-align: right;
+    background-image: url("../images/art-tools.gif");
+    background-position: top right;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
+}
+
+#art-tools, #art-tools ul li select, #art-tools ul li input {
+    font-family: Verdana, "Trebuchet MS", Times, Arial;
+    font-style: normal;
+    font-size: 1em;
+    color: #333132;
+}
+
+#art-tools ul li select {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#art-tools ul li input.submit-filter {
+    width: 60px;
+}
+
+#art-tools ul li input.page-filter {
+    width: 80px;
+}
+
+#art-tools ul li {
+    display: inline;
+}
+
+/* PODSTRONA - rejestracja */
+
+#reg-header {
+    margin-top: 60px;
+    width: 372px;
+    height: 40px;
+}
+
+.submit-form {
+    margin-left: 110px;
+}
+
+.submit-form, .reset-form {
+    float: left;
+    height: 30px;
+    width: 100px;
+}
+
+select.birthdate {
+    width: 78px;
+    font-family: Verdana, "Trebuchet MS", Times, Arial;
+    font-style: normal;
+    font-size: 1em;
+    height: 20px;
+}
+
+select.day {
+    width: 40px;
+}
+
+span.star {
+    color: red;
+}
+
+/* PODSTRONA - przypomnienie hasła */
+
+#lostpw-header {
+    margin-top: 60px;
+    width: 372px;
+    height: 40px;
+}
+
+.submit-form {
+    margin-left: 110px;
+}
+
+.submit-form, .reset-form {
+    float: left;
+    height: 30px;
+    width: 100px;
+}
+
+span.star {
+    color: red;
+}
+
+/* PODSTRONA - kontakt */
+
+.formularz {
+    font-family: Verdana, "Trebuchet MS", Times, Arial;
+    font-style: normal;
+    font-size: 1.1em;
+    color: #333132;
+    padding-right: 300px;
+    text-align: right;
+}
+
+#main .box-kontakt {
+	width: 600px;
+	margin:0 auto;
+}
+
+#main .box-kontakt.produkty-opis h2 {
+	background: url(../images/formularz.gif) no-repeat;
+	text-indent: -666em;
+	padding-bottom: 40px;
+	margin-top: 40px;
+}
+
+.objTable {
+    width: 600px;
+}
+
+.objTable tbody tr td {
+    width: 210px;
+}
+
+.objTable tbody tr td:first-child {
+    width: 120px;
+}
+
+.objTable tbody tr td:last-child {
+    width: 300px;
+}
+    
+label {
+    font-family: Verdana, "Trebuchet MS", Times, Arial;
+    font-style: normal;
+    font-size: 1em;
+    color: #333132;
+}
+
+input, textarea {
+    width: 200px;
+    font-family: Verdana, "Trebuchet MS", Times, Arial;
+    font-style: normal;
+    font-size: 1em;
+    height: 20px;
+}
+
+textarea {
+    height: 100px;
+}
+
+#sent-to-me {
+    width: auto;
+    vertical-align: middle;
+}
+
+.submit-form {
+    height: 30px;
+}
+
+div.error {
+    font-family: Verdana, Tahoma, Arial, Times;
+    font-size: 11px;
+    background:url("../images/deny.png") no-repeat 0px 0px;
+    padding-left: 30px;
+    height: 16px;
+    color: red;
+    text-align: left;
+}
+div.valid {
+    font-family: Verdana, Tahoma, Arial, Times;
+    font-size: 11px;
+    text-align: left;
+    height: 16px;
+    background:url("../images/tick.png") no-repeat 0px 0px;
+    padding-left: 30px;
+    color: green;
+}
+	
+/* PODSTRONA - produkty */
+
+#slogan.produkty {
+	background: #33ca21 url(../images/top-tlo.jpg) repeat-x;
+	}
+#slogan.produkty .content {
+	height: 140px;
+	background: url(../images/top-produkty.jpg) no-repeat;
+	}
+	
+#slogan .content #motto.motto-produkty {
+	top: 40px;
+	left: 405px;
+}
+
+#slogan .content #motto.motto-produkty a {
+	background: url(../images/motto-produkty.png) no-repeat;
+}
+
+#main .box.produkty-opis ul {
+	list-style: none;
+	list-style-image: url(../images/strzalka-produkty.jpg);
+	padding: 10px 20px;
+	font-weight: bold;
+	}
+
+#main .box-artykuly.produkty-opis h2 {
+	background: url(../images/naglowek1-produkty.jpg) no-repeat;
+	text-indent: -666em;
+	padding-bottom: 40px;
+	margin-top: 40px;
+	}
+#main .box.produkty-cechy {
+	background: url(../images/ikonki-produkty.jpg) no-repeat;
+	padding-left: 90px;
+	margin-top: 40px;	
+	}
+	
+#main .box.produkty-cechy h2 {
+	text-indent: -666em;
+	}
+#main .box.produkty-cechy .produkt1 {
+	background: url(../images/naglowek2-produkty.jpg) no-repeat;
+	padding-top: 50px;
+	}
+#main .box.produkty-cechy .produkt2 {
+	background: url(../images/naglowek3-produkty.jpg) no-repeat;
+	padding-top: 50px;
+	}
