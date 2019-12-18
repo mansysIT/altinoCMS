@@ -19,7 +19,6 @@ class router
 			$path = $_GET['page'];
 		}
 		
-		/* http://www.example.com/controller/action/param1/param2/.../paramN */
 		
 		$routParts = explode("/", $path);
 		

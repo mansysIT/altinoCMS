@@ -2,7 +2,7 @@
 
 ob_start();
 
-require_once("/core/init.php");					// __autoload()
+require_once("core/init.php");					// __autoload()
 
 $router = registry::register("router");
 dispatcher::dispatch($router);
