@@ -38,6 +38,26 @@ class db
 			return $this->connect;
 		}
 	}
+
+	public function querymy($sql)
+	{
+		$query_arr = explode(" ", trim($sql));
+		$query_type = strtoupper($query_arr[0]);
+		
+		if($query_type == 'SELECT' || $query_type == 'SHOW')
+		{
+			$this->result = array();
+		
+			$wynik = $this->connect->query($sql);
+			return $wynik;
+		}
+		else if($query_type == 'UPDATE' || $query_type == 'DELETE' || $query_type == 'DROP' || $query_type == 'INSERT' || $query_type == 'ALTER' || $query_type == 'CREATE')
+		{
+			return $this->modifiable($sql);
+		}
+		
+		return false;
+	}
 	
 	public function execute($sql)
 	{

@@ -1,5 +1,7 @@
 <?php
 
+include($_SERVER['DOCUMENT_ROOT'].'/application/models/homemodel.php');
+
 class home extends controller
 {
 	public function __call($method, $args)
@@ -23,6 +25,12 @@ class home extends controller
 		$this->main->model_helper;
 		$this->main->directory_helper;
 		$this->main->translate_helper;
+	}
+
+	public function getAdress()
+	{
+        $this->sidebarModal = new homemodel;
+        return $this->sidebarModal->getAdress();
 	}
 }
 

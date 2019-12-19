@@ -151,6 +151,7 @@ a.article:hover {
     margin-right: auto;
 }
 
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
@@ -166,14 +167,11 @@ a.article:hover {
     MEDIAQUERIES
 ----------------------------------------------------- */
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
     #sidebar {
         margin-left: -250px;
     }
     #sidebar.active {
         margin-left: 0;
-    }
-    #sidebarCollapse span {
-        display: none;
     }
 }
