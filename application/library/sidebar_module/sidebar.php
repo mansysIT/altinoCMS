@@ -9,10 +9,14 @@
 $sidebarController = new sidebar();
 ?>
 
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script src="/application/media/js/sidebar.js"></script>
 
 </head>
 
@@ -33,19 +37,10 @@ $sidebarController = new sidebar();
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <?php foreach($sidebarController->getAdress() as $row): ?>
                     <li>
-                        <a href="#"><?php echo $row; ?></a>
+                        <a href="#"><?php echo $row[0]; ?></a>
                     </li>
                     <?php endforeach; ?>
                 </ul>
             </li>
         </ul>
     </nav>
-
-    <!-- Page Content  -->
-
-<script>$(document).ready(function () {
-    $('#sidebarCollapse').on('click', function () {
-        $('#sidebar').toggleClass('active');
-    });
-});</script>
-<!-- TABS PRESENTATION // -->

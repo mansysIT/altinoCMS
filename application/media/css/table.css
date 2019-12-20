@@ -1,0 +1,22 @@
+.table-responsive          { overflow: scroll; height: 200px; }
+.table-responsive thead th { position: sticky; top: 0; }
+
+/* Just common table stuff. Really. */
+table  { border-collapse: collapse; width: 100%; }
+th, td { padding: 8px 16px; }
+th     { background:#eee; }
+
+.table-responsive {
+        overflow: scroll!important;
+}
+
+.table-responsive input {
+    margin: 20px;
+}
+
+.sr-only {
+    width: auto!important;
+    overflow: visible!important;
+    position: initial!important;    
+    margin: 0 10px 0 10px!important;
+}
