@@ -61,6 +61,7 @@ $sidebarController = new home(); ?>
 					<th onclick="sortTable(9)">Data5</th>
 					  <th onclick="sortTable(9)">Data4</th>
 					  <th onclick="sortTable(9)">Data6</th>
+					  <th onclick="sortTable(9)">Data7</th>
 				</tr>
 		</thead>
 		<tbody>
@@ -82,6 +83,7 @@ $sidebarController = new home(); ?>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[15]; ?></a></td>
 					  <td><a style="color: #000!important;" href="#"><?php echo $row[14]; ?></a></td>
 					  <td><a style="color: #000!important;" href="#"><?php echo $row[16]; ?></a></td>
+					  <td><a style="color: #000!important;" href="#"><?php echo $row[17]; ?></a></td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
