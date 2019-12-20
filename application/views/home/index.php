@@ -55,19 +55,8 @@ $sidebarController = new home(); ?>
 					<th onclick="sortTable(7)">nazwisko</th>
 					<th onclick="sortTable(8)">email</th>
 					<th onclick="sortTable(9)">kod</th>
-					<th onclick="sortTable(9)">Data2</th>		
-					<th onclick="sortTable(9)">Data3</th>
-          			<th onclick="sortTable(9)">Data4</th>
-					<th onclick="sortTable(9)">Data5</th>
-					  <th onclick="sortTable(9)">Data4</th>
-					  <th onclick="sortTable(9)">Data6</th>
-					  <th onclick="sortTable(9)">Data7</th>
-					  <th onclick="sortTable(9)">Data8</th>
+					<th onclick="sortTable(9)">Data</th>		
 
-					  <th onclick="sortTable(9)">Data9</th>
-					  
-
-					  <th onclick="sortTable(9)">Data10</th>
 
 				</tr>
 		</thead>
@@ -84,17 +73,7 @@ $sidebarController = new home(); ?>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[7]; ?></a></td>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[8]; ?></a></td>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[9]; ?></a></td>
-					<td><a style="color: #000!important;" href="#"><?php echo $row[11]; ?></a></td>
-					<td><a style="color: #000!important;" href="#"><?php echo $row[13]; ?></a></td>
-          			<td><a style="color: #000!important;" href="#"><?php echo $row[14]; ?></a></td>
-					<td><a style="color: #000!important;" href="#"><?php echo $row[15]; ?></a></td>
-					  <td><a style="color: #000!important;" href="#"><?php echo $row[14]; ?></a></td>
-					  <td><a style="color: #000!important;" href="#"><?php echo $row[16]; ?></a></td>
-					  <td><a style="color: #000!important;" href="#"><?php echo $row[17]; ?></a></td>
-					  <td><a style="color: #000!important;" href="#"><?php echo $row[18]; ?></a></td>
-					  <td><a style="color: #000!important;" href="#"><?php echo $row[19]; ?></a></td>
-					  <td><a style="color: #000!important;" href="#"><?php echo $row[20]; ?></a></td>
-
+					<td><a style="color: #000!important;" href="#"><?php echo $row[10]; ?></a></td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
