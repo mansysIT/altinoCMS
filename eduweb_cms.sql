@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 18 Gru 2019, 16:38
+-- Czas generowania: 24 Gru 2019, 10:10
 -- Wersja serwera: 10.4.8-MariaDB
 -- Wersja PHP: 7.3.11
 
@@ -53,16 +53,29 @@ INSERT INTO `administrator` (`id`, `imie`, `nazwisko`, `nick`, `pass`, `privileg
 
 CREATE TABLE `bedrijf_adresy` (
   `id` int(11) NOT NULL,
-  `miasto` text NOT NULL
+  `miasto` text NOT NULL,
+  `adres` text NOT NULL,
+  `borg` int(11) NOT NULL,
+  `varfor` int(11) NOT NULL,
+  `water` int(11) NOT NULL,
+  `najemca_imie` text NOT NULL,
+  `najemca_nazwisko` text NOT NULL,
+  `email` text NOT NULL,
+  `kod` text NOT NULL,
+  `date` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Zrzut danych tabeli `bedrijf_adresy`
 --
 
-INSERT INTO `bedrijf_adresy` (`id`, `miasto`) VALUES
-(1, 'aaa'),
-(2, 'bbb');
+INSERT INTO `bedrijf_adresy` (`id`, `miasto`, `adres`, `borg`, `varfor`, `water`, `najemca_imie`, `najemca_nazwisko`, `email`, `kod`, `date`) VALUES
+(1, 'aaa', 'test1', 100, 200, 300, 'imieaaa', 'nazwiskoaaa', 'aaa@aaa.com', 'kod', '2019-12-01'),
+(2, 'bbb', 'test2', 300, 150, 100, 'imiebbb', 'nazwiskobb', 'bbb@bbb.com', 'kod2', '2019-12-05'),
+(3, 'ccc', 'adres3', 111, 222, 333, 'imie3', 'nazwisko3', 'emial3', 'kod3', '2019-12-14'),
+(4, 'ddd', 'adres4', 11, 22, 33, 'imie4', 'nazwisko4', 'emial4', 'kod4', '2019-12-08'),
+(5, 'eee', 'adres5', 1111, 2222, 3333, 'imie5', 'nazwisko5', 'emial5', 'kod5', '2019-12-16'),
+(6, 'fff', 'adres6', 1, 2, 3, 'imie6', 'nazwisko6', 'emial5', 'kod6', '2019-12-02');
 
 -- --------------------------------------------------------
 
@@ -184,7 +197,7 @@ ALTER TABLE `administrator`
 -- AUTO_INCREMENT dla tabeli `bedrijf_adresy`
 --
 ALTER TABLE `bedrijf_adresy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT dla tabeli `meta_tags`

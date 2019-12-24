@@ -20,3 +20,7 @@ th     { background:#eee; }
     position: initial!important;    
     margin: 0 10px 0 10px!important;
 }
+
+.tableholder {
+    width: 100%;
+}

@@ -14,7 +14,7 @@
 <?=javascript_load('table.js,jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
-<?=include_once($_SERVER['DOCUMENT_ROOT'].'/application/controllers/home.php');
+<?=include_once('home.php');
 $sidebarController = new home(); ?>
 
 <script src="/application/media/js/table.js"></script>
@@ -26,20 +26,20 @@ $sidebarController = new home(); ?>
 	<?=module_load('SIDEBAR')?>
 	<button id="sidebarCollapse">X</button>
 	<div class="tableholder">
-	<form class="form-inline">
+	<form class="form-inline" method="post" action="">
 		<div class="form-group mx-sm-3 mb-2">
 			<label class="sr-only">Woord</label>
-			<input type="text" class="form-control" id="inputPassword2" placeholder="Key Word">
+			<input type="text" class="form-control" id="inputPassword2" name="word" placeholder="Key Word">
 		</div>
 		<div class="form-group mx-sm-3 mb-2">
 			<label class="sr-only">Vanaf</label>
-			<input type="date" class="form-control" id="inputPassword2">
+			<input type="date" class="form-control" id="inputPassword2" name="vanaf" value="2019-01-01">
 		</div>
 		<div class="form-group mx-sm-3 mb-2">
 			<label class="sr-only">Tot</label>
-			<input type="date" class="form-control" id="inputPassword2" value="1999-11-11">
+			<input type="date" class="form-control" id="inputPassword2" value="2019-12-31" name="tot">
 		</div>
-		<button type="submit" class="btn btn-danger mb-2">Confirm identity</button>
+		<button type="submit" class="btn btn-danger mb-2" name="filterByData">Confirm identity</button>
 	</form>
 	<div class="table-responsive">
 	<table class="table table-striped" id="myTable2">
@@ -55,7 +55,7 @@ $sidebarController = new home(); ?>
 					<th onclick="sortTable(7)">nazwisko</th>
 					<th onclick="sortTable(8)">email</th>
 					<th onclick="sortTable(9)">kod</th>
-					<th onclick="sortTable(9)">Data</th>
+					<th onclick="sortTable(10)">Data</th>
 				</tr>
 		</thead>
 		<tbody>
