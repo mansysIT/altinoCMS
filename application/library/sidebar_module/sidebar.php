@@ -5,7 +5,7 @@
 
 
 <?=add_metatags()?>
-<?=include_once($_SERVER['DOCUMENT_ROOT'].'/application/controllers/sidebar.php');
+<?=include_once('sidebar.php');
 $sidebarController = new sidebar();
 ?>
 
@@ -35,6 +35,9 @@ $sidebarController = new sidebar();
             <li class="active">
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Adressen</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li>
+                        <a href="adressen/index">Alle</a>
+                    </li>
                     <?php foreach($sidebarController->getAdress() as $row): ?>
                     <li>
                         <a href="#"><?php echo $row[0]; ?></a>

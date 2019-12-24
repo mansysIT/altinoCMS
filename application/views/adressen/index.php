@@ -3,19 +3,21 @@
 
 <head>
 
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 <?=add_metatags()?>
 
 <?=add_title("Design Klasy biznes - SuperCMS")?>
 
 <?=add_basehref()?>
 
-<?=stylesheet_load('screen.css,sidebar.css,table.css')?>
+<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css')?>
 
 <?=javascript_load('table.js,jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
-<?=include_once('home.php');
-$sidebarController = new home(); ?>
+<?=include_once('adressen.php');
+$sidebarController = new adressen(); ?>
 
 <script src="/application/media/js/table.js"></script>
 
@@ -24,9 +26,10 @@ $sidebarController = new home(); ?>
 <body>
  
 	<?=module_load('SIDEBAR')?>
-	<button id="sidebarCollapse">X</button>
+	<button id="sidebarCollapse" class="btn btn-danger mb-2">X</button>
 	<div class="tableholder">
 	<form class="form-inline" method="post" action="">
+        <button class="btn btn-danger mb-2">Clear</button>
 		<div class="form-group mx-sm-3 mb-2">
 			<label class="sr-only">Woord</label>
 			<input type="text" class="form-control" id="inputPassword2" name="word" placeholder="Key Word">
@@ -39,23 +42,21 @@ $sidebarController = new home(); ?>
 			<label class="sr-only">Tot</label>
 			<input type="date" class="form-control" id="inputPassword2" value="2019-12-31" name="tot">
 		</div>
-		<button type="submit" class="btn btn-danger mb-2" name="filterByData">Confirm identity</button>
+        <button type="submit" class="btn btn-danger mb-2" name="filterByData">Zoeken</button>
+        <button type="submit" class="btn btn-danger mb-2" name="filterByData">Nieuwe</button>
+        <button type="submit" class="btn btn-danger mb-2" name="filterByData">Niet active</button>
 	</form>
 	<div class="table-responsive">
 	<table class="table table-striped" id="myTable2">
 		<thead>
 				<tr>
-					<th onclick="sortTable(0)">Id</th>
-					<th onclick="sortTable(1)">City</th>
-					<th onclick="sortTable(2)">Adres</th>
-					<th onclick="sortTable(3)">Borg</th>
-					<th onclick="sortTable(4)">Varfor</th>
-					<th onclick="sortTable(5)">water</th>
-					<th onclick="sortTable(6)">imie</th>
-					<th onclick="sortTable(7)">nazwisko</th>
-					<th onclick="sortTable(8)">email</th>
-					<th onclick="sortTable(9)">kod</th>
-					<th onclick="sortTable(10)">Data</th>
+					<th onclick="sortTable(0)">ID</th>
+					<th onclick="sortTable(1)">CITY</th>
+					<th onclick="sortTable(2)">ADDRES</th>
+					<th onclick="sortTable(3)">BEDRAG</th>
+					<th onclick="sortTable(4)">INKOMSTEN</th>
+					<th onclick="sortTable(5)">UITGAVEN</th>
+					<th onclick="sortTable(6)">WINST</th>
 				</tr>
 		</thead>
 		<tbody>
@@ -68,10 +69,6 @@ $sidebarController = new home(); ?>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[4]; ?></a></td>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[5]; ?></a></td>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[6]; ?></a></td>
-					<td><a style="color: #000!important;" href="#"><?php echo $row[7]; ?></a></td>
-					<td><a style="color: #000!important;" href="#"><?php echo $row[8]; ?></a></td>
-					<td><a style="color: #000!important;" href="#"><?php echo $row[9]; ?></a></td>
-					<td><a style="color: #000!important;" href="#"><?php echo $row[10]; ?></a></td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>

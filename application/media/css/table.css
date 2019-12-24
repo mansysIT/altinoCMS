@@ -1,13 +1,26 @@
 .table-responsive          { overflow: scroll; height: 200px; }
-.table-responsive thead th { position: sticky; top: 0; }
+.table-responsive thead th { 
+    position: sticky; 
+    top: 0; 
+    background-color: #333;
+    color: #fff;
+}
 
 /* Just common table stuff. Really. */
-table  { border-collapse: collapse; width: 100%; }
+table  { border-collapse: initial; width: 100%; }
 th, td { padding: 8px 16px; }
 th     { background:#eee; }
 
+tr.table-responsive thead td {
+    border-left: 0px solid;
+    border-right: 0px solid;
+}
+
 .table-responsive {
-        overflow: scroll!important;
+    overflow: scroll!important;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    max-height: 500px;
 }
 
 .table-responsive input {
@@ -22,5 +35,50 @@ th     { background:#eee; }
 }
 
 .tableholder {
-    width: 100%;
+    width: 97%;
+    margin-left: 2%;
+}
+
+.form-inline {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.form-inline .form-group {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.form-inline .form-control {
+    width: 200px!important;
+}
+
+.form-inline .btn-danger {
+    margin-left: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+    .table-responsive {
+        margin: 0;
+        max-height: 300px;
+    }
+
+    .form-inline {
+        display: flex;
+        flex-direction: column!important;
+        margin-top: 0;
+    
+    }
+
+    .form-inline .form-group {
+        
+    }
+
+    .form-inline .btn-danger {
+        margin-left: 0;
+        margin-bottom: 5px;
+    }
 }
