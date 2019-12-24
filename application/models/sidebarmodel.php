@@ -10,7 +10,7 @@ class sidebarModal {
 
     public function getCityName(){
         DB::db();
-        $this->query = DB::$__db->querymy("SELECT miasto FROM bedrijf_adresy");
+        $this->query = DB::$__db->querymy("SELECT miasto FROM bouw_adresy");
         foreach($this->query->fetch_all() as $q){
             array_push($this->cityArray, $q);
         }

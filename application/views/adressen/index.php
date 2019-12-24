@@ -28,7 +28,7 @@ $sidebarController = new adressen(); ?>
 	<?=module_load('SIDEBAR')?>
 	<button id="sidebarCollapse" class="btn btn-danger mb-2">X</button>
 	<div class="tableholder">
-	<form class="form-inline" method="post" action="">
+	<form class="form-inline" method="get" action="">
         <button class="btn btn-danger mb-2">Clear</button>
 		<div class="form-group mx-sm-3 mb-2">
 			<label class="sr-only">Woord</label>
@@ -42,9 +42,9 @@ $sidebarController = new adressen(); ?>
 			<label class="sr-only">Tot</label>
 			<input type="date" class="form-control" id="inputPassword2" value="2019-12-31" name="tot">
 		</div>
-        <button type="submit" class="btn btn-danger mb-2" name="filterByData">Zoeken</button>
-        <button type="submit" class="btn btn-danger mb-2" name="filterByData">Nieuwe</button>
-        <button type="submit" class="btn btn-danger mb-2" name="filterByData">Niet active</button>
+        <button type="submit" class="btn btn-danger mb-2">Zoeken</button>
+        <a class="btn btn-danger mb-2" href="nieuwe_adress/index" role="button">Nieuwe</a>
+        <button type="submit" class="btn btn-danger mb-2" name="active" value="0">Niet active</button>
 	</form>
 	<div class="table-responsive">
 	<table class="table table-striped" id="myTable2">

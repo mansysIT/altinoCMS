@@ -53,6 +53,19 @@ class router
 		
 		return $this->params;
 	}
+
+	public function getParamsGet()
+	{
+		if(isset($_GET) && count($_GET) > 0)
+		{
+			foreach($_GET as $key => $val)
+			{
+				$this->params['GET'][$key] = $val;
+			}
+		}
+		
+		return $this->params;
+	}
 }
 
 ?>

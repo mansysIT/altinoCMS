@@ -12,7 +12,7 @@ class adressen extends controller
 		$this->__config = registry::register("config");
 		$this->__router = registry::register("router");
 		$this->__db = registry::register("db");
-		$this->__params = $this->__router->getParams();
+		$this->__params = $this->__router->getParamsGet();
 	}
 
 	public function __call($method, $args)
@@ -40,18 +40,22 @@ class adressen extends controller
 
 	public function getAdress()
 	{ 
-		$this->sidebarModal = new homemodel;
-		if(isset($this->__params['POST']['filterByData'])){
-			$od = $this->__params['POST']['vanaf'];
-			$do = $this->__params['POST']['tot'];
-			$word = $this->__params['POST']['word'];
-		} else {
-			$od = '2019-12-01';
-			$do = '2019-12-31';
-			$word = '';
-		}
-        return $this->sidebarModal->getAdress($od, $do, $word);
-	}
+        $this->sidebarModal = new adressenmodel;
+        if (isset($this->__params['GET']['vanaf'])) {
+            if ($this->__params['GET']['vanaf'] != null) {
+                $od = $this->__params['GET']['vanaf'];
+                $do = $this->__params['GET']['tot'];
+                $word = $this->__params['GET']['word'];
+                $active = $this->__params['GET']['active'];
+            }
+        } else {
+                $od = '2019-12-01';
+                $do = '2019-12-31';
+                $word = '';
+                $active = 1;
+            }
+            return $this->sidebarModal->getAdress($od, $do, $word, $active);   
+    }
 }
 
 
