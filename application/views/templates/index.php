@@ -5,7 +5,7 @@
 
 <?=add_metatags()?>
 
-<?=add_title("Design Klasy biznes - SuperCMS")?>
+<?=add_title("template")?>
 
 <?=add_basehref()?>
 
@@ -14,17 +14,15 @@
 <?=javascript_load('table.js,jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
-<?=include_once($_SERVER['DOCUMENT_ROOT'].'/application/controllers/home.php');
-$sidebarController = new home(); ?>
+<?=include_once('controllers/home');
+?>
 
-<script src="/application/media/js/table.js"></script>
 
 </head>
 
 <body>
  
 	<?=module_load('SIDEBAR')?>
-	<button id="sidebarCollapse">X</button>
 	<div class="tableholder">
 	<form class="form-inline">
 		<div class="form-group mx-sm-3 mb-2">
@@ -59,7 +57,7 @@ $sidebarController = new home(); ?>
 				</tr>
 		</thead>
 		<tbody>
-			<?php foreach($sidebarController->getAdress() as $row): ?>
+			<?php foreach($sidebarController->getAdress()[0] as $row): ?>
 				<tr>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[0]; ?></a></td>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[1]; ?></a></td>
