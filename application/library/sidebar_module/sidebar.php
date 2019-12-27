@@ -46,9 +46,14 @@ $sidebarController = new sidebar();
                         <a href="#"><?php echo $row[0]; ?></a>
                     </li>
                     <?php endforeach; ?>
+
                 </ul>
+
+            <li>
+                <a href="instellingen/index">Instellingen</a>
+            </li>
             </li>
 
         </ul>
     </nav>
-    <button id="sidebarCollapse">X</button>
+    <button id="sidebarCollapse" class="btn btn-danger mb-2">X</button>
