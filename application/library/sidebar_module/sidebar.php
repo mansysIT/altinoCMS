@@ -32,6 +32,9 @@ $sidebarController = new sidebar();
             <li>
                 <a href="#">Dashboard</a>
             </li>
+            <li>
+                <a href="incomsten/index">Dashboard</a>
+            </li>
             <li class="active">
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Adressen</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
@@ -45,5 +48,7 @@ $sidebarController = new sidebar();
                     <?php endforeach; ?>
                 </ul>
             </li>
+
         </ul>
     </nav>
+    <button id="sidebarCollapse">X</button>

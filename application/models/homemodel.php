@@ -17,16 +17,6 @@ class homemodel
         $this->__params = $this->__router->getParams();
         $this->__db = registry::register("db");
 	}
-	
-	public function getLoginPanelTitle()
-	{
-		return (isset($_SESSION[$this->config->default_session_auth_var]) && !empty($_SESSION[$this->config->default_session_auth_var])) ? $_SESSION[$this->config->default_session_auth_var] : "Panel logowania";
-	}
-	
-	public function addLogoutBtn()
-	{
-		return (isset($_SESSION[$this->config->default_session_auth_var]) && !empty($_SESSION[$this->config->default_session_auth_var])) ? "<li><a id=\"logged\" href=\"wylogowanie/index\">Wyloguj</a></li>" : "";
-	}
 
     public function getAdress($od, $do, $word){
 		$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` WHERE date BETWEEN '".$od."' AND '".$do."' AND  miasto LIKE '%".$word."%' ");
