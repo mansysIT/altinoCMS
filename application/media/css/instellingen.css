@@ -1,0 +1,78 @@
+.stedenlijstholder .bg-primary {
+    background-color: #ddd;
+    color: #000!important;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    border: none;
+}
+
+.stedenlijstholder .container-fluid {
+    padding: 0;
+}
+
+.stedenlijstholder .navbar-collapse {
+    padding: 0;
+}
+
+
+.stedenlijstholder a{
+    color: #000!important;
+}
+
+.tableholder .bg-primary {
+    background-color: #ddd;
+    color: #000!important;
+    padding: 0;
+}
+
+.tableholder a{
+    color: #000!important;
+}
+
+.stedenlijstholder {
+    width: 100%;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.list-group {
+    width: 100%;
+    background-color: #ddd !important;
+}
+
+.stedenlijstholder .list-group-item {
+    background-color: #eee !important;
+}
+
+.stedenlijstholder .form-inline {
+    padding: 10px 0 10px 0;
+    margin: 0;
+    background-color: #eee;
+}
+
+.stedenlijstholder .glyphicon {
+    float: right;
+    font-size: 25px;
+    line-height: 0.8em;
+}
+
+.maincontainer {
+    background-color: #eee;
+    padding: 0;
+    margin: 0;
+    width: 30%;
+}
+
+@media only screen and (max-width: 768px) {
+    .list-group {
+        width: 100%;
+        background-color: #eee !important;
+    }
+    .maincontainer {
+        background-color: #eee;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+}

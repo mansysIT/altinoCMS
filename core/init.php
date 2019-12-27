@@ -4,6 +4,8 @@ error_reporting(E_ALL);
 
 if(!isset($_SESSION)) session_start();
 
+header('Cache-Control: max-age=900');
+
 set_include_path(get_include_path() . PATH_SEPARATOR . 'core/main');
 set_include_path(get_include_path() . PATH_SEPARATOR . 'core/drivers');
 set_include_path(get_include_path() . PATH_SEPARATOR . 'core/helpers');

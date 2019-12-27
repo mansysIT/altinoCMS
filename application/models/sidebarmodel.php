@@ -1,16 +1,24 @@
 <?php
 
-namespace Modal;
-include_once($_SERVER['DOCUMENT_ROOT']."/application/providers/db_provider.php");
-use Providers\database as DB;
-
-class sidebarModal {
+class sidebarmodel {
     public $query;
     public $cityArray = Array();
 
+    private $__config;
+	private $__router;
+    private $__params;
+    private $__db;
+	
+	public function __construct()
+	{
+		$this->__config = registry::register("config");
+		$this->__router = registry::register("router");
+        $this->__params = $this->__router->getParams();
+        $this->__db = registry::register("db");
+	}
+
     public function getCityName(){
-        DB::db();
-        $this->query = DB::$__db->querymy("SELECT miasto FROM bouw_adresy");
+        $this->query = $this->__db->querymy("SELECT city FROM bouw_city");
         foreach($this->query->fetch_all() as $q){
             array_push($this->cityArray, $q);
         }

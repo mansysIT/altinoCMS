@@ -1,6 +1,6 @@
 <?php
 
-class adressenmodel
+class instellingenmodel
 {
 	public $query;
 	public $cityArray = Array();
