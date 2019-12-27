@@ -11,14 +11,17 @@ html, body, ul, li { margin: 0; padding: 0;}
 h1, h2, ul, li, p { margin: 0; padding: 0; font-size: 1em; line-height: 1.5em;}
 
 /* ustawienia globalne */
-body { font: 0.625em/1.5em tahoma, verdana, arial, sans-serif; background-color: #f3f3f3;}
+body { font: 0.625em/1.5em tahoma, verdana, arial, sans-serif; background-color: #ddd!important;}
 
 br.clear {
     clear: both;
 }
 
 /* szerokość strony */
-.content {width: 960px;}
+.content {width: 100%;
+text-align: center;
+padding: 10px;
+}
 
 /* resetowanie ramek obrazków */
 a img {border: none;}
@@ -295,11 +298,11 @@ a img {border: none;}
 
 /* footer */
 #footer {
-	background: #f3f3f3;
+    background: #ddd;
+    color: #111!important;
 	}
 #footer #footer-image {
-	float: left;
-	margin: 16px 48px 10px 71px;
+
 	}
 #footer ul {
 	list-style: none;
@@ -318,14 +321,13 @@ a img {border: none;}
 	padding: 0 12px;
 	font: 1em verdana, sans-serif;
 	background: url(../images/strzalka-footer.gif) 0 50% no-repeat;
-	color: #686868;
+	color: #111!important;
 	text-decoration: none;
 	}
 #footer #footer-copyright {
 	clear: left;
-	padding: 19px 0 19px 67px;
 	font: bold 1.1em tahoma, verdana, arial, sans-serif;
-	color: #cacaca;
+	color: #111!important;
 	background: url(../images/cien-footer.gif) top left no-repeat;
 	}
 

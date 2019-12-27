@@ -1,6 +1,6 @@
 <?php
 
-class homemodel
+class nieuwe_adressmodel
 {
 	public $query;
 	public $cityArray = Array();
@@ -18,13 +18,6 @@ class homemodel
         $this->__db = registry::register("db");
 	}
 
-    public function getAdress($od, $do, $word){
-		$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` WHERE date BETWEEN '".$od."' AND '".$do."' AND  miasto LIKE '%".$word."%' ");
-        foreach($this->query->fetch_all() as $q){
-            array_push($this->cityArray, $q);
-        }
-       return $this->cityArray;
-    }
 }
 
 ?>

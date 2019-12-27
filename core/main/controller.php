@@ -3,6 +3,7 @@
 Abstract class controller
 {
 	public $params;
+	public $config;
 	public $post;
 	public $template;
 	public $_ActionHooks = Array();

@@ -1,6 +1,6 @@
 <?php
 
-class home extends controller
+class nieuwe_adress extends controller
 {
 	private $__config;
 	private $__router;
@@ -38,20 +38,6 @@ class home extends controller
 		$this->main->translate_helper;
 	}
 
-	public function getAdress()
-	{ 
-		$this->sidebarModal = new homemodel;
-		if(isset($this->__params['POST']['filterByData'])){
-			$od = $this->__params['POST']['vanaf'];
-			$do = $this->__params['POST']['tot'];
-			$word = $this->__params['POST']['word'];
-		} else {
-			$od = '2019-12-01';
-			$do = '2019-12-31';
-			$do = 'a';
-		}
-        return $this->sidebarModal->getAdress($od, $do, $word);
-	}
 }
 
 

@@ -6,7 +6,7 @@
 
 body
 {
-    background-color: #ebedf1;
+    background-color: red!important;
     font-family: Arial;
     font-size: 11px;
     color: #78787b;
@@ -731,7 +731,7 @@ table.customTable tr.legend td
 
 table.customTable tr.content td
 {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ff1111;
     padding: 7px 0 7px 0;
 }
 
