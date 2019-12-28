@@ -17,3 +17,15 @@
     cursor: pointer;
     display: inline-block;
   }
+
+.collapse {
+    display: block!important;
+    margin: 0!important;
+    padding: 0!important;
+}
+
+.navbar-nav {
+    display: block!important;
+    margin: 0!important;
+    padding: 0!important;
+}

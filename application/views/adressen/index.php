@@ -60,7 +60,7 @@ $dOd->modify('-12 month');
 			<input type="date" class="form-control aaa" id="inputPassword2" style="line-height: 20px;" name="tot" value= <?php if(isset($sidebarController->__params['POST']['clear'])){echo $d->format('Y-m-d');} else if(isset($sidebarController->__params['POST']['tot'])){echo $sidebarController->__params['POST']['tot']; } else if(isset($_SESSION['tot'])){echo $_SESSION['tot']; } else {echo $d->format('Y-m-d'); }?>>
 		</div>
         <button type="submit" class="btn btn-danger mb-2">Zoeken</button>
-		<a class="btn btn-danger mb-2" href="nieuwe_adress/index" role="button">Nieuwe</a>
+		<a class="btn btn-danger mb-2" href="nieuwe_adress/nieuwe_adress" role="button">Nieuwe</a>
 		<?php 
 		if(isset($sidebarController->__params['POST']['active']) ):
 				if($sidebarController->__params['POST']['active'] == 0):?>

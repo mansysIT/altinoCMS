@@ -18,6 +18,7 @@ $sidebarController = new sidebar();
 
 <script src="/application/media/js/sidebar.js"></script>
 
+
 </head>
 
 <div class="wrapper">
