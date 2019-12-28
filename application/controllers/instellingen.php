@@ -53,12 +53,26 @@ class instellingen extends controller
 		$this->main->model_helper;
 		$this->main->directory_helper;
 		$this->main->translate_helper;
-    }
-    
-    public function getAdress() 
+	}
+	
+	public function addCity()
 	{
-        $this->sidebarModal = new sidebarmodel;
-        return $this->sidebarModal->getCityName();
+		$this->addHook($this->i18n->languageDetector()); 
+		
+		$this->main->model_helper;
+	}
+
+	public function removeCity()
+	{
+		$this->addHook($this->i18n->languageDetector()); 
+		
+		$this->main->model_helper;
+	}
+    
+    public function getCity() 
+	{
+        $this->sidebarModal = new instellingenmodel;
+        return $this->sidebarModal->stedenlijstGetCityName();
 	}
 
 	

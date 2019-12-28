@@ -33,6 +33,8 @@ class adressen extends controller
 	{
 		$this->addHook($this->i18n->languageDetector());
 		
+		$this->model->administrator;
+
 		$this->main->metatags_helper;
 		$this->main->head_helper;
 		$this->main->loader_helper;
@@ -44,7 +46,7 @@ class adressen extends controller
 
 	public function getAdress()
 	{ 
-		$this->sidebarModal = new adressenmodel();
+		$this->adressenModel = new adressenmodel();
 
 		if (isset($this->__params['POST']['vanaf'])) {
 			$this->od = $this->__params['POST']['vanaf'];
@@ -54,6 +56,7 @@ class adressen extends controller
 				$this->active = $this->__params['POST']['active'];
 			} else if(isset($_SESSION['active'])) {
 				$this->active = $_SESSION['active'];
+				$this->__params['POST']['active'] = $_SESSION['active'];
 			} else {
 				$this->active = 1;		
 			}
@@ -71,22 +74,31 @@ class adressen extends controller
 				$this->active = 1;
 			} 
 		} else {
-			$this->od = '2019-12-01';
-			$this->do = '2019-12-31';
+			$d = new DateTime(date("Y-m-d"));
+			$dOd = new DateTime(date("Y-m-d"));
+			$dOd->modify('-12 month');
+
+			$this->od = $dOd->format('Y-m-d');
+			$this->do = $d->format('Y-m-d');
 			$this->word = '';
 			$this->active = 1;
 		}
 
 		$this->clear();
 
-        return $this->sidebarModal->getAdress($this->od, $this->do, $this->word , $this->active);   
+        return $this->adressenModel->getAdress($this->od, $this->do, $this->word , $this->active);   
 	}
 	
 	private function clear() {
 		if(isset($this->__params['POST']['clear'])){
 			print_r($this->__params['POST']['clear']);
-			$this->od = '01-01-2019';
-			$this->do = '31-12-2019';
+			$d = new DateTime(date("Y-m-d"));
+			
+			$dOd = new DateTime(date("Y-m-d"));
+			$dOd->modify('-12 month');
+
+			$this->od = $dOd->format('Y-m-d');
+			$this->do = $d->format('Y-m-d');
 			$this->word = '';
 			$this->active = 1;
 

@@ -18,22 +18,28 @@ class instellingenmodel
         $this->__db = registry::register("db");
 	}
 	
-	public function getLoginPanelTitle()
-	{
-		return (isset($_SESSION[$this->config->default_session_auth_var]) && !empty($_SESSION[$this->config->default_session_auth_var])) ? $_SESSION[$this->config->default_session_auth_var] : "Panel logowania";
-	}
-	
-	public function addLogoutBtn()
-	{
-		return (isset($_SESSION[$this->config->default_session_auth_var]) && !empty($_SESSION[$this->config->default_session_auth_var])) ? "<li><a id=\"logged\" href=\"wylogowanie/index\">Wyloguj</a></li>" : "";
-	}
-
-    public function getAdress($od, $do, $word, $active){
-		$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
+	public function stedenlijstGetCityName(){
+        $this->query = $this->__db->querymy("SELECT city FROM bouw_city");
         foreach($this->query->fetch_all() as $q){
             array_push($this->cityArray, $q);
         }
        return $this->cityArray;
+	}
+	
+	public function stedenlijstAddCity(){
+		if(isset($this->__params['POST']['addCity'])){
+			if(isset($this->__params['POST']['cityname']) && $this->__params['POST']['cityname'] != null) {
+				$this->__db->execute("INSERT INTO bouw_city (city) VALUES ('".$this->__params['POST']['cityname']."')");
+				header("Location: ".SERVER_ADDRESS."instellingen/stedenlijst");
+			}
+		}
+	}
+	
+	public function stedenlijstRemoveCity(){
+		if(isset($this->__params['POST']['cityName']) && $this->__params['POST']['cityName'] != null) {
+			$this->__db->execute("DELETE FROM bouw_city WHERE city = '".$this->__params['POST']['cityName']."'");
+			header("Location: ".SERVER_ADDRESS."instellingen/stedenlijst");
+		}
     }
 }
 

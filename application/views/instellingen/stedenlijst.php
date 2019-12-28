@@ -30,20 +30,17 @@ $sidebarController = new instellingen(); ?>
     <?=module_load('instellingenmenu')?>
     <div class="maincontainer">
         <ul class="list-group list-group-flush">
-        <form class="form-inline" method="post" action="">
+        <form class="form-inline" method="post" action="instellingen/addCity">
 
             <div class="form-group mx-sm-3 mb-2">
             <label class="sr-only">Stad Name</label>
                 <input type="text" class="form-control" id="inputPassword2" name="cityname" placeholder="Stad Name">
             </div>
-            <button type="submit" class="btn btn-danger mb-2">Toevoegen</button>
-
+            <button type="submit" class="btn btn-danger mb-2" name="addCity">Toevoegen</button>
         </form>
-        <li class="list-group-item">Cras justo odio <span class=" glyphicon glyphicon-remove-circle" aria-hidden="true"></span></li>
-        <li class="list-group-item">Cras justo odio <span class=" glyphicon glyphicon-remove-circle" aria-hidden="true"></span></li>
-        <li class="list-group-item">Cras justo odio <span class=" glyphicon glyphicon-remove-circle" aria-hidden="true"></span></li>
-        <li class="list-group-item">Cras justo odio <span class=" glyphicon glyphicon-remove-circle" aria-hidden="true"></span></li>
-        <li class="list-group-item">Cras justo odio <span class=" glyphicon glyphicon-remove-circle" aria-hidden="true"></span></li>
+        <?php foreach($sidebarController->getCity() as $row): ?>
+        <li class="list-group-item"><?php echo $row[0]; ?><form style="width: 10%; float: right; padding: 0;" class="form-inline" method="post" action="instellingen/removeCity"><button class="btnCityRemove" type="submit" name="cityName" value="<?php echo $row[0]; ?>"><span  class=" glyphicon glyphicon-remove-circle" aria-hidden="true"></span></button></form></li>
+        <?php endforeach; ?>
         </ul>
     </div>
 	<?=module_load('FOOTER')?>
