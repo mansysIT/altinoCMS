@@ -30,12 +30,9 @@ $sidebarController = new sidebar();
 
         <ul class="list-unstyled components">
             <li>
-                <a href="#">Dashboard</a>
+                <a href="home/index">Dashboard</a>
             </li>
             <li>
-                <a href="incomsten/index">Dashboard</a>
-            </li>
-            <li class="active">
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Adressen</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li>
@@ -50,7 +47,7 @@ $sidebarController = new sidebar();
                 </ul>
 
             <li>
-                <a href="instellingen/index">Instellingen</a>
+                <a href="instellingen/stedenlijst">Instellingen</a>
             </li>
             </li>
 

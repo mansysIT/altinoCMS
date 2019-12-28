@@ -22,7 +22,14 @@
 <?=icon_load("pp_fav.ico")?>
 <?=include_once('adressen.php');
 
-$sidebarController = new adressen(); ?>
+$sidebarController = new adressen(); 
+$adress = $sidebarController->getAdress();
+$d = new DateTime(date("Y-m-d"));
+			
+$dOd = new DateTime(date("Y-m-d"));
+$dOd->modify('-12 month');
+
+?>
 
 <script src="/application/media/js/table.js"></script>
 
@@ -46,17 +53,28 @@ $sidebarController = new adressen(); ?>
 		</div>
 		<div class="form-group mx-sm-3 mb-2">
 			<label class="sr-only">Vanaf</label>
-			<input type="date" class="form-control" id="inputPassword2" style="line-height: 20px;" name="vanaf" value=<?php if(isset($sidebarController->__params['POST']['clear'])){echo '2019-01-01';} else if(isset($sidebarController->__params['POST']['vanaf'])){echo $sidebarController->__params['POST']['vanaf']; } else if(isset($_SESSION['vanaf'])){echo $_SESSION['vanaf']; } else {echo '2019-01-01'; }?>>
+			<input type="date" class="form-control" id="inputPassword2" style="line-height: 20px;" name="vanaf" value=<?php if(isset($sidebarController->__params['POST']['clear'])){echo $dOd->format('Y-m-d');} else if(isset($sidebarController->__params['POST']['vanaf'])){echo $sidebarController->__params['POST']['vanaf']; } else if(isset($_SESSION['vanaf'])){echo $_SESSION['vanaf']; } else {echo $dOd->format('Y-m-d'); }?>>
 		</div>
 		<div class="form-group mx-sm-3 mb-2">
 			<label class="sr-only">Tot</label>
-			<input type="date" class="form-control aaa" id="inputPassword2" style="line-height: 20px;" name="tot" value= <?php if(isset($sidebarController->__params['POST']['clear'])){echo '2019-12-31';} else if(isset($sidebarController->__params['POST']['tot'])){echo $sidebarController->__params['POST']['tot']; } else if(isset($_SESSION['tot'])){echo $_SESSION['tot']; } else {echo '2019-12-31'; }?>>
+			<input type="date" class="form-control aaa" id="inputPassword2" style="line-height: 20px;" name="tot" value= <?php if(isset($sidebarController->__params['POST']['clear'])){echo $d->format('Y-m-d');} else if(isset($sidebarController->__params['POST']['tot'])){echo $sidebarController->__params['POST']['tot']; } else if(isset($_SESSION['tot'])){echo $_SESSION['tot']; } else {echo $d->format('Y-m-d'); }?>>
 		</div>
         <button type="submit" class="btn btn-danger mb-2">Zoeken</button>
 		<a class="btn btn-danger mb-2" href="nieuwe_adress/index" role="button">Nieuwe</a>
-		<?php if(isset($sidebarController->__params['POST']['active']) && $sidebarController->__params['POST']['active'] == 0):?>
-			<button type="submit" class="btn btn-danger mb-2" name="active" value="1">Aactive</button>
-		<?php else: ?>
+		<?php 
+		if(isset($sidebarController->__params['POST']['active']) ):
+				if($sidebarController->__params['POST']['active'] == 0):?>
+				<button type="submit" class="btn btn-danger mb-2" name="active" value="1">Aactive</button>
+			<?php else: ?>
+				<button type="submit" class="btn btn-danger mb-2" name="active" value="0">Niet active</button>
+			<?php endif; 
+		elseif(isset($_SESSION['active'])): 
+			if($_SESSION['active'] == 0):?>
+				<button type="submit" class="btn btn-danger mb-2" name="active" value="1">Aactive</button>
+			<?php else: ?>
+				<button type="submit" class="btn btn-danger mb-2" name="active" value="0">Niet active</button>
+			<?php endif; 
+		else: ?>
 			<button type="submit" class="btn btn-danger mb-2" name="active" value="0">Niet active</button>
 		<?php endif; ?>
 	</form>
@@ -72,10 +90,11 @@ $sidebarController = new adressen(); ?>
 					<th onclick="sortTable(4)">INKOMSTEN</th>
 					<th onclick="sortTable(5)">UITGAVEN</th>
 					<th onclick="sortTable(6)">WINST</th>
+					<th onclick="sortTable(7)">ACTIVE</th>
 				</tr>
 		</thead>
 		<tbody>
-			<?php foreach($sidebarController->getAdress() as $row): ?>
+			<?php foreach($adress as $row): ?>
 				<tr>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[0]; ?></a></td>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[13]; ?></a></td>
@@ -84,7 +103,11 @@ $sidebarController = new adressen(); ?>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[4]; ?></a></td>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[5]; ?></a></td>
 					<td><a style="color: #000!important;" href="#"><?php echo $row[6]; ?></a></td>
-					<td><span class="glyphicon glyphicon-search" aria-hidden="true"></span></td>
+					<?php if($row[11] == 1): ?>
+						<td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+					<?php  else: ?>
+						<td><span class=" glyphicon glyphicon-remove " aria-hidden="true"></span></td>
+					<?php endif; ?>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
