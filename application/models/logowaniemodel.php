@@ -44,11 +44,11 @@ class logowaniemodel
 			{
 				if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))
 				{
-					header("Location: ".SERVER_ADDRESS."home/index");	
+					header("Location: ".SERVER_ADDRESS."administrator/home/index");	
 				}
 				else
 				{
-					header("Location: ".SERVER_ADDRESS."home/index");
+					header("Location: ".SERVER_ADDRESS."administrator/home/index");
 				}
 				
 			}

@@ -22,10 +22,9 @@ class sidebar extends controller
 
 	public function main() { }
 
-	public function getAdress()
+	public function index()
 	{
-        $this->sidebarModal = new sidebarmodel();
-        return $this->sidebarModal->getCityName();
+		$this->main->model_helper;
 	}
 }
 
