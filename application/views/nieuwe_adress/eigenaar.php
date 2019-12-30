@@ -95,8 +95,7 @@
                 <div class="RekeningInside">
                     <p class="rekaningText">Rekening</p>
                     <input type="text" name="Rekening" value='' >
-				</div> 
-				<br>          
+                </div>           
             </div>
             <div class="right">
 

@@ -32,26 +32,13 @@
     <?=module_load('nieuweadressmenu')?>
     <div class="maincontainer">
         <div class="info">													
-            <div class="infoUp">
-            <form action="nieuwe_adress/savenieuwe_adress" method="post">								
+            <div class="infoUp">										
                 <p class="info pFirstChild">Adres
-                <input class="inputNewHuurder" type="text" name="adres" value='' >
+                <input class="inputNewHuurder" type="text" name="Adres" value='' >
                 </p>
                 <p class="info p">Postcode 
-                <input class="inputNewHuurder" type="text" name="postcode" value=''>
+                <input class="inputNewHuurder" type="text" name="Postcode" value=''>
                 </p>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Example select</label>
-                    <select name="city" class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-danger mb-2" name="adresbtn">Toevoegen</button>
-            </form>		
             </div>										
         </div>
         
