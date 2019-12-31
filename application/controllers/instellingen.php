@@ -102,17 +102,5 @@ class instellingen extends controller
 		
 		$this->main->model_helper;
 	}
-    
-    public function getCity() 
-	{
-        $this->sidebarModal = new instellingenmodel;
-        return $this->sidebarModal->stedenlijstGetCityName();
-	}
-
-	
 }
-
-
-
-
 ?>

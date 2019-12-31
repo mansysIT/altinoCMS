@@ -31,6 +31,9 @@ class administratormodel
 			{
 				
 			} else {
+				if(isset($_SESSION[$this->__config->default_session_auth_var]))
+				header("Location: ".SERVER_ADDRESS."user/index");
+				else
 				header("Location: ".SERVER_ADDRESS."administrator/administrator/index");
 			}
 		}

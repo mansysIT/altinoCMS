@@ -7,7 +7,7 @@
     <nav id="sidebar">
         <div class="sidebar-header">
         <a class="btn btn-danger" href="wylogowanie/index" role="button">Wyloguj</a>
-            <h3>Bootstrap Sidebar</h3>
+            <h3 style="text-align: center">Aguiar Bouw</h3>
         </div>
 
         <ul class="list-unstyled components">
@@ -23,7 +23,8 @@
                     </li>
                     <?php foreach($sidebarController as $row): ?>
                     <li>
-                        <a href="#"><?php echo $row[0]; ?></a>
+                    <?php 
+                    echo" <a href='administrator/administrator/articles/view/$row[0]'> $row[0]</a>" ?>
                     </li>
                     <?php endforeach; ?>
 

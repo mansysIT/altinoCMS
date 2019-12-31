@@ -1,11 +1,15 @@
 <?php
 
-class home extends controller
+class user extends controller
 {
 	private $__config;
 	private $__router;
-    private $__params;
-    private $__db;
+    public $__params;
+	private $__db;
+	public $od;
+	public $do;
+	public $word;
+	public $active;
 
 	public function __construct()
 	{
@@ -27,22 +31,10 @@ class home extends controller
 	
 	public function index()
 	{
-
-		$this->model->administrator;
-
-		$this->addHook($this->i18n->languageDetector());
-		
-		$this->main->metatags_helper;
-		$this->main->head_helper;
-		$this->main->loader_helper;
-		$this->main->module_helper;
-		$this->main->model_helper;
 		$this->main->directory_helper;
-		$this->main->translate_helper;
 	}
+
+	
 }
-
-
-
 
 ?>

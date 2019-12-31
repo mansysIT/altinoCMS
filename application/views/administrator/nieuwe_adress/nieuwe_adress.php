@@ -5,7 +5,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
+<?php $sidebarController=model_load('nieuwe_adressmodel', 'getCityName', '')?>
 
 <?=add_metatags()?>
 
@@ -36,29 +36,102 @@
     <div class="Mycontainer">
     <?=module_load('nieuweadressmenu')?>
     <div class="maincontainer">
-        <div class="info">													
-            <div class="infoUp">
-            <form action="nieuwe_adress/savenieuwe_adress" method="post">								
-                <p class="info pFirstChild">Adres
-                <input class="inputNewHuurder" type="text" name="adres" value='' >
-                </p>
-                <p class="info p">Postcode 
-                <input class="inputNewHuurder" type="text" name="postcode" value=''>
-                </p>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Example select</label>
-                    <select name="city" class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    </select>
+            <form action="administrator/nieuwe_adress/savenieuwe_adress" method="post">
+            <div class="bottomHolder">
+            <div class="rekaning">
+				<div class="RekeningInside">
+                    <p class="rekaningText">Adres</p>
+                    <input class="inputNewHuurder" type="text" name="adres" value='' >
                 </div>
-                <button type="submit" class="btn btn-danger mb-2" name="adresbtn">Toevoegen</button>
-            </form>		
-            </div>										
+                <div class="RekeningInside">
+                    <p class="rekaningText">Postcode</p>
+                    <input class="inputNewHuurder" type="text" name="postcode" value=''>
+                </div>       
+                <div class="RekeningInside">
+                    <p class="rekaningText">City</p>
+                    <select name="city" class="form-control" id="exampleFormControlSelect1">
+                    <?php foreach($sidebarController as $row): ?>
+                    <li>
+                    <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
+                    </li>
+                    <?php endforeach; ?>
+                    </select>
+                </div>      
+            </div>
+            <div class="right">
+
+
+            </div>
+            
         </div>
+        <div class="info">										
+            <div class="infoUp" id="nieuweadressprivate">	
+				<button type="button" id="privatetoogler" style="margin-top: 1%; margin-left: 0.8%" class="btn btn-danger mb-2">Private</button>									
+                <p class="info pFirstChild">Naam
+                <input class="inputNewHuurder" type="text" name="private_naam" value='' >
+                </p>
+                <p class="info p">Achternaam 
+                <input class="inputNewHuurder" type="text" name="private_achternaam" value=''>
+                </p>
+                <p class="info p">Nr en serie van ID-kaart
+                <input class="inputNewHuurder" type="text" name="private_id_kaart" value='' >
+                </p>
+                <p class="info p">Telefoon  
+                <input class="inputNewHuurder" type="text" name="tel" value='' >
+                </p>
+                <p class="info p">Geboortedatum  
+                <input class="inputNewHuurder" sty type="date" name="private_geboortedatum" value='' >
+                </p>
+			</div>
+			<div class="active" id="nieuweadressbedrijf">
+                <div class="infoUp">	
+				<button type="button" id="bedrijftoogler" style="margin-top: 1%; margin-left: 0.8%" class="btn btn-danger mb-2">Bedrijf</button>
+                    <p class="info pFirstChildfirst">Bedrijf
+                    <input class="inputNewHuurderfirst" type="text" name="bedrijf_bedrijf" value='' >
+                    </p>
+                    <p class="info p">Adres 
+                    <input class="inputNewHuurder" type="text" name="bedrijf_adres" value='' >
+                    </p>
+                    <p class="info p">Post code
+                    <input class="inputNewHuurder" type="text" name="bedrijf_postcode" value='' >
+                    </p>
+                    <p class="info p">Stad 
+                    <input class="inputNewHuurder" type="text" name="bedrijf_stad" value='' >
+                    </p>
+                </div>
+                <div class="infoDown">
+                    <p class="info pFirstChild">KvK 
+                    <input class="inputNewHuurder" type="text" name="bedrijf_kvk" value='' >
+                    </p>
+                    <p class="info p">BTW  
+                    <input class="inputNewHuurder" type="text" name="bedrijf_btw" value='' >
+                    </p>
+                    <p class="info p">Tel 
+                    <input class="inputNewHuurder" type="text" name="tel1" value='' >
+                    </p>
+				</div>
+			</div>									
+		</div>
+		<div class="bottomHolder">
+            <div class="rekaning">
+				<div class="RekeningInside">
+                    <p class="rekaningText">Email</p>
+                    <input type="text" name="email" value='' >
+                </div>
+                <div class="RekeningInside">
+                    <p class="rekaningText">Rekening</p>
+                    <input type="text" name="rekening" value='' >
+                </div>           
+            </div>
+            <div class="right">
+
+
+                </div>
+        </div>							
+
+                <button type="submit" class="btn btn-danger mb-2" style="margin-left: 0.8%;" name="adresbtn">Toevoegen</button>
+            </form>		
+
         
        
     </div>

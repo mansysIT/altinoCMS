@@ -1,4 +1,4 @@
-.table-responsive          { overflow: scroll; height: 200px; }
+.table-responsive          { overflow: scroll; }
 .table-responsive thead th { 
     position: sticky; 
     top: 0; 
@@ -20,7 +20,6 @@ tr.table-responsive thead td {
     overflow: scroll!important;
     margin-top: 50px;
     margin-bottom: 50px;
-    max-height: 500px;
 }
 
 .table-responsive input {
@@ -60,10 +59,12 @@ tr.table-responsive thead td {
     margin-left: 5px;
 }
 
+
+
 @media only screen and (max-width: 768px) {
     .table-responsive {
         margin: 0;
-        max-height: 300px;
+        max-height: 250px;
     }
 
     .form-inline {
@@ -74,11 +75,16 @@ tr.table-responsive thead td {
     }
 
     .form-inline .form-group {
-        
+        width: 100%;
     }
 
     .form-inline .btn-danger {
         margin-left: 0;
         margin-bottom: 5px;
+    }
+
+    .tableholder .btn-danger{
+        width: 99%;
+        margin: 1px;
     }
 }

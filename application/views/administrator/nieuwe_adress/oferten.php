@@ -32,18 +32,7 @@
     <div class="Mycontainer">
     <?=module_load('nieuweadressmenu')?>
     <div class="maincontainer">
-        <div class="info">													
-            <div class="infoUp">										
-                <p class="info pFirstChild">Adres
-                <input class="inputNewHuurder" type="text" name="Adres" value='' >
-                </p>
-                <p class="info p">Postcode 
-                <input class="inputNewHuurder" type="text" name="Postcode" value=''>
-                </p>
-            </div>										
-        </div>
         
-       
     </div>
 	<?=module_load('FOOTER')?>
 	</div>

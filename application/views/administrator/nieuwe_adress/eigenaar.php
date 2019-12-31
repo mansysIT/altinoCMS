@@ -95,9 +95,9 @@
 
 
                 </div>
-            </div>
-
         </div>
+
+    </div>
 	<?=module_load('FOOTER')?>
 	</div>
 </body>

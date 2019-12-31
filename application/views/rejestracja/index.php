@@ -19,10 +19,6 @@
 
 <body>
  
-<div id="header">
-    <?=module_load('LOGINPANEL')?>
-    <?=module_load('MENU')?>
-</div>
 
 <div id="slogan" class="artykuly">
     <div class="content">
