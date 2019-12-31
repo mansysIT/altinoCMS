@@ -27,6 +27,8 @@ class nieuwe_adress extends controller
 	
 	public function nieuwe_adress()
 	{
+		$this->model->administrator;
+
 		$this->addHook($this->i18n->languageDetector());
 		
 		$this->main->metatags_helper;
@@ -40,6 +42,8 @@ class nieuwe_adress extends controller
 
 	public function eigenaar()
 	{
+		$this->model->administrator;
+
 		$this->addHook($this->i18n->languageDetector());
 		
 		$this->main->metatags_helper;
@@ -53,6 +57,8 @@ class nieuwe_adress extends controller
 
 	public function oferten()
 	{
+		$this->model->administrator;
+
 		$this->addHook($this->i18n->languageDetector());
 		
 		$this->main->metatags_helper;

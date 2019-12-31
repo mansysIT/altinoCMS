@@ -27,6 +27,9 @@ class home extends controller
 	
 	public function index()
 	{
+
+		$this->model->administrator;
+
 		$this->addHook($this->i18n->languageDetector());
 		
 		$this->main->metatags_helper;

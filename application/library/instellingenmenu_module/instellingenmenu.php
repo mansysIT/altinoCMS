@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 function ActiveClassIfRequestMatches($requestUri)
 {
@@ -10,19 +10,14 @@ function ActiveClassIfRequestMatches($requestUri)
 
 ?>
 
-<?=include_once('sidebar.php');
-$sidebarController = new sidebar();
-?>
-
-
 </head>
   <nav class="navbar navbar-dark bg-primary">
     <div class="container-fluid">
-      <div id="navbar" class="navbar-collapse collapse">
+      <div id="navbar" class="navbar-collapse collapseinsteligen">
         <ul class="nav navbar-nav">
-          <li><a <?php ActiveClassIfRequestMatches('stedenlijst')?> href="instellingen/stedenlijst">Stedenlijst</a></li>
-          <li><a <?php ActiveClassIfRequestMatches('example1')?> href="instellingen/example1">Example1</a></li>
-          <li><a <?php ActiveClassIfRequestMatches('example2')?> href="instellingen/example2">Example2</a></li>
+          <li><a <?php ActiveClassIfRequestMatches('stedenlijst')?> href="administrator/instellingen/stedenlijst">Stedenlijst</a></li>
+          <li><a <?php ActiveClassIfRequestMatches('example1')?> href="administrator/instellingen/example1">Example1</a></li>
+          <li><a <?php ActiveClassIfRequestMatches('example2')?> href="administrator/instellingen/example2">Example2</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
 

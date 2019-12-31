@@ -151,6 +151,10 @@ a.article:hover {
     margin-right: auto;
 }
 
+.wrapper .mb-2 {
+    margin-bottom: 0!important;
+}
+
 
 
 /* ---------------------------------------------------

@@ -79,9 +79,5 @@
         margin: 0;
         width: 100%;
     }
-    .collapse {
-        display: block!important;
-        margin: 0;
-        padding: 0;
-    }
+
 }

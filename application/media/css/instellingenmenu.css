@@ -1,5 +1,5 @@
 .stedenlijstholder .bg-primary {
-    background-color: #ddd;
+    background-color: #ddd!important;
     color: #000!important;
     padding: 0;
 }
@@ -18,14 +18,14 @@
     display: inline-block;
   }
 
-.collapse {
-    display: block!important;
+
+.navbar-nav {
+    flex-direction: row!important;
     margin: 0!important;
     padding: 0!important;
 }
 
-.navbar-nav {
-    display: block!important;
-    margin: 0!important;
-    padding: 0!important;
+.navbar-nav a {
+    padding: 10px;
+    display: block;
 }

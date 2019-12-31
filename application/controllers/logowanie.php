@@ -14,6 +14,7 @@ class logowanie extends controller
 	
 	public function index()
 	{
+		$this->model->administrator;
 		$this->main->model_helper;
 	}
 }

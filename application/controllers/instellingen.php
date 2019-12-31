@@ -31,6 +31,8 @@ class instellingen extends controller
 	
 	public function index()
 	{
+		$this->model->administrator;
+
 		$this->addHook($this->i18n->languageDetector());
 		
 		$this->main->metatags_helper;
@@ -44,6 +46,8 @@ class instellingen extends controller
 
     public function stedenlijst()
 	{
+		$this->model->administrator;
+
 		$this->addHook($this->i18n->languageDetector());
 		
 		$this->main->metatags_helper;
@@ -57,6 +61,8 @@ class instellingen extends controller
 
 	public function example1()
 	{
+		$this->model->administrator;
+
 		$this->addHook($this->i18n->languageDetector());
 		
 		$this->main->metatags_helper;
@@ -70,6 +76,8 @@ class instellingen extends controller
 
 	public function example2()
 	{
+		$this->model->administrator;
+
 		$this->addHook($this->i18n->languageDetector());
 		
 		$this->main->metatags_helper;

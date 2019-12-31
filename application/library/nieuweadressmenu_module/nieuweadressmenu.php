@@ -14,11 +14,11 @@ function ActiveClassIfRequestMatches($requestUri)
 
 <nav class="navbar navbar-dark bg-primary">
     <div class="container-fluid">
-      <div id="navbar" class="navbar-collapse collapse" id="navbarSupportedContent">
+      <div id="navbar" class="navbar-collapse" id="navbarSupportedContent">
         <ul class="nav navbar-nav">
-          <li><a <?php ActiveClassIfRequestMatches('nieuwe_adress')?> href="nieuwe_adress/nieuwe_adress">NIEUWE ADRESS</a></li>
-          <li><a <?php ActiveClassIfRequestMatches('eigenaar')?> href="nieuwe_adress/eigenaar">EIGENAAR</a></li>
-          <li><a <?php ActiveClassIfRequestMatches('oferten')?> href="nieuwe_adress/oferten">OFERTEN</a></li>
+          <li><a <?php ActiveClassIfRequestMatches('nieuwe_adress')?> href="administrator/nieuwe_adress/nieuwe_adress">NIEUWE ADRESS</a></li>
+          <li><a <?php ActiveClassIfRequestMatches('eigenaar')?> href="administrator/nieuwe_adress/eigenaar">EIGENAAR</a></li>
+          <li><a <?php ActiveClassIfRequestMatches('oferten')?> href="administrator/nieuwe_adress/oferten">OFERTEN</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
 
