@@ -7,7 +7,7 @@ class adressenmodel
 
 	private $__config;
 	private $__router;
-    private $__params;
+    public $__params;
     private $__db;
 	
 	public function __construct()
@@ -15,7 +15,9 @@ class adressenmodel
 		$this->__config = registry::register("config");
 		$this->__router = registry::register("router");
         $this->__params = $this->__router->getParams();
-        $this->__db = registry::register("db");
+		$this->__db = registry::register("db");
+		
+		$this->clearActive();
 	}
 	
 	public function getLoginPanelTitle()
@@ -69,8 +71,12 @@ class adressenmodel
 		}
 
 		$this->clear();
+		if(isset($this->__params[2])){
+			return $this->adressenModel->adres($this->od, $this->do, $this->word , $this->active, $this->__params[2]);   
+		} else {
+			return $this->adressenModel->adres($this->od, $this->do, $this->word , $this->active, null);   
+		}
 
-        return $this->adressenModel->adres($this->od, $this->do, $this->word , $this->active);   
 	}
 	
 	private function clear() {
@@ -97,14 +103,119 @@ class adressenmodel
 		}
 	}
 
-    public function adres($od, $do, $word, $active){
+	private function clearActive(){
+		if(!isset($this->__params['POST']['clear']) && !isset($this->__params['POST']['zoeken']) && !isset($this->__params['POST']['active']))
+		{
+			unset($this->__params['POST']['active']);
+			unset($_SESSION['active']);
+		}
+
+	}
+
+    public function adres($od, $do, $word, $active, $city_id = null){
 		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
-		$this->query = $this->__db->querymy("SELECT bouw_adresy.id, bouw_adresy.adres, bouw_adresy.active, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
+		if($city_id != null){
+			$this->query = $this->__db->querymy("SELECT bouw_adresy.id, bouw_adresy.adres, bouw_adresy.active, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE active = ".$active." AND  bouw_city.city LIKE '%".$word."%' AND bouw_adresy.city = $city_id ");
+		} else {
+			$this->query = $this->__db->querymy("SELECT bouw_adresy.id, bouw_adresy.adres, bouw_adresy.active, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE active = ".$active." AND  bouw_city.city LIKE '%".$word."%'");
+		}
+		
         foreach($this->query->fetch_all() as $q){
             array_push($this->cityArray, $q);
         }
        return $this->cityArray;
-    }
+	}
+	
+	public function getAdressById() {
+		$data = $this->__db->execute("SELECT *, bouw_adresy.city AS adres_city_id FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE id = ".$this->__params[1]);
+
+		return $data[0];
+	}
+
+	public function adresMenuGetUrl() {
+		if(isset($this->__params[1]))
+		return $this->__params[1];
+	}
+
+	public function adresMenuPageName() {
+		if(isset($this->__params[0]))
+		return $this->__params[0];
+	}
+
+	public function getAllFilesInDirectory() {
+		$dir = "application/storage/adres/".$this->__params[1];
+		$files = scandir($dir);
+		$foldersArray = array();
+		$filesArray = array();
+		foreach($files as $file)
+		{
+			if (strpos($file, '.') == null) {	
+				if (strpos($file, '..') == null) {
+					array_push($foldersArray, $file);
+				}
+			} else {
+				array_push($filesArray, $file);
+			}
+		}
+		return array($foldersArray, $filesArray);
+	}
+
+	public function createNewFolder() {
+		if(isset($this->__params['POST']['addfolder']) && isset($this->__params['POST']['foldername']) && $this->__params['POST']['foldername'] != null) {
+			$file = $this->__params['POST']['foldername'];
+			
+			if(!is_dir('application/storage/adres/'.$this->__params[1].'/'.$file.'')){
+				mkdir('application/storage/adres/'.$this->__params[1].'/'.$file.'', 0777);
+			}
+		}
+	}
+
+	public function remove() {
+		if(isset($this->__params['POST']['removefolder'])) {
+			$file = $this->__params['POST']['removefolder'];
+			if(is_dir('application/storage/adres/'.$this->__params[1].'/'.$file.'')){
+				print_r('is');
+				rmdir('application/storage/adres/'.$this->__params[1].'/'.$file.'');
+			}
+		}
+
+		if(isset($this->__params['POST']['removefile'])) {
+			$file = $this->__params['POST']['removefile'];
+			print_r($file);
+			if(file_exists('application/storage/adres/'.$this->__params[1].'/'.$file.'')){
+				print_r('isFile');
+				unlink('application/storage/adres/'.$this->__params[1].'/'.$file.'');
+			}
+		}
+	}
+
+	public function uploadFile() {
+		$target_dir = "application/storage/adres/".$this->__params[1]."/";
+		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+		$uploadOk = 1;
+		
+		// Check if file already exists
+		if (file_exists($target_file)) {
+			echo "Sorry, file already exists.";
+			$uploadOk = 0;
+		}
+		// Check file size
+		if ($_FILES["fileToUpload"]["size"] > 500000) {
+			echo "Sorry, your file is too large.";
+			$uploadOk = 0;
+		}
+		// Check if $uploadOk is set to 0 by an error
+		if ($uploadOk == 0) {
+			echo "Sorry, your file was not uploaded.";
+		// if everything is ok, try to upload file
+		} else {
+			if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+				echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+			} else {
+				echo "Sorry, there was an error uploading your file.";
+			}
+		}
+	}
 }
 
 ?>

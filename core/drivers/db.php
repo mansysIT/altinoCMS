@@ -39,6 +39,10 @@ class db
 		}
 	}
 
+	public function getLastInsertedId() {
+		return mysqli_insert_id($this->connect);
+	}
+
 	public function querymy($sql)
 	{
 		$query_arr = explode(" ", trim($sql));

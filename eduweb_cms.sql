@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 30 Gru 2019, 09:26
--- Wersja serwera: 10.1.38-MariaDB
--- Wersja PHP: 5.6.40
+-- Czas generowania: 02 Sty 2020, 14:32
+-- Wersja serwera: 10.4.11-MariaDB
+-- Wersja PHP: 7.2.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -43,7 +43,8 @@ CREATE TABLE `administrator` (
 
 INSERT INTO `administrator` (`id`, `imie`, `nazwisko`, `nick`, `pass`, `privileges`) VALUES
 (1, 'Mateusz', 'Manaj', 'administrator', '9056c0bbcb4075ff82dd99efe295922f', 'admin'),
-(2, 'Mateusz', 'Manaj', 'user', '24c9e15e52afc47c225b757e7bee1f9d', 'user');
+(2, 'Mateusz', 'Manaj', 'user', '24c9e15e52afc47c225b757e7bee1f9d', 'user'),
+(5, 'test', 'test', 'test', '202cb962ac59075b964b07152d234b70', 'admin');
 
 -- --------------------------------------------------------
 
@@ -58,8 +59,8 @@ CREATE TABLE `bouw_adresy` (
   `postcode` text NOT NULL,
   `private_naam` text NOT NULL,
   `private_achternaam` text NOT NULL,
-  `najemca_imie` text NOT NULL,
-  `private_id-kaart` text NOT NULL,
+  `private_id_kaart` text NOT NULL,
+  `private_tel` text NOT NULL,
   `private_geboortedatum` date NOT NULL,
   `bedrijf_bedrijf` text NOT NULL,
   `bedrijf_adres` text NOT NULL,
@@ -67,6 +68,7 @@ CREATE TABLE `bouw_adresy` (
   `bedrijf_stad` text NOT NULL,
   `bedrijf_kvk` text NOT NULL,
   `bedrijf_btw` text NOT NULL,
+  `bedrijf_tel` text NOT NULL,
   `tel` text NOT NULL,
   `email` text NOT NULL,
   `rekening` text NOT NULL,
@@ -77,16 +79,30 @@ CREATE TABLE `bouw_adresy` (
 -- Zrzut danych tabeli `bouw_adresy`
 --
 
-INSERT INTO `bouw_adresy` (`id`, `city`, `adres`, `postcode`, `private_naam`, `private_achternaam`, `najemca_imie`, `private_id-kaart`, `private_geboortedatum`, `bedrijf_bedrijf`, `bedrijf_adres`, `bedrijf_postcode`, `bedrijf_stad`, `bedrijf_kvk`, `bedrijf_btw`, `tel`, `email`, `rekening`, `active`) VALUES
-(1, 1, 'test1', '100', '200', '300', 'imieaaa', 'nazwiskoaaa', '0000-00-00', 'kod', '2019-12-01', '', '', '', '', '', '', '', 1),
-(2, 2, 'test2', '300', '150', '100', 'imiebbb', 'nazwiskobb', '0000-00-00', 'kod2', '2019-12-05', '', '', '', '', '', '', '', 1),
-(3, 3, 'adres3', '111', '222', '333', 'imie3', 'nazwisko3', '0000-00-00', 'kod3', '2019-12-14', '', '', '', '', '', '', '', 0),
-(4, 4, 'adres4', '11', '22', '33', 'imie4', 'nazwisko4', '0000-00-00', 'kod4', '2019-12-08', '', '', '', '', '', '', '', 0),
-(5, 5, 'adres5', '1111', '2222', '3333', 'imie5', 'nazwisko5', '0000-00-00', 'kod5', '2019-12-16', '', '', '', '', '', '', '', 0),
-(6, 6, 'adres6', '1', '2', '3', 'imie6', 'nazwisko6', '0000-00-00', 'kod6', '2019-12-02', '', '', '', '', '', '', '', 0),
-(7, 0, 'testsql', 'testsql', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', 0),
-(8, 4, '', 'test1', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', 0),
-(9, 5, 'test10', 'test10', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', 0);
+INSERT INTO `bouw_adresy` (`id`, `city`, `adres`, `postcode`, `private_naam`, `private_achternaam`, `private_id_kaart`, `private_tel`, `private_geboortedatum`, `bedrijf_bedrijf`, `bedrijf_adres`, `bedrijf_postcode`, `bedrijf_stad`, `bedrijf_kvk`, `bedrijf_btw`, `bedrijf_tel`, `tel`, `email`, `rekening`, `active`) VALUES
+(1, 1, 'test1', '100', '200', '300', 'nazwiskoaaa', '', '0000-00-00', 'kod', '2019-12-01', '', '', '', '', '', '', '', '', 1),
+(2, 2, 'test2', '300', '150', '100', 'nazwiskobb', '', '0000-00-00', 'kod2', '2019-12-05', '', '', '', '', '', '', '', '', 1),
+(3, 3, 'adres3', '111', '222', '333', 'nazwisko3', '', '0000-00-00', 'kod3', '2019-12-14', '', '', '', '', '', '', '', '', 0),
+(4, 4, 'adres4', '11', '22', '33', 'nazwisko4', '', '0000-00-00', 'kod4', '2019-12-08', '', '', '', '', '', '', '', '', 0),
+(5, 5, 'adres5', '1111', '2222', '3333', 'nazwisko5', '', '0000-00-00', 'kod5', '2019-12-16', '', '', '', '', '', '', '', '', 0),
+(6, 6, 'adres6', '1', '2', '3', 'nazwisko6', '', '0000-00-00', 'kod6', '2019-12-02', '', '', '', '', '', '', '', '', 0),
+(7, 0, 'testsql', 'testsql', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
+(8, 4, '', 'test1', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
+(9, 5, 'test10', 'test10', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
+(14, 15, 'test', 'test', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
+(15, 15, 'aatest', 'aapostcode', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
+(16, 14, 'gggadres', 'gggpostcode', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
+(18, 12, 'testadres', 'testpostcode', 'testprivatename', 'testprivateachtname', 'testidkadr', '', '2019-12-01', '', '', '', '', '', '', '', '', 'testemail', 'testrekaring', 0),
+(19, 17, 'testbedrijf', 'testbedrijf', '', '', '', '', '0000-00-00', 'testberdijfbedrijf', 'testadresbedrijf', 'testpostcodebedrijf', 'teststadbedrijf', 'testkvkbedrijf', 'testbtwbedrijf', '', '', 'testemailbedrijf', 'testrekaringbedrijf', 1),
+(21, 1, 'jjjj', 'jjjj', 'jjj', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', 'jjjj', 'jjj', 0),
+(22, 1, 'tefdgdfd', 'fgdfgd', 'dfgdf', 'gdfgdf', 'dfgdf', '123', '2020-01-01', 'dfg', 'dfg', 'df', 'dfgd', 'fg', 'dfg', '321', '', 'dfgdfg', 'dfgd', 0),
+(23, 17, 'adresM', 'postcodeM', 'nameM', 'achtnameM', 'kartaM', 'M123456789', '2020-01-01', 'bedrijfM', 'bedrijfAdresM', 'bedrijfPostcodeM', 'bedrijfStadM', 'kvkM', 'btwM', 'bedrijfTelM', '', 'emailM', 'rekaringM', 0),
+(24, 1, 'aasd', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
+(25, 1, 'ffffffff', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
+(26, 1, 'hhhhh', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
+(27, 12, 'ooo', 'pppp', 'op', 'iopi', '', '', '0000-00-00', '', '', '', '', '', '', '', '', 'iop', 'iop', 0),
+(28, 15, 'aaf', 'sdfdf', 'sdfsdf', 'sdfsf', 'sdfs', 'dfsd', '2020-01-09', '', '', '', '', '', '', '', '', 'sdf', 'sdf', 0),
+(29, 1, 'adasdad', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -107,10 +123,11 @@ INSERT INTO `bouw_city` (`city_id`, `city`) VALUES
 (1, 'aaa'),
 (2, 'bbb'),
 (3, 'ccc'),
-(4, 'ddd'),
 (5, 'eee'),
-(6, 'fff'),
-(11, 'ggg');
+(12, 'fff'),
+(14, 'ggg'),
+(15, 'aa'),
+(17, 'mmm');
 
 -- --------------------------------------------------------
 
@@ -182,7 +199,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fullname`, `username`, `password`, `mail`, `birthdate`) VALUES
-(13, 'aaa', 'aaa', '123', 'aaa@aaa.com', '2019-12-01');
+(13, 'aaa', 'aaa', '123', 'aaa@aaa.com', '2019-12-01'),
+(17, 'test', 'test', '202cb962ac59075b964b07152d234b70', 'test@test.com', '2019-12-03'),
+(19, 'marcel test', 'marcelo', '5a105e8b9d40e1329780d62ea2265d8a', 'test@test.com', '1990-01-01');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -225,26 +244,26 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT dla tabel zrzutów
 --
 
 --
 -- AUTO_INCREMENT dla tabeli `administrator`
 --
 ALTER TABLE `administrator`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_adresy`
 --
 ALTER TABLE `bouw_adresy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_city`
 --
 ALTER TABLE `bouw_city`
-  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT dla tabeli `meta_tags`
@@ -262,7 +281,7 @@ ALTER TABLE `meta_tags_index`
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

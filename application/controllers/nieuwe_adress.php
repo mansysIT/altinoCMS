@@ -70,6 +70,21 @@ class nieuwe_adress extends controller
 		$this->main->translate_helper;
 	}
 
+	public function bestanden()
+	{
+		$this->model->administrator;
+
+		$this->addHook($this->i18n->languageDetector());
+		
+		$this->main->metatags_helper;
+		$this->main->head_helper;
+		$this->main->loader_helper;
+		$this->main->module_helper;
+		$this->main->model_helper;
+		$this->main->directory_helper;
+		$this->main->translate_helper;
+	}
+
 	public function savenieuwe_adress()
 	{
 		$this->addHook($this->i18n->languageDetector()); 

@@ -17,7 +17,7 @@ function ActiveClassIfRequestMatches($requestUri)
       <div id="navbar" class="navbar-collapse" id="navbarSupportedContent">
         <ul class="nav navbar-nav">
           <li><a <?php ActiveClassIfRequestMatches('nieuwe_adress')?> href="administrator/nieuwe_adress/nieuwe_adress">NIEUWE ADRESS</a></li>
-          <li><a <?php ActiveClassIfRequestMatches('oferten')?> href="administrator/nieuwe_adress/oferten">BESTANDEN</a></li>
+          <li><a <?php ActiveClassIfRequestMatches('bestanden')?> href="administrator/nieuwe_adress/bestanden">BESTANDEN</a></li>
           <li><a <?php ActiveClassIfRequestMatches('oferten')?> href="administrator/nieuwe_adress/oferten">OFERTEN</a></li>
         </ul>	
         <ul class="nav navbar-nav navbar-right">
