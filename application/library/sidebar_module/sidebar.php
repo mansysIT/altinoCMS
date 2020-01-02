@@ -23,8 +23,7 @@
                     </li>
                     <?php foreach($sidebarController as $row): ?>
                     <li>
-                    <?php 
-                    echo" <a href='administrator/administrator/articles/view/$row[0]'> $row[0]</a>" ?>
+                    <?=" <a href='administrator/adressen/index/stad/$row[0]'> $row[1]</a>" ?>
                     </li>
                     <?php endforeach; ?>
 

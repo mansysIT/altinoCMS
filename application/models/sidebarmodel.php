@@ -18,7 +18,7 @@ class sidebarmodel {
 	}
 
     public function getCityName(){
-        $this->query = $this->__db->querymy("SELECT city FROM bouw_city");
+        $this->query = $this->__db->querymy("SELECT city_id, city FROM bouw_city");
         foreach($this->query->fetch_all() as $q){
             array_push($this->cityArray, $q);
         }

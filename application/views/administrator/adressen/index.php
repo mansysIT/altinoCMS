@@ -53,7 +53,7 @@ $dOd->modify('-12 month');
 			<label class="sr-only">Tot</label>
 			<input type="date" class="form-control aaa" id="inputPassword2" style="line-height: 20px;" name="tot" value= <?php if(isset($sidebarController->__params['POST']['clear'])){echo $d->format('Y-m-d');} else if(isset($sidebarController->__params['POST']['tot'])){echo $sidebarController->__params['POST']['tot']; } else if(isset($_SESSION['tot'])){echo $_SESSION['tot']; } else {echo $d->format('Y-m-d'); }?>>
 		</div>
-        <button type="submit" class="btn btn-danger mb-2">Zoeken</button>
+        <button type="submit" class="btn btn-danger mb-2" name="zoeken">Zoeken</button>
 		<a class="btn btn-danger mb-2" href="administrator/nieuwe_adress/nieuwe_adress" role="button">Nieuwe</a>
 		<?php 
 		if(isset($sidebarController->__params['POST']['active']) ):
@@ -90,13 +90,13 @@ $dOd->modify('-12 month');
 		<tbody>
 			<?php foreach($adress as $row): ?>
 				<tr>
-					<td><a style="color: #000!important;" href="#"><?php echo $row[0]; ?></a></td>
-					<td><a style="color: #000!important;" href="#"><?php echo $row[3]; ?></a></td>
-					<td><a style="color: #000!important;" href="#"><?php echo $row[1]; ?></a></td>
-					<td><a style="color: #000!important;" href="#">0.00</a></td>
-					<td><a style="color: #000!important;" href="#">0.00</a></td>
-					<td><a style="color: #000!important;" href="#">0.00</a></td>
-					<td><a style="color: #000!important;" href="#">0.00</a></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[0]</a>" ?></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[3]</a>" ?></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[1]</a>" ?></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>0.00</a>" ?></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>0.00</a>" ?></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>0.00</a>" ?></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>0.00</a>" ?></td>
 					<?php if($row[2] == 1): ?>
 						<td><span class="oi oi-check" title="check" aria-hidden="true"></span></span></td>
 					<?php  else: ?>
