@@ -9,6 +9,8 @@
 <?php $nieuweadressmodel=model_load('adressenmodel', 'remove', '')?>
 <?php $nieuweadressmodel=model_load('adressenmodel', 'uploadFile', '')?>
 <?php $nieuweadressmodel=model_load('adressenmodel', 'getAllFilesInDirectory', '')?>
+<?php $getParametrs=model_load('adressenmodel', 'getParametrs', '')?>
+<?php $adresMenuGetUrl=model_load('adressenmodel', 'adresMenuGetUrl', '')?>
 
 
 <?=add_metatags()?>
@@ -19,7 +21,7 @@
 
 <?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css,adres.css')?>
 
-<?=javascript_load('table.js,jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js,nieuwe_adress.js')?> 
+<?=javascript_load('jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js,nieuwe_adress.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
 
@@ -36,7 +38,8 @@
 <?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
     <?=module_load('adresmenu')?>
-    <div class="maincontainer">       
+    <div class="maincontainer">  
+		<?php if(!$getParametrs): ?>     
 		<form style="justify-content: start; margin: 25px" class="form-inline" method="post" action="">
 		<div class="form-group mx-sm-3 mb-2">
 		<label class="sr-only">Add Folder</label>
@@ -44,20 +47,24 @@
 		</div>
 		<button type="submit" class="btn btn-danger mb-2" name="addfolder">Toevoegen</button>
 		</form>
+		<?php endif; ?>
 		<div class="folderContainer">
+		<?php if($nieuweadressmodel[0] != null): ?>
 			<?php foreach($nieuweadressmodel[0] as $folder): ?>
 				<?php if($folder != "." && $folder != ".."): ?>
 				<div class="folderDisplayDiv">
-				<a href="#" class="folderDisplay"><span class="oi oi-folder" title="folder" aria-hidden="true"></span><?=$folder?></span></a>
+				<a href="/administrator/adressen/bestanden/<?php echo $adresMenuGetUrl."/".$folder ?>" class="folderDisplay"><span class="oi oi-folder" title="folder" aria-hidden="true"></span><?=$folder?></span></a>
 				<form method="post" action=""><button class="btnCityRemove" type="submit" name="removefolder" 
 				value="<?php echo $folder; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form>
 				</div>
 				<?php endif;?>
 			<?php endforeach; ?>
+		<?php endif; ?>
 		</div>
 
 		<div class="fileContainer">
 			<ul class="list-group list-group-flush">
+			<?php if($nieuweadressmodel[1] != null): ?>
 			<?php foreach($nieuweadressmodel[1] as $file): ?>
 				<li class="list-group-item"><?php echo $file; ?>
 					<form style="width: 10%; float: right; padding: 0;" method="post" action="">
@@ -65,6 +72,7 @@
 					</span></button></form>
 				</li>
 			<?php endforeach; ?>
+			<?php endif; ?>
 			</ul>
 		</div>
 		<form action="" method="post" enctype="multipart/form-data">

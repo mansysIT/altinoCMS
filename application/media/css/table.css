@@ -6,6 +6,17 @@
     color: #fff;
 }
 
+.table-responsive thead th:hover { 
+    cursor: pointer;
+}
+
+.table-responsive tfoot th { 
+    position: sticky; 
+    top: 0; 
+    background-color: #333;
+    color: #fff;
+}
+
 /* Just common table stuff. Really. */
 table  { border-collapse: initial; width: 100%; }
 th, td { padding: 8px 16px; }
@@ -16,15 +27,19 @@ tr.table-responsive thead td {
     border-right: 0px solid;
 }
 
+
 .table-responsive {
     overflow: scroll!important;
     margin-top: 50px;
     margin-bottom: 50px;
+    text-align: right;
 }
 
 .table-responsive input {
     margin: 20px;
+    
 }
+
 
 .sr-only {
     width: auto!important;

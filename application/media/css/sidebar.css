@@ -179,4 +179,9 @@ a.article:hover {
     #sidebar.active {
         margin-left: 0;
     }
+
+    .wrapper
+    {
+       padding-right: 8%;
+    }
 }

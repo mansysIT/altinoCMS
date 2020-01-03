@@ -11,13 +11,12 @@
 
 <?=stylesheet_load('screen.css,sidebar.css,table.css')?>
 
-<?=javascript_load('table.js,jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js')?> 
+<?=javascript_load('jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
 <?=include_once('controllers/incomsten');
 $sidebarController = new home(); ?>
 
-<script src="/application/media/js/table.js"></script>
 
 </head>
 

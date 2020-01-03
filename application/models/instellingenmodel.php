@@ -19,7 +19,7 @@ class instellingenmodel
 	}
 	
 	public function stedenlijstGetCityName(){
-        $this->query = $this->__db->querymy("SELECT city FROM bouw_city");
+        $this->query = $this->__db->querymy("SELECT city, city_id FROM bouw_city");
         foreach($this->query->fetch_all() as $q){
             array_push($this->cityArray, $q);
         }
@@ -37,7 +37,8 @@ class instellingenmodel
 	
 	public function stedenlijstRemoveCity(){
 		if(isset($this->__params['POST']['cityName']) && $this->__params['POST']['cityName'] != null) {
-			$this->__db->execute("DELETE FROM bouw_city WHERE city = '".$this->__params['POST']['cityName']."'");
+			$this->__db->execute("UPDATE bouw_adresy SET city = 0 WHERE city = '".$this->__params['POST']['cityName']."'");
+			$this->__db->execute("DELETE FROM bouw_city WHERE city_id = '".$this->__params['POST']['cityName']."'");	
 			header("Location: ".SERVER_ADDRESS."administrator/instellingen/stedenlijst");
 		}
     }

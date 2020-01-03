@@ -1,10 +1,11 @@
 <?php
 
-error_reporting(E_ERROR | E_PARSE);
+// error_reporting(E_ERROR | E_PARSE);
 
-class adressenmodel
+class inkomstenmodel
 {
-	public $query;
+    public $query;
+    private $bedrag;
 	public $cityArray = Array();
 
 	private $__config;
@@ -18,11 +19,9 @@ class adressenmodel
 		$this->__router = registry::register("router");
         $this->__params = $this->__router->getParams();
 		$this->__db = registry::register("db");
-		
-		$this->clearActive();
 	}
 
-	public function getAdress()
+	public function getFactur()
 	{ 
 		$this->adressenModel = new adressenmodel();
 
@@ -30,27 +29,14 @@ class adressenmodel
 			$this->od = $this->__params['POST']['vanaf'];
 			$this->do = $this->__params['POST']['tot'];
 			$this->word = $this->__params['POST']['word'];
-			if(isset($this->__params['POST']['active'])){
-				$this->active = $this->__params['POST']['active'];
-			} else if(isset($_SESSION['active'])) {
-				$this->active = $_SESSION['active'];
-				$this->__params['POST']['active'] = $_SESSION['active'];
-			} else {
-				$this->active = 1;		
-			}
+
 			$_SESSION['vanaf'] = $this->od; 
 			$_SESSION['tot'] = $this->do; 
 			$_SESSION['word'] = $this->word; 
-			$_SESSION['active'] = $this->active; 
 		} else if(isset($_SESSION['vanaf']) && $_SESSION['vanaf'] != null) {
 			$this->od = $_SESSION['vanaf'];
             $this->do = $_SESSION['tot'];
 			$this->word = $_SESSION['word'];
-			if(isset($this->__params['POST']['active'])){
-				$this->active = $this->__params['POST']['active'];
-			} else {
-				$this->active = 1;
-			} 
 		} else {
 			$d = new DateTime(date("Y-m-d"));
 			$dOd = new DateTime(date("Y-m-d"));
@@ -59,14 +45,14 @@ class adressenmodel
 			$this->od = $dOd->format('Y-m-d');
 			$this->do = $d->format('Y-m-d');
 			$this->word = '';
-			$this->active = 1;
 		}
 
-		$this->clear();
+        $this->clear();
+
 		if(isset($this->__params[2])){
-			return $this->adressenModel->adres($this->od, $this->do, $this->word , $this->active, $this->__params[2]);   
+			return $this->adres($this->od, $this->do, $this->word , $this->__params[2]);   
 		} else {
-			return $this->adressenModel->adres($this->od, $this->do, $this->word , $this->active, null);   
+			return $this->adres($this->od, $this->do, $this->word , null);   
 		}
 
 	}
@@ -87,39 +73,63 @@ class adressenmodel
 			unset($this->__params['POST']['vanaf']);
 			unset($this->__params['POST']['tot']);
 			unset($this->__params['POST']['word']);
-			unset($this->__params['POST']['active']);
 			unset($_SESSION['vanaf']);
 			unset($_SESSION['tot']);
 			unset($_SESSION['word']);
-			unset($_SESSION['active']);
 		}
 	}
 
-	private function clearActive(){
-		if(!isset($this->__params['POST']['clear']) && !isset($this->__params['POST']['zoeken']) && !isset($this->__params['POST']['active']))
-		{
-			unset($this->__params['POST']['active']);
-			unset($_SESSION['active']);
-		}
+    private function getBedgar($id) {
 
-	}
+        $this->bedrag = $this->__db->querymy("SELECT quantity, price FROM `bouw_factur_details` WHERE factur_nr = $id");
 
-    public function adres($od, $do, $word, $active, $city_id = null){
+        $bedgarSum = 0;
+
+        foreach($this->bedrag->fetch_all() as $q){
+            $result = $q[0]*$q[1];
+            $bedgarSum += $result;
+        }
+        // array_push($bedgarSum, $result);
+
+        return $bedgarSum;
+    }
+
+    // SELECT bouw_adresy.id, bouw_adresy.adres, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE bouw_factur.adres_id = 28
+
+    public function adres($od, $do, $word, $city_id = null) {
 		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
 		if($city_id != null){
-			$this->query = $this->__db->querymy("SELECT bouw_adresy.id, bouw_adresy.adres, bouw_adresy.active, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE active = ".$active." AND  bouw_city.city LIKE '%".$word."%' AND bouw_adresy.city = $city_id ");
+			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, bouw_factur.oferten_id, bouw_factur.factur_numer, bouw_factur.data FROM `bouw_adresy`
+             INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
+             INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' ");
 		} else {
-			$this->query = $this->__db->querymy("SELECT bouw_adresy.id, bouw_adresy.adres, bouw_adresy.active, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE active = ".$active." AND  bouw_city.city LIKE '%".$word."%'");
+			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, bouw_factur.oferten_id, bouw_factur.factur_numer, bouw_factur.data FROM `bouw_adresy`
+            INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
+            INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
+            WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' ");
 		}
-	
 
-
+        $x = 0;
         foreach($this->query->fetch_all() as $q){
+
             array_push($this->cityArray, $q);
-		}
-		
+            array_push($this->cityArray[$x], $this->getBedgar($q[0]));      
+            $x++;
+        }
+
+        // array_push($this->cityArray[0], $this->getBedgar());     
+
+        // $response = array_merge($this->cityArray, $this->getBedgar());
+        
        return $this->cityArray;
-	}
+    }
+    
+    public function removeFactur(){
+		if(isset($this->__params['POST']['facturremove']) && $this->__params['POST']['facturremove'] != null) {
+			$this->__db->execute("DELETE FROM bouw_factur WHERE id = '".$this->__params['POST']['facturremove']."'");
+			header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
+		}
+    }
 	
 	public function getAdressById() {
 		$data = $this->__db->execute("SELECT *, bouw_adresy.city AS adres_city_id FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE id = ".$this->__params[1]);
@@ -266,17 +276,6 @@ class adressenmodel
 		if(isset($this->__params[2])) {
 			return true;
 		}
-	}
-
-	public function setActive() {
-		if(isset($this->__params['POST']['active'])){
-		$this->__db->execute("UPDATE bouw_adresy SET active = 0  WHERE id = ".$this->__params['POST']['active']);
-		header("Location: ".SERVER_ADDRESS."administrator/adressen/index");
-		}else {
-			
-		$this->__db->execute("UPDATE bouw_adresy SET active = 1  WHERE id = ".$this->__params['POST']['noactive']);
-		header("Location: ".SERVER_ADDRESS."administrator/adressen/index");
-	}
 	}
 }
 

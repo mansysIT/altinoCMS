@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 02 Sty 2020, 14:32
+-- Czas generowania: 03 Sty 2020, 15:54
 -- Wersja serwera: 10.4.11-MariaDB
 -- Wersja PHP: 7.2.26
 
@@ -80,19 +80,19 @@ CREATE TABLE `bouw_adresy` (
 --
 
 INSERT INTO `bouw_adresy` (`id`, `city`, `adres`, `postcode`, `private_naam`, `private_achternaam`, `private_id_kaart`, `private_tel`, `private_geboortedatum`, `bedrijf_bedrijf`, `bedrijf_adres`, `bedrijf_postcode`, `bedrijf_stad`, `bedrijf_kvk`, `bedrijf_btw`, `bedrijf_tel`, `tel`, `email`, `rekening`, `active`) VALUES
-(1, 1, 'test1', '100', '200', '300', 'nazwiskoaaa', '', '0000-00-00', 'kod', '2019-12-01', '', '', '', '', '', '', '', '', 1),
-(2, 2, 'test2', '300', '150', '100', 'nazwiskobb', '', '0000-00-00', 'kod2', '2019-12-05', '', '', '', '', '', '', '', '', 1),
-(3, 3, 'adres3', '111', '222', '333', 'nazwisko3', '', '0000-00-00', 'kod3', '2019-12-14', '', '', '', '', '', '', '', '', 0),
+(1, 1, 'test1', '100', '200', '300', 'nazwiskoaaa', '', '0000-00-00', 'kod', '2019-12-01', '', '', '', '', '', '', '', '', 0),
+(2, 0, 'test2', '300', '150', '100', 'nazwiskobb', '', '0000-00-00', 'kod2', '2019-12-05', '', '', '', '', '', '', '', '', 1),
+(3, 0, 'adres3', '111', '222', '333', 'nazwisko3', '', '0000-00-00', 'kod3', '2019-12-14', '', '', '', '', '', '', '', '', 0),
 (4, 4, 'adres4', '11', '22', '33', 'nazwisko4', '', '0000-00-00', 'kod4', '2019-12-08', '', '', '', '', '', '', '', '', 0),
-(5, 5, 'adres5', '1111', '2222', '3333', 'nazwisko5', '', '0000-00-00', 'kod5', '2019-12-16', '', '', '', '', '', '', '', '', 0),
+(5, 0, 'adres5', '1111', '2222', '3333', 'nazwisko5', '', '0000-00-00', 'kod5', '2019-12-16', '', '', '', '', '', '', '', '', 0),
 (6, 6, 'adres6', '1', '2', '3', 'nazwisko6', '', '0000-00-00', 'kod6', '2019-12-02', '', '', '', '', '', '', '', '', 0),
 (7, 0, 'testsql', 'testsql', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
 (8, 4, '', 'test1', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
-(9, 5, 'test10', 'test10', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
-(14, 15, 'test', 'test', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
+(9, 0, 'test10', 'test10', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 1),
+(14, 15, 'test', 'test', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 1),
 (15, 15, 'aatest', 'aapostcode', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
 (16, 14, 'gggadres', 'gggpostcode', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
-(18, 12, 'testadres', 'testpostcode', 'testprivatename', 'testprivateachtname', 'testidkadr', '', '2019-12-01', '', '', '', '', '', '', '', '', 'testemail', 'testrekaring', 0),
+(18, 0, 'testadres', 'testpostcode', 'testprivatename', 'testprivateachtname', 'testidkadr', '', '2019-12-01', '', '', '', '', '', '', '', '', 'testemail', 'testrekaring', 1),
 (19, 17, 'testbedrijf', 'testbedrijf', '', '', '', '', '0000-00-00', 'testberdijfbedrijf', 'testadresbedrijf', 'testpostcodebedrijf', 'teststadbedrijf', 'testkvkbedrijf', 'testbtwbedrijf', '', '', 'testemailbedrijf', 'testrekaringbedrijf', 1),
 (21, 1, 'jjjj', 'jjjj', 'jjj', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', 'jjjj', 'jjj', 0),
 (22, 1, 'tefdgdfd', 'fgdfgd', 'dfgdf', 'gdfgdf', 'dfgdf', '123', '2020-01-01', 'dfg', 'dfg', 'df', 'dfgd', 'fg', 'dfg', '321', '', 'dfgdfg', 'dfgd', 0),
@@ -100,7 +100,7 @@ INSERT INTO `bouw_adresy` (`id`, `city`, `adres`, `postcode`, `private_naam`, `p
 (24, 1, 'aasd', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
 (25, 1, 'ffffffff', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
 (26, 1, 'hhhhh', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
-(27, 12, 'ooo', 'pppp', 'op', 'iopi', '', '', '0000-00-00', '', '', '', '', '', '', '', '', 'iop', 'iop', 0),
+(27, 0, 'ooo', 'pppp', 'op', 'iopi', '', '', '0000-00-00', '', '', '', '', '', '', '', '', 'iop', 'iop', 0),
 (28, 15, 'aaf', 'sdfdf', 'sdfsdf', 'sdfsf', 'sdfs', 'dfsd', '2020-01-09', '', '', '', '', '', '', '', '', 'sdf', 'sdf', 0),
 (29, 1, 'adasdad', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0);
 
@@ -120,14 +120,74 @@ CREATE TABLE `bouw_city` (
 --
 
 INSERT INTO `bouw_city` (`city_id`, `city`) VALUES
-(1, 'aaa'),
-(2, 'bbb'),
-(3, 'ccc'),
-(5, 'eee'),
-(12, 'fff'),
+(0, 'Zonder Stad'),
 (14, 'ggg'),
-(15, 'aa'),
-(17, 'mmm');
+(18, 'mmm');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `bouw_factur`
+--
+
+CREATE TABLE `bouw_factur` (
+  `id` int(11) NOT NULL,
+  `adres_id` int(11) NOT NULL,
+  `oferten_id` int(11) NOT NULL,
+  `factur_numer` int(11) NOT NULL,
+  `data` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `bouw_factur`
+--
+
+INSERT INTO `bouw_factur` (`id`, `adres_id`, `oferten_id`, `factur_numer`, `data`) VALUES
+(1, 28, 5, 1, '2020-01-01');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `bouw_factur_details`
+--
+
+CREATE TABLE `bouw_factur_details` (
+  `id` int(11) NOT NULL,
+  `factur_nr` int(11) NOT NULL,
+  `waarvoor_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `bouw_factur_details`
+--
+
+INSERT INTO `bouw_factur_details` (`id`, `factur_nr`, `waarvoor_id`, `quantity`, `price`) VALUES
+(1, 1, 1, 10, 10),
+(2, 1, 1, 10, 10),
+(3, 1, 1, 20, 20),
+(4, 2, 1, 100, 5),
+(5, 2, 1, 50, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `bouw_waarvoor`
+--
+
+CREATE TABLE `bouw_waarvoor` (
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `btw` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `bouw_waarvoor`
+--
+
+INSERT INTO `bouw_waarvoor` (`id`, `name`, `btw`) VALUES
+(1, 'time', 10);
 
 -- --------------------------------------------------------
 
@@ -226,6 +286,24 @@ ALTER TABLE `bouw_city`
   ADD PRIMARY KEY (`city_id`);
 
 --
+-- Indeksy dla tabeli `bouw_factur`
+--
+ALTER TABLE `bouw_factur`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `bouw_factur_details`
+--
+ALTER TABLE `bouw_factur_details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `bouw_waarvoor`
+--
+ALTER TABLE `bouw_waarvoor`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `meta_tags`
 --
 ALTER TABLE `meta_tags`
@@ -263,7 +341,25 @@ ALTER TABLE `bouw_adresy`
 -- AUTO_INCREMENT dla tabeli `bouw_city`
 --
 ALTER TABLE `bouw_city`
-  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT dla tabeli `bouw_factur`
+--
+ALTER TABLE `bouw_factur`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT dla tabeli `bouw_factur_details`
+--
+ALTER TABLE `bouw_factur_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT dla tabeli `bouw_waarvoor`
+--
+ALTER TABLE `bouw_waarvoor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `meta_tags`
