@@ -32,6 +32,9 @@
 
             </li>
             <li>
+                <a href="administrator/inkomsten/index">Inkomsten</a>
+            </li>
+            <li>
                 <a href="administrator/instellingen/stedenlijst">Instellingen</a>
             </li>
         </ul>

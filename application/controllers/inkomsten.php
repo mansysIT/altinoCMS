@@ -1,15 +1,11 @@
 <?php
 
-class adressen extends controller
+class inkomsten extends controller
 {
 	private $__config;
 	private $__router;
-    public $__params;
-	private $__db;
-	public $od;
-	public $do;
-	public $word;
-	public $active;
+    private $__params;
+    private $__db;
 
 	public function __construct()
 	{
@@ -29,12 +25,13 @@ class adressen extends controller
 	
 	public function main() { }
 	
-	public function index()
+	public function addFactura()
 	{
+
 		$this->model->administrator;
+
+		$this->addHook($this->i18n->languageDetector());
 		
-		$this->addSubpage(__FUNCTION__, "stad");
-	
 		$this->main->metatags_helper;
 		$this->main->head_helper;
 		$this->main->loader_helper;
@@ -42,39 +39,22 @@ class adressen extends controller
 		$this->main->model_helper;
 		$this->main->directory_helper;
 		$this->main->translate_helper;
-	}
-
-	public function adres()
+    }
+    
+    public function index()
 	{
+
 		$this->model->administrator;
-	
-		$this->main->metatags_helper;
-		$this->main->head_helper;
-		$this->main->loader_helper;
-		$this->main->module_helper;
-		$this->main->model_helper;
-		$this->main->directory_helper;
-		$this->main->translate_helper;
-	}
 
-	public function bestanden()
-	{
-		$this->model->administrator;
-	
-		$this->main->metatags_helper;
-		$this->main->head_helper;
-		$this->main->loader_helper;
-		$this->main->module_helper;
-		$this->main->model_helper;
-		$this->main->directory_helper;
-		$this->main->translate_helper;
-	}
-
-	public function setAdresActive()
-	{
-		$this->addHook($this->i18n->languageDetector()); 
+		$this->addHook($this->i18n->languageDetector());
 		
+		$this->main->metatags_helper;
+		$this->main->head_helper;
+		$this->main->loader_helper;
+		$this->main->module_helper;
 		$this->main->model_helper;
+		$this->main->directory_helper;
+		$this->main->translate_helper;
 	}
 }
 

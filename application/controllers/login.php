@@ -1,6 +1,6 @@
 <?php
 
-class administrator extends controller
+class login extends controller
 {
 	public function __call($method, $args)
 	{
@@ -14,7 +14,7 @@ class administrator extends controller
 	
 	public function index()
 	{
-		$this->model->administrator;
+		// $this->model->administrator;
 			
 		$this->main->metatags_helper;
 		$this->main->head_helper;

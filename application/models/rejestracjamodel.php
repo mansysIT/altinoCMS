@@ -58,7 +58,7 @@ class rejestracjamodel
 			$res = $this->db->execute("INSERT INTO users VALUES (NULL, '{$fullname}', '{$uname}', '{$pass}', '{$this->params['POST']['mail']}', '{$birth}')");
 			
 			if($res) 
-			header("Location: ".SERVER_ADDRESS."administrator/administrator/index");;
+			header("Location: ".SERVER_ADDRESS."administrator/login/index");;
 		}
 		
 		return false;

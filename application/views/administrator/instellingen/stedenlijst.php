@@ -13,7 +13,7 @@
 
 <?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,all.css,instellingen.css,instellingenmenu.css')?>
 
-<?=javascript_load('table.js,jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js')?> 
+<?=javascript_load('jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
 <?php 
@@ -47,7 +47,9 @@ $sidebarController = model_load('instellingenmodel', 'stedenlijstGetCityName', '
             <button type="submit" class="btn btn-danger mb-2" name="addCity">Toevoegen</button>
         </form>
         <?php foreach($sidebarController as $row): ?>
-        <li class="list-group-item"><?php echo $row[0]; ?><form style="width: 10%; float: right; padding: 0;" class="form-inline" method="post" action="administrator/instellingen/removeCity"><button class="btnCityRemove" type="submit" name="cityName" value="<?php echo $row[0]; ?>"><span class="oi oi-delete" title="delete" aria-hidden="true"></span></button></form></li>
+        <?php if($row[1] != 0): ?>
+        <li class="list-group-item"><?php echo $row[0]; ?><form style="width: 10%; float: right; padding: 0;" class="form-inline" method="post" action="administrator/instellingen/removeCity"><button class="btnCityRemove" type="submit" name="cityName" value="<?php echo $row[1]; ?>"><span class="oi oi-delete" title="delete" aria-hidden="true"></span></button></form></li>
+        <?php endif; ?>
         <?php endforeach; ?>
         </ul>
     </div>

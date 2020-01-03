@@ -18,7 +18,8 @@
 }
 
 .Mycontainer .navbar-collapse {
-    padding: 0;
+	padding: 0;
+	margin-top: 50px;
 }
 
 .Mycontainer h1{
@@ -88,7 +89,12 @@ input {
         display: block!important;
         margin: 0!important;
         padding: 0!important;
-    }
+	}
+	
+	.Mycontainer .navbar-collapse {
+		padding: 0;
+		margin-top: 0;
+	}
 
 }
 
@@ -373,7 +379,7 @@ input {
 }
 
 .Mycontainer input {
-	background-color: #fff!important;
+	/* background-color: #fff!important; */
 }
 
 .right input {
