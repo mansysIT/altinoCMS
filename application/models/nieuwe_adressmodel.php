@@ -51,7 +51,7 @@ class nieuwe_adressmodel
 				 '$bedrijf_bedrijf' , '$bedrijf_adres' , '$bedrijf_postcode' , '$bedrijf_stad' , '$bedrijf_kvk' , '$bedrijf_btw' , '$bedrijf_tel' , '$email' , '$rekening')");
 
 			$this->createAdresDirectory($this->__db->getLastInsertedId());
-			header("Location: ".SERVER_ADDRESS."administrator/adressen/adres/".$this->__db->getLastInsertedId()."");
+			// header("Location: ".SERVER_ADDRESS."administrator/adressen/adres/".$this->__db->getLastInsertedId()."");
 		}
 	}
 
@@ -65,7 +65,7 @@ class nieuwe_adressmodel
 	
 	private function createAdresDirectory($adres_id) {
 		if(!is_dir('application/storage/adres/'.$adres_id.'')){
-			mkdir('application/storage/adres/'.$adres_id.'', 0777);
+			mkdir('application/storage/adres/'.$adres_id.'', 0666);
 		}
 	}
 

@@ -176,9 +176,9 @@ iframe {
   left: 0;
   background: rgba(93,84,240,0.5);
   background: -webkit-linear-gradient(left, rgba(255, 28, 28, 0.651), rgba(41, 41, 41, 0.651));
-  background: -o-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
-  background: -moz-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
-  background: linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
+  background: -o-linear-gradient(left, rgba(255, 28, 28, 0.651), rgba(41, 41, 41, 0.651));
+  background: -moz-linear-gradient(left, rgba(255, 28, 28, 0.651), rgba(41, 41, 41, 0.651));
+  background: linear-gradient(left, rgba(255, 28, 28, 0.651), rgba(41, 41, 41, 0.651));
   pointer-events: none;
 }
 
@@ -308,20 +308,20 @@ iframe {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 
-  box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
-  -moz-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
+  box-shadow: 0 10px 30px 0px rgba(255, 47, 47, 0.644);
+  -moz-box-shadow: 0 10px 30px 0px rgba(255, 47, 47, 0.644);
   -webkit-box-shadow: 0 10px 30px 0px rgba(255, 47, 47, 0.644);
-  -o-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
-  -ms-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.5);
+  -o-box-shadow: 0 10px 30px 0px rgba(255, 47, 47, 0.644);
+  -ms-box-shadow: 0 10px 30px 0px rgba(255, 47, 47, 0.644);
 }
 
 .login100-form-btn:hover {
   background-color: #b61f1f;
-  box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
-  -moz-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
+  box-shadow: 0 10px 30px 0px rgba(179, 36, 36, 0.644);
+  -moz-box-shadow: 0 10px 30px 0px rgba(179, 36, 36, 0.644);
   -webkit-box-shadow: 0 10px 30px 0px rgba(179, 36, 36, 0.644);
-  -o-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
-  -ms-box-shadow: 0 10px 30px 0px rgba(189, 89, 212, 0.8);
+  -o-box-shadow: 0 10px 30px 0px rgba(179, 36, 36, 0.644);
+  -ms-box-shadow: 0 10px 30px 0px rgba(179, 36, 36, 0.644);
 }
 
 

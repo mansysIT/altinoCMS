@@ -56,6 +56,24 @@ class inkomsten extends controller
 		$this->main->directory_helper;
 		$this->main->translate_helper;
 	}
+
+	public function inkomstenajax()
+	{
+		$this->model->administrator;
+		$this->main->model_helper;
+	}
+
+	public function addWarforajax()
+	{
+		$this->model->administrator;
+		$this->main->model_helper;
+	}
+
+	public function savefactur()
+	{
+		$this->model->administrator;
+		$this->main->model_helper;
+	}
 }
 
 

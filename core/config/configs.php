@@ -106,6 +106,6 @@ $configs['driver_path'] = "core".DS."drivers".DS;
 $configs['db_host'] = "localhost";
 $configs['db_user'] = "root";
 $configs['db_pass'] = "";
-$configs['db_name'] = "eduweb_cms";
+$configs['db_name'] = "bouw_BD";
 
 ?>
