@@ -11,7 +11,9 @@ class inkomstenmodel
 	private $__config;
 	private $__router;
     public $__params;
-    private $__db;
+	private $__db;
+	
+	private $warforQuantiy;
 	
 	public function __construct()
 	{
@@ -275,6 +277,48 @@ class inkomstenmodel
 	public function getParametrs() {
 		if(isset($this->__params[2])) {
 			return true;
+		}
+	}
+
+	public function getAdresByCity() {
+		if(isset($this->__params['POST']['action'])){
+		if($this->__params['POST']['action'] == 'miasta') {
+			$adresy = $this->__db->querymy("SELECT id, adres FROM `bouw_adresy` WHERE city = ".$this->__params['POST']['id_miasto']);
+			
+			foreach($adresy->fetch_all() as $q){
+				echo "<option value='$q[0]'>$q[1]</option>";
+			}
+		}
+	}
+	}
+
+	public function addWarfor() {
+		if(isset($this->__params['POST']['action'])) {
+		$this->warforQuantiy = $this->__params['POST']['quantity'];
+		
+		for ($i=0; $i <= $this->warforQuantiy; $i++) { 
+			echo "<div><input type='text' name='warforname' value=''></div>";
+		}
+		$this->warforQuantiy++;
+		
+		}
+	}
+
+	public function saveFactura()
+	{
+		if(isset($this->__params['POST']['savewarfor'])) {
+			$this->__db->execute("INSERT INTO bouw_factur 
+			(adres_id, 
+			oferten_id, 
+			factur_numer,
+			data) 
+			VALUES (
+				'".$this->__params['POST']['adres']."',
+				'9',
+				'8',
+				'2019-02-02'
+				)");
+				header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
 		}
 	}
 }
