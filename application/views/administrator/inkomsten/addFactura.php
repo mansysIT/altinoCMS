@@ -63,8 +63,21 @@
                 </div>
                 <p class="rekaningText">Warvoor</p>
                 <button type="button" class="btn btn-danger mb-2" onclick=addWarfor()>Toevoegen</button>
-                <div class="warfor RekeningInside">
-                    
+                <div class="RekeningInside">
+                    <ul style="list-style: none;">
+                        <li style='display: flex; margin: 5px;'>
+                        <p style='margin: 5px'>Waarvoor</p>
+                        <select name='warforname$i' class='miasta form-control' id='exampleFormControlSelect1'>";
+                        foreach($this->getAllWarforType()->fetch_all() as $row) {
+                            echo "<option value=".$row[0].">".$row[1]."</option>";
+                        }
+                        echo"</select>
+                        <p>Quantity</p>
+                        <input type='text' value='' class='form-control' name='ile$i' placeholder='quantity'>
+                        <p>Price</p>
+                        <input type='text' class='form-control' name='cena$i' placeholder='price'>
+                        </li>";
+                    </ul>
                 </div>
 				<div class="RekeningInside">
                     <p class="rekaningText">Adres</p>
