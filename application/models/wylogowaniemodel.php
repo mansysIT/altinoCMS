@@ -10,16 +10,19 @@ class wylogowaniemodel
 		if(isset($_SESSION[$this->__config->default_session_auth_var]))
 		{
 			unset($_SESSION[$this->__config->default_session_auth_var]);
-
+			unset($_SESSION[$this->__config->default_session_admin_auth_var]);
+			header("Location: ".SERVER_ADDRESS."administrator/login/index");
 			if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))
 			{
-				header("Location: ".$_SERVER['HTTP_REFERER']);
+				header("Location: ".SERVER_ADDRESS."administrator/login/index");
 			}
 			else
 			{
-				header("Location: ".SERVER_ADDRESS."home/index");
+				header("Location: ".SERVER_ADDRESS."administrator/login/index");
 			}
 		}
+		else
+		header("Location: ".SERVER_ADDRESS."administrator/login/index");
 	}
 }
 

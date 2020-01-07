@@ -1,0 +1,31 @@
+.stedenlijstholder .bg-primary {
+    background-color: #ddd!important;
+    color: #000!important;
+    padding: 0;
+}
+
+.active {
+	background-color: #eee;
+	color: #000;
+}
+
+.btnCityRemove {
+    padding: 0!important;
+    border: none;
+    background-color: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+
+.navbar-nav {
+    flex-direction: row!important;
+    margin: 0!important;
+    padding: 0!important;
+}
+
+.navbar-nav a {
+    padding: 10px;
+    display: block;
+}

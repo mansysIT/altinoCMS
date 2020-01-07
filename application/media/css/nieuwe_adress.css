@@ -1,0 +1,607 @@
+.Mycontainer {
+    width: 100%;
+    margin-left: 1%;
+	margin-right: 1%;
+}
+
+.Mycontainer .bg-primary {
+    background-color: #ddd!important;
+    color: #000!important;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    border: none;
+}
+
+.Mycontainer .container-fluid {
+    padding: 0;
+}
+
+.Mycontainer .navbar-collapse {
+	padding: 0;
+	margin-top: 50px;
+}
+
+.Mycontainer h1{
+    margin: 0;
+}
+
+.Mycontainer a{
+    color: #000!important;
+}
+
+.active {
+	background-color: #eee;
+	color: #000;
+}
+
+.btnCityRemove {
+    padding: 0!important;
+    border: none;
+    background-color: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .maincontainer {
+    background-color: #eee;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+	padding-bottom: 10px;
+	padding: 5px;
+}
+
+input {
+    height: 30px;
+}
+
+.navbar-nav a {
+	padding: 10px;
+	display: block;
+}
+
+.navbar-nav {
+	flex-direction: row!important;
+	margin: 0!important;
+	padding: 0!important;
+}
+
+@media only screen and (max-width: 768px) {
+    .list-group {
+        width: 100%;
+        background-color: #eee !important;
+    }
+    .maincontainer {
+        background-color: #eee;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .Mycontainer input {
+        width: 99%!important;
+    }
+
+    
+    .navbar-nav {
+        display: block!important;
+        margin: 0!important;
+        padding: 0!important;
+	}
+	
+	.Mycontainer .navbar-collapse {
+		padding: 0;
+		margin-top: 0;
+	}
+
+}
+
+/* new adress */
+
+.addresMaxWidth {
+	display: flex;
+}
+
+.addres {
+	display: flex;
+	width: 50%;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.huur {
+	display: flex;
+	flex-direction: column;
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+}
+
+.info input {
+	margin-left: 5px;
+	margin-bottom: 0;
+}
+
+.info p {
+	margin-bottom: 0 !important;
+}
+
+.bottomHolder {
+	display: flex;
+	width: 100%;
+    flex-direction: row;
+}
+
+.rekaning {
+	display: flex;
+	width: 60%;
+	flex-direction: column;
+	margin-top: 10px;
+}
+
+.right {
+	display: flex;
+	width: 40%;
+	height: 100px;
+	margin: 0;
+	flex-direction: column;
+}
+
+.TaalVanContract {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.addres p {
+	margin-top: auto;
+    margin-bottom: auto;
+    padding: 0 15px 0 15px;
+}
+
+.addres input {
+	display: flex;
+	width: 300px;
+}
+
+.adresArea {
+	display: flex;
+	width: 100%;
+}
+
+.textareaholder {
+	width: 53.8% !important;
+	height: 100px !important;
+}
+
+.postcode {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.stad {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.huurup {
+	display: flex;
+	justify-content: space-between;
+	padding-right: 20px;
+}
+
+.huurdown {
+	display: flex;
+	justify-content: space-between;
+    padding-right: 20px;
+}
+
+.infoUp {
+	display: flex;
+	width: 100%;
+}
+
+.infoDown {
+	display: flex;
+	width: 100%;
+}
+
+.inputOldHuurerFirstChild {
+	margin-left: 175px !important;
+}
+
+.huurup .inputOldHuurerFirstChild {
+	margin-left: 167px !important;
+}
+
+.inputOldHuurer {
+	display: flex; 
+	margin-left: 5px;
+	width: 40px;
+}
+
+.pOldChildFirstChild {
+	display: flex; 
+	margin-left: 20px !important;
+}
+
+.pOldChild {
+	display: flex; 
+	margin-left: 5px;
+}
+
+.info .pFirstChild {
+	display: flex; 
+	margin-left: 166px;
+}
+
+.pFirstChildfirst {
+    display: flex; 
+	margin-left: 169px;
+}
+
+#nieuweadressbedrijf .pFirstChild {
+	display: flex; 
+	margin-left: 255px;
+}
+.info .p {
+	display: flex; 
+	margin-left: 5px;
+}
+
+.HandtekeningBtn {
+	display: flex;
+	margin-top: 5px;
+}
+
+.HandtekeningButton {
+	width: 70px !important
+}
+
+.rekaning .textareaholder {
+	width: 500px !important;
+	height: 100px !important;
+}
+
+.rekaningText {
+	padding: 0 15px 0 15px;
+	width: 258px;
+}
+
+.textareaholder {
+	width: 53.8% !important;
+	height: 100px !important;
+}
+
+.RekeningInside {
+	display: flex;
+	width: 100%;
+}
+
+.RekeningInside input {
+	display: flex;
+	margin-left: 1px;
+}
+
+.ExtraOpmerking	 {
+	display: flex;
+	width: 100%;
+}
+
+.ExtraOpmerkingTextarea {
+	display: flex;
+	width: 530px !important;
+	background: #ddd!important;
+	padding: 5px!important;
+	margin-bottom: 10px!important;
+}
+
+.AantalPersonen {
+	display: flex;
+	width: 100%;
+}
+
+.AantalPersonen input {
+	display: flex;
+	width: 7%;
+}
+
+.ContractVanaf {
+	display: flex;
+	width: 100%;
+}
+
+.ContractVanaInput {
+	display: flex;
+	width: 70px;
+}
+
+.ContractVanaFirstChild {
+	display: flex;
+	width: 70px;
+}
+
+.Woningtypen {
+	display: flex;
+	width: 100%;
+}
+
+.Woningtypen input {
+	margin: 0;
+}
+
+.Indexering {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.bg-primary {
+	background-color: #212529!important;
+	color: white!important;
+}
+
+.table-scroll {
+	overflow-x:auto;
+}
+
+.table-scroll table{
+	width:1100px;
+	margin: auto;
+	margin-bottom: 30px;
+	margin-top: 30px;
+}
+
+.table-hover tbody tr:hover {
+	background-color: #aaa!important;
+}
+
+.table-scroll .table {
+	max-width: none!important;
+}
+
+.tableRowLight {
+	background-color: #ddd;
+	cursor: pointer;
+	border: 1px solid #ccc;
+}
+
+.tableRowDark {
+	background-color: #eee;
+	cursor: pointer;
+	border: 1px solid #ccc;
+}
+
+.Mycontainer input {
+	/* background-color: #fff!important; */
+}
+
+.right input {
+	margin: 5px 20px 5px 0;
+}
+
+#old_huurder {
+	padding: 0!important;
+}
+
+#nieuweadressprivate.active {
+    display: none;
+}
+
+#nieuweadressprivate {
+    display: flex;
+}
+
+#nieuweadressbedrijf.active {
+    display: none;
+}
+
+#nieuweadressbedrijf {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control {
+	width: 200px!important;
+}
+
+@media (max-width: 739px) {
+
+	
+	.huur input{
+		margin-left: 0 !important;
+	}
+	
+	.pOldChildFirstChild {
+	margin-left: 0 !important;
+	}
+	
+	.textareaholder {
+		width: 205px !important;
+		height: 100px !important;
+	}
+
+	.postcode {
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+	}
+
+	.stad {
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+	}
+	
+	.addres input {
+		width: 200px;
+	}
+	
+	.addresMaxWidth {
+		display: hidden;
+	}
+	
+	.addres {
+	display: flex;
+	
+	width: 100%;
+	}
+	
+	.bottomHolder {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	padding-left: 0;
+	}
+	
+	.rekaning {
+	display: flex;
+	width: 100%;
+	height: auto;
+	}
+
+	.right {
+	display: flex;
+	width: 100%;
+	height: auto;
+	margin: 0;
+	}
+	
+	.huur {
+	display: flex;
+	width: 100%;
+	flex-direction: row; 
+	}
+	
+	.huurup {
+		display: flex;
+		width: 100%;
+		width: 50%;
+		flex-direction: column;
+	}
+
+	.huurdown {
+		display: flex;
+		width: 100%;
+		width: 50%;
+		flex-direction: column;
+	}
+	
+	.info input {
+		width: 99% !important;
+		margin-left: 0;
+	}
+	
+	.infoUp {
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+	}
+
+	.infoDown {
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+	}
+	
+	.info .pFirstChild {
+	display: flex; 
+	margin-left: 5px;
+	}
+	
+	.huurup .inputOldHuurerFirstChild {
+	margin-left: 0 !important;
+	}
+	
+	.HandtekeningButton {
+	margin-left: 5px; 
+	width: 70px !important
+	}
+	
+	.RekeningInside {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	}
+	
+	.RekeningInside input {
+	display: flex;
+	width: 100%;
+	margin-left: 0;
+	width: 90%;
+	}
+	
+	.TaalVanContract {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	}
+	
+	.Woningtypen {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	}
+	
+	.Woningtypen input {
+		margin-left: 0;
+	}
+
+	
+	.AantalPersonen {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	}
+	
+	.ContractVanaf {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	}
+	
+	.adresArea {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	}
+	
+	.ExtraOpmerkingTextarea {
+	display: flex;
+	width: 95% !important;
+	}
+	
+	.HandtekeningBtn {
+	display: flex;
+	margin-top: 2px;
+	flex-direction: column;
+    }
+    
+    .pFirstChildfirst {
+        display: flex; 
+        margin-left: 0;
+    }
+    
+    #nieuweadressbedrijf .pFirstChild {
+        display: flex; 
+        margin-left: 0;
+	}
+	
+	.form-control {
+		width: 100%!important;
+		margin-bottom: 10px;
+	}
+
+	.rekaningText {
+		padding: 0 15px 0 15px;
+		width: 100%!important;
+		text-align: center;
+		margin-top: 10px;
+	}
+}

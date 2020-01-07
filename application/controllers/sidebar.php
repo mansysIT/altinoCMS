@@ -1,9 +1,5 @@
 <?php
 
-include($_SERVER['DOCUMENT_ROOT'].'/application/models/sidebarmodel.php');
-
-use Modal\sidebarModal as modal;
-
 class sidebar extends controller
 {
     private $sidebarModal;
@@ -16,12 +12,19 @@ class sidebar extends controller
 		}
 	}
 	
-	public function main() { }
-	
-	public function getAdress()
+	public function __construct()
 	{
-        $this->sidebarModal = new modal;
-        return $this->sidebarModal->getCityName();
+		$this->__config = registry::register("config");
+		$this->__router = registry::register("router");
+		$this->__db = registry::register("db");
+		$this->__params = $this->__router->getParams();
+	}
+
+	public function main() { }
+
+	public function index()
+	{
+		$this->main->model_helper;
 	}
 }
 

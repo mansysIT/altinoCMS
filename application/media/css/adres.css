@@ -1,0 +1,56 @@
+.folderDisplay {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    flex-flow:column wrap; 
+}
+
+.folderDisplay span{
+    font-size: 60px;
+}
+
+.folderDisplayDiv {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 5px;
+}
+
+.folderContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.fileContainer {
+    margin-top: 50px!important;
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    width: 20%;
+}
+
+.fileContainer .list-group-item {
+    background-color: #eee;
+}
+
+.form-inline-adres {
+    display: flex;
+}
+
+@media only screen and (max-width: 768px) {
+    .folderDisplayDiv {
+        width: auto;
+        
+    }
+
+    .folderContainer {
+        flex-wrap: wrap;
+    }
+
+    .fileContainer {
+        width: 100%;   
+    }
+}

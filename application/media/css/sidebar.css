@@ -151,6 +151,11 @@ a.article:hover {
     margin-right: auto;
 }
 
+.wrapper .mb-2 {
+    margin-bottom: 0!important;
+}
+
+
 
 /* ---------------------------------------------------
     CONTENT STYLE
@@ -173,5 +178,10 @@ a.article:hover {
     }
     #sidebar.active {
         margin-left: 0;
+    }
+
+    .wrapper
+    {
+       padding-right: 8%;
     }
 }

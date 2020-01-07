@@ -11,7 +11,8 @@ class dispatcher
 		if($router instanceof router)
 		{
 			$controller     = $router->getController();
-            $action         = $router->getAction();
+			$action         = $router->getAction();
+			$admin			= $router->getIsAdmin();
             $params         = $router->getParams();
 		}
 		else
@@ -38,7 +39,7 @@ class dispatcher
 		
 		$template = $view->getTemplate($action);
 		
-		main::_templateLoader($controller, $template);
+		main::_templateLoader($controller, $template, $admin);
 	}
 }
 

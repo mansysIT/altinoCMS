@@ -23,8 +23,8 @@ class logowaniemodel
 	
 	private function _login($LOGIN, $PASSWORD)
 	{
-		//$PASSWORD = md5($PASSWORD);
-
+		$PASSWORD = md5($PASSWORD);
+		
 		if($this->isExist($LOGIN, $PASSWORD) && count($this->isExist($LOGIN, $PASSWORD)) > 0)
 		{
 			$_SESSION[$this->__config->default_session_auth_var] = $LOGIN;
@@ -44,28 +44,29 @@ class logowaniemodel
 			{
 				if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))
 				{
-					header("Location: ".SERVER_ADDRESS."home/index");	
+					header("Location: ".SERVER_ADDRESS."administrator/home/index");
 				}
 				else
 				{
-					header("Location: ".SERVER_ADDRESS."home/index");
+					header("Location: ".SERVER_ADDRESS."administrator/home/index");
 				}
 				
 			}
 			else
 			{
-				die("Przekierowanie na stronę błędu");
+				header("Location: ".$_SERVER['HTTP_REFERER']);
 			}
 		}
 		else
 		{
 			if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))
 			{
-				header("Location: ".$_SERVER['HTTP_REFERER']);
+				header("Location: ".SERVER_ADDRESS."administrator/home/index");
+				//header("Location: ".$_SERVER['HTTP_REFERER']);
 			}
 			else
 			{
-				header("Location: ".SERVER_ADDRESS."home/index");
+				header("Location: ".SERVER_ADDRESS."administrator/home/index");
 			}
 		}
 	}
