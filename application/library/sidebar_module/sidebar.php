@@ -26,13 +26,13 @@
                     <?=" <a href='administrator/adressen/index/stad/$row[0]'> $row[1]</a>" ?>
                     </li>
                     <?php endforeach; ?>
-
                 </ul>
-
-
-            </li>
+           </li>
             <li>
                 <a href="administrator/inkomsten/index">Inkomsten</a>
+            </li>
+            <li>
+                <a href="administrator/uitgaven/index">Uitgaven</a> 
             </li>
             <li>
                 <a href="administrator/instellingen/stedenlijst">Instellingen</a>
