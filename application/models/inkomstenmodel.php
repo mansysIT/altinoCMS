@@ -211,14 +211,9 @@ class inkomstenmodel
 
 	public function saveFactura()
 	{
-<<<<<<< HEAD
 
 		if(isset($this->__params['POST']['savewarfor'])) {
 			$this->__db->execute("INSERT INTO bouw_factur 
-=======
-        if (isset($this->__params['POST']['savewarfor'])) {
-            $this->__db->execute("INSERT INTO bouw_factur 
->>>>>>> 154bb6dde0c2501a3dac5b72b9afa80d81337bd7
 			(adres_id, 
 			oferten_id, 
 			factur_numer,
@@ -239,7 +234,8 @@ class inkomstenmodel
                 for ($i=0; $i < 20; $i++) {
                     # code...
                 
-                    print_r($i);
+					print_r($i);
+					
                 
                     $this->__db->execute("INSERT INTO bouw_factur_details 
 			(factur_nr, 
