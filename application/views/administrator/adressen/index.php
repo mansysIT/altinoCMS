@@ -90,13 +90,13 @@ $dOd->modify('-12 month');
 		<tbody>
 			<?php foreach($adress as $row): ?>
 				<tr>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[0]</a>" ?></td>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[3]</a>" ?></td>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[1]</a>" ?></td>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>0.00</a>" ?></td>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>0.00</a>" ?></td>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>0.00</a>" ?></td>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>0.00</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[0]</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[3]</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[1]</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
 					<?php if($row[2] == 1): ?>
 						<td><form method="post" action="administrator/adressen/setAdresActive"><button class="btnCityRemove" type="submit" name="active" value="<?php echo $row[0]; ?>"><span class="oi oi-check" title="check" aria-hidden="true"></span></button></form></td>
 					<?php  else: ?>
@@ -105,16 +105,6 @@ $dOd->modify('-12 month');
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
-		<tfoot>
-			<th></th>
-			<th></th>
-			<th></th>
-			<th>0.00</th>
-			<th>0.00</th>
-			<th>0.00</th>
-			<th>0.00</th>
-			<th></th>
-		</tfoot>
 		</table>
 	</div>
 	<?=module_load('FOOTER')?>
