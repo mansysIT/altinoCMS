@@ -172,33 +172,12 @@ class inkomstenmodel
 	}
 
 	public function getAllWarforType() {
+		$arr = Array();
 		$type = $this->__db->querymy("SELECT * FROM `bouw_waarvoor`");
-		print_r($type);
-		return $type;
-	}
-
-	public function addWarfor() {
-		if(isset($this->__params['POST']['action'])) {
-		$this->warforQuantiy = $this->__params['POST']['quantity'];
-		
-		for ($i=0; $i <= $this->warforQuantiy; $i++) { 
-			echo "<li style='display: flex; margin: 5px;'>
-			<p style='margin: 5px'>Waarvoor</p>
-			<select name='warforname$i' class='miasta form-control' id='exampleFormControlSelect1'>";
-			foreach($this->getAllWarforType()->fetch_all() as $row) {
-				echo "<option value=".$row[0].">".$row[1]."</option>";
-			}
-			echo"</select>
-			<p>Quantity</p>
-			<input type='text' value='' class='form-control' name='ile$i' placeholder='quantity'>
-			<p>Price</p>
-			<input type='text' class='form-control' name='cena$i' placeholder='price'>
-			</li>";
-
-		}
-		$this->warforQuantiy++;
-		
-		}
+        foreach($type->fetch_all() as $q){
+            array_push($arr, $q);
+        }
+       return $arr;
 	}
 
 	private function getLastFacturNr() {
@@ -208,17 +187,10 @@ class inkomstenmodel
             return $x;
 		}
 	}
-
 	public function saveFactura()
 	{
-<<<<<<< HEAD
-
 		if(isset($this->__params['POST']['savewarfor'])) {
 			$this->__db->execute("INSERT INTO bouw_factur 
-=======
-        if (isset($this->__params['POST']['savewarfor'])) {
-            $this->__db->execute("INSERT INTO bouw_factur 
->>>>>>> 154bb6dde0c2501a3dac5b72b9afa80d81337bd7
 			(adres_id, 
 			oferten_id, 
 			factur_numer,
@@ -227,7 +199,7 @@ class inkomstenmodel
 				'".$this->__params['POST']['adres']."',
 				'6',
 				'".$this->getLastFacturNr()."',
-				'2019-02-02'
+				'".$this->__params['POST']['facturdata']."'
 				)");
             
         
@@ -239,7 +211,6 @@ class inkomstenmodel
                 for ($i=0; $i < 20; $i++) {
                     # code...
                 
-                    print_r($i);
                 
                     $this->__db->execute("INSERT INTO bouw_factur_details 
 			(factur_nr, 
@@ -248,15 +219,16 @@ class inkomstenmodel
 			price) 
 			VALUES (
 			".$row[0].",
-			".$this->__params['POST']['warforname'.$i].",
-			".$this->__params['POST']['ile'.$i].",
-			".$this->__params['POST']['cena'.$i]."
+			".$this->__params['POST']['warfortype'][$i].",
+			".$this->__params['POST']['warfortimespend'][$i].",
+			".$this->__params['POST']['warforquantity'][$i]."
 			)");
                 }
             }
         }
 		header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
     }
+
 }
 
 ?>

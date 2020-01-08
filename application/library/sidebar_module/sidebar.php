@@ -1,7 +1,5 @@
 <?php $sidebarController=model_load('sidebarmodel', 'getCityName', '')?>
 
-<script src="/application/media/js/sidebar.js"></script>
-
 <div class="wrapper">
     <!-- Sidebar  -->
     <nav id="sidebar">

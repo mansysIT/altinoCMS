@@ -3,14 +3,14 @@
 
 <head>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
-
-<head>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <?php $sidebarController=model_load('nieuwe_adressmodel', 'getCityName', '')?>
+<?php $getWarforTypes = model_load('inkomstenmodel', 'getAllWarforType', '')?>
 
 <?=add_metatags()?>
 
@@ -18,18 +18,20 @@
 
 <?=add_basehref()?>
 
-<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css')?>
+<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css,factur.css')?>
 
-<?=javascript_load('jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js,nieuwe_adress.js')?> 
+<?=javascript_load('sidebar.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<script src="/application/media/js/nieuwe_adress.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+
+
+<script src="/application/media/js/addfileds.js"></script>
+
+
+
 
 </head>
 
@@ -57,37 +59,58 @@
                 <div class="RekeningInside">
                     <p class="rekaningText">Adres</p>
                     <select name="adres" class="adresy form-control" id="exampleFormControlSelect1">
-                        <option value="999">SELECT ADRES</option>
-                        <option value="999222">SELECT ADRES2</option>
+                        <option>SELECT ADRES</option>
                     </select>
                 </div>
                 <p class="rekaningText">Warvoor</p>
-                <button type="button" class="btn btn-danger mb-2" onclick=addWarfor()>Toevoegen</button>
+                
                 <div class="RekeningInside">
-                    <ul style="list-style: none;">
-                        <li style='display: flex; margin: 5px;'>
-                        <p style='margin: 5px'>Waarvoor</p>
-                        <select name='warforname$i' class='miasta form-control' id='exampleFormControlSelect1'>";
-                        foreach($this->getAllWarforType()->fetch_all() as $row) {
-                            echo "<option value=".$row[0].">".$row[1]."</option>";
-                        }
-                        echo"</select>
-                        <p>Quantity</p>
-                        <input type='text' value='' class='form-control' name='ile$i' placeholder='quantity'>
-                        <p>Price</p>
-                        <input type='text' class='form-control' name='cena$i' placeholder='price'>
-                        </li>";
-                    </ul>
+                <?php
+                		echo '
+                        <div>
+                            <table id="kopia_wiersz" class="container"> 
+                                <tbody class="warforadd">                             
+                                    <tr class="nag ">
+                                        <td class="">
+                                            <h5 class="">Naam</h5>
+                                        </td>
+                                        <td class="">
+                                        <select name="warfortype[]" class="form-control">';
+                                        foreach($getWarforTypes as $row): ?>
+                                            <li>
+                                                <option value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
+                                            </li>
+                                        <?php endforeach;
+
+                                           echo'</select>
+                                        </td>
+                                        <td class="">
+                                            <h5 class="">Achternaam</h5>
+                                        </td>
+                                        <td class="">
+                                            <input class="form-control" name="warfortimespend[]" value="">
+                                        </td>
+                                        <td class="">
+                                        <h5 class="">Achternaam</h5>
+                                        </td>
+                                        <td class="">
+                                            <input class="form-control" name="warforquantity[]" value="">
+                                        </td>
+                                        <td class=" del blok_mansys">
+                                            <input style=" width: auto; display:block; margin:0 auto;" class="btn btn-danger" name="del-a" type="submit" value="X" >
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>';
+                                    
+					?>
                 </div>
+                <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
 				<div class="RekeningInside">
-                    <p class="rekaningText">Adres</p>
-                    <input class="inputNewHuurder" type="text" name="
-                    " value='' >
+                    <p class="rekaningText">Data</p>
+                    <input class="inputNewHuurder" type="date" name="facturdata" value='' >
                 </div>
-                <div class="RekeningInside">
-                    <p class="rekaningText">Postcode</p>
-                    <input class="inputNewHuurder" type="text" name="postcode" value=''>
-                </div>       
    
             </div>
             <div class="right">
@@ -137,9 +160,12 @@ var quan = 0;
 function addWarfor() {
         
             var quantity = quan;
+            // var ile = $(".ile"+quan).val();
+            // alert(".ile"+quan)
             var dataString = {
             action: "warfor",
-            quantity: quantity
+            quantity: quantity,
+            // ile0: ile
             };
             $.ajax
             ({
