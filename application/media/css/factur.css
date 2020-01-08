@@ -1,0 +1,19 @@
+.btn-small{
+    width: 13%;
+}
+
+.warforadd .rekaningText {
+    margin: 0;
+    width: auto;
+    padding: 0;
+}
+@media only screen and (max-width: 768px) {
+    .warforadd tr{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn-small{
+        width: 100%!important;
+    }
+}

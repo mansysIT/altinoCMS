@@ -12,6 +12,12 @@
 
 <?php $getCityId=model_load('nieuwe_adressmodel', 'getCityName', '')?>
 <?php $facturaModelData=model_load('facturmodel', 'showdata', '')?>
+<?php $getWarforTypes = model_load('inkomstenmodel', 'getAllWarforType', '')?>
+<?=model_load('facturmodel', 'editFactura', '')?>
+<?php
+$d = new DateTime($facturaModelData[0]['data']);
+
+?>
 
 <?=add_metatags()?>
 
@@ -19,7 +25,7 @@
 
 <?=add_basehref()?>
 
-<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css')?>
+<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css,factur.css')?>
 
 <?=javascript_load('jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js,nieuwe_adress.js')?> 
     
@@ -39,7 +45,7 @@
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
     <div class="maincontainer">
-    <form action="administrator/inkomsten/savefactur" method="post">
+    <form action="" method="post">
             <div class="bottomHolder">
             <div class="rekaning">
                 <div class="RekeningInside">
@@ -61,13 +67,66 @@
                     </select>
                 </div>
                 <p class="rekaningText">Warvoor</p>
-                <button type="button" class="btn btn-danger mb-2" onclick=addWarfor()>Toevoegen</button>
-                <div class="warfor RekeningInside">     
+                
+                <div class="RekeningInside">
+                    <?='
+                        <div>
+                            <table id="kopia_wiersz" class="container"> 
+                                <tbody class="warforadd">' ?>
+                    <?php 
+                    $x = 0;
+                     foreach(array_slice($facturaModelData,1)  as $rows): ?>
+      
+                <?php echo '<tr class="nag ">
+                                        <td class="">
+                                        <p class="rekaningText">Warvoor</p>
+                                        </td>
+                                        <td class="">
+                                        <select name="warfortype[]" class="form-control">';
+                                        foreach($getWarforTypes as $row){ ?>
+                                            <li>
+                                                <option value="<?php echo $row[0]; ?>"<?php if($row[0] == $rows['waarvoor_id']) echo" selected" ?>><?php echo $row[1]." (".$row[2]."%)"; ?></option>
+                                            </li>
+                                        <?php };
+
+                                           echo'</select>
+                                        </td>
+                                        <td class="">
+                                        <p class="rekaningText">Warvoor</p>
+                                        </td>
+                                        <td class="">
+                                            <input class="form-control" name="warfortimespend[]" value="'.$rows["quantity"].'">
+                                        </td>
+                                        <td class="">
+                                        <p class="rekaningText">Warvoor</p>
+                                        </td>
+                                        <td class="">
+                                            <input class="form-control" name="warforquantity[]" value="'.$rows["price"].'">
+                                        </td>
+                                        <td class=" del blok_mansys">
+                                            <input style=" width: auto; display:block; margin:0 auto;" class="btn btn-danger" name="del-a" type="submit" value="X" >
+                                        </td>
+                                    </tr>';
+
+                                    
+                    ?>
+                    <?php endforeach; ?>
+                    <?='</tbody>
+                            </table>
+                        </div>';?>
                 </div>
+                <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
 				<div class="RekeningInside">
                     <p class="rekaningText">Data</p>
-                    <input class="inputNewHuurder" type="date" name="" value=''>
-                </div>  
+
+                    <input class="inputNewHuurder" type="date" name="facturdata" value="<?php echo $d->format('Y-m-d') ?>">
+                </div>
+                <div class="RekeningInside">
+                    <p class="rekaningText">Factuurnummer</p>
+
+                    <input class="inputNewHuurder" type="number" name="facturnumer" value="<?=$facturaModelData[0]['factur_numer'] ?>">
+                </div>
+   
             </div>
             <div class="right">
 
@@ -75,7 +134,7 @@
             </div>
             
         </div>
-        <button type="submit" class="btn btn-danger mb-2" name="savewarfor">Toevoegen</button>
+        <button type="submit" class="btn btn-danger mb-2" name="editwarfor">Toevoegen</button>
         </form>
     </div>
 	<?=module_load('FOOTER')?>
@@ -141,6 +200,7 @@ function addWarfor() {
         var dataString = {
         action: "warfor",
         quantity: quantity
+        
         };
         $.ajax
         ({
