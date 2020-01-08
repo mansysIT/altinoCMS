@@ -189,6 +189,7 @@ class inkomstenmodel
 	}
 	public function saveFactura()
 	{
+
 		if(isset($this->__params['POST']['savewarfor'])) {
 			$this->__db->execute("INSERT INTO bouw_factur 
 			(adres_id, 
@@ -210,7 +211,7 @@ class inkomstenmodel
             foreach ($factur_nr->fetch_all() as $row) {
                 for ($i=0; $i < 20; $i++) {
                     # code...
-                
+
                 
                     $this->__db->execute("INSERT INTO bouw_factur_details 
 			(factur_nr, 
