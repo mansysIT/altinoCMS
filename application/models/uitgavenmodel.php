@@ -2,7 +2,7 @@
 
 // error_reporting(E_ERROR | E_PARSE);
 
-class uitgavennmodel 
+class uitgavenmodel  
 {
     public $query;
     private $bedrag;
@@ -81,42 +81,27 @@ class uitgavennmodel
 		}
 	}
 
-    private function getBedgar($id) {
 
-        $this->bedrag = $this->__db->querymy("SELECT quantity, price FROM `bouw_factur_details` WHERE factur_nr = $id");
-
-        $bedgarSum = 0;
-
-        foreach($this->bedrag->fetch_all() as $q){
-            $result = $q[0]*$q[1];
-            $bedgarSum += $result;
-        }
-        // array_push($bedgarSum, $result);
-
-        return $bedgarSum;
-    }
 
     // SELECT bouw_adresy.id, bouw_adresy.adres, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE bouw_factur.adres_id = 28
 
     public function adres($od, $do, $word, $city_id = null) {
 		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
 		if($city_id != null){
-			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, bouw_factur.oferten_id, bouw_factur.factur_numer, bouw_factur.data FROM `bouw_adresy`
+			$this->query = $this->__db->querymy("SELECT bouw_uitgaven .id, bouw_city.city, bouw_adresy.adres, bouw_uitgaven.oferten_id, bouw_uitgaven.price, bouw_uitgaven.data FROM `bouw_adresy`
              INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
-             INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' ");
+             INNER JOIN bouw_uitgaven ON bouw_uitgaven.adres_id = bouw_adresy.id WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%'  ORDER BY bouw_uitgaven.id DESC");
 		} else {
-			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, bouw_factur.oferten_id, bouw_factur.factur_numer, bouw_factur.data FROM `bouw_adresy`
+			$this->query = $this->__db->querymy("SELECT bouw_uitgaven.id, bouw_city.city, bouw_adresy.adres, bouw_uitgaven.oferten_id, bouw_uitgaven.price, bouw_uitgaven.data FROM `bouw_adresy`
             INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
-            INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
-            WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' ");
+            INNER JOIN bouw_uitgaven ON bouw_uitgaven.adres_id = bouw_adresy.id 
+            WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' ORDER BY bouw_uitgaven.id DESC"); 
 		}
 
-        $x = 0;
         foreach($this->query->fetch_all() as $q){
 
             array_push($this->cityArray, $q);
-            array_push($this->cityArray[$x], $this->getBedgar($q[0]));      
-            $x++;
+         
         }
 
         // array_push($this->cityArray[0], $this->getBedgar());     
@@ -125,7 +110,7 @@ class uitgavennmodel
         
        return $this->cityArray;
     }
-    
+     
     public function removeFactur(){
 		if(isset($this->__params['POST']['facturremove']) && $this->__params['POST']['facturremove'] != null) {
 			$this->__db->execute("DELETE FROM bouw_factur WHERE id = '".$this->__params['POST']['facturremove']."'");
@@ -304,23 +289,29 @@ class uitgavennmodel
 		}
 	}
 
-	public function saveFactura()
+	public function saveUitgaaf() 
 	{
 		if(isset($this->__params['POST']['savewarfor'])) {
-			$this->__db->execute("INSERT INTO bouw_factur 
+
+
+			$d = new DateTime($this->__params['POST']['datum']);
+			$data = $d->format('Y-m-d');	
+
+			$this->__db->execute("INSERT INTO bouw_uitgaven 
 			(adres_id, 
 			oferten_id, 
-			factur_numer,
-			data) 
+			price,
+			data
+			) 
 			VALUES (
 			'".$this->__params['POST']['adres']."',
 			'9',
-			'8',
-			'2019-02-02'
+			'".$this->__params['POST']['price']."',
+			'".$data."' 
 			)");
 			header("Location: ".SERVER_ADDRESS."administrator/uitgaven/index");
 		}
 	}
 }
- 
+  
 ?>

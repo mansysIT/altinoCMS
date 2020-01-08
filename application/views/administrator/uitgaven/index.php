@@ -11,22 +11,12 @@
 
 <?=add_basehref()?>
 
-<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,all.css, instellingenmenu.css')?>
+<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,all.css,instellingenmenu.css')?>
 
-<?=javascript_load('jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js,table.js')?> 
+<?=javascript_load('sidebar.js,table.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
-<?php 
-$adress=model_load('inkomstenmodel', 'removeFactur', '');
-$adress=model_load('inkomstenmodel', 'getFactur', '');
 
-
-$d = new DateTime(date("Y-m-d"));
-			
-$dOd = new DateTime(date("Y-m-d"));
-$dOd->modify('first day of this month');   
-
-?>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -35,6 +25,19 @@ $dOd->modify('first day of this month');
 <link href="/application/media/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
 
 </head>
+
+
+<?php 
+$adress=model_load('uitgavenmodel', 'removeFactur', '');
+$adress=model_load('uitgavenmodel', 'getFactur', ''); 
+
+ 
+$d = new DateTime(date("Y-m-d"));
+
+$dOd = new DateTime(date("Y-m-d"));
+$dOd->modify('first day of this month');   
+
+?> 
 
 <body>
 
@@ -69,20 +72,19 @@ $dOd->modify('first day of this month');
 					<th onclick="sortTable(2)">ADRES</th>
 					<th onclick="sortTable(3)">OFFERTEN</th> 
 					<th onclick="sortTable(4)">BEDRAG</th>
-					<th onclick="sortTable(5)">FACTUR</th>
-					<th onclick="sortTable(6)">DATUM</th>
-					<th onclick="sortTable(7)">ACTION</th>
+					<th onclick="sortTable(5)">DATUM</th>
+					<th>ACTION</th>
 				</tr>
 		</thead>
 		<tbody>
+			
         
-			<?php foreach($adress as $row): ?>
+			<?php foreach($adress as $row): ?> 
 				<tr>
 					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[0]</a>" ?></td>
 					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[1]</a>" ?></td>
 					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[2]</a>" ?></td>
 					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[3]</a>" ?></td>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[6]</a>" ?></td>
 					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[4]</a>" ?></td>
 					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[5]</a>" ?></td>
 					<td> <form  method="post" action=""><button class="btnCityRemove" type="submit" name="facturremove" value="<?php echo $row[0]; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form></td>
