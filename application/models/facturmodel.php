@@ -72,25 +72,38 @@ class facturmodel
 
         return $z;
 
-    }
+    } 
 
     public function editFactura()
 	{
 		if(isset($this->__params['POST']['editwarfor'])) {
-            print_r("aaaaaaaaaaaaaaa");
-            print_r($this->__params['POST']['adres']);
-            print_r($this->__params['POST']['facturnumer']);
-            print_r($this->__params['POST']['facturdata']);
+            // print_r("aaaaaaaaaaaaaaa");
+            // print_r($this->__params['POST']['adres']);
+            // print_r($this->__params['POST']['facturnumer']);
+            // print_r($this->__params['POST']['facturdata']);
 
 			$this->__db->execute("UPDATE bouw_factur SET
-			adres_id = 10,
+			adres_id = '".$this->__params['POST']['adres']."',
 			oferten_id = 6, 
-			factur_numer = 5,
-			data = 2018-01-01
-            WHERE factur_numer = 19
+			factur_numer = '".$this->__params['POST']['facturnumer']."',
+			data = '".$this->__params['POST']['facturdata']."'
+            WHERE factur_numer = '".$this->__params['POST']['facturnumer']."'
             ");
+
+            for ($i=0; $i < 20; $i++) {
+                print_r($this->__params['POST']['warfortype'][$i]);
+
+                $r = $this->__db->execute("UPDATE bouw_factur_details SET
+                factur_nr = '".$this->__params['POST']['facturnumer']."',
+                waarvoor_id = '".$this->__params['POST']['warfortype'][$i]."',
+                quantity = '".$this->__params['POST']['warfortimespend'][$i]."',
+                price = '".$this->__params['POST']['warforquantity'][$i]."'
+                WHERE factur_nr = ".$this->__params['POST']['facturnumer']."
+                ");
+            }
             
-            
+            print_r($r);
+
             // header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
         }	
     }

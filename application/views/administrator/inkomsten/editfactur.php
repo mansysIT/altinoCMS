@@ -75,7 +75,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                                 <tbody class="warforadd">' ?>
                     <?php 
                     $x = 0;
-                     foreach(array_slice($facturaModelData,1)  as $rows): ?>
+                     foreach(array_slice($facturaModelData, 1)  as $rows): ?>
       
                 <?php echo '<tr class="nag ">
                                         <td class="">
