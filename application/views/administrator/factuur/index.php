@@ -125,10 +125,12 @@ $pdf = new FPDF();
 
 		if($data[0]['email']){
 		$pdf->Cell(0,5,''.$data[0]['email'],0,1);
+		$pdf->SetX(130);
         }
         
         if($data[0]['private_tel']){
-            $pdf->Cell(0,5,''.$data[0]['private_tel'],0,1);
+			$pdf->Cell(0,5,''.$data[0]['private_tel'],0,1);
+			$pdf->SetX(130);
         }
     }
 
@@ -194,7 +196,7 @@ $pdf = new FPDF();
 		$pdf->SetFont('Arial','',12);
 
 		$pdf->SetFillColor(240, 240, 240);
-		$pdf->Cell(0,10,'Proforma: '.$data[0]['factur_numer'].' van '.$data[0]['data'].' '.$wynajem,T,1,1,true);
+		$pdf->Cell(0,10,'Proforma: '.$data[0]['factur_numer'].' van '.$data[0]['data'].' ',T,1,1,true);
 
 
 		$pdf->Cell(100,10,'Order: '.$data[0]['id'],0,1);
@@ -291,7 +293,7 @@ $pdf = new FPDF();
 		if($ilosc_znakow == 4)
 		$ilosc_znakow +=16;
 
-		$pdf->SetXY(162 + $ilosc_znakow,$wysokosc);
+		$pdf->SetXY(169 + $ilosc_znakow,$wysokosc);
 		if ($warrvoor == 0)
 			$pdf->Cell(0,10,chr(128).' '.number_format($total, 2,',', '.'),0,1);
 		else
@@ -330,7 +332,7 @@ $pdf = new FPDF();
 							$ilosc_znakow +=12;
 						
                             $totalBtW += $stawki_vat;
-						$pdf->SetXY(162 + $ilosc_znakow,$wysokosc+10+$wys);
+						$pdf->SetXY(169 + $ilosc_znakow,$wysokosc+10+$wys);
 						$pdf->Cell(0,5,chr(128).' '.number_format($stawki_vat, 2,',', '.'),0,1);
 						
 						$wys += 5;
@@ -351,7 +353,7 @@ $pdf = new FPDF();
 
 
 
-		$pdf->SetXY(162 + $ilosc_znakow,$wysokosc+30);
+		$pdf->SetXY(169 + $ilosc_znakow,$wysokosc+30);
 		if ($warrvoor == 0)
 			$pdf->Cell(20,10,chr(128).' '.number_format($total,2,',', '.').'',0,1,true);
 		else
