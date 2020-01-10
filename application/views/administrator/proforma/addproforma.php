@@ -11,6 +11,7 @@
 
 <?php $sidebarController=model_load('nieuwe_adressmodel', 'getCityName', '')?>
 <?php $getWarforTypes = model_load('inkomstenmodel', 'getAllWarforType', '')?>
+<?php $oferten = model_load('facturmodel', 'getOferten', '')?>
 
 <?=add_metatags()?>
 
@@ -46,7 +47,7 @@ $d = new DateTime(date("Y-m-d"));
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
     <div class="maincontainer">
-    <form action="administrator/proforma/saveproforma" method="post">
+    <form action="administrator/proforma/saveproforma" method="post" id="myForm">
             <div class="bottomHolder">
             <div class="rekaning">
                 <div class="RekeningInside">
@@ -66,14 +67,24 @@ $d = new DateTime(date("Y-m-d"));
                         <option>SELECT ADRES</option>
                     </select>
                 </div>
-
+                <div class="RekeningInside">
+                    <p class="rekaningText">Oferten</p>
+                    <select name="oferten" class="oferten form-control" id="exampleFormControlSelect1">
+                    <option value="">SELECT OFERTEN</option>
+                    <?php foreach($oferten as $row): ?>
+                        <li>
+                            <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
+                        </li>
+                    <?php endforeach; ?>
+                    </select>
+                </div>  
                 <div class="RekeningInside">
                 <?php
                 		echo '
                         <div>
                             <table id="kopia_wiersz" class="container"> 
                                 <tbody class="warforadd">                             
-                                    <tr class="nag ">
+                                    <tr style="display: none" class="nag " id="count">
                                         <td class="">
                                         <p class="rekaningText">Warvoor</p>
                                         </td>
@@ -91,16 +102,16 @@ $d = new DateTime(date("Y-m-d"));
                                         <p class="rekaningText">Nummer</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control" name="warfortimespend[]" placeholder="0" value="">
+                                            <input id="num1" class="form-control form-control-small" name="warfortimespend[]" placeholder="0" value="">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
                                         </td>
-                                        <td class="">
-                                            <input class="form-control" name="warforquantity[]" placeholder="0" value="">
+                                        <td class="" id="num2">
+                                            <input id="num2" class="form-control form-control-small" name="warforquantity[]" placeholder="0" value="">
                                         </td>
                                         <td class=" del blok_mansys">
-                                            <input style=" width: auto; display:block; margin:0 auto;" class="btn btn-danger" name="del-a" type="submit" value="X" >
+                                            <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="btn btn-danger" name="del-a" type="submit" value="X" >
                                         </td>
                                     </tr>
                                 </tbody>
@@ -123,14 +134,20 @@ $d = new DateTime(date("Y-m-d"));
             
         </div>
         <button type="submit" class="btn btn-danger mb-2" name="saveproforma">Toevoegen</button>
+
         </form>
+
+        
     </div>
 	<?=module_load('FOOTER')?>
-	</div>
+    </div>
+
 </body>
 </html>
 
 <script type="text/javascript" >
+
+
 
 $(document).ready(function()
 {
@@ -159,6 +176,19 @@ $(document).ready(function()
 
 });
 
+function sum() {
+    
+            var num1 = document.getElementById('num1').value;
+            var num2 = document.getElementById('num2').value;
+			var result = parseInt(num1) + parseInt(num2);
+            alert(result);
+			// var result1 = parseInt(num2) - parseInt(num1);
+            if (!isNaN(result)) {
+                document.getElementById('calculateSum').value = result;
+				// document.getElementById('subt').value = result1;
+            }
+        }
+
 var quan = 0;
 function addWarfor() {
         
@@ -184,5 +214,7 @@ function addWarfor() {
                 }
             });
     };
+
+
 
 </script>

@@ -24,7 +24,7 @@ $adress=model_load('inkomstenmodel', 'getFactur', '');
 $d = new DateTime(date("Y-m-d"));
 			
 $dOd = new DateTime(date("Y-m-d"));
-$dOd->modify('-12 month');
+$dOd->modify('first day of this month');  
 
 ?>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 10 Sty 2020, 08:23
+-- Czas generowania: 10 Sty 2020, 16:09
 -- Wersja serwera: 10.4.11-MariaDB
 -- Wersja PHP: 7.2.26
 
@@ -171,7 +171,18 @@ INSERT INTO `bouw_factur` (`id`, `adres_id`, `oferten_id`, `factur_numer`, `data
 (27, 30, 6, 21, '2020-01-01'),
 (28, 30, 6, 22, '2020-01-02'),
 (29, 30, 6, 23, '2019-12-05'),
-(30, 10, 6, 5, '0000-00-00');
+(30, 10, 6, 5, '0000-00-00'),
+(31, 23, 6, 24, '2020-01-08'),
+(32, 23, 1, 25, '2020-01-10'),
+(33, 23, 1, 26, '2020-01-10'),
+(34, 1, 1, 27, '2020-01-10'),
+(35, 1, 1, 28, '2020-01-10'),
+(36, 1, 1, 29, '2020-01-10'),
+(37, 23, 1, 30, '2020-01-10'),
+(38, 16, 2, 31, '2020-01-10'),
+(39, 23, 3, 32, '2020-01-10'),
+(40, 23, 1, 33, '2020-01-01'),
+(41, 0, 0, 34, '2020-01-10');
 
 -- --------------------------------------------------------
 
@@ -196,7 +207,6 @@ INSERT INTO `bouw_factur_details` (`id`, `factur_nr`, `waarvoor_id`, `quantity`,
 (2, 1, 1, 100, 10),
 (3, 23, 1, 5, 10),
 (4, 23, 1, 5, 10),
-(5, 23, 1, 5, 10),
 (7, 23, 1, 5, 10),
 (8, 23, 1, 5, 10),
 (9, 23, 1, 5, 10),
@@ -223,7 +233,18 @@ INSERT INTO `bouw_factur_details` (`id`, `factur_nr`, `waarvoor_id`, `quantity`,
 (30, 23, 1, 5, 10),
 (31, 23, 1, 5, 10),
 (32, 23, 1, 5, 10),
-(33, 23, 1, 5, 10);
+(33, 23, 1, 5, 10),
+(34, 25, 1, 20, 40),
+(35, 26, 2, 70, 80),
+(36, 24, 2, 40, 40),
+(37, 25, 2, 70, 80),
+(38, 25, 2, 40, 40),
+(39, 26, 2, 40, 40),
+(40, 25, 1, 10, 10),
+(41, 26, 2, 5, 5),
+(44, 32, 1, 9, 8),
+(45, 33, 1, 11, 80),
+(47, 33, 2, 50, 40);
 
 -- --------------------------------------------------------
 
@@ -255,6 +276,26 @@ INSERT INTO `bouw_insteligen_company_data` (`id`, `naam`, `stad`, `postcode`, `s
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `bouw_oferten`
+--
+
+CREATE TABLE `bouw_oferten` (
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `bouw_oferten`
+--
+
+INSERT INTO `bouw_oferten` (`id`, `name`) VALUES
+(1, 'ofeta1'),
+(2, 'oferta2'),
+(3, 'oferta3');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `bouw_proforma`
 --
 
@@ -272,7 +313,9 @@ CREATE TABLE `bouw_proforma` (
 
 INSERT INTO `bouw_proforma` (`id`, `adres_id`, `oferten_id`, `proforma_numer`, `data`) VALUES
 (2, 30, 6, 1, '2020-01-09'),
-(3, 9, 6, 2, '2020-01-09');
+(3, 9, 6, 2, '2020-01-09'),
+(4, 19, 6, 3, '2020-01-10'),
+(5, 23, 1, 4, '2020-01-10');
 
 -- --------------------------------------------------------
 
@@ -296,7 +339,9 @@ INSERT INTO `bouw_proforma_details` (`id`, `proforma_nr`, `waarvoor_id`, `quanti
 (1, 0, 1, 10, 20),
 (2, 1, 2, 80, 1),
 (3, 1, 1, 100, 1),
-(4, 2, 1, 20, 5);
+(4, 2, 1, 20, 5),
+(5, 3, 1, 10, 2),
+(7, 4, 1, 44, 5);
 
 -- --------------------------------------------------------
 
@@ -461,6 +506,12 @@ ALTER TABLE `bouw_insteligen_company_data`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeksy dla tabeli `bouw_oferten`
+--
+ALTER TABLE `bouw_oferten`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `bouw_proforma`
 --
 ALTER TABLE `bouw_proforma`
@@ -528,13 +579,13 @@ ALTER TABLE `bouw_city`
 -- AUTO_INCREMENT dla tabeli `bouw_factur`
 --
 ALTER TABLE `bouw_factur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_factur_details`
 --
 ALTER TABLE `bouw_factur_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_insteligen_company_data`
@@ -543,16 +594,22 @@ ALTER TABLE `bouw_insteligen_company_data`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT dla tabeli `bouw_oferten`
+--
+ALTER TABLE `bouw_oferten`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT dla tabeli `bouw_proforma`
 --
 ALTER TABLE `bouw_proforma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_proforma_details`
 --
 ALTER TABLE `bouw_proforma_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_uitgaven`

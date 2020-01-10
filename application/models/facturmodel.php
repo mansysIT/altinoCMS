@@ -41,7 +41,8 @@ class facturmodel
         -- adresy.rekening,
         factur.data,
         factur.factur_numer,
-        adresy.id
+        adresy.id,
+        factur.oferten_id
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
         INNER JOIN bouw_factur AS factur ON adresy.id = factur.adres_id 
@@ -91,11 +92,13 @@ class facturmodel
             $adres = $this->__params['POST']['adres'];
             $factur =$this->__params['POST']['facturnumer'];
             $data = $this->__params['POST']['facturdata'];
+            $oferten = $this->__params['POST']['oferten'];
+
 
 			$this->__db->execute("UPDATE bouw_factur 
             SET
 			adres_id = $adres,
-			oferten_id = 6, 
+			oferten_id = $oferten, 
 			factur_numer = $factur,
 			data = '$data' 
             WHERE factur_numer = $factur
@@ -145,6 +148,16 @@ class facturmodel
         }
 
     }
+
+    public function getOferten(){
+        $oferten = Array();
+        $query = $this->__db->querymy("SELECT id, name FROM bouw_oferten");
+        
+        foreach($query->fetch_all() as $q){
+            array_push($oferten, $q);
+        }
+       return $oferten;
+	}
 
 }
 

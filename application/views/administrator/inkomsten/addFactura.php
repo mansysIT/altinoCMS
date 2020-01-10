@@ -11,6 +11,7 @@
 
 <?php $sidebarController=model_load('nieuwe_adressmodel', 'getCityName', '')?>
 <?php $getWarforTypes = model_load('inkomstenmodel', 'getAllWarforType', '')?>
+<?php $oferten = model_load('facturmodel', 'getOferten', '')?>
 
 <?=add_metatags()?>
 
@@ -66,6 +67,18 @@ $d = new DateTime(date("Y-m-d"));
                         <option>SELECT ADRES</option>
                     </select>
                 </div>
+
+                <div class="RekeningInside">
+                    <p class="rekaningText">Oferten</p>
+                    <select name="oferten" class="oferten form-control" id="exampleFormControlSelect1">
+                    <option value="">SELECT OFERTEN</option>
+                    <?php foreach($oferten as $row): ?>
+                        <li>
+                            <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
+                        </li>
+                    <?php endforeach; ?>
+                    </select>
+                </div>  
                 <!-- <p class="rekaningText">Warvoor</p> -->
                 
                 <div class="RekeningInside">
@@ -74,7 +87,7 @@ $d = new DateTime(date("Y-m-d"));
                         <div>
                             <table id="kopia_wiersz" class="container"> 
                                 <tbody class="warforadd">                             
-                                    <tr class="nag ">
+                                    <tr style="display: none" class="nag ">
                                         <td class="">
                                             <p class="rekaningText">Warvoor</p>
                                         </td>
@@ -92,16 +105,16 @@ $d = new DateTime(date("Y-m-d"));
                                             <p class="rekaningText">Nummer</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control" name="warfortimespend[]" placeholder="0" value="">
+                                            <input class="form-control form-control-small" name="warfortimespend[]" placeholder="0" value="">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control" name="warforquantity[]" placeholder="0" value="">
+                                            <input class="form-control form-control-small" name="warforquantity[]" placeholder="0" value="">
                                         </td>
                                         <td class=" del blok_mansys">
-                                            <input style=" width: auto; display:block; margin:0 auto;" class="btn btn-danger" name="del-a" type="submit" value="X" >
+                                            <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="btn btn-danger" name="del-a" type="submit" value="X" >
                                         </td>
                                     </tr>
                                 </tbody>

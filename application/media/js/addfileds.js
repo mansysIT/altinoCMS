@@ -18,7 +18,9 @@ $(document).ready(function () {
 	var row_one = $(".nag:first").html();   
 	var fields_line_one = $(".nag").find("input, select, textarea");
 	var index = 1; 
-	var id_adres = $("#id_adres").attr("value");
+	var id_adres = $("#aaa").attr("value");
+
+	
 
 	$(".nag").first().attr("id", "nag_1");
 

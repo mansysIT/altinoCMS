@@ -225,43 +225,52 @@ $pdf = new FPDF();
 		//TO ZMIENIŁEM GDY BYŁ PROBLE Z FAKTURĄ NA KÓREJ BORG BYŁ TJ. HUUR 
 		//if($hu > 0 && $borg != $cala_kwota_incl){
             foreach(array_slice($data,1) as $row){
-                // print_r($row['name']);
-                $sum = $row['quantity'] * $row['price'];
-                $pdf->SetY($wysokosc);
+				// print_r($row['name']);
+				if($wysokosc >= 270 && $wysokosc <= 275){
+					$pdf->AddPage();
+					$wysokosc = 5;
+				}
+					$sum = $row['quantity'] * $row['price'];
+					$pdf->SetY($wysokosc);
 
-                $ilosc_znakow = 0;
+					$ilosc_znakow = 0;
 
-                $ilosc_znakow = strlen(number_format($hu,2,',', '.'));
+					$ilosc_znakow = strlen(number_format($hu, 2, ',', '.'));
 
-                if($ilosc_znakow == 6)
-                $ilosc_znakow +=5;
+					if ($ilosc_znakow == 6) {
+						$ilosc_znakow +=5;
+					}
 
-                if($ilosc_znakow == 5)
-                $ilosc_znakow +=8;
+					if ($ilosc_znakow == 5) {
+						$ilosc_znakow +=8;
+					}
 
-                if($ilosc_znakow == 4)
-                $ilosc_znakow +=11;
+					if ($ilosc_znakow == 4) {
+						$ilosc_znakow +=11;
+					}
 
-                $pdf->Cell(0,10,''.$row['name'].'',0,1); 
-                $pdf->SetXY(92 + $ilosc_znakow,$wysokosc);
+					$pdf->Cell(0, 10, ''.$row['name'].'', 0, 1);
+					$pdf->SetXY(92 + $ilosc_znakow, $wysokosc);
 
-                if($row['price'])
+					if ($row['price']) {
+						$pdf->Cell(0, 10, chr(128).' '.number_format($row['price'], 2, ',', '.').'', 0, 1);
+					}
 
-                $pdf->Cell(0,10,chr(128).' '.number_format($row['price'],2,',', '.').'',0,1);
+					$pdf->SetXY(140, $wysokosc);
+					$pdf->Cell(0, 10, $row['quantity'], 0, 1);
+					$pdf->SetXY(155, $wysokosc);
+					$pdf->Cell(0, 10, '  '.$row['btw'].' %', 0, 1);
+					$pdf->SetXY(162 + $ilosc_znakow, $wysokosc);
 
-                $pdf->SetXY(140,$wysokosc);
-                $pdf->Cell(0,10,$row['quantity'],0,1); 
-                $pdf->SetXY(155,$wysokosc);
-                $pdf->Cell(0,10,'  '.$row['btw'].' %',0,1);
-                $pdf->SetXY(162 + $ilosc_znakow,$wysokosc);
+					$pdf->Cell(0, 10, chr(128).' '.number_format($sum, 2, ',', '.').'', 0, 1);
 
-                $pdf->Cell(0,10,chr(128).' '.number_format($sum,2,',', '.').'',0,1);  
+					
 
                 $wysokosc += 5;
                 }
-
-		$pdf->Line(150,200,200,200);
-		$pdf->SetXY(150,200);
+				$wysokosc += 5;
+		$pdf->Line(150,$wysokosc,200,$wysokosc);
+		$pdf->SetXY(150,$wysokosc);
 		$pdf->SetFont('Arial','',12);
 		$pdf->Cell(0,10,'Subtotaal',0,1);
 
@@ -274,15 +283,15 @@ $pdf = new FPDF();
 			$ilosc_znakow = strlen(number_format($total,2,',', '.'));
 
 		if($ilosc_znakow == 6)
-		$ilosc_znakow +=5;
+		$ilosc_znakow +=10;
 
 		if($ilosc_znakow == 5)
-		$ilosc_znakow +=9;
+		$ilosc_znakow +=15;
 
 		if($ilosc_znakow == 4)
-		$ilosc_znakow +=11;
+		$ilosc_znakow +=16;
 
-		$pdf->SetXY(162 + $ilosc_znakow,200);
+		$pdf->SetXY(162 + $ilosc_znakow,$wysokosc);
 		if ($warrvoor == 0)
 			$pdf->Cell(0,10,chr(128).' '.number_format($total, 2,',', '.'),0,1);
 		else
@@ -321,7 +330,7 @@ $pdf = new FPDF();
 							$ilosc_znakow +=12;
 						
                             $totalBtW += $stawki_vat;
-						$pdf->SetXY(162 + $ilosc_znakow,210+$wys);
+						$pdf->SetXY(162 + $ilosc_znakow,$wysokosc+10+$wys);
 						$pdf->Cell(0,5,chr(128).' '.number_format($stawki_vat, 2,',', '.'),0,1);
 						
 						$wys += 5;
@@ -335,14 +344,14 @@ $pdf = new FPDF();
 
 
 
-		$pdf->SetXY(135,230);
+		$pdf->SetXY(135,$wysokosc+30);
 		$ilosc_znakow = 10;
 		$pdf->Cell(55 + $ilosc_znakow,10,'Totaal incl. BTW',T,0,1,true);
 
 
 
 
-		$pdf->SetXY(162 + $ilosc_znakow,230);
+		$pdf->SetXY(162 + $ilosc_znakow,$wysokosc+30);
 		if ($warrvoor == 0)
 			$pdf->Cell(20,10,chr(128).' '.number_format($total,2,',', '.').'',0,1,true);
 		else
