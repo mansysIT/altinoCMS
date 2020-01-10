@@ -5,10 +5,12 @@ $data=model_load('proformamodel', 'getdata', '');
 $btw=model_load('proformamodel', 'getbtw', '');
 $total=model_load('proformamodel', 'gettotal', '');
 $company=model_load('proformamodel', 'getCompanyData', '');
+$ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
 // echo"<pre>";
-// print_r($company);
+// print_r($ilemail);
 
-$pdf = new FPDF();
+
+		$pdf = new FPDF();
 		$pdf->AddFont('ArialMT','','arial.php');
 		$pdf->AddPage();
 		$pdf->SetFont('ArialMT','',12);
@@ -16,11 +18,15 @@ $pdf = new FPDF();
 
 
 		// $pdf->Image('../themes/admin/img/logo.png',7,10,75);
-		if($betaal == 1)
-			// $pdf->Image('../themes/admin/img/betaligsherinnering.jpg',7,50,200);
+        if ($ilemail == 1) {
+			// print_r('raz');
+            $pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/betaligsherinnering.jpg',7,50,200);
+        }
 		
-		if($betaal == 2)
-			// $pdf->Image('../themes/admin/img/betalingaanmeldingen.jpg',7,50,200);
+        if ($ilemail == 2) {
+			// print_r('dwa');
+            $pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/betalingaanmeldingen.jpg',7,50,200);
+        }
 		
 		$pdf->SetX(160);
 		
@@ -94,11 +100,13 @@ $pdf = new FPDF();
             }
     
             if($data[0]['email']){
-            $pdf->Cell(0,5,''.$data[0]['email'],0,1);
+			$pdf->Cell(0,5,''.$data[0]['email'],0,1);
+			$pdf->SetX(130);
             }
             
             if($data[0]['bedrijf_tel']){
-                $pdf->Cell(0,5,''.$data[0]['private_tel'],0,1);
+				$pdf->Cell(0,5,''.$data[0]['private_tel'],0,1);
+				$pdf->SetX(130);
             }
     } else {
         // echo"bbbbb";
@@ -125,10 +133,12 @@ $pdf = new FPDF();
 
 		if($data[0]['email']){
 		$pdf->Cell(0,5,''.$data[0]['email'],0,1);
+		$pdf->SetX(130);
         }
         
         if($data[0]['private_tel']){
-            $pdf->Cell(0,5,''.$data[0]['private_tel'],0,1);
+			$pdf->Cell(0,5,''.$data[0]['private_tel'],0,1);
+			$pdf->SetX(130);
         }
     }
 
