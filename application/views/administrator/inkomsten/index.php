@@ -17,7 +17,7 @@
     
 <?=icon_load("pp_fav.ico")?>
 <?php 
-$adress=model_load('inkomstenmodel', 'removeFactur', '');
+model_load('inkomstenmodel', 'removeFactur', '');
 $adress=model_load('inkomstenmodel', 'getFactur', '');
 
 

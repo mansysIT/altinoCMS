@@ -221,18 +221,18 @@ class inkomstenmodel
                     # code...
 
                 
-                    $this->__db->execute("INSERT INTO bouw_factur_details 
-			(factur_nr, 
-			waarvoor_id, 
-			quantity,
-			price) 
-			VALUES (
-			".$row[0].",
-			".$this->__params['POST']['warfortype'][$i].",
-			".$this->__params['POST']['warfortimespend'][$i].",
-			".$this->__params['POST']['warforquantity'][$i]."
-			)");
-                }
+                $this->__db->execute("INSERT INTO bouw_factur_details 
+				(factur_nr, 
+				waarvoor_id, 
+				quantity,
+				price) 
+				VALUES (
+				".$row[0].",
+				".$this->__params['POST']['warfortype'][$i].",
+				".$this->__params['POST']['warfortimespend'][$i].",
+				".$this->__params['POST']['warforquantity'][$i]."
+				)");
+            }
             }
         }
 		header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");

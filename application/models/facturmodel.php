@@ -74,7 +74,7 @@ class facturmodel
 
         return $z;
 
-    }
+    } 
 
     public function editFactura()
 	{
