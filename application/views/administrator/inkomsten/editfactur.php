@@ -17,7 +17,6 @@
 <?php
 // if($facturaModelData[0]['data']));
 $d = new DateTime($facturaModelData[0]['data']);
-// print_r($facturaModelData[0]['data']);
 ?>
 
 <?=add_metatags()?>
@@ -43,7 +42,7 @@ $d = new DateTime($facturaModelData[0]['data']);
 
 </head>
 
-<body onload=getAdres()>
+<body>
  
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
@@ -75,13 +74,46 @@ $d = new DateTime($facturaModelData[0]['data']);
                     <?='
                         <div>
                             <table id="kopia_wiersz" class="container"> 
-                                <tbody class="warforadd">' ?>
+                                <tbody class="warforadd">
+                                <tr style="display: none" class="nag ">
+                                        
+                                        <td class="">
+                                        <p class="rekaningText">Warvoor</p>
+                                        </td>
+                                        <td class="">
+                                        <select name="warfortype[]" class="form-control">';
+                                        foreach($getWarforTypes as $row){ ?>
+                                            <li>
+                                                <option value="<?php echo $row[0]; ?>"<?php if($row[0] == $rows['waarvoor_id']) echo" selected" ?>><?php echo $row[1]." (".$row[2]."%)"; ?></option>
+                                            </li>
+                                        <?php };
+
+                                           echo'</select>
+                                        </td>
+                                        <td class="">
+                                        <p class="rekaningText">Warvoor</p>
+                                        </td>
+                                        <td class="">
+                                            <input class="form-control" name="warfortimespend[]" value="">
+                                        </td>
+                                        <td class="">
+                                        <p class="rekaningText">Warvoor</p>
+                                        </td>
+                                        <td class="">
+                                            <input class="form-control" name="warforquantity[]" value="">
+                                            <input style="display: none;"name="warforInputId[]" value="" >
+                                        </td>
+                                        <td class=" del blok_mansys">
+                                            <button type="submit" class="warfor_id btn btn-danger mb-2" value="'.$rows["id"].'" onclick="removeWarfor('.$rows["id"].')" name="del-a" >X</button>
+                                            
+                                        </td>
+                                        
+                                    </tr>';?>
                     <?php 
                     $x = 0;
                      foreach(array_slice($facturaModelData, 1)  as $rows): ?>
-      
-                <?php echo '<tr class="nag ">
-                                        <input style="display: none;"name="warforInputId[]" value="'.$rows["id"].'" >
+                <?php echo '<tr style="display: flex" class="">
+                                        
                                         <td class="">
                                         <p class="rekaningText">Warvoor</p>
                                         </td>
@@ -106,14 +138,16 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         </td>
                                         <td class="">
                                             <input class="form-control" name="warforquantity[]" value="'.$rows["price"].'">
+                                            <input style="display: none;"name="warforInputId[]" value="'.$rows["id"].'" >
                                         </td>
                                         <td class=" del blok_mansys">
-                                            <input style=" width: auto; display:block; margin:0 auto;" class="btn btn-danger" name="del-a" value="X" >
+                                            <button type="submit" class="warfor_id btn btn-danger mb-2" value="'.$rows["id"].'" onclick="removeWarfor('.$rows["id"].')" name="del-a" >X</button>
+                                            
                                         </td>
                                         
                                     </tr>';
                                     // $facturaModelData[0]['warforInputId'][] = $rows['id']
-
+                                    // <input style=" width: auto; display:block; margin:0 auto;" value="'.$rows["id"].'" class="btn btn-danger" name="del-a" value="X" >
                                     
                     ?>
                     <?php endforeach; ?>
@@ -121,7 +155,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                             </table>
                         </div>';?>
                 </div>
-                <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
+                <button type="button" class="btn btn-danger mb-2 btn-small toevoegenadd" id="dodaj">Toevoegen + </button>
 				<div class="RekeningInside">
                     <p class="rekaningText">Data</p>
 
@@ -221,6 +255,28 @@ function addWarfor() {
                 quan++;
 
                 $(".warfor").html(html);
+            }
+        });
+};
+
+var warfor_id = 0;
+function removeWarfor(id) {      
+    warfor_id =id
+    var dataString = {
+        action: "removewarfor",
+        warfor_id: warfor_id
+        };
+
+        $.ajax
+        ({
+            type: "POST",
+            url: "administrator/inkomsten/warforremove",
+            data: dataString,
+            cache: false,
+            success: function(res)
+            {
+                alert('Waarvoor Verwijderd');
+                // $(".adresy").html(html);
             }
         });
 };

@@ -1,6 +1,6 @@
 <?php
 
-// error_reporting(E_ERROR | E_PARSE);
+error_reporting(E_ERROR | E_PARSE);
 
 class facturmodel
 {
@@ -53,6 +53,17 @@ class facturmodel
         }
 
         
+        $y = $this->getAllWarforForAdres();
+
+        $z = array_merge($x, $y);
+       
+        // print_r($z);
+
+        return $z;
+
+    } 
+
+    private function getAllWarforForAdres() {
         $dataWarfor = $this->__db->execute("SELECT 
         factur_nr,
         waarvoor_id,
@@ -66,15 +77,12 @@ class facturmodel
         foreach($dataWarfor as $q){
 
             array_push($y, $q);
+            // print_r($q);
 
         }
-        $z = array_merge($x, $y);
-       
-        // print_r($z);
 
-        return $z;
-
-    } 
+        return $y;
+    }
 
     public function editFactura()
 	{
@@ -92,37 +100,50 @@ class facturmodel
 			data = '$data' 
             WHERE factur_numer = $factur
             ");
-//print_r($this->__params['POST']);
-                for ($i=0; $i < 5; $i++) {
-                    # code...
-          
-            $warfortype = $this->__params['POST']['warfortype'][$i];
-            $warfortimespend = $this->__params['POST']['warfortype'][$i];
-            $warforquantity = $this->__params['POST']['warforquantity'][$i];
-            echo 'jest:'. $this->__params['POST']['warforInputId'][$i]    ;  
-            
-           if(isset($warfortype)){
-                
-               // print_r($warfortype." / ");
-              //  print_r($warfortimespend." / ");
-//print_r($warforquantity." / ");
-            $r = $this->__db->execute("UPDATE bouw_factur_details 
-            SET
-            factur_nr = '".$factur."',
-            waarvoor_id = '".$this->__params['POST']['warfortype'][$i]."', 
-            quantity = '".$this->__params['POST']['warfortimespend'][$i]."',
-            price = '".$this->__params['POST']['warforquantity'][$i]."'
-            WHERE factur_nr = ".$this->__params['POST']['warforInputId'][$i]."
-            ");
-            // print_r($this->__params['POST']['warfortype'][$i]." / ");
-            }
-            
+
+            $i = 1;
+
+            if (count($this->__params['POST']['warforInputId']) >= count($this->getAllWarforForAdres())) {
+                foreach (array_slice($this->__params['POST']['warforInputId'], 1) as $row) {
+                    $id = $this->__params['POST']['warforInputId'][$i];
+                    $allwarfor = $this->getAllWarforForAdres()[$i - 1];
+                    if (in_array($id, $allwarfor)) {
+                    $r = $this->__db->execute("UPDATE bouw_factur_details 
+                    SET
+                    factur_nr = '".$factur."',
+                    waarvoor_id = '".$this->__params['POST']['warfortype'][$i]."', 
+                    quantity = '".$this->__params['POST']['warfortimespend'][$i]."',
+                    price = '".$this->__params['POST']['warforquantity'][$i]."'
+                    WHERE id = '".$this->__params['POST']['warforInputId'][$i]."'
+                    ");
+                        // print_r(" [ ".$r." / ");
+                        } else {
+                            $this->__db->execute("INSERT INTO bouw_factur_details 
+                        (factur_nr, 
+                        waarvoor_id, 
+                        quantity,
+                        price) 
+                        VALUES (
+                        ".$factur.",
+                        ".$this->__params['POST']['warfortype'][$i].",
+                        ".$this->__params['POST']['warfortimespend'][$i].",
+                        ".$this->__params['POST']['warforquantity'][$i]."
+                        )");
+                        }
+                  
+                    $i++;
+                    
                 }
-            
-            
-          print_r(" [ ".$r." / ");
-            // header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
-        }	
+            }
+            header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
+        }
+    }
+
+    public function removewarfor() {
+        if ($this->__params['POST']['action'] == 'removewarfor') {
+            $this->__db->execute("DELETE FROM bouw_factur_details WHERE id = ".$this->__params['POST']['warfor_id']);
+        }
+
     }
 
 }

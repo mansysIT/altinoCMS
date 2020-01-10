@@ -1,5 +1,5 @@
-.btn-small{
-    width: 13%;
+.toevoegenadd{
+    width: 20%;
 }
 
 .warforadd .rekaningText {
@@ -13,7 +13,7 @@
         flex-direction: column;
     }
 
-    .btn-small{
+    .toevoegenadd{
         width: 100%!important;
     }
 }

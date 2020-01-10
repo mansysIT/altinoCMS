@@ -95,6 +95,11 @@ class inkomsten extends controller
 		$this->main->translate_helper;
 	}
 
+	public function warforremove()
+	{
+		$this->model->administrator;
+		$this->main->model_helper;
+	}
 	
 }
 
