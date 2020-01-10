@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 10 Sty 2020, 16:09
+-- Czas generowania: 10 Sty 2020, 22:32
 -- Wersja serwera: 10.4.11-MariaDB
 -- Wersja PHP: 7.2.26
 
@@ -242,7 +242,7 @@ INSERT INTO `bouw_factur_details` (`id`, `factur_nr`, `waarvoor_id`, `quantity`,
 (39, 26, 2, 40, 40),
 (40, 25, 1, 10, 10),
 (41, 26, 2, 5, 5),
-(44, 32, 1, 9, 8),
+(44, 32, 1, 1, 1),
 (45, 33, 1, 11, 80),
 (47, 33, 2, 50, 40);
 
@@ -342,6 +342,18 @@ INSERT INTO `bouw_proforma_details` (`id`, `proforma_nr`, `waarvoor_id`, `quanti
 (4, 2, 1, 20, 5),
 (5, 3, 1, 10, 2),
 (7, 4, 1, 44, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `bouw_proforma_mail`
+--
+
+CREATE TABLE `bouw_proforma_mail` (
+  `id` int(11) NOT NULL,
+  `proforma_id` int(11) NOT NULL,
+  `data_czas` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -524,6 +536,12 @@ ALTER TABLE `bouw_proforma_details`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeksy dla tabeli `bouw_proforma_mail`
+--
+ALTER TABLE `bouw_proforma_mail`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `bouw_uitgaven`
 --
 ALTER TABLE `bouw_uitgaven`
@@ -610,6 +628,12 @@ ALTER TABLE `bouw_proforma`
 --
 ALTER TABLE `bouw_proforma_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT dla tabeli `bouw_proforma_mail`
+--
+ALTER TABLE `bouw_proforma_mail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_uitgaven`

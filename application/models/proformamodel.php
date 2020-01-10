@@ -8,7 +8,9 @@ class proformamodel
     public $query;
     private $bedrag;
 	public $cityArray = Array();
-	public $adresArray = Array();
+    public $adresArray = Array();
+    
+    public $ilosc_maili = 0;
 
 	private $__config;
 	private $__router;
@@ -425,6 +427,30 @@ class proformamodel
         }
 
     }
+
+    public function proform_ilosc_maili($id_proforma) {
+		
+        $dzis = date('Y-m-d');
+        
+        $db_query_m = array();
+
+        if (isset($this->__params[2])) {
+            $db_query_m = $this->__db->execute("SELECT `id` FROM `bouw_proforma_mail` WHERE `proforma_id` =  ".$this->__params[2]." ");
+        } else {
+            $db_query_m = $this->__db->execute("SELECT `id` FROM `bouw_proforma_mail` WHERE `proforma_id` =  ".$id_proforma." ");
+        }
+        // print_r($db_query_m);
+
+        foreach ($db_query_m as $row) {
+	
+			
+				$this->ilosc_maili++;
+	
+		}
+		// print_r($this->ilosc_maili);
+		return $this->ilosc_maili;
+	
+	}	 
 }
 
 ?>

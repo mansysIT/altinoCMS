@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/packages/mailer/class.phpmailer.php');
 class smtpmailer {
 
     public function send(){
-        $this->wyslij_maila_smtp('kw-53@wp.pl', 'testsmtp', 'testowa tresc wiadomosci');
+        $this->wyslij_maila_smtp('kw-53@wp.pl', 'testsmtp', 'testowa tresc wiadomosci',$_SERVER['DOCUMENT_ROOT'].'proforma.pdf');
     }
 
     function wyslij_maila_smtp($do, $temat, $wiadomosc, $plik = NULL){
