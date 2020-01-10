@@ -88,11 +88,11 @@ class uitgavenmodel
     public function adres($od, $do, $word, $city_id = null) {
 		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
 		if($city_id != null){
-			$this->query = $this->__db->querymy("SELECT bouw_uitgaven .id, bouw_city.city, bouw_adresy.adres, bouw_uitgaven.oferten_id, bouw_uitgaven.price, bouw_uitgaven.data FROM `bouw_adresy`
+			$this->query = $this->__db->querymy("SELECT bouw_uitgaven .id, bouw_city.city, bouw_adresy.adres, bouw_uitgaven.oferten_id, bouw_uitgaven.price, bouw_uitgaven.data, bouw_uitgaven.waarvoor_id FROM `bouw_adresy`
              INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
              INNER JOIN bouw_uitgaven ON bouw_uitgaven.adres_id = bouw_adresy.id WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%'  ORDER BY bouw_uitgaven.id DESC");
 		} else {
-			$this->query = $this->__db->querymy("SELECT bouw_uitgaven.id, bouw_city.city, bouw_adresy.adres, bouw_uitgaven.oferten_id, bouw_uitgaven.price, bouw_uitgaven.data FROM `bouw_adresy`
+			$this->query = $this->__db->querymy("SELECT bouw_uitgaven.id, bouw_city.city, bouw_adresy.adres, bouw_uitgaven.oferten_id, bouw_uitgaven.price, bouw_uitgaven.data, bouw_uitgaven.waarvoor_id FROM `bouw_adresy`
             INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
             INNER JOIN bouw_uitgaven ON bouw_uitgaven.adres_id = bouw_adresy.id 
             WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' ORDER BY bouw_uitgaven.id DESC"); 
@@ -111,10 +111,10 @@ class uitgavenmodel
        return $this->cityArray;
     }
      
-    public function removeFactur(){
-		if(isset($this->__params['POST']['facturremove']) && $this->__params['POST']['facturremove'] != null) {
-			$this->__db->execute("DELETE FROM bouw_factur WHERE id = '".$this->__params['POST']['facturremove']."'");
-			header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
+    public function removeUitgaaf(){
+		if(isset($this->__params['POST']['uitgaafremove']) && $this->__params['POST']['uitgaafremove'] != null) {
+			$this->__db->execute("DELETE FROM bouw_uitgaven WHERE id = '".$this->__params['POST']['uitgaafremove']."'");
+			header("Location: ".SERVER_ADDRESS."administrator/uitgaven/index");
 		}
     }
 	
@@ -300,12 +300,14 @@ class uitgavenmodel
 			$this->__db->execute("INSERT INTO bouw_uitgaven 
 			(adres_id, 
 			oferten_id, 
+			waarvoor_id, 
 			price,
 			data
 			) 
 			VALUES (
 			'".$this->__params['POST']['adres']."',
-			'9',
+			'".$this->__params['POST']['oferte_id']."',
+			'".$this->__params['POST']['waarvoor']."',
 			'".$this->__params['POST']['price']."',
 			'".$data."' 
 			)");

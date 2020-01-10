@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <?php $sidebarController=model_load('nieuwe_adressmodel', 'getCityName', '')?>
+<?php $uitgavenModelData=model_load('uitgaafmodel', 'showdata', '')?> 
 
 <?=add_metatags()?>
 
@@ -27,11 +28,15 @@
 <script src="/application/media/js/nieuwe_adress.js"></script>
 
 <body>
-
+ 
 <?php
 $waarvoor = array();
 $waarvoor = model_load('waarvoormodel', 'getWaarvoor', ''); 
 model_load('uitgavenmodel', 'saveUitgaaf', ''); 
+
+
+echo 'jest'; 
+print_r($uitgavenModelData);
 
 ?>    
  
@@ -49,13 +54,13 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                     <select name="city" class="miasta form-control" id="exampleFormControlSelect1">
                     <option value="">SELECT CITY</option>
                     <?php foreach($sidebarController as $row): ?>
-                        <li>
-                            <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
+                        <li> 
+                        <option value="<?php echo $row[0]; ?>"<?php if(!empty($uitgavenModelData) && $row[0] == $uitgavenModelData[0]['city_id']) echo "selected" ?>><?php echo $row[1]; ?></option>
                         </li>
-                    <?php endforeach; ?>
+                    <?php endforeach; ?> 
                     </select>
                 </div>  
-                <div class="RekeningInside">
+                <div class="RekeningInside"> 
                     <p class="rekaningText">Adres</p>
                     <select name="adres" class="adresy form-control" id="exampleFormControlSelect1">
                         <option value="999">SELECT ADRES</option>
@@ -64,18 +69,32 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                 </div>
                 <div class="RekeningInside">
                     <p class="rekaningText">Waarvoor</p> 
-                    <select name="waarvoor" class="miasta form-control" id="exampleFormControlSelect1">
+                    <select name="waarvoor" class="form-control" id="exampleFormControlSelect1">
                     <option value="">KIEZ</option>
-                    <?php foreach($waarvoor as $row): ?>
+                    <?php foreach($waarvoor as $row): ?> 
                         <li>
-                            <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
+                            <option value="<?php echo $row[0]; ?>"<?php if(!empty($uitgavenModelData) && $row[0] == $uitgavenModelData[0]['waarvoor_id']) echo 'selected'; ?>><?php echo $row[1]; ?></option>
                         </li>
                     <?php endforeach; ?> 
                     </select>
+                </div>
+                
+                <div class="RekeningInside">
+                    <p class="rekaningText">Oferten</p> 
+                    <select name="oferte_id" class="form-control" id="exampleFormControlSelect1">
+                    <option value="">KIEZ</option>
+                    <option value="1">oferta 1</option>
+                    <!-- <?php foreach($offerten as $row): ?> 
+                        <li>
+                            <option value="<?php echo $row[0]; ?>"<?php if(!empty($uitgavenModelData) && $row[0] == $uitgavenModelData[0]['oferte_id']) echo 'selected'; ?>><?php echo $row[1]; ?></option>
+                        </li>
+                    <?php endforeach; ?>  -->
+                    </select>
                 </div>  
+                
 				<div class="RekeningInside">
                     <p class="rekaningText">Bedrag</p>
-                    <input class="inputPrice" type="text" name="price" value='' >
+                    <input class="inputPrice" type="text" name="price" value="<?php if(!empty($uitgavenModelData)) echo $uitgavenModelData[0]['price']; ?>" >
                 </div>
                 <div class="RekeningInside">
                     <p class="rekaningText">Datum</p>
@@ -101,7 +120,7 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
 
 $(document).ready(function()
 {
-
+ 
     $(".miasta").change(function()
     {
         
@@ -125,28 +144,64 @@ $(document).ready(function()
     });
 
 });
+</script>
 
-var quan = 0;
-function addWarfor() {
-        
-            var quantity = quan;
-            var dataString = {
-            action: "warfor",
-            quantity: quantity
+<?php 
+
+if($uitgavenModelData){
+
+    echo '<script type="text/javascript" >
+    window.onload = function() {    
+        var id_miasto = $(".miasta").val();
+        var id_adres = '.$uitgavenModelData[0]["id"].'
+        var dataString = {
+            action: "miasta",
+            id_miasto: id_miasto,
+            id_adres: id_adres
             };
+            // alert(res);
             $.ajax
             ({
                 type: "POST",
-                url: "administrator/inkomsten/addWarforajax",
+                url: "administrator/inkomsten/inkomstenajax",
                 data: dataString,
                 cache: false,
                 success: function(html)
                 {
-                    quan++;
-
-                    $(".warfor").html(html);
+                    res = html;
+                    $(".adresy").html(html);
                 }
             });
-    };
+            };
+
+            </script>';
+
+
+  }   
+?>   
+
+<script type="text/javascript" >
+var quan = 0;
+function addWarfor() {      
+        var quantity = quan;
+        var dataString = {
+        action: "warfor",
+        quantity: quantity
+        
+        };
+        $.ajax
+        ({
+            type: "POST",
+            url: "administrator/inkomsten/addWarforajax",
+            data: dataString,
+            cache: false,
+            success: function(html)
+            {
+                quan++;
+
+                $(".warfor").html(html);
+            }
+        });
+};
 
 </script>
