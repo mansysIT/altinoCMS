@@ -285,13 +285,13 @@ $pdf = new FPDF();
 			$ilosc_znakow = strlen(number_format($total,2,',', '.'));
 
 		if($ilosc_znakow == 6)
-		$ilosc_znakow +=10;
+		$ilosc_znakow +=5;
 
 		if($ilosc_znakow == 5)
-		$ilosc_znakow +=15;
+		$ilosc_znakow +=9;
 
 		if($ilosc_znakow == 4)
-		$ilosc_znakow +=16;
+		$ilosc_znakow +=10;
 
 		$pdf->SetXY(169 + $ilosc_znakow,$wysokosc);
 		if ($warrvoor == 0)

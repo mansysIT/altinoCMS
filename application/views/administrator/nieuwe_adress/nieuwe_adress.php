@@ -34,6 +34,7 @@
  
 <?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
+    <h1>Nieuw adres</h1>
     <?=module_load('nieuweadressmenu')?>
     <div class="maincontainer">
             <form action="administrator/nieuwe_adress/savenieuwe_adress" method="post">
