@@ -26,7 +26,7 @@ $(document).ready(function () {
 
     $('#dodaj').on('click', function () {
 
-		nowywiersz(index, "<tr class=warforadd'>"+row_one+"</tr>");
+		nowywiersz(index, "<tr style='display: flex' class=warforadd'>"+row_one+"</tr>");
         index++;
     });
 
