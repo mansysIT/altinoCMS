@@ -5,7 +5,7 @@
 class waarvoormodel 
 {
   
-    public $waarvoorArray = array();
+    
  
 	private $__config;
 	private $__router;
@@ -21,16 +21,21 @@ class waarvoormodel
         $this->__db = registry::register("db");
 	}
 
-    public function getWaarvoor(){
+    public function getWaarvoor($waarvoor_id=null){
 
+        $waarvoorArray = array();
 
-		$this->query = $this->__db->querymy("SELECT * FROM `bouw_waarvoor`");
+        $dod = '';
+        if($waarvoor_id != 0)
+            $dod = 'WHERE id = '.$waarvoor_id;
+
+		$this->query = $this->__db->querymy("SELECT * FROM `bouw_waarvoor` ".$dod."");
         
         foreach($this->query->fetch_all() as $q){
-            array_push($this->waarvoorArray, $q);
+            array_push($waarvoorArray, $q);
         }
 
-       return $this->waarvoorArray; 
+       return $waarvoorArray;   
     }
 }
   

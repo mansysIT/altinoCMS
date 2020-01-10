@@ -28,14 +28,17 @@
 
 
 <?php 
-$adress=model_load('uitgavenmodel', 'removeFactur', '');
+$adress=model_load('uitgavenmodel', 'removeUitgaaf', '');
 $adress=model_load('uitgavenmodel', 'getFactur', ''); 
+//$waarvoor=model_load('waarvoormodel', 'getwaarvoor', '1');
 
+//print_r($waarvoor); 
  
 $d = new DateTime(date("Y-m-d"));
 
 $dOd = new DateTime(date("Y-m-d"));
 $dOd->modify('first day of this month');   
+
 
 ?> 
 
@@ -71,6 +74,7 @@ $dOd->modify('first day of this month');
 					<th onclick="sortTable(1)">STAD</th>
 					<th onclick="sortTable(2)">ADRES</th>
 					<th onclick="sortTable(3)">OFFERTEN</th> 
+					<th onclick="sortTable(3)">WAARVOOR</th> 
 					<th onclick="sortTable(4)">BEDRAG</th>
 					<th onclick="sortTable(5)">DATUM</th>
 					<th>ACTION</th>
@@ -79,17 +83,43 @@ $dOd->modify('first day of this month');
 		<tbody>
 			
         
-			<?php foreach($adress as $row): ?> 
+			<?php 
+			$total  = 0;
+			
+			foreach($adress as $k=>$row): 
+
+				$w = model_load('waarvoormodel', 'getwaarvoor', $row[6]); 
+				$waar = $w[0][1]; 
+				$total += $row[4];
+	
+				// $w = '';
+				// echo '<pre>';
+				// $w =  $waarvoor[$k][1];  
+				// //print_r($waarvoor);
+				// echo '<br>bbb:'.$w;
+				?>  
 				<tr>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[0]</a>" ?></td>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[1]</a>" ?></td>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[2]</a>" ?></td>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[3]</a>" ?></td>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[4]</a>" ?></td>
-					<td><?=" <a style='color: #000!important;' href='administrator/adressen/adres/$row[0]/adress'>$row[5]</a>" ?></td>
-					<td> <form  method="post" action=""><button class="btnCityRemove" type="submit" name="facturremove" value="<?php echo $row[0]; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$row[0]</a>" ?></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$row[1]</a>" ?></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$row[2]</a>" ?></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$row[3]</a>" ?></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$waar</a>" ?></td> 
+					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>€ ".number_format($row[4],2,',', '.')."</a>" ?></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$row[5]</a>" ?></td>
+					<td> <form  method="post" action=""><button class="btnCityRemove" type="submit" name="uitgaafremove" value="<?php echo $row[0]; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form></td>
 				</tr>
-			<?php endforeach; ?>
+			<?php endforeach; ?> 
+
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><?="€ ".number_format($total,2,',', '.')."" ?></td>
+				<td></td>
+				<td></td>
+			</tr>
 		</tbody>
 		</table>
 	</div>
