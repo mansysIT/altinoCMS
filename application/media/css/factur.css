@@ -7,11 +7,16 @@
     margin: 0;
     width: auto;
     padding: 0;
+    line-height: 42px;
 }
 
 .form-control-small {
     width: 100px!important;
     text-align: center;
+}
+
+#myForm {
+    padding-top: 50px;
 }
 @media only screen and (max-width: 768px) {
     .warforadd tr{

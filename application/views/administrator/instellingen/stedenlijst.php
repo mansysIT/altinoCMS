@@ -35,6 +35,7 @@ $sidebarController = model_load('instellingenmodel', 'stedenlijstGetCityName', '
  
 	<?=module_load('SIDEBAR')?>
     <div class="stedenlijstholder">
+    <h1 style="margin-bottom: 30px">Instellingen</h1>
     <?=module_load('instellingenmenu')?>
     <div class="maincontainer">
         <ul class="list-group list-group-flush">

@@ -48,7 +48,8 @@ $d = new DateTime($facturaModelData[0]['data']);
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
     <div class="maincontainer">
-    <form action="" method="post">
+    <h1>Proforma Bewerken</h1>
+    <form action="" method="post" id="myForm">
             <div class="bottomHolder">
             <div class="rekaning">
                 <div class="RekeningInside">
@@ -103,7 +104,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                                            echo'</select>
                                         </td>
                                         <td class="">
-                                        <p class="rekaningText">Nummer</p>
+                                        <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
                                             <input class="form-control form-control-small" name="warfortimespend[]" value="">

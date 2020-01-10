@@ -47,7 +47,8 @@ $d = new DateTime(date("Y-m-d"));
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
     <div class="maincontainer">
-    <form action="administrator/inkomsten/savefactur" method="post">
+    <h1>Factuur Aanmaken</h1>
+    <form action="administrator/inkomsten/savefactur" method="post"  id="myForm">
             <div class="bottomHolder">
             <div class="rekaning">
                 <div class="RekeningInside">
@@ -102,7 +103,7 @@ $d = new DateTime(date("Y-m-d"));
                                            echo'</select>
                                         </td>
                                         <td class="">
-                                            <p class="rekaningText">Nummer</p>
+                                            <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
                                             <input class="form-control form-control-small" name="warfortimespend[]" placeholder="0" value="">

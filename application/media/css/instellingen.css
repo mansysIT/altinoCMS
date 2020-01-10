@@ -66,6 +66,7 @@
     padding: 0;
     margin: 0;
     width: 30%;
+    padding-bottom: 30px!important;
 }
 
 @media only screen and (max-width: 768px) {

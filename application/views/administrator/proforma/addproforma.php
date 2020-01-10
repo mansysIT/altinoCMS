@@ -47,6 +47,7 @@ $d = new DateTime(date("Y-m-d"));
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
     <div class="maincontainer">
+    <h1>Proforma Aanmaken</h1>
     <form action="administrator/proforma/saveproforma" method="post" id="myForm">
             <div class="bottomHolder">
             <div class="rekaning">
@@ -99,7 +100,7 @@ $d = new DateTime(date("Y-m-d"));
                                            echo'</select>
                                         </td>
                                         <td class="">
-                                        <p class="rekaningText">Nummer</p>
+                                        <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
                                             <input id="num1" class="form-control form-control-small" name="warfortimespend[]" placeholder="0" value="">
