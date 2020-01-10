@@ -9,9 +9,9 @@
 <head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<?=model_load('facturmodel', 'editFactura', '')?>
+<?=model_load('proformamodel', 'editProforma', '')?>
 <?php $getCityId=model_load('nieuwe_adressmodel', 'getCityName', '')?>
-<?php $facturaModelData=model_load('facturmodel', 'showdata', '')?>
+<?php $facturaModelData=model_load('proformamodel', 'showdata', '')?>
 <?php $getWarforTypes = model_load('inkomstenmodel', 'getAllWarforType', '')?>
 <?php $oferten = model_load('facturmodel', 'getOferten', '')?>
 
@@ -69,7 +69,6 @@ $d = new DateTime($facturaModelData[0]['data']);
                         <option>SELECT ADRES</option>
                     </select>
                 </div>
-
                 <div class="RekeningInside">
                     <p class="rekaningText">Oferten</p>
                     <select name="oferten" class="oferten form-control" id="exampleFormControlSelect1">
@@ -144,7 +143,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <p class="rekaningText">Nummer</p>
                                         </td>
                                         <td class="">
-                                            <input id="aaa" class="form-control form-control-small" name="warfortimespend[]" value="'.$rows["quantity"].'">
+                                            <input class="form-control form-control-small" name="warfortimespend[]" value="'.$rows["quantity"].'">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
@@ -177,7 +176,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                 <div style="display: none" class="RekeningInside">
                     <p class="rekaningText">Factuurnummer</p>
 
-                    <input  class="inputNewHuurder form-control-small" type="number" name="facturnumer" value="<?=$facturaModelData[0]['factur_numer'] ?>">
+                    <input class="inputNewHuurder form-control-small" type="number" name="facturnumer" value="<?=$facturaModelData[0]['proforma_numer'] ?>">
                 </div>
                 <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Toevoegen</button>
             </div>
@@ -283,7 +282,7 @@ function removeWarfor(id) {
         $.ajax
         ({
             type: "POST",
-            url: "administrator/inkomsten/warforremove",
+            url: "administrator/proforma/warforremove",
             data: dataString,
             cache: false,
             success: function(res)

@@ -66,7 +66,7 @@ class inkomstenmodel
 			$d = new DateTime(date("Y-m-d"));
 			
 			$dOd = new DateTime(date("Y-m-d"));
-			$dOd->modify('-12 month');
+			$dOd->modify('first day of this month');  
 
 			$this->od = $dOd->format('Y-m-d');
 			$this->do = $d->format('Y-m-d');
@@ -199,6 +199,7 @@ class inkomstenmodel
 	{
 
 		if(isset($this->__params['POST']['savewarfor'])) {
+			print_r($this->__params['POST']['adres']);
 			$this->__db->execute("INSERT INTO bouw_factur 
 			(adres_id, 
 			oferten_id, 
@@ -206,7 +207,7 @@ class inkomstenmodel
 			data) 
 			VALUES (
 				'".$this->__params['POST']['adres']."',
-				'6',
+				'".$this->__params['POST']['oferten']."',
 				'".$this->getLastFacturNr()."',
 				'".$this->__params['POST']['facturdata']."'
 				)");

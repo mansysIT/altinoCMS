@@ -254,7 +254,7 @@ class proformamodel
 			data) 
 			VALUES (
 				'".$this->__params['POST']['adres']."',
-				'6',
+				'".$this->__params['POST']['oferten']."',
 				'".$this->getLastProformaNr()."',
 				'".$this->__params['POST']['proformadata']."'
 				)");
@@ -294,6 +294,136 @@ class proformamodel
         }
 
         return $x;
+    }
+
+    public function showdata() {
+
+        $data = $this->__db->execute("SELECT 
+        city.city_id,
+        city.city,
+        adresy.adres, 
+        adresy.postcode,
+        -- adresy.private_naam,
+        -- adresy.private_achternaam,
+        -- adresy.private_id_kaart,
+        -- adresy.private_tel,
+        -- adresy.private_geboortedatum,
+        -- adresy.bedrijf_bedrijf,
+        -- adresy.bedrijf_adres,
+        -- adresy.bedrijf_postcode,
+        -- adresy.bedrijf_stad,
+        -- adresy.bedrijf_kvk,
+        -- adresy.bedrijf_btw,
+        -- adresy.bedrijf_tel,
+        -- adresy.email,
+        -- adresy.rekening,
+        proforma.data,
+        proforma.proforma_numer,
+        adresy.id,
+        proforma.oferten_id
+        
+        FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
+        INNER JOIN bouw_proforma AS proforma ON adresy.id = proforma.adres_id 
+        WHERE proforma.proforma_numer = ".$this->__params[1]);
+        $x = array();
+        foreach($data as $q){
+            array_push($x, $q);
+
+        }
+
+        
+        $y = $this->getAllWarforForAdres();
+
+        $z = array_merge($x, $y);
+       
+        // print_r($z);
+
+        return $z;
+
+    } 
+
+    private function getAllWarforForAdres() {
+        $dataWarfor = $this->__db->execute("SELECT 
+        proforma_nr,
+        waarvoor_id,
+        quantity,
+        price,
+        id
+        FROM bouw_proforma_details 
+        WHERE proforma_nr = ".$this->__params[1]);
+
+        $y = array();
+        foreach($dataWarfor as $q){
+
+            array_push($y, $q);
+            // print_r($q);
+
+        }
+
+        return $y;
+    }
+
+    public function editProforma()
+	{
+		if(isset($this->__params['POST']['editwarfor'])) {
+
+            $adres = $this->__params['POST']['adres'];
+            $factur =$this->__params['POST']['facturnumer'];
+            $data = $this->__params['POST']['facturdata'];
+            $oferten = $this->__params['POST']['oferten'];
+
+			$this->__db->execute("UPDATE bouw_proforma 
+            SET
+			adres_id = $adres,
+			oferten_id = $oferten, 
+			proforma_numer = $factur,
+			data = '$data' 
+            WHERE proforma_numer = $factur
+            ");
+
+            $i = 1;
+
+            if (count($this->__params['POST']['warforInputId']) >= count($this->getAllWarforForAdres())) {
+                foreach (array_slice($this->__params['POST']['warforInputId'], 1) as $row) {
+                    $id = $this->__params['POST']['warforInputId'][$i];
+                    $allwarfor = $this->getAllWarforForAdres()[$i - 1];
+                    if (in_array($id, $allwarfor)) {
+                    $r = $this->__db->execute("UPDATE bouw_proforma_details 
+                    SET
+                    proforma_nr = '".$factur."',
+                    waarvoor_id = '".$this->__params['POST']['warfortype'][$i]."', 
+                    quantity = '".$this->__params['POST']['warfortimespend'][$i]."',
+                    price = '".$this->__params['POST']['warforquantity'][$i]."'
+                    WHERE id = '".$this->__params['POST']['warforInputId'][$i]."'
+                    ");
+                        // print_r(" [ ".$r." / ");
+                        } else {
+                            $this->__db->execute("INSERT INTO bouw_proforma_details 
+                        (proforma_nr, 
+                        waarvoor_id, 
+                        quantity,
+                        price) 
+                        VALUES (
+                        ".$factur.",
+                        ".$this->__params['POST']['warfortype'][$i].",
+                        ".$this->__params['POST']['warfortimespend'][$i].",
+                        ".$this->__params['POST']['warforquantity'][$i]."
+                        )");
+                        }
+                  
+                    $i++;
+                    
+                }
+            }
+            header("Location: ".SERVER_ADDRESS."administrator/proforma/proforma");
+        }
+    }
+
+    public function removewarfor() {
+        if ($this->__params['POST']['action'] == 'removewarfor') {
+            $this->__db->execute("DELETE FROM bouw_proforma_details WHERE id = ".$this->__params['POST']['warfor_id']);
+        }
+
     }
 }
 
