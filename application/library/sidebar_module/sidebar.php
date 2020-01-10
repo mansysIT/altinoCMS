@@ -33,6 +33,9 @@
                 <a href="administrator/uitgaven/index">Uitgaven</a> 
             </li>
             <li>
+                <a href="administrator/proforma/proforma">Proforma</a> 
+            </li>
+            <li>
                 <a href="administrator/instellingen/stedenlijst">Instellingen</a>
             </li>
         </ul>

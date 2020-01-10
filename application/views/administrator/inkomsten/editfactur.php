@@ -9,14 +9,15 @@
 <head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+<?=model_load('facturmodel', 'editFactura', '')?>
 <?php $getCityId=model_load('nieuwe_adressmodel', 'getCityName', '')?>
 <?php $facturaModelData=model_load('facturmodel', 'showdata', '')?>
 <?php $getWarforTypes = model_load('inkomstenmodel', 'getAllWarforType', '')?>
-<?=model_load('facturmodel', 'editFactura', '')?>
-<?php
-$d = new DateTime($facturaModelData[0]['data']);
 
+<?php
+// if($facturaModelData[0]['data']));
+$d = new DateTime($facturaModelData[0]['data']);
+// print_r($facturaModelData[0]['data']);
 ?>
 
 <?=add_metatags()?>
@@ -37,6 +38,8 @@ $d = new DateTime($facturaModelData[0]['data']);
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="/application/media/js/nieuwe_adress.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script src="/application/media/js/addfileds.js"></script>
 
 </head>
 
@@ -75,9 +78,10 @@ $d = new DateTime($facturaModelData[0]['data']);
                                 <tbody class="warforadd">' ?>
                     <?php 
                     $x = 0;
-                     foreach(array_slice($facturaModelData,1)  as $rows): ?>
+                     foreach(array_slice($facturaModelData, 1)  as $rows): ?>
       
                 <?php echo '<tr class="nag ">
+                                        <input style="display: none;"name="warforInputId[]" value="'.$rows["id"].'" >
                                         <td class="">
                                         <p class="rekaningText">Warvoor</p>
                                         </td>
@@ -104,9 +108,11 @@ $d = new DateTime($facturaModelData[0]['data']);
                                             <input class="form-control" name="warforquantity[]" value="'.$rows["price"].'">
                                         </td>
                                         <td class=" del blok_mansys">
-                                            <input style=" width: auto; display:block; margin:0 auto;" class="btn btn-danger" name="del-a" type="submit" value="X" >
+                                            <input style=" width: auto; display:block; margin:0 auto;" class="btn btn-danger" name="del-a" value="X" >
                                         </td>
+                                        
                                     </tr>';
+                                    // $facturaModelData[0]['warforInputId'][] = $rows['id']
 
                                     
                     ?>
@@ -119,7 +125,7 @@ $d = new DateTime($facturaModelData[0]['data']);
 				<div class="RekeningInside">
                     <p class="rekaningText">Data</p>
 
-                    <input class="inputNewHuurder" type="date" name="facturdata" value="<?php echo $d->format('Y-m-d') ?>">
+                    <input class="inputNewHuurder" type="date" name="facturdata" value="<?php echo $facturaModelData[0]['data']?>">
                 </div>
                 <div class="RekeningInside">
                     <p class="rekaningText">Factuurnummer</p>
@@ -173,9 +179,11 @@ $(document).ready(function()
 
 window.onload = function() {    
     var id_miasto = $(".miasta").val();
+    var id_adres = <?=$facturaModelData[0]['id']?>;
     var dataString = {
         action: "miasta",
-        id_miasto: id_miasto
+        id_miasto: id_miasto,
+        id_adres: id_adres
         };
         // alert(res);
         $.ajax

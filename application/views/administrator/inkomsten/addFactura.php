@@ -24,6 +24,10 @@
     
 <?=icon_load("pp_fav.ico")?>
 
+<?php
+$d = new DateTime(date("Y-m-d"));
+?>
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 
@@ -62,7 +66,7 @@
                         <option>SELECT ADRES</option>
                     </select>
                 </div>
-                <p class="rekaningText">Warvoor</p>
+                <!-- <p class="rekaningText">Warvoor</p> -->
                 
                 <div class="RekeningInside">
                 <?php
@@ -72,7 +76,7 @@
                                 <tbody class="warforadd">                             
                                     <tr class="nag ">
                                         <td class="">
-                                            <h5 class="">Naam</h5>
+                                            <p class="rekaningText">Warvoor</p>
                                         </td>
                                         <td class="">
                                         <select name="warfortype[]" class="form-control">';
@@ -85,16 +89,16 @@
                                            echo'</select>
                                         </td>
                                         <td class="">
-                                            <h5 class="">Achternaam</h5>
+                                            <p class="rekaningText">Nummer</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control" name="warfortimespend[]" value="">
+                                            <input class="form-control" name="warfortimespend[]" placeholder="0" value="">
                                         </td>
                                         <td class="">
-                                        <h5 class="">Achternaam</h5>
+                                        <p class="rekaningText">Prijs</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control" name="warforquantity[]" value="">
+                                            <input class="form-control" name="warforquantity[]" placeholder="0" value="">
                                         </td>
                                         <td class=" del blok_mansys">
                                             <input style=" width: auto; display:block; margin:0 auto;" class="btn btn-danger" name="del-a" type="submit" value="X" >
@@ -109,7 +113,7 @@
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
 				<div class="RekeningInside">
                     <p class="rekaningText">Data</p>
-                    <input class="inputNewHuurder" type="date" name="facturdata" value='' >
+                    <input class="inputNewHuurder" type="date" name="facturdata" value='<?=$d->format('Y-m-d')?>' >
                 </div>
    
             </div>
