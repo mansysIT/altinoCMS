@@ -92,8 +92,7 @@ class inkomstenmodel
             $result = $q[0]*$q[1];
             $bedgarSum += $result;
         }
-        // array_push($bedgarSum, $result);
-
+		// array_push($bedgarSum, $result);
         return $bedgarSum;
     }
 
@@ -104,19 +103,21 @@ class inkomstenmodel
 		if($city_id != null){
 			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, bouw_factur.oferten_id, bouw_factur.factur_numer, bouw_factur.data FROM `bouw_adresy`
              INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
-             INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' ");
+			 INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' 
+			 ORDER BY bouw_factur.id DESC");
 		} else {
 			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, bouw_factur.oferten_id, bouw_factur.factur_numer, bouw_factur.data FROM `bouw_adresy`
             INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
             INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
-            WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' ");
+			WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' 
+			ORDER BY bouw_factur.id DESC");
 		}
 
         $x = 0;
         foreach($this->query->fetch_all() as $q){
 
             array_push($this->cityArray, $q);
-            array_push($this->cityArray[$x], $this->getBedgar($q[0]));      
+            array_push($this->cityArray[$x], $this->getBedgar($q[4]));      
             $x++;
         }
 
@@ -163,7 +164,14 @@ class inkomstenmodel
 			
 			foreach($adresy->fetch_all() as $q){
 				// array_push($this->adresArray, $q);
+				if(isset($this->__params['POST']['id_adres'])){
+				echo "<option value='$q[0]'"; 
+				if($q[0] == $this->__params['POST']['id_adres'])
+				{ echo "selected"; }
+				echo ">$q[1]</option>";
+				} else {
 				echo "<option value='$q[0]'>$q[1]</option>";
+				}
 			}
 			// echo $this->adresArray;
 			return $this->adresArray;
@@ -228,7 +236,102 @@ class inkomstenmodel
             }
         }
 		header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
+	}
+	
+	public function getdata() {
+
+        $data = $this->__db->execute("SELECT 
+        city.city_id,
+        city.city,
+        adresy.adres, 
+        adresy.postcode,
+        adresy.private_naam,
+        adresy.private_achternaam,
+        adresy.private_id_kaart,
+        adresy.private_tel,
+        adresy.private_geboortedatum,
+        adresy.bedrijf_bedrijf,
+        adresy.bedrijf_adres,
+        adresy.bedrijf_postcode,
+        adresy.bedrijf_stad,
+        adresy.bedrijf_kvk,
+        adresy.bedrijf_btw,
+        adresy.bedrijf_tel,
+        adresy.email,
+        adresy.rekening,
+        factur.data,
+        factur.factur_numer,
+        factur.id
+        
+        FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
+        INNER JOIN bouw_factur AS factur ON adresy.id = factur.adres_id 
+        WHERE factur.factur_numer = ".$this->__params[1]);
+        $x = array();
+        foreach($data as $q){
+            array_push($x, $q);
+
+        }
+
+        $dataWarfor = $this->__db->execute("SELECT 
+        warfor.name,
+        warfor.btw,
+        details.quantity,
+        details.price
+        FROM bouw_factur_details AS details INNER JOIN bouw_waarvoor AS warfor ON details.waarvoor_id = warfor.id
+        WHERE factur_nr = ".$this->__params[1]);
+
+        $y = array();
+        foreach($dataWarfor as $q){
+
+            array_push($y, $q);
+
+        }
+
+        $z = array_merge($x, $y);
+       
+        // print_r($z);
+
+        return $z;
+
     }
+
+    public function getbtw() {
+
+        $warfor = $this->getdata();
+        $x = Array();
+
+        foreach(array_slice($warfor,1) as $row){
+            $z = $row['quantity'] * $row['price'];
+
+            if(!in_array($row['btw'], $x))
+            $x += array($row['btw'] => 0) ;
+
+            foreach($x as $rows=>$val){
+                if($rows == $row['btw']){
+                    $x[$rows] += $z * ((int)$rows * 0.01);
+                }
+
+            }
+
+        }
+
+
+
+        return $x;
+
+    }
+
+    public function gettotal(){
+        $warfor = $this->getdata();
+        $total = 0;
+        foreach(array_slice($warfor,1) as $row){
+            $z = $row['quantity'] * $row['price'];
+
+            $total += $z;
+        }
+
+        return $total;
+    } 
 
 }
 

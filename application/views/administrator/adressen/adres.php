@@ -36,6 +36,9 @@
  
 <?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
+    <h1>
+    <?=$getDataFromAdres['city']." ".$getDataFromAdres['adres']?>
+    </h1> 
     <?=module_load('adresmenu')?>
     <div class="maincontainer">
             <form action="administrator/nieuwe_adress/savenieuwe_adress" method="post">

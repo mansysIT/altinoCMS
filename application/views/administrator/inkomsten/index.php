@@ -41,6 +41,7 @@ $dOd->modify('-12 month');
 	<?=module_load('SIDEBAR')?>
 
 	<div class="tableholder">
+	<h1>Inkomsten</h1> 
 	<form class="form-inline" method="post" action="">
 		<button type="submit" class="btn btn-danger mb-2" name="clear">Clear</button> 
 		<div class="form-group mx-sm-3 mb-2">
@@ -81,8 +82,8 @@ $dOd->modify('-12 month');
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[1]</a>" ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[2]</a>" ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[3]</a>" ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[6]</a>" ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[4]<span class='oi oi-file' title='file' aria-hidden='true'></span></a>" ?></td>
+					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>€ ".number_format($row[6],2,',', '.')."</a>" ?></td>
+					<?="<td> <a style='color: #000!important;' href='administrator/factuur/index/$row[4]'>$row[4]</a><a style='color: #000!important;' href='administrator/factuur/index/$row[4]'> <span class='oi oi-file' title='file' aria-hidden='true'></span></a> " ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[5]</a>" ?></td>
 					<td> <form  method="post" action=""><button class="btnCityRemove" type="submit" name="facturremove" value="<?php echo $row[0]; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form></td>
 				</tr>

@@ -39,6 +39,7 @@ $dOd->modify('-12 month');
 	<?=module_load('SIDEBAR')?>
 
 	<div class="tableholder">
+	<h1>Adressen</h1> 
 	<form class="form-inline" method="post" action="">
 		<button type="submit" class="btn btn-danger mb-2" name="clear">Clear</button> 
 		<div class="form-group mx-sm-3 mb-2">

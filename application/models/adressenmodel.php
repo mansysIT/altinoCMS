@@ -107,9 +107,15 @@ class adressenmodel
     public function adres($od, $do, $word, $active, $city_id = null){
 		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
 		if($city_id != null){
-			$this->query = $this->__db->querymy("SELECT bouw_adresy.id, bouw_adresy.adres, bouw_adresy.active, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE active = ".$active." AND  bouw_city.city LIKE '%".$word."%' AND bouw_adresy.city = $city_id ");
+			$this->query = $this->__db->querymy("SELECT bouw_adresy.id, bouw_adresy.adres, bouw_adresy.active, bouw_city.city
+			FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
+			WHERE active = ".$active." AND  bouw_city.city LIKE '%".$word."%' AND bouw_adresy.city = $city_id 
+			ORDER BY bouw_adresy.id DESC");
 		} else {
-			$this->query = $this->__db->querymy("SELECT bouw_adresy.id, bouw_adresy.adres, bouw_adresy.active, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE active = ".$active." AND  bouw_city.city LIKE '%".$word."%'");
+			$this->query = $this->__db->querymy("SELECT bouw_adresy.id, bouw_adresy.adres, bouw_adresy.active, bouw_city.city 
+			FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id
+			WHERE active = ".$active." AND  bouw_city.city LIKE '%".$word."%'
+			ORDER BY bouw_adresy.id DESC");
 		}
 	
 
