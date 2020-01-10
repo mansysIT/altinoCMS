@@ -24,7 +24,7 @@ $proforma=model_load('proformamodel', 'getproforma', '');
 $d = new DateTime(date("Y-m-d"));
 			
 $dOd = new DateTime(date("Y-m-d"));
-$dOd->modify('-12 month');
+$dOd->modify('first day of this month'); 
 
 ?>
 
