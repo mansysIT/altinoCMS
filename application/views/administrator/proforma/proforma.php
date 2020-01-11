@@ -65,12 +65,12 @@ $dOd->modify('first day of this month');
 		<thead>
 				<tr>
 					<th onclick="sortTable(0)">ID</th>
-					<th onclick="sortTable(1)">STAD</th>
-					<th onclick="sortTable(2)">ADRES</th>
-					<th onclick="sortTable(3)">OFFERTEN</th>
-					<th onclick="sortTable(4)">BEDRAG</th>
-					<th onclick="sortTable(5)">PROFORMA</th>
-					<th onclick="sortTable(6)">DATUM</th>
+					<th onclick="sortTable(2)">STAD</th>
+					<th onclick="sortTable(3)">ADRES</th>
+					<th onclick="sortTable(4)">OFFERTEN</th>
+					<th onclick="sortTable(5)">BEDRAG</th>
+					<th onclick="sortTable(6)">PROFORMA</th>
+					<th onclick="sortTable(8)">DATUM</th>
 					<th onclick="sortTable(7)">ACTION</th>
 				</tr>
 		</thead>
@@ -78,7 +78,7 @@ $dOd->modify('first day of this month');
         
 			<?php foreach($proforma as $row): ?>
 				<tr>
-				<?="<td> <a style='color: #000!important;' href='administrator/proforma/index/$row[4]/$row[0]'>$row[0]</a><a style='color: #000!important;' href='administrator/proforma/index/$row[4]/$row[0]'> <span class='oi oi-envelope-closed' title='envelope-closed' aria-hidden='true'></span></a> " ?></td>
+					<?="<td> <a style='color: #000!important;' href='administrator/proforma/sendproforma/$row[4]/$row[0]'>$row[0]</a><a style='color: #000!important;' href='administrator/proforma/sendproforma/$row[4]/$row[0]'> <span class='oi oi-envelope-closed' title='envelope-closed' aria-hidden='true'></span></a> " ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/proforma/editproforma/$row[4]'>$row[1]</a>" ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/proforma/editproforma/$row[4]'>$row[2]</a>" ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/proforma/editproforma/$row[4]'>$row[3]</a>" ?></td>

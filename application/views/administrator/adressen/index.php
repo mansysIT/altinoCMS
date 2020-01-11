@@ -18,7 +18,6 @@
 <?=icon_load("pp_fav.ico")?>
 <?php 
 $adress=model_load('adressenmodel', 'getAdress', '');
-model_load('smtpmailer', 'send', '');
 
 $d = new DateTime(date("Y-m-d"));
 			

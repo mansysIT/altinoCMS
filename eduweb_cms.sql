@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 10 Sty 2020, 22:32
+-- Czas generowania: 11 Sty 2020, 13:57
 -- Wersja serwera: 10.4.11-MariaDB
 -- Wersja PHP: 7.2.26
 
@@ -244,7 +244,28 @@ INSERT INTO `bouw_factur_details` (`id`, `factur_nr`, `waarvoor_id`, `quantity`,
 (41, 26, 2, 5, 5),
 (44, 32, 1, 1, 1),
 (45, 33, 1, 11, 80),
-(47, 33, 2, 50, 40);
+(47, 33, 3, 60, 40),
+(48, 33, 2, 40, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `bouw_factur_mail`
+--
+
+CREATE TABLE `bouw_factur_mail` (
+  `id` int(11) NOT NULL,
+  `factur_id` int(11) NOT NULL,
+  `data_czas` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `bouw_factur_mail`
+--
+
+INSERT INTO `bouw_factur_mail` (`id`, `factur_id`, `data_czas`) VALUES
+(1, 40, '2020-01-11 11:21:44'),
+(2, 40, '2020-01-11 11:22:16');
 
 -- --------------------------------------------------------
 
@@ -315,7 +336,8 @@ INSERT INTO `bouw_proforma` (`id`, `adres_id`, `oferten_id`, `proforma_numer`, `
 (2, 30, 6, 1, '2020-01-09'),
 (3, 9, 6, 2, '2020-01-09'),
 (4, 19, 6, 3, '2020-01-10'),
-(5, 23, 1, 4, '2020-01-10');
+(5, 23, 1, 4, '2020-01-10'),
+(6, 23, 3, 5, '2020-01-11');
 
 -- --------------------------------------------------------
 
@@ -341,7 +363,8 @@ INSERT INTO `bouw_proforma_details` (`id`, `proforma_nr`, `waarvoor_id`, `quanti
 (3, 1, 1, 100, 1),
 (4, 2, 1, 20, 5),
 (5, 3, 1, 10, 2),
-(7, 4, 1, 44, 5);
+(7, 4, 1, 44, 5),
+(8, 5, 3, 50, 50);
 
 -- --------------------------------------------------------
 
@@ -354,6 +377,16 @@ CREATE TABLE `bouw_proforma_mail` (
   `proforma_id` int(11) NOT NULL,
   `data_czas` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `bouw_proforma_mail`
+--
+
+INSERT INTO `bouw_proforma_mail` (`id`, `proforma_id`, `data_czas`) VALUES
+(24, 5, '2020-01-11 10:28:59'),
+(25, 5, '2020-01-11 10:29:05'),
+(26, 5, '2020-01-11 10:36:08'),
+(27, 5, '2020-01-11 10:36:14');
 
 -- --------------------------------------------------------
 
@@ -401,7 +434,9 @@ CREATE TABLE `bouw_waarvoor` (
 
 INSERT INTO `bouw_waarvoor` (`id`, `name`, `btw`) VALUES
 (1, 'time', 10),
-(2, ' aaaa', 20);
+(2, ' aaaa', 20),
+(3, 'tttt', 12),
+(4, 'jjj', 5);
 
 -- --------------------------------------------------------
 
@@ -512,6 +547,12 @@ ALTER TABLE `bouw_factur_details`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeksy dla tabeli `bouw_factur_mail`
+--
+ALTER TABLE `bouw_factur_mail`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `bouw_insteligen_company_data`
 --
 ALTER TABLE `bouw_insteligen_company_data`
@@ -603,7 +644,13 @@ ALTER TABLE `bouw_factur`
 -- AUTO_INCREMENT dla tabeli `bouw_factur_details`
 --
 ALTER TABLE `bouw_factur_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- AUTO_INCREMENT dla tabeli `bouw_factur_mail`
+--
+ALTER TABLE `bouw_factur_mail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_insteligen_company_data`
@@ -621,19 +668,19 @@ ALTER TABLE `bouw_oferten`
 -- AUTO_INCREMENT dla tabeli `bouw_proforma`
 --
 ALTER TABLE `bouw_proforma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_proforma_details`
 --
 ALTER TABLE `bouw_proforma_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_proforma_mail`
 --
 ALTER TABLE `bouw_proforma_mail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_uitgaven`
@@ -645,7 +692,7 @@ ALTER TABLE `bouw_uitgaven`
 -- AUTO_INCREMENT dla tabeli `bouw_waarvoor`
 --
 ALTER TABLE `bouw_waarvoor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `meta_tags`

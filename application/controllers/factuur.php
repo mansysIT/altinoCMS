@@ -24,6 +24,12 @@ class factuur extends controller
 		$this->main->model_helper;
 	}
 
+	public function sendfactur()
+	{
+		$this->model->administrator;
+		$this->main->model_helper;
+	}
+
 }
 
 

@@ -78,6 +78,11 @@ class proforma extends controller
 		$this->main->model_helper;
 	}
 
+	public function sendproforma()
+	{
+		$this->model->administrator;
+		$this->main->model_helper;
+	}	
 }
 
 
