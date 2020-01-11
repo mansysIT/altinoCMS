@@ -36,8 +36,12 @@
                 <a href="administrator/proforma/proforma">Proforma</a> 
             </li>
             <li>
+                <a href="administrator/oferten/index">Oferten</a>
+            </li>
+            <li>
                 <a href="administrator/instellingen/stedenlijst">Instellingen</a>
             </li>
+
         </ul>
     </nav>
     <button id="sidebarCollapse" class="btn btn-danger mb-2">X</button>

@@ -65,20 +65,21 @@ $dOd->modify('first day of this month');
 		<thead>
 				<tr>
 					<th onclick="sortTable(0)">ID</th>
-					<th onclick="sortTable(1)">STAD</th>
-					<th onclick="sortTable(2)">ADRES</th>
-					<th onclick="sortTable(3)">OFFERTEN</th>
-					<th onclick="sortTable(4)">BEDRAG</th>
-					<th onclick="sortTable(5)">FACTUR</th>
-					<th onclick="sortTable(6)">DATUM</th>
+					<th onclick="sortTable(2)">STAD</th>
+					<th onclick="sortTable(3)">ADRES</th>
+					<th onclick="sortTable(4)">OFFERTEN</th>
+					<th onclick="sortTable(5)">BEDRAG</th>
+					<th onclick="sortTable(6)">FACTUR</th>
+					<th onclick="sortTable(8)">DATUM</th>
 					<th onclick="sortTable(7)">ACTION</th>
 				</tr>
 		</thead>
 		<tbody>
-        
+        <?php $sum = 0?>
 			<?php foreach($adress as $row): ?>
+				<?php $sum += $row[6] ?>
 				<tr>
-					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[0]</a>" ?></td>
+					<?="<td> <a style='color: #000!important;' href='administrator/factuur/sendfactur/$row[4]/$row[0]'>$row[0]</a><a style='color: #000!important;' href='administrator/factuur/sendfactur/$row[4]/$row[0]'> <span class='oi oi-envelope-closed' title='envelope-closed' aria-hidden='true'></span></a> " ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[1]</a>" ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[2]</a>" ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[3]</a>" ?></td>
@@ -90,7 +91,9 @@ $dOd->modify('first day of this month');
 			<?php endforeach; ?>
 		</tbody>
 		</table>
+		<h2></h2>
 	</div>
+
 	<?=module_load('FOOTER')?>
 	</div>
 </body>

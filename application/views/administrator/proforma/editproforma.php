@@ -14,6 +14,7 @@
 <?php $facturaModelData=model_load('proformamodel', 'showdata', '')?>
 <?php $getWarforTypes = model_load('inkomstenmodel', 'getAllWarforType', '')?>
 <?php $oferten = model_load('facturmodel', 'getOferten', '')?>
+<?php $mailhistory=model_load('proformamodel', 'getproformaidbynumer', '')?>
 
 <?php
 // if($facturaModelData[0]['data']));
@@ -180,7 +181,14 @@ $d = new DateTime($facturaModelData[0]['data']);
                     <input class="inputNewHuurder form-control-small" type="number" name="facturnumer" value="<?=$facturaModelData[0]['proforma_numer'] ?>">
                 </div>
                 <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Toevoegen</button>
+                <h3 style="margin: 15px 0 15px 0;">Email Geschiedenis</h3>
+                <ul class="list-group list-group-flush">
+                <?php foreach($mailhistory as $rows): ?>
+                    <li style="background-color: #eee; padding: 0.75rem 0;" class="list-group-item"><?php echo $rows['data_czas']; ?></li>
+                <?php endforeach; ?>
+                </ul>
             </div>
+
             <div class="right">
 
             

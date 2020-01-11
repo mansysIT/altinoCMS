@@ -11,20 +11,18 @@
 
 <?=add_basehref()?>
 
-<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,all.css, instellingenmenu.css')?>
+<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,all.css,instellingenmenu.css')?>
 
 <?=javascript_load('jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js,table.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
 <?php 
-model_load('inkomstenmodel', 'removeFactur', '');
-$adress=model_load('inkomstenmodel', 'getFactur', '');
-
+$adress=model_load('adressenmodel', 'getAdress', '');
 
 $d = new DateTime(date("Y-m-d"));
 			
 $dOd = new DateTime(date("Y-m-d"));
-$dOd->modify('first day of this month');  
+$dOd->modify('-12 month');
 
 ?>
 
@@ -41,7 +39,7 @@ $dOd->modify('first day of this month');
 	<?=module_load('SIDEBAR')?>
 
 	<div class="tableholder">
-	<h1>Inkomsten</h1> 
+	<h1>Oferten</h1> 
 	<form class="form-inline" method="post" action="">
 		<button type="submit" class="btn btn-danger mb-2" name="clear">Clear</button> 
 		<div class="form-group mx-sm-3 mb-2">
@@ -57,7 +55,23 @@ $dOd->modify('first day of this month');
 			<input type="date" class="form-control aaa" id="inputPassword2" style="line-height: 20px;" name="tot" value= <?php if(isset($sidebarController->__params['POST']['clear'])){echo $d->format('Y-m-d');} else if(isset($sidebarController->__params['POST']['tot'])){echo $sidebarController->__params['POST']['tot']; } else if(isset($_SESSION['tot'])){echo $_SESSION['tot']; } else {echo $d->format('Y-m-d'); }?>>
 		</div>
         <button type="submit" class="btn btn-danger mb-2" name="zoeken">Zoeken</button>
-		<a class="btn btn-danger mb-2" href="administrator/inkomsten/addFactura" role="button">+Inkomsten</a>
+		<a class="btn btn-danger mb-2" href="administrator/nieuwe_adress/nieuwe_adress" role="button">Nieuwe</a>
+		<?php 
+		if(isset($sidebarController->__params['POST']['active']) ):
+				if($sidebarController->__params['POST']['active'] == 0):?>
+				<button type="submit" class="btn btn-danger mb-2" name="active" value="1">Aactive</button>
+			<?php else: ?>
+				<button type="submit" class="btn btn-danger mb-2" name="active" value="0">Niet active</button>
+			<?php endif; 
+		elseif(isset($_SESSION['active'])): 
+			if($_SESSION['active'] == 0):?>
+				<button type="submit" class="btn btn-danger mb-2" name="active" value="1">Aactive</button>
+			<?php else: ?>
+				<button type="submit" class="btn btn-danger mb-2" name="active" value="0">Niet active</button>
+			<?php endif; 
+		else: ?>
+			<button type="submit" class="btn btn-danger mb-2" name="active" value="0">Niet active</button>
+		<?php endif; ?>
 	</form>
 
 	<div class="table-responsive">
@@ -67,25 +81,28 @@ $dOd->modify('first day of this month');
 					<th onclick="sortTable(0)">ID</th>
 					<th onclick="sortTable(1)">STAD</th>
 					<th onclick="sortTable(2)">ADRES</th>
-					<th onclick="sortTable(3)">OFFERTEN</th>
-					<th onclick="sortTable(4)">BEDRAG</th>
-					<th onclick="sortTable(5)">FACTUR</th>
-					<th onclick="sortTable(6)">DATUM</th>
-					<th onclick="sortTable(7)">ACTION</th>
+					<th onclick="sortTable(3)">BEDRAG</th>
+					<th onclick="sortTable(4)">INKOMSTEN</th>
+					<th onclick="sortTable(5)">UITGAVEN</th>
+					<th onclick="sortTable(6)">WINST</th>
+					<th>ACTIVE</th>
 				</tr>
 		</thead>
 		<tbody>
-        
 			<?php foreach($adress as $row): ?>
 				<tr>
-					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[0]</a>" ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[1]</a>" ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[2]</a>" ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[3]</a>" ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>€ ".number_format($row[6],2,',', '.')."</a>" ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/factuur/index/$row[4]'>$row[4]</a><a style='color: #000!important;' href='administrator/factuur/index/$row[4]'> <span class='oi oi-file' title='file' aria-hidden='true'></span></a> " ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[5]</a>" ?></td>
-					<td> <form  method="post" action=""><button class="btnCityRemove" type="submit" name="facturremove" value="<?php echo $row[0]; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[0]</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[3]</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[1]</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
+					<?php if($row[2] == 1): ?>
+						<td><form method="post" action="administrator/adressen/setAdresActive"><button class="btnCityRemove" type="submit" name="active" value="<?php echo $row[0]; ?>"><span class="oi oi-check" title="check" aria-hidden="true"></span></button></form></td>
+					<?php  else: ?>
+						<td><form method="post" action="administrator/adressen/setAdresActive"><button class="btnCityRemove" type="submit" name="noactive" value="<?php echo $row[0]; ?>"><span class="oi oi-ban" title="ban" aria-hidden="true"></span></button></form></td>
+					<?php endif; ?>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>

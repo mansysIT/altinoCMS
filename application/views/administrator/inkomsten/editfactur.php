@@ -14,6 +14,7 @@
 <?php $facturaModelData=model_load('facturmodel', 'showdata', '')?>
 <?php $getWarforTypes = model_load('inkomstenmodel', 'getAllWarforType', '')?>
 <?php $oferten = model_load('facturmodel', 'getOferten', '')?>
+<?php $mailhistory=model_load('facturmodel', 'getfacturidbynumer', '')?>
 
 <?php
 // if($facturaModelData[0]['data']));
@@ -142,7 +143,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                                            echo'</select>
                                         </td>
                                         <td class="">
-                                        <p class="rekaningText">Nummer</p>
+                                        <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
                                             <input id="aaa" class="form-control form-control-small" name="warfortimespend[]" value="'.$rows["quantity"].'">
@@ -181,6 +182,12 @@ $d = new DateTime($facturaModelData[0]['data']);
                     <input  class="inputNewHuurder form-control-small" type="number" name="facturnumer" value="<?=$facturaModelData[0]['factur_numer'] ?>">
                 </div>
                 <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Toevoegen</button>
+                <h3 style="margin: 15px 0 15px 0;">Email Geschiedenis</h3>
+                <ul class="list-group list-group-flush">
+                <?php foreach($mailhistory as $rows): ?>
+                    <li style="background-color: #eee; padding: 0.75rem 0;" class="list-group-item"><?php echo $rows['data_czas']; ?></li>
+                <?php endforeach; ?>
+                </ul>
             </div>
             <div class="right">
 

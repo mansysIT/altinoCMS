@@ -4,13 +4,24 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/packages/mailer/class.phpmailer.php');
 
 class smtpmailer {
 
-    public function send(){
-        $this->wyslij_maila_smtp('kw-53@wp.pl', 'testsmtp', 'testowa tresc wiadomosci',$_SERVER['DOCUMENT_ROOT'].'proforma.pdf');
+    private $__config;
+	private $__router;
+    public $__params;
+    private $__db;
+    
+    private $proformamodel;
+	
+	public function __construct()
+	{
+		$this->__config = registry::register("config");
+		$this->__router = registry::register("router");
+        $this->__params = $this->__router->getParams();
+        $this->__db = registry::register("db");
     }
 
     function wyslij_maila_smtp($do, $temat, $wiadomosc, $plik = NULL){
 
-        
+        $tresc = '';
         
         $mail = new PHPMailer(true);
         
