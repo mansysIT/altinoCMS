@@ -74,9 +74,9 @@ $dOd->modify('first day of this month');
 					<th onclick="sortTable(1)">STAD</th>
 					<th onclick="sortTable(2)">ADRES</th>
 					<th onclick="sortTable(3)">OFFERTEN</th> 
-					<th onclick="sortTable(3)">WAARVOOR</th> 
-					<th onclick="sortTable(4)">BEDRAG</th>
-					<th onclick="sortTable(5)">DATUM</th>
+					<th onclick="sortTable(4)">WAARVOOR</th>  
+					<th onclick="sortTable(5)">BEDRAG</th>
+					<th onclick="sortTable(6)">DATUM</th>
 					<th>ACTION</th>
 				</tr>
 		</thead>
@@ -110,7 +110,7 @@ $dOd->modify('first day of this month');
 				</tr>
 			<?php endforeach; ?> 
 
-			<tr>
+			<tr class="suma">
 				<td></td>
 				<td></td>
 				<td></td>

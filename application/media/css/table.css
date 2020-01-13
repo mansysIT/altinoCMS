@@ -82,7 +82,16 @@ tr.table-responsive thead td {
     color: black!important;
 }
 
+.suma {
+    background: 
+#333 !important;
+color:
+    white; 
+}
 
+#myTable2 th {
+    font-weight: 200;
+}
 
 @media only screen and (max-width: 768px) {
     .table-responsive {
