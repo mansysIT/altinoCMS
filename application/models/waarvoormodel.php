@@ -21,22 +21,31 @@ class waarvoormodel
         $this->__db = registry::register("db");
 	}
 
-    public function getWaarvoor($waarvoor_id=null){
+    public function getWaarvoor($params=null){
 
         $waarvoorArray = array();
 
-        $dod = '';
-        if($waarvoor_id != 0)
-            $dod = 'WHERE id = '.$waarvoor_id;
+       // $waarvoor_id = 1;
 
-		$this->query = $this->__db->querymy("SELECT * FROM `bouw_waarvoor` ".$dod."");
+        $dod = '';
+         if($params[0] != 0)
+              $dod = 'WHERE id = '.$params[0];
+
+        if(isset($params[1]))
+            $dod = "WHERE name LIKE '".$params[1]."'"; 
+
+		$this->query = $this->__db->querymy("SELECT * FROM `bouw_waarvoor` ".$dod);
         
         foreach($this->query->fetch_all() as $q){
             array_push($waarvoorArray, $q);
         }
 
+        
+      
+
        return $waarvoorArray;   
-    }
+    } 
+
 }
   
 ?>

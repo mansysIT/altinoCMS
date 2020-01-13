@@ -787,6 +787,20 @@ bottom: .5em;
 }
 
 
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+
+    font-weight: 200!important;
+    line-height: 1.5!important;
+
+}
+
+input {
+ 
+    border: 1px solid #cecece;
+    padding: 17px 10px;
+}
+
+
 
 
 

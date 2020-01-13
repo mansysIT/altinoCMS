@@ -44,11 +44,11 @@ class logowaniemodel
 			{
 				if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))
 				{
-					header("Location: ".SERVER_ADDRESS."administrator/home/index");
+					header("Location: ".SERVER_ADDRESS."administrator/adressen/index");
 				}
 				else
 				{
-					header("Location: ".SERVER_ADDRESS."administrator/home/index");
+					header("Location: ".SERVER_ADDRESS."administrator/adressen/index");
 				}
 				
 			}
@@ -61,12 +61,12 @@ class logowaniemodel
 		{
 			if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))
 			{
-				header("Location: ".SERVER_ADDRESS."administrator/home/index");
+				header("Location: ".SERVER_ADDRESS."administrator/adressen/index");
 				//header("Location: ".$_SERVER['HTTP_REFERER']);
 			}
 			else
 			{
-				header("Location: ".SERVER_ADDRESS."administrator/home/index");
+				header("Location: ".SERVER_ADDRESS."administrator/adressen/index");
 			}
 		}
 	}
