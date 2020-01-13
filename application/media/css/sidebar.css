@@ -13,7 +13,7 @@ p {
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
-    color: #999;
+    color: #000;
 }
 
 a,
@@ -80,7 +80,7 @@ a:focus {
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #47748b;
+  
 }
 
 #sidebar ul p {
@@ -171,6 +171,11 @@ a.article:hover {
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
+
+
+#sidebar img {
+    margin-top: 21px;
+}
 
 @media only screen and (max-width: 768px) {
     #sidebar {

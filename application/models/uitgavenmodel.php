@@ -51,11 +51,9 @@ class uitgavenmodel
 
         $this->clear();
 
-		if(isset($this->__params[2])){
-			return $this->adres($this->od, $this->do, $this->word , $this->__params[2]);   
-		} else {
-			return $this->adres($this->od, $this->do, $this->word , null);   
-		}
+		
+		return $this->adres($this->od, $this->do, $this->word);   
+	
 
 	}
 	
@@ -85,17 +83,43 @@ class uitgavenmodel
 
     // SELECT bouw_adresy.id, bouw_adresy.adres, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE bouw_factur.adres_id = 28
 
-    public function adres($od, $do, $word, $city_id = null) {
+    public function adres($od, $do, $word) {
+
+	
+
 		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
-		if($city_id != null){
-			$this->query = $this->__db->querymy("SELECT bouw_uitgaven .id, bouw_city.city, bouw_adresy.adres, bouw_uitgaven.oferten_id, bouw_uitgaven.price, bouw_uitgaven.data, bouw_uitgaven.waarvoor_id FROM `bouw_adresy`
+		if($word != null){
+
+			$params[0] = 0;
+			$params[1] = $word;
+
+			$dod = '';
+			$w = model_load('waarvoormodel', 'getwaarvoor', $params); 
+			$waarvoorId = $w[0][0]; 
+
+			if(!empty($waarvoorId))
+				$dod = "data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.waarvoor_id = ".$waarvoorId." OR ";
+			
+	 
+			//echo 'jest'. $w[0][0];
+
+			$this->query = $this->__db->querymy("SELECT bouw_uitgaven.id, bouw_city.city, bouw_adresy.adres, bouw_uitgaven.oferte_numer, bouw_uitgaven.price, bouw_uitgaven.data, bouw_uitgaven.waarvoor_id FROM `bouw_adresy`
              INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
-             INNER JOIN bouw_uitgaven ON bouw_uitgaven.adres_id = bouw_adresy.id WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%'  ORDER BY bouw_uitgaven.id DESC");
+             INNER JOIN bouw_uitgaven ON bouw_uitgaven.adres_id = bouw_adresy.id WHERE 
+			 data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' OR
+			 data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.id = ".$word." OR
+			 data BETWEEN '".$od."' AND '".$do."' AND  bouw_adresy.adres LIKE '%".$word."%' OR
+			 data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.price LIKE '%".$word."%' OR
+			".$dod." 
+			 data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.oferte_numer = ".$word." 
+
+			 ORDER BY bouw_uitgaven.id DESC");
 		} else {
-			$this->query = $this->__db->querymy("SELECT bouw_uitgaven.id, bouw_city.city, bouw_adresy.adres, bouw_uitgaven.oferten_id, bouw_uitgaven.price, bouw_uitgaven.data, bouw_uitgaven.waarvoor_id FROM `bouw_adresy`
+			$this->query = $this->__db->querymy("SELECT bouw_uitgaven.id, bouw_city.city, bouw_adresy.adres, bouw_uitgaven.oferte_numer, bouw_uitgaven.price, bouw_uitgaven.data, bouw_uitgaven.waarvoor_id FROM `bouw_adresy`
             INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
             INNER JOIN bouw_uitgaven ON bouw_uitgaven.adres_id = bouw_adresy.id 
-            WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' ORDER BY bouw_uitgaven.id DESC"); 
+            WHERE data BETWEEN '".$od."' AND '".$do."'
+			ORDER BY bouw_uitgaven.id DESC"); 
 		}
 
         foreach($this->query->fetch_all() as $q){
@@ -124,7 +148,7 @@ class uitgavenmodel
 		return $data[0];
 	}
 
-	public function adresMenuGetUrl() {
+	public function adresMenuGetUrl() { 
 		if(isset($this->__params[1]))
 		return $this->__params[1];
 	}
@@ -137,7 +161,7 @@ class uitgavenmodel
 	public function getAllFilesInDirectory() {
 
 		if(isset($this->__params[2])){
-			$dir = "application/storage/adres/".$this->__params[1]."/".$this->__params[2];
+			$dir = "application/storage/uitagven/".$this->__params[1];
 			if(scandir($dir) != null){
 				$files = scandir($dir);
 				$foldersArray = array();
@@ -156,7 +180,7 @@ class uitgavenmodel
 				return array();
 			}
 		} else {
-			$dir = "application/storage/adres/".$this->__params[1];
+			$dir = "application/storage/uitagven/".$this->__params[1];
 			if(scandir($dir) != null){
 				$files = scandir($dir);
 				$foldersArray = array();
@@ -225,10 +249,10 @@ class uitgavenmodel
 	}
 
 	public function uploadFile() {
-		if(isset($this->__params[2])){
-			$target_dir = "application/storage/adres/".$this->__params[1]."/".$this->__params[2]."/";
+		if(isset($this->__params[1])){
+			$target_dir = "application/uitagven/adres/".$this->__params[2]."/";
 		} else {
-			$target_dir = "application/storage/adres/".$this->__params[1]."/";
+			$target_dir = "application/uitagven/adres/".$this->__params[1]."/";
 		}
 		
 		//if(isset($this->__params['POST']['fileToUpload'])){
@@ -237,7 +261,7 @@ class uitgavenmodel
 		
 		// Check if file already exists
 		if (file_exists($target_file)) {
-			echo "Sorry, file already exists.";
+			//echo "Sorry, file already exists.";
 			$uploadOk = 0;
 		}
 		// Check file size
@@ -291,26 +315,57 @@ class uitgavenmodel
 
 	public function saveUitgaaf() 
 	{
+		if(isset($this->__params[1])) {
+
+
+		}
 		if(isset($this->__params['POST']['savewarfor'])) {
 
 
 			$d = new DateTime($this->__params['POST']['datum']);
-			$data = $d->format('Y-m-d');	
+			$data = $d->format('Y-m-d');
 
-			$this->__db->execute("INSERT INTO bouw_uitgaven 
-			(adres_id, 
-			oferten_id, 
-			waarvoor_id, 
-			price,
-			data
-			) 
-			VALUES (
-			'".$this->__params['POST']['adres']."',
-			'".$this->__params['POST']['oferte_id']."',
-			'".$this->__params['POST']['waarvoor']."',
-			'".$this->__params['POST']['price']."',
-			'".$data."' 
-			)");
+			$price = str_replace(",",".",$this->__params['POST']['price']);
+			
+			if(empty($this->__params[1])){
+
+				$this->__db->execute("INSERT INTO bouw_uitgaven 
+				(adres_id, 
+				oferte_numer, 
+				waarvoor_id, 
+				price,
+				data
+				) 
+				VALUES (
+				'".$this->__params['POST']['adres']."', 
+				'".$this->__params['POST']['oferte_id']."',
+				'".$this->__params['POST']['waarvoor']."',
+				'".$price."',
+				'".$data."' 
+				)");
+			}
+			else{
+
+	
+				$this->__db->execute("
+				UPDATE `bouw_uitgaven` SET `adres_id`=".$this->__params['POST']['adres'].", 
+				`oferte_numer`=".$this->__params['POST']['oferte_id'].", 
+				`waarvoor_id`=".$this->__params['POST']['waarvoor'].", 
+				`price`=".$price.", 
+				`data`= '".$data."'
+				WHERE id = ".$this->__params[1]); 
+
+			}
+
+			// UPDATE `bouw_uitgaven` SET 
+			// `adres_id`=".$this->__params['POST']['adres'].",
+			// `oferte_numer`=".$this->__params['POST']['oferte_id'].",
+			// `waarvoor_id`=".$this->__params['POST']['waarvoor'].",
+			// `price`=".$this->__params['POST']['price'].",
+			// `data`= '2002'  
+			// WHERE id = 16
+
+
 			header("Location: ".SERVER_ADDRESS."administrator/uitgaven/index");
 		}
 	}

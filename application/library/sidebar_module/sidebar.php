@@ -5,7 +5,7 @@
     <nav id="sidebar">
         <div class="sidebar-header">
         <a class="btn btn-danger" href="wylogowanie/index" role="button">Wyloguj</a>
-            <h3 style="text-align: center">Aguiar Bouw</h3>
+            <img src="/application/media/images/logo.png">
         </div>
 
         <ul class="list-unstyled components">
