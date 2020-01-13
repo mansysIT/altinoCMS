@@ -64,7 +64,7 @@ class facturmodel
 
     } 
 
-    private function getAllWarforForAdres() {
+    public function getAllWarforForAdres() {
         $dataWarfor = $this->__db->execute("SELECT 
         factur_nr,
         waarvoor_id,
@@ -151,7 +151,7 @@ class facturmodel
 
     public function getOferten(){
         $oferten = Array();
-        $query = $this->__db->querymy("SELECT id, name FROM bouw_oferten");
+        $query = $this->__db->querymy("SELECT id, oferten_numer FROM bouw_oferten");
         
         foreach($query->fetch_all() as $q){
             array_push($oferten, $q);

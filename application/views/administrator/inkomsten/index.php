@@ -90,6 +90,18 @@ $dOd->modify('first day of this month');
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
+		<tfoot style="background-color: #212529; color: white">
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><?="€ ".number_format($sum,2,',', '.')?></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		</tfoot>
 		</table>
 		<h2></h2>
 	</div>

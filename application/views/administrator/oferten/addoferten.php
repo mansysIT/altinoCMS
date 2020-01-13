@@ -11,12 +11,11 @@
 
 <?php $sidebarController=model_load('nieuwe_adressmodel', 'getCityName', '')?>
 <?php $getWarforTypes = model_load('inkomstenmodel', 'getAllWarforType', '')?>
-<?php $oferten = model_load('facturmodel', 'getOferten', '')?>
-<?=model_load('proformamodel', 'saveproforma', '')?>
+<?=model_load('ofertenmodel', 'saveoferten', '')?>
 
 <?=add_metatags()?>
 
-<?=add_title("Add Factur")?>
+<?=add_title("Add Oferten")?>
 
 <?=add_basehref()?>
 
@@ -48,7 +47,7 @@ $d = new DateTime(date("Y-m-d"));
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
     <div class="maincontainer">
-    <h1>Proforma Aanmaken</h1>
+    <h1>Oferten Aanmaken</h1>
     <form action="" method="post" id="myForm">
             <div class="bottomHolder">
             <div class="rekaning">
@@ -70,15 +69,6 @@ $d = new DateTime(date("Y-m-d"));
                     </select>
                 </div>
                 <div class="RekeningInside">
-                    <p class="rekaningText">Oferten</p>
-                    <select name="oferten" class="oferten form-control" id="exampleFormControlSelect1">
-                    <option value="">SELECT OFERTEN</option>
-                    <?php foreach($oferten as $row): ?>
-                        <li>
-                            <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
-                        </li>
-                    <?php endforeach; ?>
-                    </select>
                 </div>  
                 <div class="RekeningInside">
                 <?php
@@ -125,7 +115,12 @@ $d = new DateTime(date("Y-m-d"));
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
 				<div class="RekeningInside">
                     <p class="rekaningText">Data</p>
-                    <input class="inputNewHuurder" type="date" name="proformadata" value='<?=$d->format('Y-m-d')?>' >
+                    <input class="inputNewHuurder" type="date" name="ofertendata" value='<?=$d->format('Y-m-d')?>' >
+                </div>
+
+                <div class="RekeningInside">
+                    <p class="rekaningText">Einddatum</p>
+                    <input class="inputNewHuurder" type="date" name="ofertendataend" value='<?=$d->format('Y-m-d')?>' >
                 </div>
    
             </div>
@@ -135,7 +130,7 @@ $d = new DateTime(date("Y-m-d"));
             </div>
             
         </div>
-        <button type="submit" class="btn btn-danger mb-2" name="saveproforma">Toevoegen</button>
+        <button type="submit" class="btn btn-danger mb-2" name="saveoferten">Toevoegen</button>
 
         </form>
 

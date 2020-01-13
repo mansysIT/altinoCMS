@@ -154,10 +154,11 @@ $d = new DateTime($facturaModelData[0]['data']);
                                             <input class="form-control form-control-small" name="warforquantity[]" value="'.$rows["price"].'">
                                             <input style="display: none;"name="warforInputId[]" value="'.$rows["id"].'" >
                                         </td>
-                                        <td class=" del blok_mansys">
-                                            <button type="submit" class="warfor_id btn btn-danger mb-2" value="'.$rows["id"].'" onclick="removeWarfor('.$rows["id"].')" name="del-a" >X</button>
-                                            
-                                        </td>
+                                        <td class=" del blok_mansys">';
+                                        if($facturaModelData[0]['is_factur'] != 1){
+                                            echo '<button type="submit" class="warfor_id btn btn-danger mb-2" value="'.$rows["id"].'" onclick="removeWarfor('.$rows["id"].')" name="del-a" >X</button>';
+                                        }
+                                        echo '</td>
                                         
                                     </tr>';
                                     // $facturaModelData[0]['warforInputId'][] = $rows['id']
@@ -169,18 +170,25 @@ $d = new DateTime($facturaModelData[0]['data']);
                             </table>
                         </div>';?>
                 </div>
+                <?php if($facturaModelData[0]['is_factur'] != 1): ?>
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
+                <?php endif; ?>
 				<div class="RekeningInside">
                     <p class="rekaningText">Data</p>
-
                     <input class="inputNewHuurder" type="date" name="facturdata" value="<?php echo $facturaModelData[0]['data']?>">
+                </div>
+                <div class="RekeningInside">
+                    <p class="rekaningText">Data Betalen</p>
+                    <input class="inputNewHuurder" type="date" name="data_betalen" value="<?php echo $facturaModelData[0]['data_betalen']?>">
                 </div>
                 <div style="display: none" class="RekeningInside">
                     <p class="rekaningText">Factuurnummer</p>
 
                     <input class="inputNewHuurder form-control-small" type="number" name="facturnumer" value="<?=$facturaModelData[0]['proforma_numer'] ?>">
                 </div>
+                <?php if($facturaModelData[0]['is_factur'] != 1): ?>
                 <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Toevoegen</button>
+                <?php endif; ?>
                 <h3 style="margin: 15px 0 15px 0;">Email Geschiedenis</h3>
                 <ul class="list-group list-group-flush">
                 <?php foreach($mailhistory as $rows): ?>
