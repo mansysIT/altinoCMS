@@ -98,18 +98,24 @@ class inkomstenmodel
 
     // SELECT bouw_adresy.id, bouw_adresy.adres, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE bouw_factur.adres_id = 28
 
-    public function adres($od, $do, $word, $city_id = null) {
+    public function adres($od, $do, $word = null, $city_id = null) {
 		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
-		if($city_id != null){
+		if($word != null){
 			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, bouw_factur.oferten_id, bouw_factur.factur_numer, bouw_factur.data FROM `bouw_adresy`
              INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
-			 INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' 
+			 INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
+			 WHERE 
+			bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.id = $word OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_adresy.adres LIKE '%".$word."%' OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.oferten_id = $word OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.factur_numer = $word 
 			 ORDER BY bouw_factur.id DESC");
 		} else {
 			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, bouw_factur.oferten_id, bouw_factur.factur_numer, bouw_factur.data FROM `bouw_adresy`
             INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
             INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
-			WHERE data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' 
+			WHERE bouw_factur.data BETWEEN '".$od."' AND '".$do."'
 			ORDER BY bouw_factur.id DESC");
 		}
 
@@ -188,18 +194,19 @@ class inkomstenmodel
        return $arr;
 	}
 
-	private function getLastFacturNr() {
+	public function getLastFacturNr() {
 		$nr = $this->__db->querymy("SELECT factur_numer FROM `bouw_factur` ORDER BY factur_numer DESC LIMIT 1");
 		foreach($nr as $q){
 			$x = $q['factur_numer'] + 1;
             return $x;
 		}
 	}
+
 	public function saveFactura()
 	{
 
 		if(isset($this->__params['POST']['savewarfor'])) {
-			print_r($this->__params['POST']['adres']);
+			// print_r($this->__params['POST']['adres']);
 			$this->__db->execute("INSERT INTO bouw_factur 
 			(adres_id, 
 			oferten_id, 

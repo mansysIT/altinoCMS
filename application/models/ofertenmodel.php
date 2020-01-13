@@ -1,34 +1,28 @@
 <?php
 
-error_reporting(E_ERROR | E_PARSE);
-require_once($_SERVER['DOCUMENT_ROOT'].'/packages/pdf/fpdf.php');
-
-class proformamodel
+class ofertenmodel
 {
-
-    public $query;
-    private $bedrag;
+	public $query;
 	public $cityArray = Array();
-    public $adresArray = Array();
 
 	private $__config;
 	private $__router;
-    public $__params;
-	private $__db;
+    private $__params;
+    private $__db;
 	
 	public function __construct()
 	{
 		$this->__config = registry::register("config");
 		$this->__router = registry::register("router");
         $this->__params = $this->__router->getParams();
-		$this->__db = registry::register("db");
-    }
-    
+        $this->__db = registry::register("db");
+	}
+
     public function getdata($request = null) {
         if($request[0] == null){
-            $proforma_numer = $this->__params[1];
+            $oferten_numer = $this->__params[1];
         } else {
-            $proforma_numer = $request[0];
+            $oferten_numer = $request[0];
         }
 
         $data = $this->__db->execute("SELECT 
@@ -50,13 +44,13 @@ class proformamodel
         adresy.bedrijf_tel,
         adresy.email,
         adresy.rekening,
-        proforma.data,
-        proforma.proforma_numer,
-        proforma.id
+        oferten.data,
+        oferten.oferten_numer,
+        oferten.id
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
-        INNER JOIN bouw_proforma AS proforma ON adresy.id = proforma.adres_id 
-        WHERE proforma.proforma_numer = ".$proforma_numer);
+        INNER JOIN bouw_oferten AS oferten ON adresy.id = oferten.adres_id 
+        WHERE oferten.oferten_numer = ".$oferten_numer);
         $x = array();
         foreach($data as $q){
             array_push($x, $q);
@@ -68,8 +62,8 @@ class proformamodel
         warfor.btw,
         details.quantity,
         details.price
-        FROM bouw_proforma_details AS details INNER JOIN bouw_waarvoor AS warfor ON details.waarvoor_id = warfor.id
-        WHERE proforma_nr = ".$proforma_numer);
+        FROM bouw_oferten_details AS details INNER JOIN bouw_waarvoor AS warfor ON details.waarvoor_id = warfor.id
+        WHERE oferten_nr = ".$oferten_numer);
 
         $y = array();
         foreach($dataWarfor as $q){
@@ -125,7 +119,7 @@ class proformamodel
         return $total;
     } 
 
-    public function getproforma()
+    public function getoferten()
 	{ 
 		$this->adressenModel = new adressenmodel();
 
@@ -185,7 +179,7 @@ class proformamodel
 
     private function getBedgar($id) {
 
-        $this->bedrag = $this->__db->querymy("SELECT quantity, price FROM `bouw_proforma_details` WHERE proforma_nr = $id");
+        $this->bedrag = $this->__db->querymy("SELECT quantity, price FROM `bouw_oferten_details` WHERE oferten_nr = $id");
 
         $bedgarSum = 0;
 
@@ -202,28 +196,28 @@ class proformamodel
     public function adres($od, $do, $word = null, $city_id = null) {
 		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
 		if($word != null){
-			$this->query = $this->__db->querymy("SELECT proforma.id, city.city, adres.adres, proforma.oferten_id, proforma.proforma_numer, proforma.data, proforma.is_factur 
+			$this->query = $this->__db->querymy("SELECT oferten.id, city.city, adres.adres, oferten.data, oferten.status
             FROM bouw_adresy AS adres 
             INNER JOIN bouw_city AS city ON adres.city = city.city_id 
-			INNER JOIN bouw_proforma AS proforma ON proforma.adres_id = adres.id 
+			INNER JOIN bouw_oferten AS oferten ON oferten.adres_id = adres.id 
             WHERE 
-            proforma.data BETWEEN '".$od."' AND '".$do."' AND  city.city LIKE '%".$word."%' OR
-            proforma.data BETWEEN '".$od."' AND '".$do."' AND  proforma.id = $word OR
-            proforma.data BETWEEN '".$od."' AND '".$do."' AND  adres.adres LIKE '%".$word."%' OR
-            proforma.data BETWEEN '".$od."' AND '".$do."' AND  proforma.oferten_id = $word OR
-            proforma.data BETWEEN '".$od."' AND '".$do."' AND  proforma.proforma_numer = $word
-			ORDER BY proforma.id DESC");
+            oferten.data BETWEEN '".$od."' AND '".$do."' AND  city.city LIKE '%".$word."%' OR
+            oferten.data BETWEEN '".$od."' AND '".$do."' AND  oferten.id = $word OR
+            oferten.data BETWEEN '".$od."' AND '".$do."' AND  adres.adres LIKE '%".$word."%' OR
+            oferten.data BETWEEN '".$od."' AND '".$do."' AND  oferten.oferten_id = $word OR
+            oferten.data BETWEEN '".$od."' AND '".$do."' AND  oferten.oferten_numer = $word
+			ORDER BY oferten.id DESC");
 		} else {
-			$this->query = $this->__db->querymy("SELECT proforma.id, city.city, adres.adres, proforma.oferten_id, proforma.proforma_numer, proforma.data, proforma.is_factur  
+			$this->query = $this->__db->querymy("SELECT oferten.id, city.city, adres.adres, oferten.data, oferten.status
             FROM bouw_adresy AS adres 
             INNER JOIN bouw_city AS city ON adres.city = city.city_id 
-			INNER JOIN bouw_proforma AS proforma ON proforma.adres_id = adres.id 
-            WHERE proforma.data BETWEEN '".$od."' AND '".$do."'
-			ORDER BY proforma.id DESC");
+			INNER JOIN bouw_oferten AS oferten ON oferten.adres_id = adres.id 
+            WHERE oferten.data BETWEEN '".$od."' AND '".$do."'
+			ORDER BY oferten.id DESC");
 		}
 
         $x = 0;
-
+        print_r($this->query);
         if(!empty($this->query))
         foreach($this->query->fetch_all() as $q){
 
@@ -239,61 +233,74 @@ class proformamodel
        return $this->cityArray;
     }
     
-    public function removeproforma(){
+    public function removeoferten(){
 		if(isset($this->__params['POST']['proformremove']) && $this->__params['POST']['proformremove'] != null) {
-			$this->__db->execute("DELETE FROM bouw_proforma WHERE id = '".$this->__params['POST']['proformremove']."'");
-			header("Location: ".SERVER_ADDRESS."administrator/proforma/index");
+			$this->__db->execute("DELETE FROM bouw_oferten WHERE id = '".$this->__params['POST']['proformremove']."'");
+			header("Location: ".SERVER_ADDRESS."administrator/oferten/index");
 		}
     }
 
-    private function getLastProformaNr() {
-		$nr = $this->__db->querymy("SELECT proforma_numer FROM `bouw_proforma` ORDER BY proforma_numer DESC LIMIT 1");
+    private function getLastofertenNr() {
+		$nr = $this->__db->querymy("SELECT oferten_numer FROM `bouw_oferten` ORDER BY oferten_numer DESC LIMIT 1");
 		foreach($nr as $q){
-			$x = $q['proforma_numer'] + 1;
+			$x = $q['oferten_numer'] + 1;
+            return $x;
+		}
+    }
+    
+    public function getLastFacturNr() {
+		$nr = $this->__db->querymy("SELECT oferten_numer FROM `bouw_factur` ORDER BY oferten_numer DESC LIMIT 1");
+		foreach($nr as $q){
+			$x = $q['oferten_numer'] + 1;
             return $x;
 		}
 	}
 
-    public function saveproforma()
+    public function saveoferten()
 	{
 
-		if(isset($this->__params['POST']['saveproforma'])) {
-			$this->__db->execute("INSERT INTO bouw_proforma 
+		if(isset($this->__params['POST']['saveoferten'])) {
+			$this->__db->execute("INSERT INTO bouw_oferten 
 			(adres_id, 
-			oferten_id, 
-			proforma_numer,
-			data) 
+			in_progres, 
+			status,
+            oferten_numer,
+			data,
+            data_end
+            ) 
 			VALUES (
 				'".$this->__params['POST']['adres']."',
-				'".$this->__params['POST']['oferten']."',
-				'".$this->getLastProformaNr()."',
-				'".$this->__params['POST']['proformadata']."'
+				0,
+				0,
+                '".$this->getLastFacturNr()."',
+				'".$this->__params['POST']['ofertendata']."',
+                '".$this->__params['POST']['ofertendataend']."'
 				)");
             
         
 
             $id = $this->__db->getLastInsertedId();
 
-            $proforma_nr = $this->__db->querymy("SELECT proforma_numer FROM `bouw_proforma` WHERE id = ".$id);
-            foreach ($proforma_nr->fetch_all() as $row) {
+            $oferten_nr = $this->__db->querymy("SELECT oferten_numer FROM `bouw_oferten` WHERE id = ".$id);
+            foreach ($oferten_nr->fetch_all() as $row) {
                 for ($i=0; $i < 20; $i++) {
                     # code...
 
                 
-                    $this->__db->execute("INSERT INTO bouw_proforma_details 
-			(proforma_nr, 
-			waarvoor_id, 
-			quantity,
-			price) 
-			VALUES (
-			".$row[0].",
-			".$this->__params['POST']['warfortype'][$i].",
-			".$this->__params['POST']['warfortimespend'][$i].",
-			".$this->__params['POST']['warforquantity'][$i]."
-			)");
+                        $this->__db->execute("INSERT INTO bouw_oferten_details 
+                (oferten_nr, 
+                waarvoor_id, 
+                quantity,
+                price) 
+                VALUES (
+                ".$row[0].",
+                ".$this->__params['POST']['warfortype'][$i].",
+                ".$this->__params['POST']['warfortimespend'][$i].",
+                ".$this->__params['POST']['warforquantity'][$i]."
+                )");
                 }
             }
-            header("Location: ".SERVER_ADDRESS."administrator/proforma/index");
+            header("Location: ".SERVER_ADDRESS."administrator/oferten/index");
         }
 		
     }
@@ -329,16 +336,16 @@ class proformamodel
         -- adresy.bedrijf_tel,
         -- adresy.email,
         -- adresy.rekening,
-        proforma.data,
-        proforma.proforma_numer,
+        oferten.data,
+        oferten.oferten_numer,
         adresy.id,
-        proforma.oferten_id,
-        proforma.data_betalen,
-        proforma.is_factur
+        oferten.oferten_id,
+        oferten.data_betalen,
+        oferten.is_factur
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
-        INNER JOIN bouw_proforma AS proforma ON adresy.id = proforma.adres_id 
-        WHERE proforma.proforma_numer = ".$this->__params[1]);
+        INNER JOIN bouw_oferten AS oferten ON adresy.id = oferten.adres_id 
+        WHERE oferten.oferten_numer = ".$this->__params[1]);
         $x = array();
         foreach($data as $q){
             array_push($x, $q);
@@ -358,13 +365,13 @@ class proformamodel
 
     private function getAllWarforForAdres() {
         $dataWarfor = $this->__db->execute("SELECT 
-        proforma_nr,
+        oferten_nr,
         waarvoor_id,
         quantity,
         price,
         id
-        FROM bouw_proforma_details 
-        WHERE proforma_nr = ".$this->__params[1]);
+        FROM bouw_oferten_details 
+        WHERE oferten_nr = ".$this->__params[1]);
 
         $y = array();
         foreach($dataWarfor as $q){
@@ -378,7 +385,7 @@ class proformamodel
     }
     
 
-    public function editProforma()
+    public function editoferten()
 	{
 		if(isset($this->__params['POST']['editwarfor'])) {
             $lastFacturId=model_load('inkomstenmodel', 'getLastFacturNr', '');
@@ -391,15 +398,15 @@ class proformamodel
             $data_betalen = $this->__params['POST']['data_betalen'];
 
             if($data_betalen != null){
-                $this->__db->execute("UPDATE bouw_proforma 
+                $this->__db->execute("UPDATE bouw_oferten 
                 SET
                 adres_id = $adres,
                 oferten_id = $oferten, 
-                proforma_numer = $factur,
+                oferten_numer = $factur,
                 data = '$data',
                 data_betalen = '$data_betalen',
                 is_factur = 1
-                WHERE proforma_numer = $factur
+                WHERE oferten_numer = $factur
                 ");
 
                 $this->__db->execute("INSERT INTO bouw_factur 
@@ -415,14 +422,14 @@ class proformamodel
                     )");
                 
             } else {
-                $this->__db->execute("UPDATE bouw_proforma 
+                $this->__db->execute("UPDATE bouw_oferten 
                 SET
                 adres_id = $adres,
                 oferten_id = $oferten, 
-                proforma_numer = $factur,
+                oferten_numer = $factur,
                 data = '$data',
                 data_betalen = null
-                WHERE proforma_numer = $factur
+                WHERE oferten_numer = $factur
                 ");
     
             }
@@ -435,9 +442,9 @@ class proformamodel
                     $id = $this->__params['POST']['warforInputId'][$i];
                     $allwarfor = $this->getAllWarforForAdres()[$i - 1];
                     if (in_array($id, $allwarfor)) {
-                    $r = $this->__db->execute("UPDATE bouw_proforma_details 
+                    $r = $this->__db->execute("UPDATE bouw_oferten_details 
                     SET
-                    proforma_nr = '".$factur."',
+                    oferten_nr = '".$factur."',
                     waarvoor_id = '".$this->__params['POST']['warfortype'][$i]."', 
                     quantity = '".$this->__params['POST']['warfortimespend'][$i]."',
                     price = '".$this->__params['POST']['warforquantity'][$i]."'
@@ -445,8 +452,8 @@ class proformamodel
                     ");
                         // print_r(" [ ".$r." / ");
                         } else {
-                            $this->__db->execute("INSERT INTO bouw_proforma_details 
-                        (proforma_nr, 
+                            $this->__db->execute("INSERT INTO bouw_oferten_details 
+                        (oferten_nr, 
                         waarvoor_id, 
                         quantity,
                         price) 
@@ -488,24 +495,24 @@ class proformamodel
                     }
                 }
             }
-            header("Location: ".SERVER_ADDRESS."administrator/proforma/index");
+            header("Location: ".SERVER_ADDRESS."administrator/oferten/index");
         }
     }
 
     public function removewarfor() {
         if ($this->__params['POST']['action'] == 'removewarfor') {
-            $this->__db->execute("DELETE FROM bouw_proforma_details WHERE id = ".$this->__params['POST']['warfor_id']);
+            $this->__db->execute("DELETE FROM bouw_oferten_details WHERE id = ".$this->__params['POST']['warfor_id']);
         }
 
     }
 
-    public function sendproforma($request = null){
+    public function sendoferten($request = null){
         if($request[0] == null || $request[1] == null){
-            $proforma_numer = $this->__params[1];
-            $proforma_id =  $this->__params[2];
+            $oferten_numer = $this->__params[1];
+            $oferten_id =  $this->__params[2];
         } else {
-            $proforma_numer = $request[1];
-            $proforma_id =  $request[0];
+            $oferten_numer = $request[1];
+            $oferten_id =  $request[0];
         }
         
         $data = $this->__db->execute("SELECT 
@@ -527,14 +534,14 @@ class proformamodel
         adresy.bedrijf_tel,
         adresy.email,
         adresy.rekening,
-        proforma.data,
-        proforma.proforma_numer,
+        oferten.data,
+        oferten.oferten_numer,
         adresy.id,
-        proforma.oferten_id
+        oferten.oferten_id
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
-        INNER JOIN bouw_proforma AS proforma ON adresy.id = proforma.adres_id 
-        WHERE proforma.proforma_numer = ".$proforma_numer);
+        INNER JOIN bouw_oferten AS oferten ON adresy.id = oferten.adres_id 
+        WHERE oferten.oferten_numer = ".$oferten_numer);
         $x = array();
 
         foreach($data as $q){
@@ -543,24 +550,24 @@ class proformamodel
         }
 
         $email = $x[0]['email'];
-        $id = $proforma_id;
+        $id = $oferten_id;
         $betaald = $this->proform_ilosc_maili($id);
 
-        $this->proformy_mail_wyslij($email, $proforma_id, $betaald, TRUE, $proforma_numer);
+        $this->proformy_mail_wyslij($email, $oferten_id, $betaald, TRUE, $oferten_numer);
 
-        // $this->wyslij_maila_smtp('kw-53@wp.pl', 'testsmtp', 'testowa tresc wiadomosci',$_SERVER['DOCUMENT_ROOT'].'proforma.pdf');
+        // $this->wyslij_maila_smtp('kw-53@wp.pl', 'testsmtp', 'testowa tresc wiadomosci',$_SERVER['DOCUMENT_ROOT'].'oferten.pdf');
     }
 
-    public function proform_ilosc_maili($id_proforma) {
+    public function proform_ilosc_maili($id_oferten) {
 		$ilosc_maili = 0;
         $dzis = date('Y-m-d');
         
         $db_query_m = array();
 
-        if (isset($id_proforma)) {
-            $db_query_m = $this->__db->execute("SELECT `id` FROM `bouw_proforma_mail` WHERE `proforma_id` =  ".$id_proforma." ");
+        if (isset($id_oferten)) {
+            $db_query_m = $this->__db->execute("SELECT `id` FROM `bouw_oferten_mail` WHERE `oferten_id` =  ".$id_oferten." ");
         } else {
-            $db_query_m = $this->__db->execute("SELECT `id` FROM `bouw_proforma_mail` WHERE `proforma_id` =  ".$this->__params[2]." ");
+            $db_query_m = $this->__db->execute("SELECT `id` FROM `bouw_oferten_mail` WHERE `oferten_id` =  ".$this->__params[2]." ");
         }
         // print_r($db_query_m);
 
@@ -575,7 +582,7 @@ class proformamodel
 	
     }	
 
-    public function proformy_mail_wyslij($email, $proforma_id, $betaald = null, $wystaw_i_wyslij = null, $proforma_numer = null) {
+    public function proformy_mail_wyslij($email, $oferten_id, $betaald = null, $wystaw_i_wyslij = null, $oferten_numer = null) {
 		
 		
 		if(!empty($betaald)){
@@ -583,11 +590,11 @@ class proformamodel
 
 			
 			if($betaald == 1){
-				$temat = 'BETALINGSHERINNERING - proforma factuur van KH Bemiddeling';
+				$temat = 'BETALINGSHERINNERING - oferten factuur van KH Bemiddeling';
 
 				$tresc = '
 							Beste <br><br>
-							In de bijlage kunt u de proforma factuur inzien en uitprinten.<br /><br />
+							In de bijlage kunt u de oferten factuur inzien en uitprinten.<br /><br />
 										
 							
 							met vriendelijke groet <br />
@@ -595,22 +602,22 @@ class proformamodel
 		 
 				
 				
-                $proforma_pdf = 'application/storage/proformy/'.$proforma_id.'-1.pdf';
-                $proforma1 = file_exists($proforma_pdf); 
+                $oferten_pdf = 'application/storage/proformy/'.$oferten_id.'-1.pdf';
+                $oferten1 = file_exists($oferten_pdf); 
 
-                if (!$proforma1 && $wystaw_i_wyslij){
+                if (!$oferten1 && $wystaw_i_wyslij){
                     
-                    $this->createproforma(true, 1, $proforma_numer);
-                    $proforma_pdf = 'application/storage/proformy/'.$proforma_id.'-1.pdf';
+                    $this->createoferten(true, 1, $oferten_numer);
+                    $oferten_pdf = 'application/storage/proformy/'.$oferten_id.'-1.pdf';
                 }
 			}
 			
 			if($betaald == 2){
-				$temat = 'AANMANING - proforma factuur van KH Bemiddeling'; 
+				$temat = 'AANMANING - oferten factuur van KH Bemiddeling'; 
 
 				$tresc = '
 							Beste <br><br>
-							In de bijlage kunt u de proforma factuur inzien en uitprinten.<br /><br />
+							In de bijlage kunt u de oferten factuur inzien en uitprinten.<br /><br />
 										
 							
 							met vriendelijke groet <br />
@@ -618,13 +625,13 @@ class proformamodel
 		 
 				
 				
-                $proforma_pdf = 'application/storage/proformy/'.$proforma_id.'-2.pdf';
-                $proforma1 = file_exists($proforma_pdf); 
+                $oferten_pdf = 'application/storage/proformy/'.$oferten_id.'-2.pdf';
+                $oferten1 = file_exists($oferten_pdf); 
 
-                if (!$proforma1 && $wystaw_i_wyslij){
-                    $this->createproforma(true, 2, $proforma_numer);
+                if (!$oferten1 && $wystaw_i_wyslij){
+                    $this->createoferten(true, 2, $oferten_numer);
                     
-                    $proforma_pdf = 'application/storage/proformy/'.$proforma_id.'-2.pdf';
+                    $oferten_pdf = 'application/storage/proformy/'.$oferten_id.'-2.pdf';
                 }
 			}
 		
@@ -632,23 +639,23 @@ class proformamodel
 		} else{
 		
 	
-			$temat = 'proforma Factuur van KH Bemiddeling';
+			$temat = 'oferten Factuur van KH Bemiddeling';
 
 			$tresc = '
 						Beste <br><br>
-						In de bijlage kunt u de proforma factuur inzien en uitprinten.<br /><br />
+						In de bijlage kunt u de oferten factuur inzien en uitprinten.<br /><br />
 									
 						
 						met vriendelijke groet <br />
                         KHBemiddeling';
                         
-			$proforma_pdf = 'application/storage/proformy/'.$proforma_id.'.pdf';
+			$oferten_pdf = 'application/storage/proformy/'.$oferten_id.'.pdf';
 			
-			$proforma1 = file_exists($proforma_pdf); 
+			$oferten1 = file_exists($oferten_pdf); 
 
-			if (!$proforma1 && $wystaw_i_wyslij){
-                $this->createproforma(true, 0, $proforma_numer);
-                $proforma_pdf = 'application/storage/proformy/'.$proforma_id.'.pdf';
+			if (!$oferten1 && $wystaw_i_wyslij){
+                $this->createoferten(true, 0, $oferten_numer);
+                $oferten_pdf = 'application/storage/proformy/'.$oferten_id.'.pdf';
 			}
 	 
 		}
@@ -667,25 +674,25 @@ class proformamodel
 		
 
 
-        $this->__db->execute("INSERT INTO `bouw_proforma_mail`(`proforma_id`, `data_czas`) VALUES (" . $proforma_id . ", '" . date('Y-m-d H:i:s') . "') ");
+        $this->__db->execute("INSERT INTO `bouw_oferten_mail`(`oferten_id`, `data_czas`) VALUES (" . $oferten_id . ", '" . date('Y-m-d H:i:s') . "') ");
 
         $msg = 'E-mail was verstuurd.';
 
         print_r('send');
 
-        //$mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $proforma_pdf);
+        //$mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $oferten_pdf);
 
 
         //header('Location:proformy.php?msg=' . $msg);
     
     }
 
-    public function createproforma($create, $ilemaili = null, $proforma_numer = null) {
-$data=model_load('proformamodel', 'getdata', $proforma_numer);
-$btw=model_load('proformamodel', 'getbtw', '');
-$total=model_load('proformamodel', 'gettotal', '');
-$company=model_load('proformamodel', 'getCompanyData', '');
-$ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
+    public function createoferten($create, $ilemaili = null, $oferten_numer = null) {
+$data=model_load('ofertenmodel', 'getdata', $oferten_numer);
+$btw=model_load('ofertenmodel', 'getbtw', '');
+$total=model_load('ofertenmodel', 'gettotal', '');
+$company=model_load('ofertenmodel', 'getCompanyData', '');
+$ilemail=model_load('ofertenmodel', 'proform_ilosc_maili', '');
 // echo"<pre>";
 // print_r($ilemail);
 
@@ -714,7 +721,7 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
 		// $nr='KH-00'.$id;
 
 		$pdf->SetFont('ArialMT','',14);
-		$pdf->Cell(0,0,'Proforma: '.$data[0]['proforma_numer'],0,1);
+		$pdf->Cell(0,0,'oferten: '.$data[0]['oferten_numer'],0,1);
 		$pdf->SetY(45);
 		$pdf->SetFont('ArialMT','',17);
 		$pdf->SetTextColor(0, 0, 0);
@@ -738,7 +745,7 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
 
 		$pdf->SetXY(130,45);
 		$pdf->SetFont('Arial','',12);
-		$pdf->Cell(0,5,'Proforma voor:',0,1);
+		$pdf->Cell(0,5,'oferten voor:',0,1);
 		$pdf->SetX(130);
 
         $pdf->SetFont('ArialMT','',10);
@@ -884,7 +891,7 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
             $pdf->SetFont('Arial', '', 12);
 
             $pdf->SetFillColor(240, 240, 240);
-            $pdf->Cell(0, 10, 'Proforma: '.$data[0]['proforma_numer'].' van '.$data[0]['data'].' '.$wynajem, T, 1, 1, true);
+            $pdf->Cell(0, 10, 'oferten: '.$data[0]['oferten_numer'].' van '.$data[0]['data'].' '.$wynajem, T, 1, 1, true);
 
 
             $pdf->Cell(100, 10, 'Order: '.$data[0]['id'], 0, 1);
@@ -1059,19 +1066,19 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
                 }
                 
             } else {
-                $pdf->Output('proforma-'.$nr.'.pdf', 'D');
+                $pdf->Output('oferten-'.$nr.'.pdf', 'D');
                 $pdf->Output();
             }   
     }
 
     }
 
-    public function showproforma() {
-        $this->createproforma(false);
+    public function showoferten() {
+        $this->createoferten(false);
     }
 
-    public function getproformaidbynumer() {
-        $data = $this->__db->execute("SELECT id FROM `bouw_proforma` WHERE `proforma_numer` = " . $this->__params[1]);
+    public function getofertenidbynumer() {
+        $data = $this->__db->execute("SELECT id FROM `bouw_oferten` WHERE `oferten_numer` = " . $this->__params[1]);
 
         $x = array();
 
@@ -1083,9 +1090,9 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
        return $this->historia_maili($x[0]['id']);
     }
 
-    public function historia_maili($proforma_id) {
+    public function historia_maili($oferten_id) {
 
-        $db_query = $this->__db->execute("SELECT data_czas FROM `bouw_proforma_mail` WHERE `proforma_id` = ".$proforma_id);
+        $db_query = $this->__db->execute("SELECT data_czas FROM `bouw_oferten_mail` WHERE `oferten_id` = ".$oferten_id);
         
         $historia_maili = array();
 
@@ -1096,20 +1103,6 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
         // print_r($historia_maili);
         return $historia_maili;
     }
-
-    public function getProformaForCron() {
-        $db_query = $this->__db->execute("SELECT id, proforma_numer  FROM bouw_proforma WHERE `is_factur` =  0");
-
-        $cronProformyId = array();
-
-        foreach($db_query as $q){
-          
-            array_push($cronProformyId, $q);
-        }
-        // print_r($historia_maili);
-        return $cronProformyId;
-    }
- 
 }
 
 ?>

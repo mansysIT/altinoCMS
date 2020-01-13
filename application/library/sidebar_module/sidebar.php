@@ -33,7 +33,7 @@
                 <a href="administrator/uitgaven/index">Uitgaven</a> 
             </li>
             <li>
-                <a href="administrator/proforma/proforma">Proforma</a> 
+                <a href="administrator/proforma/index">Proforma</a> 
             </li>
             <li>
                 <a href="administrator/oferten/index">Oferten</a>

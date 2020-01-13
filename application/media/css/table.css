@@ -74,6 +74,14 @@ tr.table-responsive thead td {
     margin-left: 5px;
 }
 
+.proformared a{
+    color: red!important;
+}
+
+.proformablack a{
+    color: black!important;
+}
+
 
 
 @media only screen and (max-width: 768px) {

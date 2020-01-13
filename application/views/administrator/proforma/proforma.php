@@ -77,14 +77,14 @@ $dOd->modify('first day of this month');
 		<tbody>
         
 			<?php foreach($proforma as $row): ?>
-				<tr>
-					<?="<td> <a style='color: #000!important;' href='administrator/proforma/sendproforma/$row[4]/$row[0]'>$row[0]</a><a style='color: #000!important;' href='administrator/proforma/sendproforma/$row[4]/$row[0]'> <span class='oi oi-envelope-closed' title='envelope-closed' aria-hidden='true'></span></a> " ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/proforma/editproforma/$row[4]'>$row[1]</a>" ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/proforma/editproforma/$row[4]'>$row[2]</a>" ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/proforma/editproforma/$row[4]'>$row[3]</a>" ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/proforma/editproforma/$row[4]'>€ ".number_format($row[6],2,',', '.')."</a>" ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/proforma/index/$row[4]/$row[0]'>$row[4]</a><a style='color: #000!important;' href='administrator/proforma/index/$row[4]/$row[0]'> <span class='oi oi-file' title='file' aria-hidden='true'></span></a> " ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/proforma/editproforma/$row[4]'>$row[5]</a>" ?></td>
+				<?php print_r($row) ?>
+				<tr <?php if($row[6] == 0){echo "class='proformared'"; } else { echo "class='proformablack'"; } ?>>
+					<?="<td> <a href='administrator/proforma/sendproforma/$row[4]/$row[0]'>$row[0]</a><a href='administrator/proforma/sendproforma/$row[4]/$row[0]'> <span class='oi oi-envelope-closed' title='envelope-closed' aria-hidden='true'></span></a> " ?></td>
+					<?="<td> <a href='administrator/proforma/editproforma/$row[4]'>$row[1]</a>" ?></td>
+					<?="<td> <a href='administrator/proforma/editproforma/$row[4]'>$row[3]</a>" ?></td>
+					<?="<td> <a href='administrator/proforma/editproforma/$row[4]'>€ ".number_format($row[6],2,',', '.')."</a>" ?></td>
+					<?="<td> <a href='administrator/proforma/index/$row[4]/$row[0]'>$row[4]</a><a href='administrator/proforma/index/$row[4]/$row[0]'> <span class='oi oi-file' title='file' aria-hidden='true'></span></a> " ?></td>
+					<?="<td> <a href='administrator/proforma/editproforma/$row[4]'>$row[5]</a>" ?></td>
 					<td> <form  method="post" action=""><button class="btnCityRemove" type="submit" name="proformremove" value="<?php echo $row[0]; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form></td>
 				</tr>
 			<?php endforeach; ?>
