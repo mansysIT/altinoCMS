@@ -5,7 +5,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<?php $sidebarController=model_load('nieuwe_adressmodel', 'getCityName', '')?>
+<?php $sidebarController=model_load('mainmodel', 'getCityName', '')?>
 
 <?=add_metatags()?>
 

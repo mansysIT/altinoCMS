@@ -9,8 +9,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<?php $sidebarController=model_load('nieuwe_adressmodel', 'getCityName', '')?>
-<?php $getWarforTypes = model_load('inkomstenmodel', 'getAllWarforType', '')?>
+<?php $sidebarController=model_load('mainmodel', 'getCityName', '')?>
+<?php $getWarforTypes = model_load('mainmodel', 'getWaarvoor', '')?>
 <?=model_load('ofertenmodel', 'saveoferten', '')?>
 
 <?=add_metatags()?>
@@ -94,13 +94,13 @@ $d = new DateTime(date("Y-m-d"));
                                         <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
-                                            <input id="num1" class="form-control form-control-small" name="warfortimespend[]" placeholder="0" value="">
+                                            <input id="num" class="form-control form-control-small oferten" name="warfortimespend[]" placeholder="0" value="">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
                                         </td>
-                                        <td class="" id="num2">
-                                            <input id="num2" class="form-control form-control-small" name="warforquantity[]" placeholder="0" value="">
+                                        <td class="" id="num">
+                                            <input id="num2" class="form-control form-control-small oferten" name="warforquantity[]" placeholder="0" value="">
                                         </td>
                                         <td class=" del blok_mansys">
                                             <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="btn btn-danger" name="del-a" type="submit" value="X" >
@@ -114,15 +114,15 @@ $d = new DateTime(date("Y-m-d"));
                 </div>
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
 				<div class="RekeningInside">
-                    <p class="rekaningText">Data</p>
+                    <p class="rekaningText">Aanmaakdatum</p>
                     <input class="inputNewHuurder" type="date" name="ofertendata" value='<?=$d->format('Y-m-d')?>' >
                 </div>
 
                 <div class="RekeningInside">
-                    <p class="rekaningText">Einddatum</p>
+                    <p class="rekaningText">Geplande Datum Van Voltooiing</p>
                     <input class="inputNewHuurder" type="date" name="ofertendataend" value='<?=$d->format('Y-m-d')?>' >
                 </div>
-   
+                <button type="submit" class="btn btn-danger mb-2 btn-small" name="saveoferten">Toevoegen</button>
             </div>
             <div class="right">
 
@@ -130,7 +130,7 @@ $d = new DateTime(date("Y-m-d"));
             </div>
             
         </div>
-        <button type="submit" class="btn btn-danger mb-2" name="saveoferten">Toevoegen</button>
+        
 
         </form>
 
@@ -212,6 +212,9 @@ function addWarfor() {
             });
     };
 
-
+    // $("body").on("click", ".oferten", function(){
+    // var element = document.querySelectorAll('#num1');
+    // alert(element.value);
+})
 
 </script>

@@ -88,7 +88,7 @@ $dOd->modify('first day of this month');
 			
 			foreach($adress as $k=>$row): 
 
-				$w = model_load('waarvoormodel', 'getwaarvoor', $row[6]); 
+				$w = model_load('mainmodel', 'getwaarvoor', $row[6]); 
 				$waar = $w[0][1]; 
 				$total += $row[4];
 	

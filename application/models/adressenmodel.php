@@ -10,7 +10,8 @@ class adressenmodel
 	private $__config;
 	private $__router;
     public $__params;
-    private $__db;
+	private $__db;
+	private $mainModel;
 	
 	public function __construct()
 	{
@@ -20,6 +21,8 @@ class adressenmodel
 		$this->__db = registry::register("db");
 		
 		$this->clearActive();
+
+		$this->mainModel = new mainmodel;
 	}
 
 	public function getAdress()
@@ -143,136 +146,7 @@ class adressenmodel
 		return $this->__params[0];
 	}
 
-	public function getAllFilesInDirectory() {
 
-		if(isset($this->__params[2])){
-			$dir = "application/storage/adres/".$this->__params[1]."/".$this->__params[2];
-			if(scandir($dir) != null){
-				$files = scandir($dir);
-				$foldersArray = array();
-				$filesArray = array();
-				foreach($files as $file)
-				{
-					if (strpos($file, '.') == null) {	
-						if (strpos($file, '..') == null) {
-						}
-					} else {
-						array_push($filesArray, $file);
-					}
-				}
-				return array($foldersArray, $filesArray);
-			} else {
-				return array();
-			}
-		} else {
-			$dir = "application/storage/adres/".$this->__params[1];
-			if(scandir($dir) != null){
-				$files = scandir($dir);
-				$foldersArray = array();
-				$filesArray = array();
-				foreach($files as $file)
-				{
-					if (strpos($file, '.') == null) {	
-						if (strpos($file, '..') == null) {
-							array_push($foldersArray, $file);
-						}
-					} else {
-						array_push($filesArray, $file);
-					}
-				}
-				return array($foldersArray, $filesArray);
-			}
-		}
-	}
-
-	public function createNewFolder() {
-		if(isset($this->__params['POST']['addfolder']) && isset($this->__params['POST']['foldername']) && $this->__params['POST']['foldername'] != null) {
-			$file = $this->__params['POST']['foldername'];
-			
-			if(!is_dir('application/storage/adres/'.$this->__params[1].'/'.$file.'')){
-				mkdir('application/storage/adres/'.$this->__params[1].'/'.$file.'', 0777);
-			}
-		}
-	}
-
-	public function remove() {
-		if(isset($this->__params[2])){
-			if(isset($this->__params['POST']['removefolder'])) {
-				$file = $this->__params['POST']['removefolder'];
-				if(is_dir('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2]."/".$file.'')){
-					print_r('is');
-					rmdir('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2].'/'.$file.'');
-				}
-			}
-
-			if(isset($this->__params['POST']['removefile'])) {
-				$file = $this->__params['POST']['removefile'];
-				print_r($file);
-				if(file_exists('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2].'/'.$file.'')){
-					print_r('isFile');
-					unlink('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2].'/'.$file.'');
-				}
-			}
-		} else {
-			if(isset($this->__params['POST']['removefolder'])) {
-				$file = $this->__params['POST']['removefolder'];
-				if(is_dir('application/storage/adres/'.$this->__params[1].'/'.$file.'')){
-					print_r('is');
-					rmdir('application/storage/adres/'.$this->__params[1].'/'.$file.'');
-				}
-			}
-
-			if(isset($this->__params['POST']['removefile'])) {
-				$file = $this->__params['POST']['removefile'];
-				print_r($file);
-				if(file_exists('application/storage/adres/'.$this->__params[1].'/'.$file.'')){
-					print_r('isFile');
-					unlink('application/storage/adres/'.$this->__params[1].'/'.$file.'');
-				}
-			}
-		}
-	}
-
-	public function uploadFile() {
-		if(isset($this->__params[2])){
-			$target_dir = "application/storage/adres/".$this->__params[1]."/".$this->__params[2]."/";
-		} else {
-			$target_dir = "application/storage/adres/".$this->__params[1]."/";
-		}
-		
-		//if(isset($this->__params['POST']['fileToUpload'])){
-		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-		$uploadOk = 1;
-		
-		// Check if file already exists
-		if (file_exists($target_file)) {
-			//echo "Sorry, file already exists.";
-			$uploadOk = 0;
-		}
-		// Check file size
-		if ($_FILES["fileToUpload"]["size"] > 500000) {
-			echo "Sorry, your file is too large.";
-			$uploadOk = 0;
-		}
-		// Check if $uploadOk is set to 0 by an error
-		if ($uploadOk == 0) {
-			//echo "Sorry, your file was not uploaded.";
-		// if everything is ok, try to upload file
-		} else {
-			if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-				echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-			} else {
-				echo "Sorry, there was an error uploading your file.";
-			}
-		}
-	//}
-	}
-
-	public function getParametrs() {
-		if(isset($this->__params[2])) {
-			return true;
-		}
-	}
 
 	public function setActive() {
 		if(isset($this->__params['POST']['active'])){
@@ -283,6 +157,14 @@ class adressenmodel
 		$this->__db->execute("UPDATE bouw_adresy SET active = 1  WHERE id = ".$this->__params['POST']['noactive']);
 		header("Location: ".SERVER_ADDRESS."administrator/adressen/index");
 	}
+	}
+
+	public function createAdresFolder() {
+        if (isset($this->__params['POST']['addfolder']) && isset($this->__params['POST']['foldername']) && $this->__params['POST']['foldername'] != null) {
+			$dir = 'application/storage/adres/'.$this->__params[1];
+			$dirName = $this->__params['POST']['foldername'];	
+			$this->mainModel->createNewFolder($dir, $dirName);	
+        }			
 	}
 }
 

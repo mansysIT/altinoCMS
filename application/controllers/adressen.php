@@ -75,22 +75,7 @@ class adressen extends controller
 		$this->addHook($this->i18n->languageDetector()); 
 		
 		$this->main->model_helper;
-	}
-
-	public function offerten()
-	{
-		$this->model->administrator;
-	
-		$this->main->metatags_helper;
-		$this->main->head_helper;
-		$this->main->loader_helper;
-		$this->main->module_helper;
-		$this->main->model_helper;
-		$this->main->directory_helper;
-		$this->main->translate_helper;
-	}
-
-	
+	}	
 }
 
 

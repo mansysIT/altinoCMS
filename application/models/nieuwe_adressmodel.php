@@ -54,14 +54,6 @@ class nieuwe_adressmodel
 			header("Location: ".SERVER_ADDRESS."administrator/adressen/adres/".$this->__db->getLastInsertedId()."");
 		}
 	}
-
-	public function getCityName(){
-        $this->query = $this->__db->querymy("SELECT city_id, city FROM bouw_city");
-        foreach($this->query->fetch_all() as $q){
-            array_push($this->cityArray, $q);
-        }
-       return $this->cityArray;
-	}
 	
 	private function createAdresDirectory($adres_id) {
 		if(!is_dir('application/storage/adres/'.$adres_id.'')){
