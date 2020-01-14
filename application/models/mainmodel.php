@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ERROR | E_PARSE);
+
 class mainmodel
 {
 	public $query;
@@ -26,29 +28,28 @@ class mainmodel
        return $this->cityArray;
 	}
     
-    public function getAllFilesInDirectory() {
+    public function getAllFilesInDirectory($dir) {
 
-		if(isset($this->__params[2])){
-			$dir = "application/storage/adres/".$this->__params[1]."/".$this->__params[2];
-			if(scandir($dir) != null){
-				$files = scandir($dir);
-				$foldersArray = array();
-				$filesArray = array();
-				foreach($files as $file)
-				{
-					if (strpos($file, '.') == null) {	
-						if (strpos($file, '..') == null) {
-						}
-					} else {
-						array_push($filesArray, $file);
-					}
-				}
-				return array($foldersArray, $filesArray);
-			} else {
-				return array();
-			}
-		} else {
-			$dir = "application/storage/adres/".$this->__params[1];
+		// if(isset($this->__params[2])){
+		// 	$dir = "application/storage/adres/".$this->__params[1]."/".$this->__params[2];
+		// 	if(scandir($dir) != null){
+		// 		$files = scandir($dir);
+		// 		$foldersArray = array();
+		// 		$filesArray = array();
+		// 		foreach($files as $file)
+		// 		{
+		// 			if (strpos($file, '.') == null) {	
+		// 				if (strpos($file, '..') == null) {
+		// 				}
+		// 			} else {
+		// 				array_push($filesArray, $file);
+		// 			}
+		// 		}
+		// 		return array($foldersArray, $filesArray);
+		// 	} else {
+		// 		return array();
+		// 	}
+		// } else {
 			if(scandir($dir) != null){
 				$files = scandir($dir);
 				$foldersArray = array();
@@ -65,7 +66,7 @@ class mainmodel
 				}
 				return array($foldersArray, $filesArray);
 			}
-		}
+		// }
 	}
 
 	public function createNewFolder($dir, $dirName) {
@@ -74,54 +75,61 @@ class mainmodel
 		}
 	}
 
-	public function remove() {
-		if(isset($this->__params[2])){
-			if(isset($this->__params['POST']['removefolder'])) {
-				$file = $this->__params['POST']['removefolder'];
-				if(is_dir('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2]."/".$file.'')){
-					print_r('is');
-					rmdir('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2].'/'.$file.'');
-				}
-			}
+	public function remove($dir) {
+		// if(isset($this->__params[2])){
+		// 	if(isset($this->__params['POST']['removefolder'])) {
+		// 		$file = $this->__params['POST']['removefolder'];
+		// 		if(is_dir('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2]."/".$file.'')){
+		// 			print_r('is');
+		// 			rmdir('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2].'/'.$file.'');
+		// 		}
+		// 	}
 
-			if(isset($this->__params['POST']['removefile'])) {
-				$file = $this->__params['POST']['removefile'];
-				print_r($file);
-				if(file_exists('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2].'/'.$file.'')){
-					print_r('isFile');
-					unlink('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2].'/'.$file.'');
-				}
-			}
-		} else {
-			if(isset($this->__params['POST']['removefolder'])) {
-				$file = $this->__params['POST']['removefolder'];
-				if(is_dir('application/storage/adres/'.$this->__params[1].'/'.$file.'')){
-					print_r('is');
-					rmdir('application/storage/adres/'.$this->__params[1].'/'.$file.'');
-				}
-			}
+		// 	if(isset($this->__params['POST']['removefile'])) {
+		// 		$file = $this->__params['POST']['removefile'];
+		// 		print_r($file);
+		// 		if(file_exists('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2].'/'.$file.'')){
+		// 			print_r('isFile');
+		// 			unlink('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2].'/'.$file.'');
+		// 		}
+		// 	}
+		// } else {
+		// 	if(isset($this->__params['POST']['removefolder'])) {
+		// 		$file = $this->__params['POST']['removefolder'];
+		// 		if(is_dir('application/storage/adres/'.$this->__params[1].'/'.$file.'')){
+		// 			print_r('is');
+		// 			rmdir('application/storage/adres/'.$this->__params[1].'/'.$file.'');
+		// 		}
+		// 	}
 
-			if(isset($this->__params['POST']['removefile'])) {
-				$file = $this->__params['POST']['removefile'];
-				print_r($file);
-				if(file_exists('application/storage/adres/'.$this->__params[1].'/'.$file.'')){
-					print_r('isFile');
-					unlink('application/storage/adres/'.$this->__params[1].'/'.$file.'');
-				}
+		// 	if(isset($this->__params['POST']['removefile'])) {
+		// 		$file = $this->__params['POST']['removefile'];
+		// 		print_r($file);
+		// 		if(file_exists('application/storage/adres/'.$this->__params[1].'/'.$file.'')){
+		// 			print_r('isFile');
+		// 			unlink('application/storage/adres/'.$this->__params[1].'/'.$file.'');
+		// 		}
+		// 	}
+		// }
+
+		if(isset($this->__params['POST']['removefile'])) {
+			$file = $this->__params['POST']['removefile'];
+			if(file_exists($dir.'/'.$file.'')){
+				unlink($dir.'/'.$file.'');
 			}
 		}
 	}
 
-	public function uploadFile() {
-		if(isset($this->__params[2])){
-			$target_dir = "application/storage/adres/".$this->__params[1]."/".$this->__params[2]."/";
-		} else {
-			$target_dir = "application/storage/adres/".$this->__params[1]."/";
-		}
+	public function uploadFile($target_dir) {
+		// if(isset($this->__params[2])){
+		// 	$target_dir = "application/storage/adres/".$this->__params[1]."/".$this->__params[2]."/";
+		// } else {
+		// 	$target_dir = "application/storage/adres/".$this->__params[1]."/";
+		// }
 		
 		//if(isset($this->__params['POST']['fileToUpload'])){
 		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-		$uploadOk = 1;
+		$uploadOk = 1; 
 		
 		// Check if file already exists
 		if (file_exists($target_file)) {

@@ -699,6 +699,32 @@ class facturmodel
         return $historia_maili;
     }
 
+    public function uploadFacturFiles() {
+        
+        if (isset($this->__params['POST']['facturFiles'])) {
+			$dir = 'application/storage/factur';
+			$dirName = $this->__params['POST']['id_factur'];	
+            $this->mainModel->createNewFolder($dir, $dirName);
+            $x = $dir."/".$dirName.'/';
+            $this->mainModel->uploadFile($x);		
+        }			
+    }
+    
+    public function getAllFilesFromFactur($id) {
+        if ($id != null) {
+            $dir = 'application/storage/factur/'.$id.'/';
+            return $this->mainModel->getAllFilesInDirectory($dir);
+        }
+    }
+    
+    public function removeFileFromFactur($id) {
+        if(isset($this->__params['POST']['removefile']) && $this->__params['POST']['removefile'] != null){
+            $dir = 'application/storage/factur/'.$id.'/';
+            $this->mainModel->remove($dir);	
+        }
+
+    }
+
 }
 
 ?>

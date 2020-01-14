@@ -13,6 +13,8 @@
 <?php $getWarforTypes = model_load('mainmodel', 'getWaarvoor', '')?>
 <?php $oferten = model_load('mainmodel', 'getOferten', '')?>
 
+
+
 <?=add_metatags()?>
 
 <?=add_title("Add Factur")?>
@@ -129,7 +131,6 @@ $d = new DateTime(date("Y-m-d"));
                     <p class="rekaningText">Data</p>
                     <input class="inputNewHuurder" type="date" name="facturdata" value='<?=$d->format('Y-m-d')?>' >
                 </div>
-   
             </div>
             <div class="right">
 
@@ -138,7 +139,7 @@ $d = new DateTime(date("Y-m-d"));
             
         </div>
         <button type="submit" class="btn btn-danger mb-2" name="savewarfor">Toevoegen</button>
-        </form>
+        
     </div>
 	<?=module_load('FOOTER')?>
 	</div>
