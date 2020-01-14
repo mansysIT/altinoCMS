@@ -15,6 +15,9 @@
 <?php $getWarforTypes = model_load('mainmodel', 'getWaarvoor', '')?>
 <?php $oferten = model_load('mainmodel', 'getOferten', '')?>
 <?php $mailhistory=model_load('facturmodel', 'getfacturidbynumer', '')?>
+<?php model_load('facturmodel', 'uploadFacturFiles', '')?>
+<?php model_load('facturmodel', 'removeFileFromFactur', $facturaModelData[0]['id'])?>
+<?php $files = model_load('facturmodel', 'getAllFilesFromFactur', $facturaModelData[0]['id'])?>
 
 <?php
 // if($facturaModelData[0]['data']));
@@ -39,6 +42,7 @@ $d = new DateTime($facturaModelData[0]['data']);
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="/application/media/js/nieuwe_adress.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link href="/application/media/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
 
 <script src="/application/media/js/addfileds.js"></script>
 
@@ -184,8 +188,8 @@ $d = new DateTime($facturaModelData[0]['data']);
                 <h3 style="margin: 15px 0 15px 0;">Bestanden</h3>
                 <div class="fileContainer">
                     <ul class="list-group list-group-flush">
-                    <?php if($nieuweadressmodel[1] != null): ?>
-                    <?php foreach($nieuweadressmodel[1] as $file): ?>
+                    <?php if($files[1] != null): ?>
+                    <?php foreach($files[1] as $file): ?>
                         <li class="list-group-item"><?php echo $file; ?>
                             <form style="width: 10%; float: right; padding: 0;" method="post" action="">
                             <button class="btnCityRemove" type="submit" name="removefile" value="<?php echo $file; ?>"><span class="oi oi-delete" title="delete" aria-hidden="true">
@@ -198,7 +202,8 @@ $d = new DateTime($facturaModelData[0]['data']);
                 <form action="" method="post" enctype="multipart/form-data">
                     Select file to upload:
                     <input type="file" name="fileToUpload" id="fileToUpload">
-                    <input type="submit" value="Upload Image" name="submit">
+                    <input type="submit" name="facturFiles" value="facturFiles" name="submit">
+                    <input style="display: none;"name="id_factur" value="<?=$facturaModelData[0]['id']; ?>" >
                 </form>
 
                 <h3 style="margin: 15px 0 15px 0;">Email Geschiedenis</h3>

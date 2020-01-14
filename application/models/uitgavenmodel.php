@@ -14,6 +14,8 @@ class uitgavenmodel
 	private $__db;
 	
 	private $warforQuantiy;
+
+	private $mainModel;
 	
 	public function __construct()
 	{
@@ -21,6 +23,8 @@ class uitgavenmodel
 		$this->__router = registry::register("router");
         $this->__params = $this->__router->getParams();
 		$this->__db = registry::register("db");
+
+		$this->mainModel = new mainmodel;
 	}
 
 	public function getFactur()
@@ -238,6 +242,32 @@ class uitgavenmodel
 			header("Location: ".SERVER_ADDRESS."administrator/uitgaven/index");
 		}
 	}
+
+	public function uploadUitgavenFiles() {
+        
+        if (isset($this->__params['POST']['facturFiles'])) {
+			$dir = 'application/storage/uitgaven';
+			$dirName = $this->__params['POST']['id_factur'];	
+            $this->mainModel->createNewFolder($dir, $dirName);
+            $x = $dir."/".$dirName.'/';
+            $this->mainModel->uploadFile($x);		
+        }			
+    }
+    
+    public function getAllFilesFromUitgaven($id) {
+        if ($id != null) {
+            $dir = 'application/storage/uitgaven/'.$id.'/';
+            return $this->mainModel->getAllFilesInDirectory($dir);
+        }
+    }
+    
+    public function removeFileFromUitgaven($id) {
+        if(isset($this->__params['POST']['removefile']) && $this->__params['POST']['removefile'] != null){
+            $dir = 'application/storage/uitgaven/'.$id.'/';
+            $this->mainModel->remove($dir);	
+        }
+
+    }
 }
   
 ?>

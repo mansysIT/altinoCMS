@@ -9,13 +9,17 @@
 <?php $sidebarController=model_load('mainmodel', 'getCityName', '')?>
 <?php $uitgavenModelData=model_load('uitgaafmodel', 'showdata', '')?> 
 
+<?php model_load('uitgavenmodel', 'uploadUitgavenFiles', '')?>
+<?php model_load('uitgavenmodel', 'removeFileFromUitgaven', $uitgavenModelData[0]['id'])?>
+<?php $files = model_load('uitgavenmodel', 'getAllFilesFromUitgaven', $uitgavenModelData[0]['id'])?>
+
 <?=add_metatags()?>
 
 <?=add_title("addUitgaaf")?>
 
 <?=add_basehref()?>
 
-<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css')?>
+<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css,factur.css')?>
 
 <?=javascript_load('main.js,sidebar.js,nieuwe_adress.js')?> 
      
@@ -25,7 +29,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+<link href="/application/media/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
 
 <body>
  
@@ -33,7 +37,6 @@
 $waarvoor = array();
 $waarvoor = model_load('mainmodel', 'getWaarvoor', ''); 
 model_load('uitgavenmodel', 'saveUitgaaf', ''); 
-
 
 ?>    
  
@@ -97,16 +100,41 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                     <p class="rekaningText">Datum</p>
                     <input class="inputNewHuurder" type="date" name="datum" value="<?=date("Y-m-d");?>">
                 </div>       
-   
+                <button type="submit" class="btn btn-danger mb-2 btn-small" name="savewarfor">Toevoegen</button>
+            
+            
+            </form>
+            <?php if($uitgavenModelData[0] != null): ?>
+                </form>
+                <h3 style="margin: 15px 0 15px 0;">Bestanden</h3>
+                <div class="fileContainer">
+                    <ul class="list-group list-group-flush">
+                    <?php if($files[1] != null): ?>
+                    <?php foreach($files[1] as $file): ?>
+                        <li class="list-group-item"><?php echo $file; ?>
+                            <form style="width: 10%; float: right; padding: 0;" method="post" action="">
+                            <button class="btnCityRemove" type="submit" name="removefile" value="<?php echo $file; ?>"><span class="oi oi-delete" title="delete" aria-hidden="true">
+                            </span></button></form>
+                        </li>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                    </ul>
+                </div>
+                <form action="" method="post" enctype="multipart/form-data">
+                    Select file to upload:
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <input type="submit" name="facturFiles" value="facturFiles" name="submit">
+                    <input style="display: none;"name="id_factur" value="<?=$uitgavenModelData[0]['id']; ?>" >
+                </form>
+            <?php endif; ?>
             </div>
             <div class="right">
 
 
             </div>
             
-        </div>
-        <button type="submit" class="btn btn-danger mb-2" name="savewarfor">Toevoegen</button>
-        </form>
+            </div>
+        
     </div>
 	<?=module_load('FOOTER')?>
 	</div>
