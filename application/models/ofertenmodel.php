@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ERROR | E_PARSE);
+require_once($_SERVER['DOCUMENT_ROOT'].'/packages/pdf/fpdf.php');
+
 class ofertenmodel
 {
 	public $query;
@@ -147,8 +150,8 @@ class ofertenmodel
 
         $this->clear();
 
-		if(isset($this->__params[2])){
-			return $this->adres($this->od, $this->do, $this->word , $this->__params[2]);   
+		if(isset($this->__params[1])){
+			return $this->adres($this->od, $this->do, $this->word , $this->__params[1]);   
 		} else {
 			return $this->adres($this->od, $this->do, $this->word , null);   
 		}
@@ -193,10 +196,30 @@ class ofertenmodel
 
     // SELECT bouw_adresy.id, bouw_adresy.adres, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE bouw_factur.adres_id = 28
 
-    public function adres($od, $do, $word = null, $city_id = null) {
+    public function adres($od, $do, $word = null, $adres_id = null) {
 		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
-		if($word != null){
-			$this->query = $this->__db->querymy("SELECT oferten.id, city.city, adres.adres, oferten.data, oferten.status
+		if($word != null && $adres_id != null){
+			$this->query = $this->__db->querymy("SELECT oferten.id, city.city, adres.adres, oferten.data, oferten.status, oferten.oferten_numer, oferten.planned_date, oferten.data_end
+            FROM bouw_adresy AS adres 
+            INNER JOIN bouw_city AS city ON adres.city = city.city_id 
+			INNER JOIN bouw_oferten AS oferten ON oferten.adres_id = adres.id 
+            WHERE 
+            oferten.data BETWEEN '".$od."' AND '".$do."' AND  city.city LIKE '%".$word."%' AND adres.id  = $adres_id OR
+            oferten.data BETWEEN '".$od."' AND '".$do."' AND  oferten.id = $word AND adres.id  = $adres_id OR
+            oferten.data BETWEEN '".$od."' AND '".$do."' AND  adres.adres LIKE '%".$word."%' AND adres.id  = $adres_id OR
+            oferten.data BETWEEN '".$od."' AND '".$do."' AND  oferten.oferten_numer = $word AND adres.id  = $adres_id
+            ORDER BY oferten.id DESC");
+            
+        } else if($adres_id != null){
+			$this->query = $this->__db->querymy("SELECT oferten.id, city.city, adres.adres, oferten.data, oferten.status, oferten.oferten_numer, oferten.planned_date, oferten.data_end
+            FROM bouw_adresy AS adres 
+            INNER JOIN bouw_city AS city ON adres.city = city.city_id 
+			INNER JOIN bouw_oferten AS oferten ON oferten.adres_id = adres.id 
+            WHERE 
+            oferten.data BETWEEN '".$od."' AND '".$do."' AND adres.id  = $adres_id
+			ORDER BY oferten.id DESC");
+        } else if($word != null){
+			$this->query = $this->__db->querymy("SELECT oferten.id, city.city, adres.adres, oferten.data, oferten.status, oferten.oferten_numer, oferten.planned_date, oferten.data_end
             FROM bouw_adresy AS adres 
             INNER JOIN bouw_city AS city ON adres.city = city.city_id 
 			INNER JOIN bouw_oferten AS oferten ON oferten.adres_id = adres.id 
@@ -204,11 +227,10 @@ class ofertenmodel
             oferten.data BETWEEN '".$od."' AND '".$do."' AND  city.city LIKE '%".$word."%' OR
             oferten.data BETWEEN '".$od."' AND '".$do."' AND  oferten.id = $word OR
             oferten.data BETWEEN '".$od."' AND '".$do."' AND  adres.adres LIKE '%".$word."%' OR
-            oferten.data BETWEEN '".$od."' AND '".$do."' AND  oferten.oferten_id = $word OR
             oferten.data BETWEEN '".$od."' AND '".$do."' AND  oferten.oferten_numer = $word
 			ORDER BY oferten.id DESC");
 		} else {
-			$this->query = $this->__db->querymy("SELECT oferten.id, city.city, adres.adres, oferten.data, oferten.status
+			$this->query = $this->__db->querymy("SELECT oferten.id, city.city, adres.adres, oferten.data, oferten.status, oferten.oferten_numer, oferten.planned_date, oferten.data_end
             FROM bouw_adresy AS adres 
             INNER JOIN bouw_city AS city ON adres.city = city.city_id 
 			INNER JOIN bouw_oferten AS oferten ON oferten.adres_id = adres.id 
@@ -217,7 +239,7 @@ class ofertenmodel
 		}
 
         $x = 0;
-        print_r($this->query);
+        // print_r($this->query);
         if(!empty($this->query))
         foreach($this->query->fetch_all() as $q){
 
@@ -249,7 +271,7 @@ class ofertenmodel
     }
     
     public function getLastFacturNr() {
-		$nr = $this->__db->querymy("SELECT oferten_numer FROM `bouw_factur` ORDER BY oferten_numer DESC LIMIT 1");
+		$nr = $this->__db->querymy("SELECT oferten_numer FROM `bouw_oferten` ORDER BY oferten_numer DESC LIMIT 1");
 		foreach($nr as $q){
 			$x = $q['oferten_numer'] + 1;
             return $x;
@@ -266,7 +288,7 @@ class ofertenmodel
 			status,
             oferten_numer,
 			data,
-            data_end
+            planned_date
             ) 
 			VALUES (
 				'".$this->__params['POST']['adres']."',
@@ -336,17 +358,20 @@ class ofertenmodel
         -- adresy.bedrijf_tel,
         -- adresy.email,
         -- adresy.rekening,
-        oferten.data,
+        -- adresy.id,
+        oferten.id,
+        oferten.in_progres,
+        oferten.status,
         oferten.oferten_numer,
-        adresy.id,
-        oferten.oferten_id,
-        oferten.data_betalen,
-        oferten.is_factur
+        oferten.data,
+        oferten.planned_date,
+        oferten.data_end
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
         INNER JOIN bouw_oferten AS oferten ON adresy.id = oferten.adres_id 
         WHERE oferten.oferten_numer = ".$this->__params[1]);
         $x = array();
+
         foreach($data as $q){
             array_push($x, $q);
 
@@ -392,44 +417,42 @@ class ofertenmodel
             $facturWarfor=model_load('facturmodel', 'getAllWarforForAdres', '');
 
             $adres = $this->__params['POST']['adres'];
-            $factur =$this->__params['POST']['facturnumer'];
+            $oferten =$this->__params['POST']['facturnumer'];
             $data = $this->__params['POST']['facturdata'];
-            $oferten = $this->__params['POST']['oferten'];
-            $data_betalen = $this->__params['POST']['data_betalen'];
+            $planedEndData = $this->__params['POST']['planned_date'];
+            $endData = $this->__params['POST']['data_end'];
 
-            if($data_betalen != null){
+            $status = $this->__params['POST']['status'];
+            if($endData != null){
                 $this->__db->execute("UPDATE bouw_oferten 
                 SET
                 adres_id = $adres,
-                oferten_id = $oferten, 
-                oferten_numer = $factur,
+                status = 2,
+                oferten_numer = $oferten,
                 data = '$data',
-                data_betalen = '$data_betalen',
-                is_factur = 1
-                WHERE oferten_numer = $factur
+                planned_date = '$planedEndData',
+                data_end = '$endData'
+                WHERE oferten_numer = $oferten
                 ");
-
-                $this->__db->execute("INSERT INTO bouw_factur 
-                (adres_id, 
-                oferten_id, 
-                factur_numer,
-                data) 
-                VALUES (
-                    '".$adres."',
-                    '".$oferten."',
-                    '".$lastFacturId."',
-                    '".$data_betalen."'
-                    )");
-                
+            } else if($status == 1) {
+                $this->__db->execute("UPDATE bouw_oferten 
+                SET
+                adres_id = $adres,
+                status = 1,
+                oferten_numer = $oferten,
+                data = '$data',
+                planned_date = '$planedEndData'
+                WHERE oferten_numer = $oferten
+                ");
             } else {
                 $this->__db->execute("UPDATE bouw_oferten 
                 SET
                 adres_id = $adres,
                 oferten_id = $oferten, 
-                oferten_numer = $factur,
+                oferten_numer = $oferten,
                 data = '$data',
                 data_betalen = null
-                WHERE oferten_numer = $factur
+                WHERE oferten_numer = $oferten
                 ");
     
             }
@@ -444,7 +467,7 @@ class ofertenmodel
                     if (in_array($id, $allwarfor)) {
                     $r = $this->__db->execute("UPDATE bouw_oferten_details 
                     SET
-                    oferten_nr = '".$factur."',
+                    oferten_nr = '".$oferten."',
                     waarvoor_id = '".$this->__params['POST']['warfortype'][$i]."', 
                     quantity = '".$this->__params['POST']['warfortimespend'][$i]."',
                     price = '".$this->__params['POST']['warforquantity'][$i]."'
@@ -458,7 +481,7 @@ class ofertenmodel
                         quantity,
                         price) 
                         VALUES (
-                        ".$factur.",
+                        ".$oferten.",
                         ".$this->__params['POST']['warfortype'][$i].",
                         ".$this->__params['POST']['warfortimespend'][$i].",
                         ".$this->__params['POST']['warforquantity'][$i]."
@@ -467,32 +490,6 @@ class ofertenmodel
                   
                     $i++;
                     
-                }
-            }
-
-            if($data_betalen != null){
-                $x = 1;
-
-                if (count($this->__params['POST']['warforInputId']) >= count($facturWarfor)) {
-                    foreach (array_slice($this->__params['POST']['warforInputId'], 1) as $row) {
-                        $id = $this->__params['POST']['warforInputId'][$x];
-                        $allwarfor = $facturWarfor[$x - 1];
-
-                        $this->__db->execute("INSERT INTO bouw_factur_details 
-                            (factur_nr, 
-                            waarvoor_id, 
-                            quantity,
-                            price) 
-                            VALUES (
-                            ".$lastFacturId.",
-                            ".$this->__params['POST']['warfortype'][$x].",
-                            ".$this->__params['POST']['warfortimespend'][$x].",
-                            ".$this->__params['POST']['warforquantity'][$x]."
-                        )");
-
-                        $x++;
-                        
-                    }
                 }
             }
             header("Location: ".SERVER_ADDRESS."administrator/oferten/index");
@@ -514,6 +511,8 @@ class ofertenmodel
             $oferten_numer = $request[1];
             $oferten_id =  $request[0];
         }
+
+        
         
         $data = $this->__db->execute("SELECT 
         city.city_id,
@@ -536,23 +535,22 @@ class ofertenmodel
         adresy.rekening,
         oferten.data,
         oferten.oferten_numer,
-        adresy.id,
-        oferten.oferten_id
+        adresy.id
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
         INNER JOIN bouw_oferten AS oferten ON adresy.id = oferten.adres_id 
         WHERE oferten.oferten_numer = ".$oferten_numer);
         $x = array();
-
+        
         foreach($data as $q){
             
             array_push($x, $q);
         }
-
+        
         $email = $x[0]['email'];
         $id = $oferten_id;
         $betaald = $this->proform_ilosc_maili($id);
-
+        
         $this->proformy_mail_wyslij($email, $oferten_id, $betaald, TRUE, $oferten_numer);
 
         // $this->wyslij_maila_smtp('kw-53@wp.pl', 'testsmtp', 'testowa tresc wiadomosci',$_SERVER['DOCUMENT_ROOT'].'oferten.pdf');
@@ -570,14 +568,15 @@ class ofertenmodel
             $db_query_m = $this->__db->execute("SELECT `id` FROM `bouw_oferten_mail` WHERE `oferten_id` =  ".$this->__params[2]." ");
         }
         // print_r($db_query_m);
-
+        
         foreach ($db_query_m as $row) {
 	
 			
 				$ilosc_maili++;
 	
 		}
-		// print_r($this->ilosc_maili);
+        // print_r($this->ilosc_maili);
+        
 		return $ilosc_maili;
 	
     }	
@@ -585,63 +584,9 @@ class ofertenmodel
     public function proformy_mail_wyslij($email, $oferten_id, $betaald = null, $wystaw_i_wyslij = null, $oferten_numer = null) {
 		
 		
-		if(!empty($betaald)){
-			
+            $temat = 'oferten Factuur van KH Bemiddeling';
 
-			
-			if($betaald == 1){
-				$temat = 'BETALINGSHERINNERING - oferten factuur van KH Bemiddeling';
-
-				$tresc = '
-							Beste <br><br>
-							In de bijlage kunt u de oferten factuur inzien en uitprinten.<br /><br />
-										
-							
-							met vriendelijke groet <br />
-							KHBemiddeling';
-		 
-				
-				
-                $oferten_pdf = 'application/storage/proformy/'.$oferten_id.'-1.pdf';
-                $oferten1 = file_exists($oferten_pdf); 
-
-                if (!$oferten1 && $wystaw_i_wyslij){
-                    
-                    $this->createoferten(true, 1, $oferten_numer);
-                    $oferten_pdf = 'application/storage/proformy/'.$oferten_id.'-1.pdf';
-                }
-			}
-			
-			if($betaald == 2){
-				$temat = 'AANMANING - oferten factuur van KH Bemiddeling'; 
-
-				$tresc = '
-							Beste <br><br>
-							In de bijlage kunt u de oferten factuur inzien en uitprinten.<br /><br />
-										
-							
-							met vriendelijke groet <br />
-							KHBemiddeling';
-		 
-				
-				
-                $oferten_pdf = 'application/storage/proformy/'.$oferten_id.'-2.pdf';
-                $oferten1 = file_exists($oferten_pdf); 
-
-                if (!$oferten1 && $wystaw_i_wyslij){
-                    $this->createoferten(true, 2, $oferten_numer);
-                    
-                    $oferten_pdf = 'application/storage/proformy/'.$oferten_id.'-2.pdf';
-                }
-			}
-		
-		
-		} else{
-		
-	
-			$temat = 'oferten Factuur van KH Bemiddeling';
-
-			$tresc = '
+            $tresc = '
 						Beste <br><br>
 						In de bijlage kunt u de oferten factuur inzien en uitprinten.<br /><br />
 									
@@ -649,50 +594,47 @@ class ofertenmodel
 						met vriendelijke groet <br />
                         KHBemiddeling';
                         
-			$oferten_pdf = 'application/storage/proformy/'.$oferten_id.'.pdf';
-			
-			$oferten1 = file_exists($oferten_pdf); 
-
-			if (!$oferten1 && $wystaw_i_wyslij){
-                $this->createoferten(true, 0, $oferten_numer);
-                $oferten_pdf = 'application/storage/proformy/'.$oferten_id.'.pdf';
-			}
-	 
-		}
-		
-			$mail = new smtpmailer();
-
-			//$mail -> wyslij_email(str_replace(' ', '', $email), $temat, $tresc);
-			$pocztaKlient = str_replace(' ', '', $email);
-			
-		
-		
-		
-		
-		
+            $oferten_pdf = 'application/storage/oferten/'.$oferten_id.'.pdf';
+            
+            $oferten1 = file_exists($oferten_pdf);
+            if ($oferten1) {
+                unlink($_SERVER['DOCUMENT_ROOT'].'/application/storage/oferten/10.pdf');
+            }
+     
+            $this->createoferten(0, $oferten_numer);
+            $oferten_pdf = 'application/storage/oferten/'.$oferten_id.'.pdf';
         
-		
+            $mail = new smtpmailer();
+
+            //$mail -> wyslij_email(str_replace(' ', '', $email), $temat, $tresc);
+            $pocztaKlient = str_replace(' ', '', $email);
+            
+        
+        
+        
+        
+        
+        
+        
 
 
-        $this->__db->execute("INSERT INTO `bouw_oferten_mail`(`oferten_id`, `data_czas`) VALUES (" . $oferten_id . ", '" . date('Y-m-d H:i:s') . "') ");
+            $this->__db->execute("INSERT INTO `bouw_oferten_mail`(`oferten_id`, `data_czas`) VALUES (" . $oferten_id . ", '" . date('Y-m-d H:i:s') . "') ");
 
-        $msg = 'E-mail was verstuurd.';
+            $msg = 'E-mail was verstuurd.';
 
-        print_r('send');
+            print_r('send');
 
-        //$mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $oferten_pdf);
+            $mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $oferten_pdf);
 
 
         //header('Location:proformy.php?msg=' . $msg);
-    
     }
 
-    public function createoferten($create, $ilemaili = null, $oferten_numer = null) {
+    public function createoferten($oferten_numer = null) {
 $data=model_load('ofertenmodel', 'getdata', $oferten_numer);
 $btw=model_load('ofertenmodel', 'getbtw', '');
 $total=model_load('ofertenmodel', 'gettotal', '');
 $company=model_load('ofertenmodel', 'getCompanyData', '');
-$ilemail=model_load('ofertenmodel', 'proform_ilosc_maili', '');
 // echo"<pre>";
 // print_r($ilemail);
 
@@ -704,16 +646,7 @@ $ilemail=model_load('ofertenmodel', 'proform_ilosc_maili', '');
 
 
 
-		// $pdf->Image('../themes/admin/img/logo.png',7,10,75);
-        if ($ilemail == 1 || $ilemaili == 1) {
-			// print_r('raz');
-            $pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/betaligsherinnering.jpg',7,50,200);
-        }
-		
-        if ($ilemail == 2 || $ilemaili == 2) {
-			// print_r('dwa');
-            $pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/betalingaanmeldingen.jpg',7,50,200);
-        }
+		$pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/logo.png',7,10,75);
 		
 		$pdf->SetX(160);
 		
@@ -721,7 +654,7 @@ $ilemail=model_load('ofertenmodel', 'proform_ilosc_maili', '');
 		// $nr='KH-00'.$id;
 
 		$pdf->SetFont('ArialMT','',14);
-		$pdf->Cell(0,0,'oferten: '.$data[0]['oferten_numer'],0,1);
+		$pdf->Cell(0,0,'Oferten: '.$data[0]['oferten_numer'],0,1);
 		$pdf->SetY(45);
 		$pdf->SetFont('ArialMT','',17);
 		$pdf->SetTextColor(0, 0, 0);
@@ -891,7 +824,7 @@ $ilemail=model_load('ofertenmodel', 'proform_ilosc_maili', '');
             $pdf->SetFont('Arial', '', 12);
 
             $pdf->SetFillColor(240, 240, 240);
-            $pdf->Cell(0, 10, 'oferten: '.$data[0]['oferten_numer'].' van '.$data[0]['data'].' '.$wynajem, T, 1, 1, true);
+            $pdf->Cell(0, 10, 'Oferten: '.$data[0]['oferten_numer'].' van '.$data[0]['data'].' '.$wynajem, T, 1, 1, true);
 
 
             $pdf->Cell(100, 10, 'Order: '.$data[0]['id'], 0, 1);
@@ -1052,23 +985,12 @@ $ilemail=model_load('ofertenmodel', 'proform_ilosc_maili', '');
             $pdf->Cell(20, 10, chr(128).' '.number_format($total, 2, ',', '.').'', 0, 1, true);
 
             $nr = $data[0]['id'];
-            if($create){
-                if ($ilemaili == 0) {
-                    file_put_contents('application/storage/proformy/'.$nr.'.pdf',$pdf->Output($nr.'.pdf', 'S'));
-                }
 
-                if ($ilemaili == 1) {
-                    file_put_contents('application/storage/proformy/'.$nr.'-1.pdf',$pdf->Output($nr.'-1.pdf', 'S'));
-                }
-                
-                if ($ilemaili == 2) {
-                    file_put_contents('application/storage/proformy/'.$nr.'-2.pdf',$pdf->Output($nr.'-2.pdf', 'S'));
-                }
-                
-            } else {
-                $pdf->Output('oferten-'.$nr.'.pdf', 'D');
-                $pdf->Output();
-            }   
+                file_put_contents('application/storage/oferten/'.$nr.'.pdf',$pdf->Output($nr.'.pdf', 'S'));
+
+                // $pdf->Output('oferten-'.$nr.'.pdf', 'D');
+                // $pdf->Output();
+             
     }
 
     }

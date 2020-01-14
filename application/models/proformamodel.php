@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ERROR | E_PARSE);
+// error_reporting(E_ERROR | E_PARSE);
 require_once($_SERVER['DOCUMENT_ROOT'].'/packages/pdf/fpdf.php');
 
 class proformamodel
@@ -25,10 +25,12 @@ class proformamodel
     }
     
     public function getdata($request = null) {
-        if($request[0] == null){
+        
+        if($request == null){
+            
             $proforma_numer = $this->__params[1];
         } else {
-            $proforma_numer = $request[0];
+            $proforma_numer = $request;
         }
 
         $data = $this->__db->execute("SELECT 
@@ -58,6 +60,7 @@ class proformamodel
         INNER JOIN bouw_proforma AS proforma ON adresy.id = proforma.adres_id 
         WHERE proforma.proforma_numer = ".$proforma_numer);
         $x = array();
+        
         foreach($data as $q){
             array_push($x, $q);
 
@@ -79,16 +82,14 @@ class proformamodel
         }
 
         $z = array_merge($x, $y);
-       
-        // print_r($z);
 
         return $z;
 
     }
 
-    public function getbtw() {
+    public function getbtw($nr) {
 
-        $warfor = $this->getdata();
+        $warfor = $this->getdata($nr);
         $x = Array();
         $y = Array();
         $vatarray = Array();
@@ -113,8 +114,8 @@ class proformamodel
 
     }
 
-    public function gettotal(){
-        $warfor = $this->getdata();
+    public function gettotal($nr){
+        $warfor = $this->getdata($nr);
         $total = 0;
         foreach(array_slice($warfor,1) as $row){
             $z = $row['quantity'] * $row['price'];
@@ -163,7 +164,6 @@ class proformamodel
 	
 	private function clear() {
 		if(isset($this->__params['POST']['clear'])){
-			// print_r($this->__params['POST']['clear']);
 			$d = new DateTime(date("Y-m-d"));
 			
 			$dOd = new DateTime(date("Y-m-d"));
@@ -258,6 +258,7 @@ class proformamodel
 	{
 
 		if(isset($this->__params['POST']['saveproforma'])) {
+            $proformaNr = $this->getLastProformaNr();
 			$this->__db->execute("INSERT INTO bouw_proforma 
 			(adres_id, 
 			oferten_id, 
@@ -266,7 +267,7 @@ class proformamodel
 			VALUES (
 				'".$this->__params['POST']['adres']."',
 				'".$this->__params['POST']['oferten']."',
-				'".$this->getLastProformaNr()."',
+				'".$proformaNr."',
 				'".$this->__params['POST']['proformadata']."'
 				)");
             
@@ -293,7 +294,18 @@ class proformamodel
 			)");
                 }
             }
-            header("Location: ".SERVER_ADDRESS."administrator/proforma/index");
+
+            $proforma_pdf = 'application/storage/proformy/'.$id.'.pdf';
+			
+			$proforma1 = file_exists($proforma_pdf); 
+            if ($proforma1) {
+                unlink($_SERVER['DOCUMENT_ROOT'].'/application/storage/proformy/'.$id.'.pdf');
+            }
+     
+            $this->createproforma(0, $proformaNr);
+            $proforma_pdf = 'application/storage/proformy/'.$id.'.pdf';
+
+            // header("Location: ".SERVER_ADDRESS."administrator/proforma/index");
         }
 		
     }
@@ -334,7 +346,8 @@ class proformamodel
         adresy.id,
         proforma.oferten_id,
         proforma.data_betalen,
-        proforma.is_factur
+        proforma.is_factur,
+        proforma.id
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
         INNER JOIN bouw_proforma AS proforma ON adresy.id = proforma.adres_id 
@@ -350,7 +363,7 @@ class proformamodel
 
         $z = array_merge($x, $y);
        
-        // print_r($z);
+
 
         return $z;
 
@@ -370,7 +383,6 @@ class proformamodel
         foreach($dataWarfor as $q){
 
             array_push($y, $q);
-            // print_r($q);
 
         }
 
@@ -381,7 +393,7 @@ class proformamodel
     public function editProforma()
 	{
 		if(isset($this->__params['POST']['editwarfor'])) {
-            $lastFacturId=model_load('inkomstenmodel', 'getLastFacturNr', '');
+            $lastFacturNumer=model_load('inkomstenmodel', 'getLastFacturNr', '');
             $facturWarfor=model_load('facturmodel', 'getAllWarforForAdres', '');
 
             $adres = $this->__params['POST']['adres'];
@@ -389,6 +401,7 @@ class proformamodel
             $data = $this->__params['POST']['facturdata'];
             $oferten = $this->__params['POST']['oferten'];
             $data_betalen = $this->__params['POST']['data_betalen'];
+            $proformaId = $this->__params['POST']['proformaId'];
 
             if($data_betalen != null){
                 $this->__db->execute("UPDATE bouw_proforma 
@@ -410,10 +423,11 @@ class proformamodel
                 VALUES (
                     '".$adres."',
                     '".$oferten."',
-                    '".$lastFacturId."',
+                    '".$lastFacturNumer."',
                     '".$data_betalen."'
                     )");
-                
+
+
             } else {
                 $this->__db->execute("UPDATE bouw_proforma 
                 SET
@@ -426,7 +440,6 @@ class proformamodel
                 ");
     
             }
-
 
             $i = 1;
 
@@ -443,7 +456,6 @@ class proformamodel
                     price = '".$this->__params['POST']['warforquantity'][$i]."'
                     WHERE id = '".$this->__params['POST']['warforInputId'][$i]."'
                     ");
-                        // print_r(" [ ".$r." / ");
                         } else {
                             $this->__db->execute("INSERT INTO bouw_proforma_details 
                         (proforma_nr, 
@@ -477,7 +489,7 @@ class proformamodel
                             quantity,
                             price) 
                             VALUES (
-                            ".$lastFacturId.",
+                            ".$lastFacturNumer.",
                             ".$this->__params['POST']['warfortype'][$x].",
                             ".$this->__params['POST']['warfortimespend'][$x].",
                             ".$this->__params['POST']['warforquantity'][$x]."
@@ -485,9 +497,32 @@ class proformamodel
 
                         $x++;
                         
+                        $facturModel = new facturmodel();
+
+                        $idFactur = $this->__db->getLastInsertedId();
+
+                        $factur_pdf = 'application/storage/factur/'.$idFactur.'.pdf';
+
+                        $proforma1 = file_exists($factur_pdf); 
+                        if ($proforma1) {
+                            unlink($_SERVER['DOCUMENT_ROOT'].'/application/storage/factur/'.$idFactur.'.pdf');
+                        }
+
+                        $facturModel->createfactur($lastFacturNumer);        
+
                     }
                 }
             }
+
+            $proforma_pdf = 'application/storage/proformy/'.$proformaId.'.pdf';
+			
+			$proforma1 = file_exists($proforma_pdf); 
+            if ($proforma1) {
+                unlink($_SERVER['DOCUMENT_ROOT'].'/application/storage/proformy/'.$proformaId.'.pdf');
+            }
+     
+            $this->createproforma(0, $factur);
+	 
             header("Location: ".SERVER_ADDRESS."administrator/proforma/index");
         }
     }
@@ -562,7 +597,6 @@ class proformamodel
         } else {
             $db_query_m = $this->__db->execute("SELECT `id` FROM `bouw_proforma_mail` WHERE `proforma_id` =  ".$this->__params[2]." ");
         }
-        // print_r($db_query_m);
 
         foreach ($db_query_m as $row) {
 	
@@ -570,7 +604,6 @@ class proformamodel
 				$ilosc_maili++;
 	
 		}
-		// print_r($this->ilosc_maili);
 		return $ilosc_maili;
 	
     }	
@@ -600,7 +633,7 @@ class proformamodel
 
                 if (!$proforma1 && $wystaw_i_wyslij){
                     
-                    $this->createproforma(true, 1, $proforma_numer);
+                    $this->createproforma(1, $proforma_numer);
                     $proforma_pdf = 'application/storage/proformy/'.$proforma_id.'-1.pdf';
                 }
 			}
@@ -622,7 +655,7 @@ class proformamodel
                 $proforma1 = file_exists($proforma_pdf); 
 
                 if (!$proforma1 && $wystaw_i_wyslij){
-                    $this->createproforma(true, 2, $proforma_numer);
+                    $this->createproforma(2, $proforma_numer);
                     
                     $proforma_pdf = 'application/storage/proformy/'.$proforma_id.'-2.pdf';
                 }
@@ -645,11 +678,12 @@ class proformamodel
 			$proforma_pdf = 'application/storage/proformy/'.$proforma_id.'.pdf';
 			
 			$proforma1 = file_exists($proforma_pdf); 
-
-			if (!$proforma1 && $wystaw_i_wyslij){
-                $this->createproforma(true, 0, $proforma_numer);
-                $proforma_pdf = 'application/storage/proformy/'.$proforma_id.'.pdf';
-			}
+            if ($proforma1) {
+                unlink($_SERVER['DOCUMENT_ROOT'].'/application/storage/proformy/'.$proforma_id.'.pdf');
+            }
+     
+            $this->createproforma(0, $proforma_numer);
+            $proforma_pdf = 'application/storage/proformy/'.$proforma_id.'.pdf';
 	 
 		}
 		
@@ -680,15 +714,12 @@ class proformamodel
     
     }
 
-    public function createproforma($create, $ilemaili = null, $proforma_numer = null) {
-$data=model_load('proformamodel', 'getdata', $proforma_numer);
-$btw=model_load('proformamodel', 'getbtw', '');
-$total=model_load('proformamodel', 'gettotal', '');
+    public function createproforma($ilemaili = null, $proforma_numer = null) {
+$data = $this->getdata($proforma_numer);
+$btw=model_load('proformamodel', 'getbtw', $proforma_numer);
+$total=model_load('proformamodel', 'gettotal', $proforma_numer);
 $company=model_load('proformamodel', 'getCompanyData', '');
 $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
-// echo"<pre>";
-// print_r($ilemail);
-
 
 		$pdf = new FPDF();
 		$pdf->AddFont('ArialMT','','arial.php');
@@ -697,14 +728,12 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
 
 
 
-		// $pdf->Image('../themes/admin/img/logo.png',7,10,75);
+		$pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/logo.png',7,10,75);
         if ($ilemail == 1 || $ilemaili == 1) {
-			// print_r('raz');
             $pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/betaligsherinnering.jpg',7,50,200);
         }
 		
         if ($ilemail == 2 || $ilemaili == 2) {
-			// print_r('dwa');
             $pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/betalingaanmeldingen.jpg',7,50,200);
         }
 		
@@ -743,7 +772,6 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
 
         $pdf->SetFont('ArialMT','',10);
         if(!empty($data[0]['bedrijf_bedrijf'])){
-            // echo"aaaaaaaaa";
 		if($data[0]['bedrijf_bedrijf']){
 			$pdf->Cell(0,5,''.$data[0]['bedrijf_bedrijf'],0,1);
 			$pdf->SetX(130);
@@ -789,7 +817,6 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
 				$pdf->SetX(130);
             }
     } else {
-        // echo"bbbbb";
 
         if($data[0]['private_naam'] || $data[0]['private_achternaam']){
 			$pdf->Cell(0,5,''.$data[0]['private_naam'].' '.$data[0]['private_achternaam'],0,1);
@@ -915,12 +942,10 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
             //TO ZMIENIŁEM GDY BYŁ PROBLE Z FAKTURĄ NA KÓREJ BORG BYŁ TJ. HUUR
             //if($hu > 0 && $borg != $cala_kwota_incl){
             foreach (array_slice($data, 1) as $row) {
-                // print_r($row['name']);
                 if ($wysokosc >= 270 && $wysokosc <= 275) {
                     $pdf->AddPage();
                     $wysokosc = 5;
                 }
-                // print_r($row['name']);
                 $sum = $row['quantity'] * $row['price'];
                 $pdf->SetY($wysokosc);
 
@@ -992,10 +1017,7 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
         
             $totalBtW = 0;
             foreach ($btw as $k => $stawki_vat) {
-                    
-                    // print_r($stawki_vat);
-                    
-                    
+  
                 if ($k !=0) {
         
                                     // $kwota_vat = round($kw - ($kw / $dzielnik),2) ;
@@ -1045,23 +1067,21 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
             $pdf->Cell(20, 10, chr(128).' '.number_format($total, 2, ',', '.').'', 0, 1, true);
 
             $nr = $data[0]['id'];
-            if($create){
-                if ($ilemaili == 0) {
-                    file_put_contents('application/storage/proformy/'.$nr.'.pdf',$pdf->Output($nr.'.pdf', 'S'));
-                }
+            
+            if ($ilemaili == 0) {
+                file_put_contents('application/storage/proformy/'.$nr.'.pdf',$pdf->Output($nr.'.pdf', 'S'));
+            }
 
-                if ($ilemaili == 1) {
-                    file_put_contents('application/storage/proformy/'.$nr.'-1.pdf',$pdf->Output($nr.'-1.pdf', 'S'));
-                }
-                
-                if ($ilemaili == 2) {
-                    file_put_contents('application/storage/proformy/'.$nr.'-2.pdf',$pdf->Output($nr.'-2.pdf', 'S'));
-                }
-                
-            } else {
-                $pdf->Output('proforma-'.$nr.'.pdf', 'D');
-                $pdf->Output();
-            }   
+            if ($ilemaili == 1) {
+                file_put_contents('application/storage/proformy/'.$nr.'-1.pdf',$pdf->Output($nr.'-1.pdf', 'S'));
+            }
+            
+            if ($ilemaili == 2) {
+                file_put_contents('application/storage/proformy/'.$nr.'-2.pdf',$pdf->Output($nr.'-2.pdf', 'S'));
+            }
+            
+            // $pdf->Output('proforma-'.$nr.'.pdf', 'D');
+            // $pdf->Output(); 
     }
 
     }
@@ -1093,7 +1113,6 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
           
             array_push($historia_maili, $q);
         }
-        // print_r($historia_maili);
         return $historia_maili;
     }
 
@@ -1106,7 +1125,6 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
           
             array_push($cronProformyId, $q);
         }
-        // print_r($historia_maili);
         return $cronProformyId;
     }
  

@@ -7,7 +7,7 @@
 
 <?php $getDataFromAdres=model_load('adressenmodel', 'getAdressById', '')?>
 
-<?php $getAllCityName=model_load('nieuwe_adressmodel', 'getCityName', '')?>
+<?php $getAllCityName=model_load('mainmodel', 'getCityName', '')?>
 
 <?=add_metatags()?>
 

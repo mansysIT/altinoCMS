@@ -64,10 +64,10 @@ $dOd->modify('first day of this month');
 	<table class="table table-striped" id="myTable2">
 		<thead>
 				<tr>
-					<th onclick="sortTable(0)">ID</th>
+					<th onclick="sortTable(0)"> ID </th>
 					<th onclick="sortTable(1)">STAD</th>
 					<th onclick="sortTable(2)">ADRES</th>
-					<th onclick="sortTable(3)">BEDRAG</th>
+					<th onclick="sortTable(3)">OFFERTEN</th>
 					<th onclick="sortTable(4)">INKOMSTEN</th>
 					<th onclick="sortTable(5)">UITGAVEN</th>
 					<th onclick="sortTable(6)">WINST</th>
@@ -77,15 +77,15 @@ $dOd->modify('first day of this month');
 		</thead>
 		<tbody>
 			<?php foreach($proforma as $row): ?>
-				<tr>
-					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[0]</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[1]</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[2]</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/proforma/editproforma/$row[4]'>$row[3]</a>" ?></td>
+				<tr <?php if($row[6] < $d->format('Y-m-d') && $row[4] < 2) echo "style='background-color: #dc3545;'"; ?> >
+					<?="<td><a style='color: #000!important;' href='administrator/oferten/sendoferten/$row[5]'>$row[0]</a><a style='color: #000!important;' href='administrator/oferten/sendoferten/$row[5]/$row[0]'> <span class='oi oi-envelope-closed' title='envelope-closed' aria-hidden='true'></span></a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>$row[1]</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>$row[2]</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='/application/storage/oferten/$row[0].pdf'>$row[5]</a><a style='color: #000!important;' href='/application/storage/oferten/$row[0].pdf'> <span class='oi oi-file' title='file' aria-hidden='true'></span></a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>0.00</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>0.00</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>0.00</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>$row[3]</a>" ?></td>
 					<td><span <?php if($row[4] == 0){ echo "style='color: orange'"; } else if($row[4] == 1) { echo "style='color: green'"; } else if($row[4] == 2) { echo "style='color: red'"; }?>  class="oi oi-media-record" title="media-record" aria-hidden="true"></span></td>
 				</tr>
 			<?php endforeach; ?>

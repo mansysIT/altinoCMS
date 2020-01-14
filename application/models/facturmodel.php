@@ -1,6 +1,7 @@
 <?php
 
 error_reporting(E_ERROR | E_PARSE);
+require_once($_SERVER['DOCUMENT_ROOT'].'/packages/pdf/fpdf.php');
 
 class facturmodel
 {
@@ -8,14 +9,18 @@ class facturmodel
 	private $__config;
 	private $__router;
     public $__params;
-	private $__db;
+    private $__db;
+
+    private $mainModel;
 	
 	public function __construct()
 	{
 		$this->__config = registry::register("config");
 		$this->__router = registry::register("router");
         $this->__params = $this->__router->getParams();
-		$this->__db = registry::register("db");
+        $this->__db = registry::register("db");
+        
+        $this->mainModel = new mainmodel;
     }
     
     public function showdata() {
@@ -42,7 +47,8 @@ class facturmodel
         factur.data,
         factur.factur_numer,
         adresy.id,
-        factur.oferten_id
+        factur.oferten_id,
+        factur.id
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
         INNER JOIN bouw_factur AS factur ON adresy.id = factur.adres_id 
@@ -93,6 +99,7 @@ class facturmodel
             $factur =$this->__params['POST']['facturnumer'];
             $data = $this->__params['POST']['facturdata'];
             $oferten = $this->__params['POST']['oferten'];
+            $facturId = $this->__params['POST']['facturId'];
 
 
 			$this->__db->execute("UPDATE bouw_factur 
@@ -138,6 +145,23 @@ class facturmodel
                     
                 }
             }
+
+            $proforma_pdf = 'application/storage/proformy/'.$facturId.'.pdf';
+			
+			$proforma1 = file_exists($proforma_pdf); 
+            if ($proforma1) {
+                unlink($_SERVER['DOCUMENT_ROOT'].'/application/storage/proformy/'.$facturId.'.pdf');
+            }
+     
+
+            $dir = $_SERVER['DOCUMENT_ROOT'].'/application/storage/factur';
+            $dirname = $facturId;
+    
+            $this->mainModel->createNewFolder($dir, $dirname);
+
+            $this->createfactur($factur);
+            $proforma_pdf = 'application/storage/proformy/'.$facturId.'.pdf';
+
             header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
         }
     }
@@ -148,18 +172,17 @@ class facturmodel
         }
 
     }
-
-    public function getOferten(){
-        $oferten = Array();
-        $query = $this->__db->querymy("SELECT id, oferten_numer FROM bouw_oferten");
-        
-        foreach($query->fetch_all() as $q){
-            array_push($oferten, $q);
-        }
-       return $oferten;
-    }
     
-    public function sendfactur(){
+    public function sendfactur($request = null){
+
+        if($request[0] == null || $request[1] == null){
+            $proforma_numer = $this->__params[1];
+            $proforma_id =  $this->__params[2];
+        } else {
+            $proforma_numer = $request[1];
+            $proforma_id =  $request[0];
+        }
+
 
         $data = $this->__db->execute("SELECT 
         city.city_id,
@@ -187,7 +210,7 @@ class facturmodel
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
         INNER JOIN bouw_factur AS factur ON adresy.id = factur.adres_id 
-        WHERE factur.factur_numer = ".$this->__params[1]);
+        WHERE factur.factur_numer = ".$proforma_numer);
         $x = array();
 
         foreach($data as $q){
@@ -197,9 +220,8 @@ class facturmodel
 
         $email = $x[0]['email'];
         $id = $this->__params[2];
-        $betaald = $this->factur_ilosc_maili($id);
 
-        $this->factur_mail_wyslij($email, $this->__params[2], $betaald, TRUE);
+        $this->factur_mail_wyslij($email, $proforma_id, TRUE, $proforma_numer);
 
         // $this->wyslij_maila_smtp('kw-53@wp.pl', 'testsmtp', 'testowa tresc wiadomosci',$_SERVER['DOCUMENT_ROOT'].'proforma.pdf');
     }
@@ -228,7 +250,7 @@ class facturmodel
 	
     }	
 
-    public function factur_mail_wyslij($email, $factur_id, $betaald = null, $wystaw_i_wyslij = null) {
+    public function factur_mail_wyslij($email, $factur_id, $wystaw_i_wyslij = null, $factur_numer = null) {
 		
 		
 			$temat = 'Factuur van KH Bemiddeling';
@@ -241,15 +263,21 @@ class facturmodel
 						met vriendelijke groet <br />
                         KHBemiddeling';
                         
-			$proforma_pdf = 'application/storage/factur/'.$factur_id.'.pdf';
+	 
+            $proforma_pdf = 'application/storage/proformy/'.$factur_id.'.pdf';
 			
 			$proforma1 = file_exists($proforma_pdf); 
+            if ($proforma1) {
+                unlink($_SERVER['DOCUMENT_ROOT'].'/application/storage/proformy/'.$factur_id.'.pdf');
+            }
 
-			if (!$proforma1 && $wystaw_i_wyslij){
-				$this->createfactur(true, 0);
-			}
-	 
-		
+            $dir = 'application/storage/factur';
+            $dirname = $factur_id;
+    
+            $this->mainModel->createNewFolder($dir, $dirname);
+     
+            $this->createfactur($factur_numer);
+            $proforma_pdf = 'application/storage/proformy/'.$factur_id.'.pdf';
 		
 			$mail = new smtpmailer();
 
@@ -274,22 +302,28 @@ class facturmodel
     
     }
 
-    public function createfactur($create, $ilemaili = null) {
+    public function createfactur($factur_numer = null) {
 
 
-        $data=model_load('inkomstenmodel', 'getdata', '');
-        $btw=model_load('inkomstenmodel', 'getbtw', '');
-        $total=model_load('inkomstenmodel', 'gettotal', '');
+        $data=model_load('inkomstenmodel', 'getdata', $factur_numer);
+        $btw=model_load('inkomstenmodel', 'getbtw', $factur_numer);
+        $total=model_load('inkomstenmodel', 'gettotal', $factur_numer);
         $company=model_load('proformamodel', 'getCompanyData', '');
         // echo"<pre>";
         // print_r($btw);
         
         $pdf = new FPDF();
+
+
                 $pdf->AddFont('ArialMT','','arial.php');
                 $pdf->AddPage();
                 $pdf->SetFont('ArialMT','',12);
         
-                $pdf->SetX(160);
+                $pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/logo.png',7,10,75);
+
+        
+		
+		        $pdf->SetX(160);
                 
             
                 // $nr='KH-00'.$id;
@@ -625,23 +659,11 @@ class facturmodel
 
             $nr = $data[0]['id'];
 
-            if($create){
-                if ($ilemaili == 0) {
                     file_put_contents('application/storage/factur/'.$nr.'.pdf',$pdf->Output($nr.'.pdf', 'S'));
-                }
 
-                if ($ilemaili == 1) {
-                    file_put_contents('application/storage/factur/'.$nr.'-1.pdf',$pdf->Output($nr.'-1.pdf', 'S'));
-                }
-                
-                if ($ilemaili == 2) {
-                    file_put_contents('application/storage/factur/'.$nr.'-2.pdf',$pdf->Output($nr.'-2.pdf', 'S'));
-                }
-                
-            } else {
-                $pdf->Output('factur-'.$nr.'.pdf', 'D');
-                $pdf->Output();
-            }   
+                // $pdf->Output('factur-'.$nr.'.pdf', 'D');
+                // $pdf->Output();
+             
         }
 
     }

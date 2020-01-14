@@ -5,11 +5,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<?php $nieuweadressmodel=model_load('adressenmodel', 'createNewFolder', '')?>
-<?php $nieuweadressmodel=model_load('adressenmodel', 'remove', '')?>
-<?php $nieuweadressmodel=model_load('adressenmodel', 'uploadFile', '')?>
-<?php $nieuweadressmodel=model_load('adressenmodel', 'getAllFilesInDirectory', '')?>
-<?php $getParametrs=model_load('adressenmodel', 'getParametrs', '')?>
+<?php $nieuweadressmodel=model_load('adressenmodel', 'createAdresFolder', '')?>
+<?php $nieuweadressmodel=model_load('mainmodel', 'remove', '')?>
+<?php $nieuweadressmodel=model_load('mainmodel', 'uploadFile', '')?>
+<?php $nieuweadressmodel=model_load('mainmodel', 'getAllFilesInDirectory', '')?>
+<?php $getParametrs=model_load('mainmodel', 'getParametrs', '')?>
 <?php $adresMenuGetUrl=model_load('adressenmodel', 'adresMenuGetUrl', '')?>
 
 
@@ -76,10 +76,10 @@
 			</ul>
 		</div>
 		<form action="" method="post" enctype="multipart/form-data">
-    Select image to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <input type="submit" value="Upload Image" name="submit">
-</form>
+    		Select image to upload:
+    		<input type="file" name="fileToUpload" id="fileToUpload">
+    		<input type="submit" value="Upload Image" name="submit">
+		</form>
 		</div>
 	<?=module_load('FOOTER')?>
 	</div>

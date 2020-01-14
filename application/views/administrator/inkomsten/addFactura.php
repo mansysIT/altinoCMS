@@ -9,9 +9,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<?php $sidebarController=model_load('nieuwe_adressmodel', 'getCityName', '')?>
-<?php $getWarforTypes = model_load('inkomstenmodel', 'getAllWarforType', '')?>
-<?php $oferten = model_load('facturmodel', 'getOferten', '')?>
+<?php $sidebarController=model_load('mainmodel', 'getCityName', '')?>
+<?php $getWarforTypes = model_load('mainmodel', 'getWaarvoor', '')?>
+<?php $oferten = model_load('mainmodel', 'getOferten', '')?>
 
 <?=add_metatags()?>
 

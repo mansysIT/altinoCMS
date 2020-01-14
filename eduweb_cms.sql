@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 13 Sty 2020, 15:35
+-- Czas generowania: 14 Sty 2020, 16:31
 -- Wersja serwera: 10.4.11-MariaDB
 -- Wersja PHP: 7.2.26
 
@@ -104,7 +104,8 @@ INSERT INTO `bouw_adresy` (`id`, `city`, `adres`, `postcode`, `private_naam`, `p
 (28, 15, 'aaf', 'sdfdf', 'sdfsdf', 'sdfsf', 'sdfs', 'dfsd', '2020-01-09', '', '', '', '', '', '', '', '', 'sdf', 'sdf', 0),
 (29, 1, 'adasdad', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 0),
 (30, 0, 'dddd', 'dddd', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', 1),
-(31, 0, 'gggadres', 'gggpostcode', 'aaaa', 'bbbb', 'ccc', 'dddd', '2020-01-01', '', '', '', '', '', '', '', '', 'eeee', 'rrrr', 0);
+(31, 0, 'gggadres', 'gggpostcode', 'aaaa', 'bbbb', 'ccc', 'dddd', '2020-01-01', '', '', '', '', '', '', '', '', 'eeee', 'rrrr', 0),
+(32, 20, 'test1', '12-123', 'tomasz', 'testowy', '12-3214321', '123456789', '1996-03-14', '', '', '', '', '', '', '', '', 'test@gmail.com', 'rekaringTest1', 1);
 
 -- --------------------------------------------------------
 
@@ -122,7 +123,8 @@ CREATE TABLE `bouw_city` (
 --
 
 INSERT INTO `bouw_city` (`city_id`, `city`) VALUES
-(0, 'Zonder Stad');
+(0, 'Zonder Stad'),
+(20, 'testcity');
 
 -- --------------------------------------------------------
 
@@ -189,7 +191,25 @@ INSERT INTO `bouw_factur` (`id`, `adres_id`, `oferten_id`, `factur_numer`, `data
 (51, 9, 0, 40, '2020-01-12'),
 (52, 23, 1, 41, '2020-01-11'),
 (53, 19, 2, 42, '2020-01-13'),
-(54, 19, 2, 43, '2020-01-14');
+(54, 19, 2, 43, '2020-01-14'),
+(55, 32, 6, 44, '2020-01-14'),
+(56, 32, 7, 45, '2020-01-13'),
+(57, 32, 7, 46, '2020-01-13'),
+(58, 32, 7, 47, '2020-01-09'),
+(59, 32, 7, 48, '2020-01-02'),
+(60, 32, 7, 49, '2020-01-07'),
+(61, 32, 7, 50, '2020-01-08'),
+(62, 32, 7, 51, '2020-01-08'),
+(63, 32, 7, 52, '2020-01-05'),
+(64, 32, 7, 53, '2020-01-01'),
+(65, 32, 7, 54, '2020-01-03'),
+(66, 32, 7, 55, '2020-01-03'),
+(67, 32, 7, 56, '2020-01-04'),
+(68, 16, 7, 57, '2020-01-14'),
+(69, 2, 7, 58, '2020-01-14'),
+(70, 2, 8, 59, '2020-01-14'),
+(71, 32, 8, 60, '2020-01-14'),
+(72, 2, 11, 61, '2020-01-14');
 
 -- --------------------------------------------------------
 
@@ -255,12 +275,29 @@ INSERT INTO `bouw_factur_details` (`id`, `factur_nr`, `waarvoor_id`, `quantity`,
 (48, 33, 2, 40, 10),
 (50, 38, 1, 44, 5),
 (53, 39, 1, 20, 5),
-(54, 40, 1, 20, 5),
+(54, 40, 1, 25, 5),
 (55, 41, 1, 44, 5),
 (56, 42, 1, 10, 10),
 (57, 42, 4, 5, 5),
 (58, 43, 1, 10, 10),
-(59, 43, 4, 5, 5);
+(59, 43, 4, 5, 100),
+(60, 44, 1, 1, 1),
+(61, 44, 2, 2, 2),
+(62, 46, 1, 5, 5),
+(63, 47, 1, 60, 52),
+(64, 48, 1, 5, 5),
+(65, 49, 1, 5, 5),
+(66, 50, 1, 55, 5),
+(67, 51, 1, 55, 5),
+(68, 52, 1, 5, 5),
+(69, 53, 1, 5, 5),
+(70, 54, 1, 57, 58),
+(71, 55, 1, 56, 54),
+(72, 56, 1, 51, 52),
+(73, 57, 1, 44, 444),
+(74, 58, 3, 5, 4),
+(75, 59, 3, 8, 6),
+(76, 60, 4, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -281,7 +318,11 @@ CREATE TABLE `bouw_factur_mail` (
 INSERT INTO `bouw_factur_mail` (`id`, `factur_id`, `data_czas`) VALUES
 (1, 40, '2020-01-11 11:21:44'),
 (2, 40, '2020-01-11 11:22:16'),
-(3, 53, '2020-01-13 10:52:27');
+(3, 53, '2020-01-13 10:52:27'),
+(4, 51, '2020-01-14 12:05:33'),
+(5, 40, '2020-01-14 12:05:47'),
+(6, 40, '2020-01-14 12:06:45'),
+(7, 54, '2020-01-14 12:24:07');
 
 -- --------------------------------------------------------
 
@@ -323,6 +364,7 @@ CREATE TABLE `bouw_oferten` (
   `status` int(11) NOT NULL,
   `oferten_numer` int(11) NOT NULL,
   `data` date NOT NULL,
+  `planned_date` date NOT NULL,
   `data_end` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -330,12 +372,14 @@ CREATE TABLE `bouw_oferten` (
 -- Zrzut danych tabeli `bouw_oferten`
 --
 
-INSERT INTO `bouw_oferten` (`id`, `adres_id`, `in_progres`, `status`, `oferten_numer`, `data`, `data_end`) VALUES
-(1, 19, 0, 2, 0, '2020-01-09', '0000-00-00'),
-(2, 16, 0, 0, 0, '2020-01-13', '2020-01-13'),
-(3, 16, 0, 0, 0, '2020-01-13', '2020-01-13'),
-(4, 30, 0, 0, 0, '2020-01-01', '2020-01-10'),
-(5, 23, 0, 0, 0, '2020-01-13', '2020-01-13');
+INSERT INTO `bouw_oferten` (`id`, `adres_id`, `in_progres`, `status`, `oferten_numer`, `data`, `planned_date`, `data_end`) VALUES
+(6, 32, 0, 1, 0, '2020-01-01', '2020-01-17', '0000-00-00'),
+(7, 32, 0, 2, 1, '2020-01-01', '0000-00-00', '2020-01-10'),
+(8, 32, 0, 2, 2, '2020-01-02', '2020-01-13', '0000-00-00'),
+(9, 32, 0, 2, 3, '2020-01-14', '2020-01-18', '2020-01-20'),
+(10, 32, 0, 2, 4, '2020-01-14', '2020-01-16', '2020-01-20'),
+(11, 30, 0, 0, 5, '2020-01-14', '2020-01-18', '0000-00-00'),
+(12, 32, 0, 0, 6, '2020-01-01', '2020-01-07', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -356,7 +400,17 @@ CREATE TABLE `bouw_oferten_details` (
 --
 
 INSERT INTO `bouw_oferten_details` (`id`, `oferten_nr`, `waarvoor_id`, `quantity`, `price`) VALUES
-(1, 0, 2, 10, 10);
+(1, 0, 2, 10, 10),
+(2, 2, 1, 10, 10),
+(3, 2, 2, 20, 20),
+(4, 2, 3, 40, 30),
+(5, 0, 1, 5, 5),
+(6, 0, 2, 6, 6),
+(7, 0, 3, 7, 7),
+(8, 0, 4, 8, 8),
+(9, 4, 1, 1, 1),
+(10, 4, 2, 2, 2),
+(11, 4, 3, 4, 30);
 
 -- --------------------------------------------------------
 
@@ -369,6 +423,33 @@ CREATE TABLE `bouw_oferten_mail` (
   `oferten_id` int(11) NOT NULL,
   `data_czas` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `bouw_oferten_mail`
+--
+
+INSERT INTO `bouw_oferten_mail` (`id`, `oferten_id`, `data_czas`) VALUES
+(1, 10, '2020-01-14 11:03:34'),
+(2, 10, '2020-01-14 11:03:59'),
+(3, 10, '2020-01-14 11:04:37'),
+(4, 10, '2020-01-14 11:05:06'),
+(5, 10, '2020-01-14 11:05:10'),
+(6, 10, '2020-01-14 11:21:49'),
+(7, 10, '2020-01-14 11:22:08'),
+(8, 10, '2020-01-14 11:22:29'),
+(9, 10, '2020-01-14 11:22:54'),
+(10, 10, '2020-01-14 11:23:42'),
+(11, 10, '2020-01-14 11:24:12'),
+(12, 10, '2020-01-14 11:24:43'),
+(13, 10, '2020-01-14 11:26:17'),
+(14, 10, '2020-01-14 11:27:11'),
+(15, 10, '2020-01-14 11:27:27'),
+(16, 10, '2020-01-14 11:28:26'),
+(17, 10, '2020-01-14 11:28:41'),
+(18, 10, '2020-01-14 11:28:58'),
+(19, 10, '2020-01-14 11:29:05'),
+(20, 11, '2020-01-14 13:38:59'),
+(21, 11, '2020-01-14 13:39:07');
 
 -- --------------------------------------------------------
 
@@ -393,10 +474,27 @@ CREATE TABLE `bouw_proforma` (
 INSERT INTO `bouw_proforma` (`id`, `adres_id`, `oferten_id`, `proforma_numer`, `data`, `data_betalen`, `is_factur`) VALUES
 (2, 30, 6, 1, '2020-01-09', '0000-00-00', 0),
 (3, 2, 2, 2, '2020-01-01', '2020-01-02', 1),
-(4, 19, 6, 3, '2020-01-10', '0000-00-00', 0),
+(4, 2, 6, 3, '2020-01-10', '0000-00-00', 0),
 (5, 23, 1, 4, '2020-01-06', '2020-01-11', 1),
 (6, 23, 3, 5, '2020-01-11', '0000-00-00', 1),
-(7, 19, 2, 6, '2020-01-13', '2020-01-14', 1);
+(7, 19, 2, 6, '2020-01-13', '2020-01-14', 1),
+(8, 32, 6, 7, '2020-01-14', '0000-00-00', 0),
+(9, 32, 8, 8, '2020-01-14', '0000-00-00', 0),
+(10, 32, 10, 9, '2020-01-14', '0000-00-00', 0),
+(11, 32, 7, 10, '2020-01-14', '0000-00-00', 0),
+(12, 32, 7, 11, '2020-01-14', '0000-00-00', 0),
+(13, 32, 7, 12, '2020-01-14', '0000-00-00', 0),
+(14, 32, 7, 13, '2020-01-14', '2020-01-04', 1),
+(15, 32, 7, 14, '2020-01-14', '2020-01-03', 1),
+(16, 32, 7, 15, '2020-01-14', '2020-01-03', 1),
+(17, 32, 7, 16, '2020-01-14', '2020-01-01', 1),
+(18, 32, 7, 17, '2020-01-14', '2020-01-05', 1),
+(19, 32, 7, 18, '2020-01-14', '2020-01-08', 1),
+(20, 32, 7, 19, '2020-01-14', '2020-01-07', 1),
+(21, 32, 7, 20, '2020-01-14', '2020-01-02', 1),
+(22, 32, 7, 21, '2020-01-14', '2020-01-09', 1),
+(23, 32, 7, 22, '2020-01-14', '2020-01-13', 1),
+(24, 32, 7, 23, '2020-01-14', '2020-01-13', 1);
 
 -- --------------------------------------------------------
 
@@ -421,11 +519,32 @@ INSERT INTO `bouw_proforma_details` (`id`, `proforma_nr`, `waarvoor_id`, `quanti
 (2, 1, 2, 80, 1),
 (3, 1, 1, 100, 1),
 (4, 2, 1, 20, 5),
-(5, 3, 1, 10, 2),
+(5, 3, 1, 10, 20),
 (7, 4, 1, 44, 5),
 (8, 5, 3, 50, 50),
 (10, 6, 1, 10, 10),
-(11, 6, 4, 5, 5);
+(11, 6, 4, 5, 5),
+(12, 7, 2, 5, 5),
+(13, 7, 3, 7, 7),
+(14, 8, 1, 4, 4),
+(15, 8, 2, 8, 8),
+(16, 8, 4, 2, 2),
+(17, 9, 1, 5, 5),
+(18, 9, 2, 7, 8),
+(19, 10, 1, 5, 5),
+(20, 11, 1, 5, 5),
+(21, 12, 1, 5, 5),
+(22, 13, 1, 51, 52),
+(23, 14, 1, 56, 54),
+(24, 15, 1, 57, 58),
+(25, 16, 1, 5, 5),
+(26, 17, 1, 5, 5),
+(27, 18, 1, 55, 5),
+(28, 19, 1, 5, 5),
+(29, 20, 1, 5, 5),
+(30, 21, 1, 60, 52),
+(31, 22, 1, 5, 5),
+(32, 23, 1, 5, 10);
 
 -- --------------------------------------------------------
 
@@ -454,7 +573,9 @@ INSERT INTO `bouw_proforma_mail` (`id`, `proforma_id`, `data_czas`) VALUES
 (96, 7, '2020-01-13 13:59:29'),
 (97, 2, '2020-01-13 13:59:35'),
 (98, 4, '2020-01-13 13:59:35'),
-(99, 7, '2020-01-13 13:59:35');
+(99, 7, '2020-01-13 13:59:35'),
+(100, 24, '2020-01-14 12:07:48'),
+(101, 24, '2020-01-14 12:08:06');
 
 -- --------------------------------------------------------
 
@@ -465,7 +586,7 @@ INSERT INTO `bouw_proforma_mail` (`id`, `proforma_id`, `data_czas`) VALUES
 CREATE TABLE `bouw_uitgaven` (
   `id` int(11) NOT NULL,
   `adres_id` int(11) NOT NULL,
-  `oferten_id` int(11) NOT NULL,
+  `oferte_numer` int(11) NOT NULL,
   `price` decimal(20,2) NOT NULL,
   `waarvoor_id` int(11) NOT NULL,
   `data` date NOT NULL
@@ -475,7 +596,7 @@ CREATE TABLE `bouw_uitgaven` (
 -- Zrzut danych tabeli `bouw_uitgaven`
 --
 
-INSERT INTO `bouw_uitgaven` (`id`, `adres_id`, `oferten_id`, `price`, `waarvoor_id`, `data`) VALUES
+INSERT INTO `bouw_uitgaven` (`id`, `adres_id`, `oferte_numer`, `price`, `waarvoor_id`, `data`) VALUES
 (1, 28, 7, '1.00', 0, '2020-01-01'),
 (3, 28, 9, '2.00', 0, '2020-01-01'),
 (4, 28, 9, '3.00', 0, '2020-01-08'),
@@ -707,31 +828,31 @@ ALTER TABLE `administrator`
 -- AUTO_INCREMENT dla tabeli `bouw_adresy`
 --
 ALTER TABLE `bouw_adresy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_city`
 --
 ALTER TABLE `bouw_city`
-  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `city_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_factur`
 --
 ALTER TABLE `bouw_factur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_factur_details`
 --
 ALTER TABLE `bouw_factur_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_factur_mail`
 --
 ALTER TABLE `bouw_factur_mail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_insteligen_company_data`
@@ -743,37 +864,37 @@ ALTER TABLE `bouw_insteligen_company_data`
 -- AUTO_INCREMENT dla tabeli `bouw_oferten`
 --
 ALTER TABLE `bouw_oferten`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_oferten_details`
 --
 ALTER TABLE `bouw_oferten_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_oferten_mail`
 --
 ALTER TABLE `bouw_oferten_mail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_proforma`
 --
 ALTER TABLE `bouw_proforma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_proforma_details`
 --
 ALTER TABLE `bouw_proforma_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_proforma_mail`
 --
 ALTER TABLE `bouw_proforma_mail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT dla tabeli `bouw_uitgaven`

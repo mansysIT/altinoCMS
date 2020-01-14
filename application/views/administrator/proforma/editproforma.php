@@ -10,10 +10,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <?=model_load('proformamodel', 'editProforma', '')?>
-<?php $getCityId=model_load('nieuwe_adressmodel', 'getCityName', '')?>
+<?php $getCityId=model_load('mainmodel', 'getCityName', '')?>
 <?php $facturaModelData=model_load('proformamodel', 'showdata', '')?>
-<?php $getWarforTypes = model_load('inkomstenmodel', 'getAllWarforType', '')?>
-<?php $oferten = model_load('facturmodel', 'getOferten', '')?>
+<?php $getWarforTypes = model_load('mainmodel', 'getWaarvoor', '')?>
+<?php $oferten = model_load('mainmodel', 'getOferten', '')?>
 <?php $mailhistory=model_load('proformamodel', 'getproformaidbynumer', '')?>
 
 <?php
@@ -183,7 +183,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                 </div>
                 <div style="display: none" class="RekeningInside">
                     <p class="rekaningText">Factuurnummer</p>
-
+                    <input class="inputNewHuurder form-control-small" type="number" name="proformaId" value="<?=$facturaModelData[0]['id'] ?>">
                     <input class="inputNewHuurder form-control-small" type="number" name="facturnumer" value="<?=$facturaModelData[0]['proforma_numer'] ?>">
                 </div>
                 <?php if($facturaModelData[0]['is_factur'] != 1): ?>

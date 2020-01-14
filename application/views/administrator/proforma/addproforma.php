@@ -9,9 +9,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<?php $sidebarController=model_load('nieuwe_adressmodel', 'getCityName', '')?>
-<?php $getWarforTypes = model_load('inkomstenmodel', 'getAllWarforType', '')?>
-<?php $oferten = model_load('facturmodel', 'getOferten', '')?>
+<?php $sidebarController=model_load('mainmodel', 'getCityName', '')?>
+<?php $getWarforTypes = model_load('mainmodel', 'getWaarvoor', '')?>
+<?php $oferten = model_load('mainmodel', 'getOferten', '')?>
 <?=model_load('proformamodel', 'saveproforma', '')?>
 
 <?=add_metatags()?>
@@ -126,6 +126,10 @@ $d = new DateTime(date("Y-m-d"));
 				<div class="RekeningInside">
                     <p class="rekaningText">Data</p>
                     <input class="inputNewHuurder" type="date" name="proformadata" value='<?=$d->format('Y-m-d')?>' >
+                </div>
+                <div style="display: none" class="RekeningInside">
+                    <p class="rekaningText">Factuurnummer</p>
+                    <input class="inputNewHuurder form-control-small" type="number" name="proformaId" value="<?=$facturaModelData[0]['id'] ?>">
                 </div>
    
             </div>

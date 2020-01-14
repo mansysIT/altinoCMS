@@ -1,4 +1,4 @@
-<?php $sidebarController=model_load('sidebarmodel', 'getCityName', '')?>
+<?php $sidebarController=model_load('mainmodel', 'getCityName', '')?>
 
 <div class="wrapper">
     <!-- Sidebar  -->

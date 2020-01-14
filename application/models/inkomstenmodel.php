@@ -15,6 +15,8 @@ class inkomstenmodel
 	private $__db;
 	
 	private $warforQuantiy;
+
+	private $mainModel;
 	
 	public function __construct()
 	{
@@ -22,6 +24,8 @@ class inkomstenmodel
 		$this->__router = registry::register("router");
         $this->__params = $this->__router->getParams();
 		$this->__db = registry::register("db");
+
+		$this->mainModel = new mainmodel;
 	}
 
 	public function getFactur()
@@ -157,12 +161,6 @@ class inkomstenmodel
 		return $this->__params[0];
 	}
 
-	public function getParametrs() {
-		if(isset($this->__params[2])) {
-			return true;
-		}
-	}
-
 	public function getAdresByCity() {
 		if(isset($this->__params['POST']['action'])){
 		if($this->__params['POST']['action'] == 'miasta') {
@@ -207,6 +205,7 @@ class inkomstenmodel
 
 		if(isset($this->__params['POST']['savewarfor'])) {
 			// print_r($this->__params['POST']['adres']);
+			$facturNr = $this->getLastFacturNr();
 			$this->__db->execute("INSERT INTO bouw_factur 
 			(adres_id, 
 			oferten_id, 
@@ -215,7 +214,7 @@ class inkomstenmodel
 			VALUES (
 				'".$this->__params['POST']['adres']."',
 				'".$this->__params['POST']['oferten']."',
-				'".$this->getLastFacturNr()."',
+				'".$facturNr."',
 				'".$this->__params['POST']['facturdata']."'
 				)");
             
@@ -242,11 +241,35 @@ class inkomstenmodel
 				)");
             }
             }
-        }
+		}
+		
+		$proforma_pdf = 'application/storage/proformy/'.$id.'.pdf';
+			
+		$dir = $_SERVER['DOCUMENT_ROOT'].'/application/storage/factur';
+		$dirname = $id;
+
+		$this->mainModel->createNewFolder($dir, $dirname);
+
+		$proforma1 = file_exists($proforma_pdf); 
+		if ($proforma1) {
+			unlink($_SERVER['DOCUMENT_ROOT'].'/application/storage/proformy/'.$id.'.pdf');
+		}
+ 
+		$facturModel = New facturmodel();
+		$facturModel->createfactur($facturNr);
+		$proforma_pdf = 'application/storage/proformy/'.$id.'.pdf';
+
 		header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
 	}
 	
-	public function getdata() {
+	public function getdata($request = null) {
+
+		if($request == null){
+            
+            $proforma_numer = $this->__params[1];
+        } else {
+            $proforma_numer = $request;
+        }
 
         $data = $this->__db->execute("SELECT 
         city.city_id,
@@ -273,7 +296,7 @@ class inkomstenmodel
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
         INNER JOIN bouw_factur AS factur ON adresy.id = factur.adres_id 
-        WHERE factur.factur_numer = ".$this->__params[1]);
+        WHERE factur.factur_numer = ".$proforma_numer);
         $x = array();
         foreach($data as $q){
             array_push($x, $q);
@@ -286,7 +309,7 @@ class inkomstenmodel
         details.quantity,
         details.price
         FROM bouw_factur_details AS details INNER JOIN bouw_waarvoor AS warfor ON details.waarvoor_id = warfor.id
-        WHERE factur_nr = ".$this->__params[1]);
+        WHERE factur_nr = ".$proforma_numer);
 
         $y = array();
         foreach($dataWarfor as $q){
@@ -303,9 +326,9 @@ class inkomstenmodel
 
     }
 
-    public function getbtw() {
+    public function getbtw($nr) {
 
-        $warfor = $this->getdata();
+        $warfor = $this->getdata($nr);
         $x = Array();
 
         foreach(array_slice($warfor,1) as $row){
@@ -329,8 +352,8 @@ class inkomstenmodel
 
     }
 
-    public function gettotal(){
-        $warfor = $this->getdata();
+    public function gettotal($nr){
+        $warfor = $this->getdata($nr);
         $total = 0;
         foreach(array_slice($warfor,1) as $row){
             $z = $row['quantity'] * $row['price'];
