@@ -46,8 +46,8 @@ $d = new DateTime(date("Y-m-d"));
  
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
-    <div class="maincontainer">
-    <h1>Oferten Aanmaken</h1>
+    <h1 class="title">Oferten Aanmaken</h1>
+    <div class="maincontainer">  
     <form action="" method="post" id="myForm">
             <div class="bottomHolder">
             <div class="rekaning">
@@ -76,7 +76,7 @@ $d = new DateTime(date("Y-m-d"));
                         <div>
                             <table id="kopia_wiersz" class="container"> 
                                 <tbody class="warforadd">                             
-                                    <tr style="display: none" class="nag " id="count">
+                                    <tr style="display: none" class="nag warforCenter" id="count">
                                         <td class="">
                                         <p class="rekaningText">Warvoor</p>
                                         </td>
@@ -122,7 +122,7 @@ $d = new DateTime(date("Y-m-d"));
                     <p class="rekaningText">Geplande Datum Van Voltooiing</p>
                     <input class="inputNewHuurder" type="date" name="ofertendataend" value='<?=$d->format('Y-m-d')?>' >
                 </div>
-                <button type="submit" class="btn btn-danger mb-2 btn-small" name="saveoferten">Toevoegen</button>
+                <button type="submit" class="btn btn-danger mb-2 btn-small" name="saveoferten">Opslaan</button>
             </div>
             <div class="right">
 

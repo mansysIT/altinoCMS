@@ -2,11 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
 
 <head>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
-
-<head>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <?=model_load('facturmodel', 'editFactura', '')?>
@@ -32,19 +28,15 @@ $d = new DateTime($facturaModelData[0]['data']);
 
 <?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css,factur.css')?>
 
-<?=javascript_load('jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js,nieuwe_adress.js')?> 
+<?=javascript_load('main.js,sidebar.js,nieuwe_adress.js,addfileds.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<script src="/application/media/js/nieuwe_adress.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link href="/application/media/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
-
-<script src="/application/media/js/addfileds.js"></script>
 
 </head>
 
@@ -52,15 +44,15 @@ $d = new DateTime($facturaModelData[0]['data']);
  
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
+    <h1 class="title">Factuur Bewerken</h1>
     <div class="maincontainer">
-    <h1>Factuur Bewerken</h1>
-    <form action="" method="post" id="myForm">
+    <form action="" method="post" id="myForm" enctype="multipart/form-data">
             <div class="bottomHolder">
             <div class="rekaning">
                 <div class="RekeningInside">
-                    <p class="rekaningText">City</p>
+                    <p class="rekaningText">Stad</p>
                     <select name="city" class="miasta form-control" id="exampleFormControlSelect1">
-                    <option value="">SELECT CITY</option>
+                    <option value="">KIES EEN STAD</option>
                     
                     <?php foreach($getCityId as $row): ?>
                         <li>
@@ -72,14 +64,14 @@ $d = new DateTime($facturaModelData[0]['data']);
                 <div class="RekeningInside">
                     <p class="rekaningText">Adres</p>
                     <select name="adres" class="adresy form-control" id="exampleFormControlSelect1">
-                        <option>SELECT ADRES</option>
+                        <option>KIES EEN ADRES</option>
                     </select>
                 </div>
 
                 <div class="RekeningInside">
-                    <p class="rekaningText">Oferten</p>
+                    <p class="rekaningText">Oferte</p>
                     <select name="oferten" class="oferten form-control" id="exampleFormControlSelect1">
-                    <option value="">SELECT OFERTEN</option>
+                    <option value="">KIES EEN OFERTE</option>
                     
                     <?php foreach($oferten as $row): ?>
                         <li>
@@ -94,7 +86,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                         <div>
                             <table id="kopia_wiersz" class="container"> 
                                 <tbody class="warforadd">
-                                <tr style="display: none" class="nag ">
+                                <tr style="display: none" class="nag warforCenter">
                                         
                                         <td class="">
                                         <p class="rekaningText">Warvoor</p>
@@ -131,7 +123,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                     <?php 
                     $x = 0;
                      foreach(array_slice($facturaModelData, 1)  as $rows): ?>
-                <?php echo '<tr style="display: flex" class="">
+                <?php echo '<tr style="display: flex" class="warforCenter">
                                         
                                         <td class="">
                                         <p class="rekaningText">Warvoor</p>
@@ -183,40 +175,60 @@ $d = new DateTime($facturaModelData[0]['data']);
                     <input  class="inputNewHuurder form-control-small" type="number" name="facturId" value="<?=$facturaModelData[0]['facturId'] ?>">
                     <input  class="inputNewHuurder form-control-small" type="number" name="facturnumer" value="<?=$facturaModelData[0]['factur_numer'] ?>">
                 </div>
-                <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Toevoegen</button>
-                </form>
-                <h3 style="margin: 15px 0 15px 0;">Bestanden</h3>
-                <div class="fileContainer">
-                    <ul class="list-group list-group-flush">
-                    <?php if($files[1] != null): ?>
-                    <?php foreach($files[1] as $file): ?>
-                        <li class="list-group-item"><?php echo $file; ?>
-                            <form style="width: 10%; float: right; padding: 0;" method="post" action="">
-                            <button class="btnCityRemove" type="submit" name="removefile" value="<?php echo $file; ?>"><span class="oi oi-delete" title="delete" aria-hidden="true">
-                            </span></button></form>
-                        </li>
-                    <?php endforeach; ?>
-                    <?php endif; ?>
-                    </ul>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6 columnAlignText">
+                            <h3 style="margin: 15px 0 15px 0;">Bestanden</h3>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="fileContainer col-sm-6">
+                            <ul class="list-group list-group-flush">
+                            <?php if($files[1] != null): ?>
+                            <?php foreach($files[1] as $file): ?>
+                                <li class="list-group-item"><a href="application/storage/factur/<?=$facturaModelData[0]['id']?>/<?=$file?>"><?=$file?></a>
+                                    <form method="post" action="">
+                                    <button style="width: 10%; float: right; padding: 0;" class="btnCityRemove" type="submit" name="removefile" value="<?php echo $file; ?>"><span class="oi oi-delete" title="delete" aria-hidden="true">
+                                    </span></button></form>
+                                </li>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                            </ul>
+                        </div>
+                    </div>                
+                    <div class="row">
+                        <div class="col-sm-4 addFiles">
+                            <input type="file" name="fileToUpload" id="fileToUpload">
+                            <input style="display: none;"name="id_factur" value="<?=$uitgavenModelData[0]['id']; ?>" >
+                        </div>
+                    </div> 
+                <div class="row">
+                        <div class="col-sm">
+                            <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Toevoegen</button>
+                        </div>
+                </div> 
+                <div class="row">
+                    <div class="col-sm-6 columnAlignText">
+                        <h3 style="margin: 15px 0 15px 0;">Email Geschiedenis</h3>
+                    </div>
+                    </div> 
+                    <div class="col-sm-4 addFiles">
+                        <ul class="list-group list-group-flush">
+                        <?php foreach($mailhistory as $rows): ?>
+                            <li style="background-color: #eee; padding: 0.75rem 0;" class="list-group-item"><?php echo $rows['data_czas']; ?></li>
+                        <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div> 
+            </div>
+            </form>
+            </div>
+    </div>
+
+
+            </div>
                 </div>
-                <form action="" method="post" enctype="multipart/form-data">
-                    Select file to upload:
-                    <input type="file" name="fileToUpload" id="fileToUpload">
-                    <input type="submit" name="facturFiles" value="facturFiles" name="submit">
-                    <input style="display: none;"name="id_factur" value="<?=$facturaModelData[0]['id']; ?>" >
-                </form>
-
-                <h3 style="margin: 15px 0 15px 0;">Email Geschiedenis</h3>
-                <ul class="list-group list-group-flush">
-                <?php foreach($mailhistory as $rows): ?>
-                    <li style="background-color: #eee; padding: 0.75rem 0;" class="list-group-item"><?php echo $rows['data_czas']; ?></li>
-                <?php endforeach; ?>
-                </ul>
-            </div>
-            <div class="right">
-
-            
-            </div>
             
         </div>
         

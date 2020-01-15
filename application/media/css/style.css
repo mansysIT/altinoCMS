@@ -800,6 +800,48 @@ input {
     padding: 17px 10px;
 }
 
+.addFiles input{
+    border: none;
+}
+
+.columnAlignText { 
+    text-align: center;
+}
+
+.alignItem {
+    margin-left: auto!important;
+    margin-right: auto!important;
+}
+
+.warforCenter td{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-small{
+    width: 150px;
+    margin-bottom: 10px!important;
+}
+
+.title {
+    margin: 5px 0 30px 0!important;
+}
+
+@media only screen and (max-width: 768px) {
+    .btn-small{
+        width: 100%!important;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px; 
+        margin-bottom: 10px!important;
+    }
+
+    .title {
+        margin: 0!important;
+        text-align: center;
+    }
+}
+
 
 
 

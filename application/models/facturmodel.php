@@ -264,11 +264,11 @@ class facturmodel
                         KHBemiddeling';
                         
 	 
-            $proforma_pdf = 'application/storage/proformy/'.$factur_id.'.pdf';
+            $proforma_pdf = 'application/storage/factur/'.$factur_id.'.pdf';
 			
 			$proforma1 = file_exists($proforma_pdf); 
             if ($proforma1) {
-                unlink($_SERVER['DOCUMENT_ROOT'].'/application/storage/proformy/'.$factur_id.'.pdf');
+                unlink($_SERVER['DOCUMENT_ROOT'].'/application/storage/factur/'.$factur_id.'.pdf');
             }
 
             $dir = 'application/storage/factur';
@@ -277,7 +277,7 @@ class facturmodel
             $this->mainModel->createNewFolder($dir, $dirname);
      
             $this->createfactur($factur_numer);
-            $proforma_pdf = 'application/storage/proformy/'.$factur_id.'.pdf';
+            $proforma_pdf = 'application/storage/factur/'.$factur_id.'.pdf';
 		
 			$mail = new smtpmailer();
 
@@ -303,8 +303,6 @@ class facturmodel
     }
 
     public function createfactur($factur_numer = null) {
-
-
         $data=model_load('inkomstenmodel', 'getdata', $factur_numer);
         $btw=model_load('inkomstenmodel', 'getbtw', $factur_numer);
         $total=model_load('inkomstenmodel', 'gettotal', $factur_numer);
@@ -699,11 +697,15 @@ class facturmodel
         return $historia_maili;
     }
 
-    public function uploadFacturFiles() {
-        
-        if (isset($this->__params['POST']['facturFiles'])) {
-			$dir = 'application/storage/factur';
-			$dirName = $this->__params['POST']['id_factur'];	
+    public function uploadFacturFiles($id = null) {
+        if (isset($this->__params['POST']['editwarfor']) || isset($this->__params['POST']['savewarfor'])) {
+            $dir = 'application/storage/factur';
+            if($id != null){
+                $dirName = $id;
+            } else {
+                $dirName = $this->__params['POST']['id_factur'];
+            }
+				
             $this->mainModel->createNewFolder($dir, $dirName);
             $x = $dir."/".$dirName.'/';
             $this->mainModel->uploadFile($x);		
@@ -722,9 +724,7 @@ class facturmodel
             $dir = 'application/storage/factur/'.$id.'/';
             $this->mainModel->remove($dir);	
         }
-
     }
-
 }
 
 ?>

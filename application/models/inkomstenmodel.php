@@ -17,6 +17,7 @@ class inkomstenmodel
 	private $warforQuantiy;
 
 	private $mainModel;
+	private $facturModel;
 	
 	public function __construct()
 	{
@@ -26,6 +27,7 @@ class inkomstenmodel
 		$this->__db = registry::register("db");
 
 		$this->mainModel = new mainmodel;
+		$this->facturModel = new facturmodel;
 	}
 
 	public function getFactur()
@@ -202,7 +204,6 @@ class inkomstenmodel
 
 	public function saveFactura()
 	{
-
 		if(isset($this->__params['POST']['savewarfor'])) {
 			// print_r($this->__params['POST']['adres']);
 			$facturNr = $this->getLastFacturNr();
@@ -242,6 +243,8 @@ class inkomstenmodel
             }
             }
 		}
+
+		$this->facturModel->uploadFacturFiles($id);
 		
 		$proforma_pdf = 'application/storage/proformy/'.$id.'.pdf';
 			

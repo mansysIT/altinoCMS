@@ -13,8 +13,6 @@
 <?php $getWarforTypes = model_load('mainmodel', 'getWaarvoor', '')?>
 <?php $oferten = model_load('mainmodel', 'getOferten', '')?>
 
-
-
 <?=add_metatags()?>
 
 <?=add_title("Add Factur")?>
@@ -48,15 +46,15 @@ $d = new DateTime(date("Y-m-d"));
  
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
+    <h1 class="title">Factuur Aanmaken</h1>
     <div class="maincontainer">
-    <h1>Factuur Aanmaken</h1>
-    <form action="administrator/inkomsten/savefactur" method="post"  id="myForm">
+    <form action="administrator/inkomsten/savefactur" method="post"  id="myForm" enctype="multipart/form-data">
             <div class="bottomHolder">
             <div class="rekaning">
                 <div class="RekeningInside">
-                    <p class="rekaningText">City</p>
+                    <p class="rekaningText">Stad</p>
                     <select name="city" class="miasta form-control" id="exampleFormControlSelect1">
-                    <option value="">SELECT CITY</option>
+                    <option value="">KIES EEN STAD</option>
                     <?php foreach($sidebarController as $row): ?>
                         <li>
                             <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
@@ -67,14 +65,14 @@ $d = new DateTime(date("Y-m-d"));
                 <div class="RekeningInside">
                     <p class="rekaningText">Adres</p>
                     <select name="adres" class="adresy form-control" id="exampleFormControlSelect1">
-                        <option>SELECT ADRES</option>
+                        <option>KIES EEN ADRES</option>
                     </select>
                 </div>
 
                 <div class="RekeningInside">
-                    <p class="rekaningText">Oferten</p>
+                    <p class="rekaningText">Oferte</p>
                     <select name="oferten" class="oferten form-control" id="exampleFormControlSelect1">
-                    <option value="">SELECT OFERTEN</option>
+                    <option value="">KIES EEN OFERTE</option>
                     <?php foreach($oferten as $row): ?>
                         <li>
                             <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
@@ -90,7 +88,7 @@ $d = new DateTime(date("Y-m-d"));
                         <div>
                             <table id="kopia_wiersz" class="container"> 
                                 <tbody class="warforadd">                             
-                                    <tr style="display: none" class="nag ">
+                                    <tr style="display: none" class="nag warforCenter">
                                         <td class="">
                                             <p class="rekaningText">Warvoor</p>
                                         </td>
@@ -127,19 +125,31 @@ $d = new DateTime(date("Y-m-d"));
 					?>
                 </div>
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
-				<div class="RekeningInside">
+                <div class="RekeningInside">
                     <p class="rekaningText">Data</p>
                     <input class="inputNewHuurder" type="date" name="facturdata" value='<?=$d->format('Y-m-d')?>' >
                 </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6 columnAlignText">
+                            <h3 style="margin: 15px 0 15px 0;">Bestanden</h3>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-sm-4 addFiles">
+                            <input type="file" name="fileToUpload" id="fileToUpload">
+                            <input style="display: none;"name="id_factur" value="<?=$uitgavenModelData[0]['uitgaven_id']; ?>" >
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-sm">
+                            <button type="submit" class="btn btn-danger mb-2 btn-small" name="savewarfor">Toevoegen</button>
+                        </div>
+                    </div> 
+                </div>
+            </form>
             </div>
-            <div class="right">
-
-
-            </div>
-            
         </div>
-        <button type="submit" class="btn btn-danger mb-2" name="savewarfor">Toevoegen</button>
-        
     </div>
 	<?=module_load('FOOTER')?>
 	</div>

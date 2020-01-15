@@ -7,6 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
 
 <head>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <?=model_load('proformamodel', 'editProforma', '')?>
@@ -29,7 +30,7 @@ $d = new DateTime($facturaModelData[0]['data']);
 
 <?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css,factur.css')?>
 
-<?=javascript_load('jQuery.js,script.js,jquery.localscroll-1.2.5.js,coda-slider.js?no_compress,jquery.scrollTo-1.3.3.js,jquery.serialScroll-1.2.1.js,main.js,sidebar.js,nieuwe_adress.js')?> 
+<?=javascript_load('main.js,sidebar.js,nieuwe_adress.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
 
@@ -48,8 +49,8 @@ $d = new DateTime($facturaModelData[0]['data']);
  
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
+    <h1 class="title">Proforma Bewerken</h1>
     <div class="maincontainer">
-    <h1>Proforma Bewerken</h1>
     <form action="" method="post" id="myForm">
             <div class="bottomHolder">
             <div class="rekaning">
