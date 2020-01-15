@@ -8,7 +8,7 @@
 
 <?php $sidebarController=model_load('mainmodel', 'getCityName', '')?>
 <?php $uitgavenModelData=model_load('uitgaafmodel', 'showdata', '')?> 
-
+<?php $oferten = model_load('mainmodel', 'getOferten', '')?>
 <?php model_load('uitgavenmodel', 'uploadUitgavenFiles', '')?>
 <?php model_load('uitgavenmodel', 'removeFileFromUitgaven', $uitgavenModelData[0]['id'])?>
 <?php $files = model_load('uitgavenmodel', 'getAllFilesFromUitgaven', $uitgavenModelData[0]['id'])?>
@@ -81,14 +81,14 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                 
                 <div class="RekeningInside">
                     <p class="rekaningText">Oferten</p> 
-                    <select name="oferte_id" class="form-control" id="exampleFormControlSelect1">
-                    <option value="">KIEZ</option>
-                    <option value="1">oferta 1</option>
-                    <!-- <?php foreach($offerten as $row): ?> 
+                    <select name="oferte_id" class="oferty form-control" id="exampleFormControlSelect1">
+                    <option value="0">KIEZ</option>
+                   
+                    <?php foreach($oferten as $row): ?> 
                         <li>
-                            <option value="<?php echo $row[0]; ?>"<?php if(!empty($uitgavenModelData) && $row[0] == $uitgavenModelData[0]['oferte_id']) echo 'selected'; ?>><?php echo $row[1]; ?></option>
+                            <option value="<?php echo $row[1]; ?>"<?php if(!empty($uitgavenModelData) && $row[0] == $uitgavenModelData[0]['oferte_id']) echo 'selected'; ?>><?php echo $row[1]; ?></option>
                         </li>
-                    <?php endforeach; ?>  -->
+                    <?php endforeach; ?> 
                     </select>
                 </div>  
                 
@@ -203,7 +203,32 @@ if($uitgavenModelData){
 
 
   }   
-?>   
+?> 
+<script type="text/javascript" >
+
+$(".adresy").change(function()
+    {
+       
+        var id_adres1 = $(this).val();
+        var dataString = {
+            action: "oferty",
+            id_adres: id_adres1
+            };
+            
+            $.ajax
+            ({
+                type: "POST",
+                url: "administrator/all/allmodelofertenajax",
+                data: dataString,
+                cache: false,
+                success: function(html)
+                {
+                    $(".oferty").html(html);
+                }
+            });
+    });
+
+</script>
 
 <script type="text/javascript" >
 var quan = 0;
