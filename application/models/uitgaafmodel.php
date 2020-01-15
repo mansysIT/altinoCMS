@@ -26,7 +26,7 @@ class uitgaafmodel
         adresy.adres, 
         adresy.postcode,
         uitgaven.data,
-        uitgaven.id,
+        uitgaven.id as uitgaven_id,
         uitgaven.waarvoor_id,
         uitgaven.price,
         adresy.id

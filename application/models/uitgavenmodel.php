@@ -238,16 +238,22 @@ class uitgavenmodel
 			// `data`= '2002'  
 			// WHERE id = 16
 
+			$id = $this->__db->getLastInsertedId();
+			$this->uploadUitgavenFiles($id);
 
 			header("Location: ".SERVER_ADDRESS."administrator/uitgaven/index");
 		}
 	}
 
-	public function uploadUitgavenFiles() {
+	public function uploadUitgavenFiles($id) {
         
-        if (isset($this->__params['POST']['facturFiles'])) {
+        if (isset($this->__params['POST']['savewarfor'])) {
 			$dir = 'application/storage/uitgaven';
-			$dirName = $this->__params['POST']['id_factur'];	
+			if($id != null){
+                $dirName = $id;
+            } else {
+                $dirName = $this->__params['POST']['id_factur'];
+            }
             $this->mainModel->createNewFolder($dir, $dirName);
             $x = $dir."/".$dirName.'/';
             $this->mainModel->uploadFile($x);		

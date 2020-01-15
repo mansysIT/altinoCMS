@@ -10,8 +10,8 @@
 <?php $uitgavenModelData=model_load('uitgaafmodel', 'showdata', '')?> 
 <?php $oferten = model_load('mainmodel', 'getOferten', '')?>
 <?php model_load('uitgavenmodel', 'uploadUitgavenFiles', '')?>
-<?php model_load('uitgavenmodel', 'removeFileFromUitgaven', $uitgavenModelData[0]['id'])?>
-<?php $files = model_load('uitgavenmodel', 'getAllFilesFromUitgaven', $uitgavenModelData[0]['id'])?>
+<?php model_load('uitgavenmodel', 'removeFileFromUitgaven', $uitgavenModelData[0]['uitgaven_id'])?>
+<?php $files = model_load('uitgavenmodel', 'getAllFilesFromUitgaven', $uitgavenModelData[0]['uitgaven_id'])?>
 
 <?=add_metatags()?>
 
@@ -37,7 +37,6 @@
 $waarvoor = array();
 $waarvoor = model_load('mainmodel', 'getWaarvoor', ''); 
 model_load('uitgavenmodel', 'saveUitgaaf', ''); 
-
 ?>    
  
     <?=module_load('SIDEBAR')?>
@@ -46,7 +45,7 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
     <div class="Mycontainer"> 
     <h1>Uitgaaf</h1>
     <div class="maincontainer">
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
             <div class="bottomHolder">
             <div class="rekaning">
                 <div class="RekeningInside">
@@ -100,37 +99,56 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                     <p class="rekaningText">Datum</p>
                     <input class="inputNewHuurder" type="date" name="datum" value="<?=date("Y-m-d");?>">
                 </div>       
-                <button type="submit" class="btn btn-danger mb-2 btn-small" name="savewarfor">Toevoegen</button>
+                
             
-            
-            </form>
             <?php if($uitgavenModelData[0] != null): ?>
-                </form>
-                <h3 style="margin: 15px 0 15px 0;">Bestanden</h3>
-                <div class="fileContainer">
-                    <ul class="list-group list-group-flush">
-                    <?php if($files[1] != null): ?>
-                    <?php foreach($files[1] as $file): ?>
-                        <li class="list-group-item"><?php echo $file; ?>
-                            <form style="width: 10%; float: right; padding: 0;" method="post" action="">
-                            <button class="btnCityRemove" type="submit" name="removefile" value="<?php echo $file; ?>"><span class="oi oi-delete" title="delete" aria-hidden="true">
-                            </span></button></form>
-                        </li>
-                    <?php endforeach; ?>
-                    <?php endif; ?>
-                    </ul>
-                </div>
-                <form action="" method="post" enctype="multipart/form-data">
-                    Select file to upload:
-                    <input type="file" name="fileToUpload" id="fileToUpload">
-                    <input type="submit" name="facturFiles" value="facturFiles" name="submit">
-                    <input style="display: none;"name="id_factur" value="<?=$uitgavenModelData[0]['id']; ?>" >
-                </form>
-            <?php endif; ?>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6 columnAlignText">
+                            <h3 style="margin: 15px 0 15px 0;">Bestanden</h3>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="fileContainer col-sm-6">
+                            <ul class="list-group list-group-flush">
+                            <?php if($files[1] != null): ?>
+                            <?php foreach($files[1] as $file): ?>
+                                <li class="list-group-item"><a href="application/storage/uitgaven/<?=$uitgavenModelData[0]['uitgaven_id']?>/<?=$file?>"><?=$file?></a>
+                                    <form method="post" action="">
+                                    <button style="width: 10%; float: right; padding: 0;" class="btnCityRemove" type="submit" name="removefile" value="<?php echo $file; ?>"><span class="oi oi-delete" title="delete" aria-hidden="true">
+                                    </span></button></form>
+                                </li>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                            </ul>
+                        </div>
+                    </div>                
+                    <div class="row">
+                        <div class="col-sm-4 addFiles">
+                            <input type="file" name="fileToUpload" id="fileToUpload">
+                            <input style="display: none;"name="id_factur" value="<?=$uitgavenModelData[0]['uitgaven_id']; ?>" >
+                        </div>
+                    </div> 
+                <?php else: ?>
+                    <div class="row">
+                        <div class="col-sm-6 columnAlignText">
+                            <h3 style="margin: 15px 0 15px 0;">Bestanden</h3>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-sm-4 addFiles">
+                            <input type="file" name="fileToUpload" id="fileToUpload">
+                            <input style="display: none;"name="id_factur" value="" >
+                        </div>
+                    </div> 
+                <?php endif; ?>
+                <div class="row">
+                        <div class="col-sm">
+                            <button type="submit" class="btn btn-danger mb-2 btn-small" name="savewarfor">Toevoegen</button>
+                        </div>
+                </div> 
             </div>
-            <div class="right">
-
-
+            </form>
             </div>
             
             </div>

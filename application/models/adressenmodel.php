@@ -161,6 +161,7 @@ class adressenmodel
 
 	public function createAdresFolder() {
         if (isset($this->__params['POST']['addfolder']) && isset($this->__params['POST']['foldername']) && $this->__params['POST']['foldername'] != null) {
+			print_r('tttttt');
 			$dir = 'application/storage/adres/'.$this->__params[1];
 			$dirName = $this->__params['POST']['foldername'];	
 			$this->mainModel->createNewFolder($dir, $dirName);	

@@ -47,8 +47,8 @@ $d = new DateTime(date("Y-m-d"));
  
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
+    <h1 class="title">Proforma Aanmaken</h1>
     <div class="maincontainer">
-    <h1>Proforma Aanmaken</h1>
     <form action="" method="post" id="myForm">
             <div class="bottomHolder">
             <div class="rekaning">
