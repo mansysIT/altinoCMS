@@ -25,8 +25,7 @@ class adressenmodel
 		$this->mainModel = new mainmodel;
 	}
 
-	public function getAdress()
-	{ 
+	public function getAdress() { 
 		$this->adressenModel = new adressenmodel();
 
 		if (isset($this->__params['POST']['vanaf'])) {
@@ -76,7 +75,6 @@ class adressenmodel
 	
 	private function clear() {
 		if(isset($this->__params['POST']['clear'])){
-			print_r($this->__params['POST']['clear']);
 			$d = new DateTime(date("Y-m-d"));
 			
 			$dOd = new DateTime(date("Y-m-d"));
@@ -122,11 +120,21 @@ class adressenmodel
 		}
 	
 
-
+		$i = 0;
         foreach($this->query->fetch_all() as $q){
-            array_push($this->cityArray, $q);
+			array_push($this->cityArray, $q);
+
+			$inkomsten = $this->mainModel->getAllInkomsten('adres_id', $q[0]);
+			$uitgaven = $this->mainModel->getAllUitgaven('adres_id', $q[0]);
+			$sum = $this->mainModel->winst($inkomsten, $uitgaven);
+
+			array_push($this->cityArray[$i], $inkomsten);
+			array_push($this->cityArray[$i], $uitgaven);
+			array_push($this->cityArray[$i], $sum);
+
+			$i++;
 		}
-		
+
        return $this->cityArray;
 	}
 	
@@ -161,12 +169,140 @@ class adressenmodel
 
 	public function createAdresFolder() {
         if (isset($this->__params['POST']['addfolder']) && isset($this->__params['POST']['foldername']) && $this->__params['POST']['foldername'] != null) {
-			print_r('tttttt');
 			$dir = 'application/storage/adres/'.$this->__params[1];
 			$dirName = $this->__params['POST']['foldername'];	
 			$this->mainModel->createNewFolder($dir, $dirName);	
         }			
+	} 
+
+	public function getAllFiles() {
+        if (isset($this->__params[2])) {
+            $dir = "application/storage/adres/".$this->__params[1]."/".$this->__params[2];
+        } else {
+			$dir = 'application/storage/adres/'.$this->__params[1];
+		}
+		
+		return $this->mainModel->getAllFilesInDirectory($dir);
+	} 
+
+	public function uploadFiles() {
+        if (isset($this->__params['POST']['fileUpload'])) {
+            if (isset($this->__params[2])) {
+                $dir = "application/storage/adres/".$this->__params[1]."/".$this->__params[2].'/';
+            } else {
+                $dir = 'application/storage/adres/'.$this->__params[1].'/';
+			}
+			return $this->mainModel->uploadFile($dir);
+        }	
+	} 
+
+	public function remove() {
+        if (isset($this->__params['POST']['removefolder']) || isset($this->__params['POST']['removefile'])) {
+            if (isset($this->__params[2])) {
+                $dir = "application/storage/adres/".$this->__params[1]."/".$this->__params[2].'/';
+            } else {
+                $dir = 'application/storage/adres/'.$this->__params[1].'/';
+			}
+			$this->mainModel->remove($dir);
+        }	
+	} 
+
+	public function editAdress(){
+		if(isset($this->__params['POST']['adresbtn']))
+		{	
+			echo "<pre>";
+			print_r($this->__params['POST']);
+			$adres = $this->__params['POST']['adres'];
+			$postcode = $this->__params['POST']['postcode'];
+			$city = $this->__params['POST']['city'];
+
+			$private_naam = $this->__params['POST']['private_naam'];
+			$private_achternaam = $this->__params['POST']['private_achternaam'];
+			$private_id_kaart = $this->__params['POST']['private_id_kaart'];
+			$private_tel = $this->__params['POST']['private_tel'];
+			$private_geboortedatum = $this->__params['POST']['private_geboortedatum'];
+
+			$bedrijf_bedrijf = $this->__params['POST']['bedrijf_bedrijf'];
+			$bedrijf_adres = $this->__params['POST']['bedrijf_adres'];
+			$bedrijf_postcode = $this->__params['POST']['bedrijf_postcode'];
+			$bedrijf_stad = $this->__params['POST']['bedrijf_stad'];
+			$bedrijf_kvk = $this->__params['POST']['bedrijf_kvk'];
+			$bedrijf_btw = $this->__params['POST']['bedrijf_btw'];
+			$bedrijf_tel = $this->__params['POST']['bedrijf_tel'];
+
+			$email = $this->__params['POST']['email'];
+			$rekening = $this->__params['POST']['rekening'];
+
+			$badrijfPrivateToogler = $this->__params['POST']['privateBedrijfToogler'];
+
+			if($badrijfPrivateToogler == 'private') {
+				$this->__db->execute("UPDATE bouw_adresy 
+				SET
+				city = '".$city."',
+				adres = '".$adres."', 
+				postcode = '".$postcode."',
+				private_naam = '".$private_naam."',
+				private_achternaam = '".$private_achternaam."',
+				private_id_kaart = '".$private_id_kaart."',
+				private_tel = '".$private_tel."',
+				private_geboortedatum = '".$private_geboortedatum."',
+				bedrijf_bedrijf = '',
+				bedrijf_adres = '',
+				bedrijf_postcode = '',
+				bedrijf_stad = '',
+				bedrijf_kvk = '',
+				bedrijf_btw = '',
+				bedrijf_tel = '',
+				email = '".$email."',
+				rekening = '".$rekening."'
+				WHERE id = ".$this->__params[1]);
+
+				$this->__db->execute("INSERT INTO bouw_adresy (
+					city, adres, postcode, private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, bedrijf_adres, bedrijf_postcode, bedrijf_stad, 
+					bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, rekening) VALUES ('$city', '$adres', '$postcode' , '$private_naam' , '$private_achternaam' , '$private_id_kaart' , '$private_tel' , '$private_geboortedatum' ,
+					 '' , '' , '' , '' , '' , '' , '' , '$email' , '$rekening')");
+			} else {
+
+				$this->__db->execute("UPDATE bouw_adresy 
+				SET
+				city = '".$city."',
+				adres = '".$adres."', 
+				postcode = '".$postcode."',
+				private_naam = '".$private_naam."',
+				private_achternaam = '".$private_achternaam."',
+				private_id_kaart = '".$private_id_kaart."',
+				private_tel = '".$private_tel."',
+				private_geboortedatum = '".$private_geboortedatum."',
+				bedrijf_bedrijf = '',
+				bedrijf_adres = '',
+				bedrijf_postcode = '',
+				bedrijf_stad = '',
+				bedrijf_kvk = '',
+				bedrijf_btw = '',
+				bedrijf_tel = '',
+				email = '".$email."',
+				rekening = '".$rekening."'
+				WHERE id = ".$this->__params[1]);
+
+				$this->__db->execute("INSERT INTO bouw_adresy (
+					city, adres, postcode, private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, bedrijf_adres, bedrijf_postcode, bedrijf_stad, 
+					bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, rekening) VALUES ('$city', '$adres', '$postcode' , '' , '' , '' , '' , '' ,
+					 '$bedrijf_bedrijf' , '$bedrijf_adres' , '$bedrijf_postcode' , '$bedrijf_stad' , '$bedrijf_kvk' , '$bedrijf_btw' , '$bedrijf_tel' , '$email' , '$rekening')");
+			}
+
+
+
+			$this->createAdresDirectory($this->__params[1]);
+			header("Location: ".SERVER_ADDRESS."administrator/adressen/index/");
+		}
 	}
+
+	private function createAdresDirectory($adres_id) {
+		if(!is_dir('application/storage/adres/'.$adres_id.'')){
+			mkdir('application/storage/adres/'.$adres_id.'', 0777);
+		}
+	}
+	
 }
 
 ?>

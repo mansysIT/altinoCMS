@@ -11,7 +11,7 @@
 
 <?=add_metatags()?>
 
-<?=add_title("Design Klasy biznes - SuperCMS")?>
+<?=add_title("Instellingen")?>
 
 <?=add_basehref()?>
 

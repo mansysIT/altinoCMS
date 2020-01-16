@@ -25,11 +25,6 @@ class incomsten extends controller
 		$this->main->translate_helper;
 	}
 
-	public function getAdress()
-	{
-        $this->sidebarModal = new homemodel;
-        return $this->sidebarModal->getAdress();
-	}
 }
 
 ?>

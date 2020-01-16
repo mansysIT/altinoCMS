@@ -23,13 +23,13 @@ $d = new DateTime($facturaModelData[0]['data']);
 
 <?=add_metatags()?>
 
-<?=add_title("Edit Factur")?>
+<?=add_title("Oferten")?>
 
 <?=add_basehref()?>
 
-<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css,factur.css,addfileds.js')?>
+<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css,factur.css')?>
 
-<?=javascript_load('main.js,sidebar.js,nieuwe_adress.js')?> 
+<?=javascript_load('main.js,sidebar.js,nieuwe_adress.js,addfileds.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
 

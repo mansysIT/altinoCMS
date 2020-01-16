@@ -26,30 +26,10 @@ class mainmodel
             array_push($this->cityArray, $q);
         }
        return $this->cityArray;
-	}
+	} 
     
     public function getAllFilesInDirectory($dir) {
 
-		// if(isset($this->__params[2])){
-		// 	$dir = "application/storage/adres/".$this->__params[1]."/".$this->__params[2];
-		// 	if(scandir($dir) != null){
-		// 		$files = scandir($dir);
-		// 		$foldersArray = array();
-		// 		$filesArray = array();
-		// 		foreach($files as $file)
-		// 		{
-		// 			if (strpos($file, '.') == null) {	
-		// 				if (strpos($file, '..') == null) {
-		// 				}
-		// 			} else {
-		// 				array_push($filesArray, $file);
-		// 			}
-		// 		}
-		// 		return array($foldersArray, $filesArray);
-		// 	} else {
-		// 		return array();
-		// 	}
-		// } else {
 			if(scandir($dir) != null){
 				$files = scandir($dir);
 				$foldersArray = array();
@@ -76,41 +56,14 @@ class mainmodel
 	}
 
 	public function remove($dir) {
-		// if(isset($this->__params[2])){
-		// 	if(isset($this->__params['POST']['removefolder'])) {
-		// 		$file = $this->__params['POST']['removefolder'];
-		// 		if(is_dir('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2]."/".$file.'')){
-		// 			print_r('is');
-		// 			rmdir('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2].'/'.$file.'');
-		// 		}
-		// 	}
-
-		// 	if(isset($this->__params['POST']['removefile'])) {
-		// 		$file = $this->__params['POST']['removefile'];
-		// 		print_r($file);
-		// 		if(file_exists('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2].'/'.$file.'')){
-		// 			print_r('isFile');
-		// 			unlink('application/storage/adres/'.$this->__params[1].'/'.$this->__params[2].'/'.$file.'');
-		// 		}
-		// 	}
-		// } else {
-		// 	if(isset($this->__params['POST']['removefolder'])) {
-		// 		$file = $this->__params['POST']['removefolder'];
-		// 		if(is_dir('application/storage/adres/'.$this->__params[1].'/'.$file.'')){
-		// 			print_r('is');
-		// 			rmdir('application/storage/adres/'.$this->__params[1].'/'.$file.'');
-		// 		}
-		// 	}
-
-		// 	if(isset($this->__params['POST']['removefile'])) {
-		// 		$file = $this->__params['POST']['removefile'];
-		// 		print_r($file);
-		// 		if(file_exists('application/storage/adres/'.$this->__params[1].'/'.$file.'')){
-		// 			print_r('isFile');
-		// 			unlink('application/storage/adres/'.$this->__params[1].'/'.$file.'');
-		// 		}
-		// 	}
-		// }
+	
+		if(isset($this->__params['POST']['removefolder'])) {
+			$file = $this->__params['POST']['removefolder'];
+			if(is_dir('application/storage/adres/'.$this->__params[1].'/'.$file.'')){
+				print_r('is');
+				rmdir('application/storage/adres/'.$this->__params[1].'/'.$file.'');
+			}
+		}
 
 		if(isset($this->__params['POST']['removefile'])) {
 			$file = $this->__params['POST']['removefile'];
@@ -121,48 +74,55 @@ class mainmodel
 	}
 
 	public function uploadFile($target_dir) {
-		// if(isset($this->__params[2])){
-		// 	$target_dir = "application/storage/adres/".$this->__params[1]."/".$this->__params[2]."/";
-		// } else {
-		// 	$target_dir = "application/storage/adres/".$this->__params[1]."/";
-		// }
-		
-		//if(isset($this->__params['POST']['fileToUpload'])){
+
 		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 		$uploadOk = 1; 
+		$message = '';
 		
 		// Check if file already exists
 		if (file_exists($target_file)) {
-			print_r('aaa');
-			echo "Sorry, file already exists.";
+			$message = "Sorry, file already exists.";
 			$uploadOk = 0;
 		}
 		// Check file size
-		if ($_FILES["fileToUpload"]["size"] > 500000) {
-			print_r('bbb');
-			echo "Sorry, your file is too large.";
+		if ($_FILES["fileToUpload"]["size"] > 5000000) {
+			$message = "Sorry, your file is too large.";
 			$uploadOk = 0;
 		}
 		
 		// Check if $uploadOk is set to 0 by an error
 		if ($uploadOk == 0) {
 			
-			echo "Sorry, your file was not uploaded.";
+			// $message = "Sorry, your file was not uploaded.";
 		// if everything is ok, try to upload file
 		} else {
 			
 			if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-				echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+				$message = "The file <strong>". basename( $_FILES["fileToUpload"]["name"]). " </strong>has been uploaded.";
 			} else {
-				echo "Sorry, there was an error uploading your file.";
+				$message = "Sorry, there was an error uploading your file.";
 			}
 		}
+
+		return $message;
 	//}
 	}
 
 	public function getParametrs() {
 		if(isset($this->__params[2])) {
 			return true;
+		}
+	}
+
+	public function getFirstParametrs() {
+		if(isset($this->__params[1])) {
+			return $this->__params[1];
+		}
+	}
+
+	public function getSecoundParametrs() {
+		if(isset($this->__params[2])) {
+			return $this->__params[2];
 		}
 	}
 
@@ -196,8 +156,32 @@ class mainmodel
             array_push($oferten, $q);
         }
        return $oferten;
-    }
+	}
+	
+	public function getAllInkomsten($colName, $id) {
+		$query = $this->__db->querymy("SELECT details.quantity, details.price
+		FROM bouw_factur_details AS details INNER JOIN bouw_factur AS factur ON details.factur_nr = factur.factur_numer 
+		WHERE factur.".$colName." = ".$id);
 
+		foreach($query->fetch_all() as $q){
+			$sum += $q[0] * $q[1];
+		}
+
+		return $sum;
+	}
+
+	public function getAllUitgaven($colName, $id) {
+		$query = $this->__db->querymy("SELECT price FROM bouw_uitgaven WHERE ".$colName." = ".$id);
+		foreach($query->fetch_all() as $q){
+			$sum += $q[0];
+			
+		}
+		return $sum;
+	}
+
+	public function winst($inkomsten, $uitgaven) {
+		return $inkomsten - $uitgaven;
+	}
 }
 
 ?>

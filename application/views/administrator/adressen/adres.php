@@ -12,7 +12,7 @@
 
 <?=add_metatags()?>
 
-<?=add_title("Design Klasy biznes - SuperCMS")?>
+<?=add_title("Adressen")?>
 
 <?=add_basehref()?>
 
@@ -35,7 +35,7 @@
  
 <?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
-    <h1>
+    <h1 class="title">
     <?=$getDataFromAdres['city']." ".$getDataFromAdres['adres']?>
     </h1> 
     <?=module_load('adresmenu')?>
@@ -70,7 +70,7 @@
         </div>
         <div class="info">										
             <div class="infoUp" id="nieuweadressprivate">	
-				<button type="button" id="privatetoogler" style="margin-top: 1%; margin-left: 0.8%" class="btn btn-danger mb-2">Private</button>									
+				<button type="button" onclick="bedrijf()" id="privatetoogler" style="margin-top: auto; margin-left: 0.8%" class="btn btn-danger mb-2 btn-small">Private</button>									
                 <p class="info pFirstChild">Naam
                 <input class="inputNewHuurder" type="text" name="private_naam" value='<?=$getDataFromAdres['private_naam']?>' >
                 </p>
@@ -89,7 +89,7 @@
 			</div>
 			<div class="active" id="nieuweadressbedrijf">
                 <div class="infoUp">	
-				<button type="button" id="bedrijftoogler" style="margin-top: 1%; margin-left: 0.8%" class="btn btn-danger mb-2">Bedrijf</button>
+				<button type="button" onclick="private()" id="bedrijftoogler" style="margin-top: auto; margin-left: 0.8%" class="btn btn-danger mb-2 btn-small">Bedrijf</button>
                     <p class="info pFirstChildfirst">Bedrijf
                     <input class="inputNewHuurderfirst" type="text" name="bedrijf_bedrijf" value='<?=$getDataFromAdres['bedrijf_bedrijf']?>' >
                     </p>
@@ -115,7 +115,8 @@
                     </p>
 				</div>
 			</div>									
-		</div>
+        </div>
+        <input style="display: none" id="toogler"  type="text" name="privateBedrijfToogler" value='private' >
 		<div class="bottomHolder">
             <div class="rekaning">
 				<div class="RekeningInside">
@@ -145,3 +146,14 @@
 	</div>
 </body>
 </html>
+<script>
+
+function bedrijf() {
+    document.getElementById("toogler").value = "bedrijf";
+};
+
+function private() {
+    document.getElementById("toogler").value = "private";
+};
+
+</script>

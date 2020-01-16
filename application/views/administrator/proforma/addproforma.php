@@ -16,7 +16,7 @@
 
 <?=add_metatags()?>
 
-<?=add_title("Add Factur")?>
+<?=add_title("Proforma")?>
 
 <?=add_basehref()?>
 

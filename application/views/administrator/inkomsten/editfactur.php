@@ -22,7 +22,7 @@ $d = new DateTime($facturaModelData[0]['data']);
 
 <?=add_metatags()?>
 
-<?=add_title("Edit Factur")?>
+<?=add_title("Factur")?>
 
 <?=add_basehref()?>
 
@@ -200,12 +200,12 @@ $d = new DateTime($facturaModelData[0]['data']);
                     <div class="row">
                         <div class="col-sm-4 addFiles">
                             <input type="file" name="fileToUpload" id="fileToUpload">
-                            <input style="display: none;"name="id_factur" value="<?=$uitgavenModelData[0]['id']; ?>" >
+                            <input style="display: none;"name="id_factur" value="<?=$facturaModelData[0]['id']; ?>" >
                         </div>
                     </div> 
                 <div class="row">
                         <div class="col-sm">
-                            <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Toevoegen</button>
+                            <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Toevoegen</button> 
                         </div>
                 </div> 
                 <div class="row">

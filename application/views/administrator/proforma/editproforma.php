@@ -24,7 +24,7 @@ $d = new DateTime($facturaModelData[0]['data']);
 
 <?=add_metatags()?>
 
-<?=add_title("Edit Factur")?>
+<?=add_title("Proforma")?>
 
 <?=add_basehref()?>
 

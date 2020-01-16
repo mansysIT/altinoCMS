@@ -10,7 +10,7 @@
 
 <?=add_metatags()?>
 
-<?=add_title("Adressen Alle")?>
+<?=add_title("Proforma")?>
 
 <?=add_basehref()?>
 
@@ -93,18 +93,16 @@ $dOd->modify('first day of this month');
 				</tr>
 			<?php endforeach; ?>
         </tbody>
-        <tfoot style="background-color: #212529; color: white">
-		<tr>
-			<td></td>
-			<td></td>
-            <td></td>
-            <td></td>
-			<td><?="€ ".number_format($sum,2,',', '.')?></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-		</tfoot>
+		<tr class="suma">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><?="€ ".number_format($sum,2,',', '.')."" ?></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
 		</table>
 	</div>
 	<?=module_load('FOOTER')?>

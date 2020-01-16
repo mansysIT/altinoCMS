@@ -18,8 +18,7 @@ class nieuwe_adressmodel
         $this->__db = registry::register("db");
 	}
 
-	public function saveNewAdress()
-	{
+	public function saveNewAdress(){
 		if(isset($this->__params['POST']['adresbtn']))
 		{	
 			echo "<pre>";
@@ -45,10 +44,21 @@ class nieuwe_adressmodel
 			$email = $this->__params['POST']['email'];
 			$rekening = $this->__params['POST']['rekening'];
 
-			$this->__db->execute("INSERT INTO bouw_adresy (
-				city, adres, postcode, private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, bedrijf_adres, bedrijf_postcode, bedrijf_stad, 
-				bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, rekening) VALUES ('$city', '$adres', '$postcode' , '$private_naam' , '$private_achternaam' , '$private_id_kaart' , '$private_tel' , '$private_geboortedatum' ,
-				 '$bedrijf_bedrijf' , '$bedrijf_adres' , '$bedrijf_postcode' , '$bedrijf_stad' , '$bedrijf_kvk' , '$bedrijf_btw' , '$bedrijf_tel' , '$email' , '$rekening')");
+			$badrijfPrivateToogler = $this->__params['POST']['privateBedrijfToogler'];
+
+			if($badrijfPrivateToogler == 'private') {
+				$this->__db->execute("INSERT INTO bouw_adresy (
+					city, adres, postcode, private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, bedrijf_adres, bedrijf_postcode, bedrijf_stad, 
+					bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, rekening) VALUES ('$city', '$adres', '$postcode' , '$private_naam' , '$private_achternaam' , '$private_id_kaart' , '$private_tel' , '$private_geboortedatum' ,
+					 '' , '' , '' , '' , '' , '' , '' , '$email' , '$rekening')");
+			} else {
+				$this->__db->execute("INSERT INTO bouw_adresy (
+					city, adres, postcode, private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, bedrijf_adres, bedrijf_postcode, bedrijf_stad, 
+					bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, rekening) VALUES ('$city', '$adres', '$postcode' , '' , '' , '' , '' , '' ,
+					 '$bedrijf_bedrijf' , '$bedrijf_adres' , '$bedrijf_postcode' , '$bedrijf_stad' , '$bedrijf_kvk' , '$bedrijf_btw' , '$bedrijf_tel' , '$email' , '$rekening')");
+			}
+
+
 
 			$this->createAdresDirectory($this->__db->getLastInsertedId());
 			header("Location: ".SERVER_ADDRESS."administrator/adressen/adres/".$this->__db->getLastInsertedId()."");
@@ -57,7 +67,7 @@ class nieuwe_adressmodel
 	
 	private function createAdresDirectory($adres_id) {
 		if(!is_dir('application/storage/adres/'.$adres_id.'')){
-			mkdir('application/storage/adres/'.$adres_id.'', 0666);
+			mkdir('application/storage/adres/'.$adres_id.'', 0777);
 		}
 	}
 

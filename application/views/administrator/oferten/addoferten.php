@@ -15,7 +15,7 @@
 
 <?=add_metatags()?>
 
-<?=add_title("Add Oferten")?>
+<?=add_title("Oferten")?>
 
 <?=add_basehref()?>
 
@@ -212,9 +212,6 @@ function addWarfor() {
             });
     };
 
-    // $("body").on("click", ".oferten", function(){
-    // var element = document.querySelectorAll('#num1');
-    // alert(element.value);
-})
+
 
 </script>
