@@ -245,20 +245,23 @@ class ofertenmodel
         if(!empty($this->query))
         foreach($this->query->fetch_all() as $q){
             array_push($this->cityArray, $q);
-
 			$inkomsten = $this->mainModel->getAllInkomsten('oferten_id', $q[0]);
 			$uitgaven = $this->mainModel->getAllUitgaven('oferte_numer', $q[5]);
 			$sum = $this->mainModel->winst($inkomsten, $uitgaven);
 
 			array_push($this->cityArray[$i], $inkomsten);
 			array_push($this->cityArray[$i], $uitgaven);
-			array_push($this->cityArray[$i], $sum);
+            array_push($this->cityArray[$i], $sum);
+            
+            array_push($this->cityArray[$i], $this->getBedgar($q[5]));  
 
 			$i++;
         }
         
        return $this->cityArray;
     }
+
+
     
     public function removeoferten(){
 		if(isset($this->__params['POST']['proformremove']) && $this->__params['POST']['proformremove'] != null) {
@@ -333,7 +336,7 @@ class ofertenmodel
             // print_r($ofertenNumer);
             $this->createoferten($ofertenNumer);
 
-            // header("Location: ".SERVER_ADDRESS."administrator/oferten/index");
+            header("Location: ".SERVER_ADDRESS."administrator/oferten/index");
         }
 		
     }
@@ -369,7 +372,7 @@ class ofertenmodel
         -- adresy.bedrijf_tel,
         -- adresy.email,
         -- adresy.rekening,
-        -- adresy.id,
+        adresy.id as adres_id,
         oferten.id,
         oferten.in_progres,
         oferten.status,
@@ -458,7 +461,7 @@ class ofertenmodel
                 adres_id = $adres,
                 oferten_numer = $oferten,
                 data = '$data',
-                data_betalen = null
+                planned_date = '$planedEndData'
                 WHERE oferten_numer = $oferten
                 ");
     
@@ -511,6 +514,7 @@ class ofertenmodel
     public function removewarfor() {
         if ($this->__params['POST']['action'] == 'removewarfor') {
             $this->__db->execute("DELETE FROM bouw_oferten_details WHERE id = ".$this->__params['POST']['warfor_id']);
+            
         }
 
     }

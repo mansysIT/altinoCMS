@@ -208,7 +208,7 @@ class adressenmodel
 	} 
 
 	public function editAdress(){
-		if(isset($this->__params['POST']['adresbtn']))
+		if(isset($this->__params['POST']['editadres']))
 		{	
 			echo "<pre>";
 			print_r($this->__params['POST']);
@@ -257,10 +257,6 @@ class adressenmodel
 				rekening = '".$rekening."'
 				WHERE id = ".$this->__params[1]);
 
-				$this->__db->execute("INSERT INTO bouw_adresy (
-					city, adres, postcode, private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, bedrijf_adres, bedrijf_postcode, bedrijf_stad, 
-					bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, rekening) VALUES ('$city', '$adres', '$postcode' , '$private_naam' , '$private_achternaam' , '$private_id_kaart' , '$private_tel' , '$private_geboortedatum' ,
-					 '' , '' , '' , '' , '' , '' , '' , '$email' , '$rekening')");
 			} else {
 
 				$this->__db->execute("UPDATE bouw_adresy 
@@ -268,29 +264,23 @@ class adressenmodel
 				city = '".$city."',
 				adres = '".$adres."', 
 				postcode = '".$postcode."',
-				private_naam = '".$private_naam."',
-				private_achternaam = '".$private_achternaam."',
-				private_id_kaart = '".$private_id_kaart."',
-				private_tel = '".$private_tel."',
-				private_geboortedatum = '".$private_geboortedatum."',
-				bedrijf_bedrijf = '',
-				bedrijf_adres = '',
-				bedrijf_postcode = '',
-				bedrijf_stad = '',
-				bedrijf_kvk = '',
-				bedrijf_btw = '',
-				bedrijf_tel = '',
+				private_naam = '',
+				private_achternaam = '',
+				private_id_kaart = '',
+				private_tel = '',
+				private_geboortedatum = '',
+				bedrijf_bedrijf = '".$bedrijf_bedrijf."',
+				bedrijf_adres = '".$bedrijf_adres."',
+				bedrijf_postcode = '".$bedrijf_postcode."',
+				bedrijf_stad = '".$bedrijf_stad."',
+				bedrijf_kvk = '".$bedrijf_kvk."',
+				bedrijf_btw = '".$bedrijf_btw."',
+				bedrijf_tel = '".$bedrijf_tel."',
 				email = '".$email."',
 				rekening = '".$rekening."'
 				WHERE id = ".$this->__params[1]);
 
-				$this->__db->execute("INSERT INTO bouw_adresy (
-					city, adres, postcode, private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, bedrijf_adres, bedrijf_postcode, bedrijf_stad, 
-					bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, rekening) VALUES ('$city', '$adres', '$postcode' , '' , '' , '' , '' , '' ,
-					 '$bedrijf_bedrijf' , '$bedrijf_adres' , '$bedrijf_postcode' , '$bedrijf_stad' , '$bedrijf_kvk' , '$bedrijf_btw' , '$bedrijf_tel' , '$email' , '$rekening')");
 			}
-
-
 
 			$this->createAdresDirectory($this->__params[1]);
 			header("Location: ".SERVER_ADDRESS."administrator/adressen/index/");

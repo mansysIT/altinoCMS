@@ -195,7 +195,7 @@ class inkomstenmodel
 				}
 			}
 			// echo $this->adresArray;
-			return $this->adresArray;
+			return $this->__params['POST']['id_adres'];
 		}
 	}
 	}

@@ -37,6 +37,7 @@ $d = new DateTime($facturaModelData[0]['data']);
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+
 </head>
 
 <body>
@@ -97,17 +98,17 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
-                                            <input id="num1" class="form-control form-control-small oferten" name="warfortimespend[]" value="0">
+                                            <input id="num1" class="form-control form-control-small getAllWarfor" name="warfortimespend[]" placeholder="0" value="">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control form-control-small" name="warforquantity[]" value="0">
+                                            <input id="num2" class="form-control form-control-small getAllWarfor" name="warforquantity[]" placeholder="0" value="">
                                             <input style="display: none;"name="warforInputId[]" value="" >
                                         </td>
                                         <td class=" del blok_mansys">
-                                            <button type="submit" class="warfor_id btn btn-danger mb-2" value="'.$rows["id"].'" onclick="removeWarfor('.$rows["id"].')" name="del-a" >X</button>
+                                            <button type="submit" class="warfor_id btn btn-danger mb-2"  name="del-a" >X</button>
                                             
                                         </td>
                                         
@@ -115,7 +116,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                     <?php 
                     $x = 0;
                      foreach(array_slice($facturaModelData, 1)  as $rows): ?>
-                <?php echo '<tr style="display: flex" class="warforCenter">
+                    <?php echo '<tr style="display: flex" class="warforCenter">
                                         
                                         <td class="">
                                         <p class="rekaningText">Warvoor</p>
@@ -131,16 +132,16 @@ $d = new DateTime($facturaModelData[0]['data']);
                                            echo'</select>
                                         </td>
                                         <td class="">
-                                        <p class="rekaningText">Nummer</p>
+                                        <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
-                                            <input id="num1" class="form-control form-control-small oferten" name="warfortimespend[]" value="'.$rows["quantity"].'">
+                                            <input id="num1" class="form-control form-control-small getAllWarfor" name="warfortimespend[]" placeholder="0" value="'.$rows["quantity"].'">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
                                         </td>
                                         <td class="">
-                                            <input id="num2" class="form-control form-control-small oferten" name="warforquantity[]" value="'.$rows["price"].'">
+                                            <input id="num2" class="form-control form-control-small getAllWarfor" name="warforquantity[]" placeholder="0" value="'.$rows["price"].'">
                                             <input style="display: none;"name="warforInputId[]" value="'.$rows["id"].'" >
                                         </td>
                                         <td class=" del blok_mansys">
@@ -158,6 +159,15 @@ $d = new DateTime($facturaModelData[0]['data']);
                         </div>';?>
                 </div>
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6 columnAlignText">
+                        </div>
+                        <div class="col-sm-6 columnAlignText">
+                            <h2 class="sumValue"></h2>
+                        </div>
+                    </div>
+                </div>
 				<div class="RekeningInside">
                     <p class="rekaningText">Aanmaakdatum</p>
                     <input class="inputNewHuurder" type="date" name="facturdata" value="<?php echo $facturaModelData[0]['data']?>">
@@ -200,15 +210,9 @@ $d = new DateTime($facturaModelData[0]['data']);
 
 <script type="text/javascript" >
 var res = "";
+
 $(document).ready(function()
 {
-    $(".oferten").blur(function(){
-    var element = document.querySelectorAll('#num1');
-    element.forEach(function(userItem) {
-    // alert(userItem.value);
-});
-})
-
     $(".miasta").change(
         function() {    
     var id_miasto = $(this).val();
@@ -236,7 +240,7 @@ $(document).ready(function()
 
 window.onload = function() {    
     var id_miasto = $(".miasta").val();
-    var id_adres = <?=$facturaModelData[0]['id']?>;
+    var id_adres = <?=$facturaModelData[0]['adres_id']?>;
     var dataString = {
         action: "miasta",
         id_miasto: id_miasto,
@@ -255,7 +259,10 @@ window.onload = function() {
                 $(".adresy").html(html);
             }
         });
-        };
+
+        sum();
+
+};
 
 
 
@@ -293,7 +300,7 @@ function removeWarfor(id) {
         $.ajax
         ({
             type: "POST",
-            url: "administrator/proforma/warforremove",
+            url: "administrator/oferten/warforremove",
             data: dataString,
             cache: false,
             success: function(res)

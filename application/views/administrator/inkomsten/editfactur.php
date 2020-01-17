@@ -105,13 +105,13 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control form-control-small" name="warfortimespend[]" value="">
+                                            <input id="num1" class="form-control form-control-small getAllWarfor" placeholder="0" name="warfortimespend[]" value="">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control form-control-small" name="warforquantity[]" value="">
+                                            <input id="num2" class="form-control form-control-small getAllWarfor" placeholder="0" name="warforquantity[]" value="">
                                             <input style="display: none;"name="warforInputId[]" value="" >
                                         </td>
                                         <td class=" del blok_mansys">
@@ -142,13 +142,13 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
-                                            <input id="aaa" class="form-control form-control-small" name="warfortimespend[]" value="'.$rows["quantity"].'">
+                                            <input id="num1" class="form-control form-control-small getAllWarfor" placeholder="0" name="warfortimespend[]" value="'.$rows["quantity"].'">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control form-control-small" name="warforquantity[]" value="'.$rows["price"].'">
+                                            <input id="num2" class="form-control form-control-small getAllWarfor" placeholder="0" name="warforquantity[]" value="'.$rows["price"].'">
                                             <input style="display: none;"name="warforInputId[]" value="'.$rows["id"].'" >
                                         </td>
                                         <td class=" del blok_mansys">
@@ -165,6 +165,15 @@ $d = new DateTime($facturaModelData[0]['data']);
                         </div>';?>
                 </div>
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6 columnAlignText">
+                        </div>
+                        <div class="col-sm-6 columnAlignText">
+                            <h2 class="sumValue"></h2>
+                        </div>
+                    </div>
+                </div>
 				<div class="RekeningInside">
                     <p class="rekaningText">Data</p>
 
@@ -270,13 +279,13 @@ $(document).ready(function()
 
 window.onload = function() {    
     var id_miasto = $(".miasta").val();
-    var id_adres = <?=$facturaModelData[0]['id']?>;
+    var id_adres = <?=$facturaModelData[0]['adres_id']?>;
     var dataString = {
         action: "miasta",
         id_miasto: id_miasto,
         id_adres: id_adres
         };
-        // alert(res);
+        
         $.ajax
         ({
             type: "POST",
@@ -289,7 +298,8 @@ window.onload = function() {
                 $(".adresy").html(html);
             }
         });
-        };
+        sum();
+};
 
 
 

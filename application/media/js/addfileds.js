@@ -1,3 +1,53 @@
+const formatter = new Intl.NumberFormat('nl-NL', {
+	style: 'currency',
+	currency: 'EUR'
+  })
+
+function sum() {
+    
+    var element1 = document.querySelectorAll('#num1');
+    var element2 = document.querySelectorAll('#num2');
+    var x = [];
+    var y =[];
+    var i = 0;
+    var sum = 0;
+
+    element1.forEach(function(userItem) {
+        
+		x.push(parseInt(userItem.value));
+		
+    });
+	x.shift()
+
+    element2.forEach(function(userItem) {
+		
+		y.push(parseInt(userItem.value));
+		
+        
+
+        
+	});
+	y.shift()
+	
+	y.forEach(function(userItem) {
+		if(isNaN(x[i])) {
+			x[i] = 0;
+		}		
+		if(isNaN(userItem)) {
+			userItem = 0;
+		}
+		sum = sum + (x[i] * userItem);
+		i++
+	});
+
+	if(isNaN(sum)) {
+		sum = 0;
+	}
+    $(".sumValue").html(formatter.format(sum));
+
+}
+
+
 function nowywiersz(index, row_one, id )
 {
 	index++;
@@ -13,7 +63,9 @@ function zamiana_daty(date)
 
 $(document).ready(function () {
 
-
+    $("body").on("blur", ".getAllWarfor", function(){
+        sum();
+    });
     
 	var row_one = $(".nag:first").html();   
 	var fields_line_one = $(".nag").find("input, select, textarea");
@@ -64,7 +116,7 @@ $(document).ready(function () {
 						}
 				});
 		$(this).parent().remove();
-
+		sum();
 	});
 	
 	

@@ -345,7 +345,7 @@ class proformamodel
         -- adresy.rekening,
         proforma.data,
         proforma.proforma_numer,
-        adresy.id,
+        adresy.id as adres_id,
         proforma.oferten_id,
         proforma.data_betalen,
         proforma.is_factur,
@@ -532,6 +532,7 @@ class proformamodel
     public function removewarfor() {
         if ($this->__params['POST']['action'] == 'removewarfor') {
             $this->__db->execute("DELETE FROM bouw_proforma_details WHERE id = ".$this->__params['POST']['warfor_id']);
+            
         }
 
     }

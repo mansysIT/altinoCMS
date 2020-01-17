@@ -46,7 +46,7 @@ class facturmodel
         -- adresy.rekening,
         factur.data,
         factur.factur_numer,
-        adresy.id,
+        adresy.id as adres_id,
         factur.oferten_id,
         factur.id
         
