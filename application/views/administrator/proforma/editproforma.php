@@ -241,6 +241,27 @@ $(document).ready(function()
         });
         });  
 
+        $(".adresy").change(function()
+        {
+       
+        var id_adres1 = $(this).val();
+        var dataString = {
+            action: "oferty",
+            id_adres: id_adres1
+            };
+            
+            $.ajax
+            ({
+                type: "POST",
+                url: "administrator/all/allmodelofertenajax",
+                data: dataString,
+                cache: false,
+                success: function(html)
+                {
+                    $(".oferty").html(html);
+                }
+        });
+    });
 
 });
 
