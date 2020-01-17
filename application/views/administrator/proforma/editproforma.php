@@ -73,17 +73,11 @@ $d = new DateTime($facturaModelData[0]['data']);
                     </select>
                 </div>
                 <div class="RekeningInside">
-                    <p class="rekaningText">Oferten</p>
-                    <select name="oferten" class="oferten form-control" id="exampleFormControlSelect1">
-                    <option value="">SELECT OFERTEN</option>
-                    
-                    <?php foreach($oferten as $row): ?>
-                        <li>
-                            <option value="<?php echo $row[0]; ?>"<?php if($row[0] == $facturaModelData[0]['oferten_id']) echo" selected" ?>><?php echo $row[1]; ?></option>
-                        </li> 
-                    <?php endforeach; ?>
+                    <p class="rekaningText">Oferten</p> 
+                    <select name="oferten" class="oferty form-control wybor_liczb" id="exampleFormControlSelect1">
+                    <option value="0">KIEZ</option>
                     </select>
-                </div> 
+                </div>  
                 
                 <div class="RekeningInside">
                     <?='
@@ -243,7 +237,7 @@ $(document).ready(function()
 
 window.onload = function() {    
     var id_miasto = $(".miasta").val();
-    var id_adres = <?=$facturaModelData[0]['id']?>;
+    var id_adres = <?=$facturaModelData[0]['adres_id']?>;
     var dataString = {
         action: "miasta",
         id_miasto: id_miasto,
@@ -262,6 +256,28 @@ window.onload = function() {
                 $(".adresy").html(html);
             }
         });
+
+        var id_adres = <?=$facturaModelData[0]["adres_id"]?>;
+        var oferte_id = <?=$facturaModelData[0]["oferten_id"]?>;
+        var dataString = {
+            action: "oferty",
+            id_adres: id_adres,
+            oferte_id: oferte_id
+            };
+            
+            $.ajax
+            ({
+                type: "POST",
+                url: "administrator/all/allmodelofertenajax",
+                data: dataString,
+                cache: false,
+                success: function(html)
+                {
+                    $(".oferty").html(html);
+                }
+            });
+
+
         };
 
 

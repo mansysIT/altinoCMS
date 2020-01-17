@@ -305,7 +305,7 @@ class proformamodel
             $this->createproforma(0, $proformaNr);
             $proforma_pdf = 'application/storage/proformy/'.$id.'.pdf';
 
-            // header("Location: ".SERVER_ADDRESS."administrator/proforma/index");
+            header("Location: ".SERVER_ADDRESS."administrator/proforma/index");
         }
 		
     }
@@ -343,7 +343,7 @@ class proformamodel
         -- adresy.rekening,
         proforma.data,
         proforma.proforma_numer,
-        adresy.id,
+        adresy.id AS adres_id, 
         proforma.oferten_id,
         proforma.data_betalen,
         proforma.is_factur,
