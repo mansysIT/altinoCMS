@@ -11,7 +11,7 @@
 
 <?php $sidebarController=model_load('mainmodel', 'getCityName', '')?>
 <?php $getWarforTypes = model_load('mainmodel', 'getWaarvoor', '')?>
-<?php $oferten = model_load('mainmodel', 'getOferten', '')?>
+
 
 <?=add_metatags()?>
 
@@ -63,14 +63,13 @@ $d = new DateTime(date("Y-m-d"));
                 </div>
 
                 <div class="RekeningInside">
-                    <p class="rekaningText">Oferte</p>
-                    <select name="oferten" class="oferten form-control" id="exampleFormControlSelect1">
-                    <option value="">KIES EEN OFERTE</option>
-                    <?php foreach($oferten as $row): ?>
-                        <li>
-                            <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
-                        </li>
-                    <?php endforeach; ?>
+                    <p class="rekaningText">Oferten</p> 
+                    <select name="oferten" class="oferty form-control wybor_liczb" id="exampleFormControlSelect1">
+
+
+                    <option value="0">KIEZ</option>
+                   
+                   
                     </select>
                 </div>  
                 <!-- <p class="rekaningText">Warvoor</p> -->
@@ -184,6 +183,32 @@ $(document).ready(function()
                 }
             });
     });
+
+
+    $(".adresy").change(function()
+    {
+        
+        var id_adres = $(this).val();
+        var dataString = {
+            action: "oferty",
+            id_adres: id_adres
+           
+            };
+            
+            $.ajax
+            ({
+                type: "POST",
+                url: "administrator/all/allmodelofertenajax",
+                data: dataString,
+                cache: false,
+                success: function(html)
+                {
+                    $(".oferty").html(html);
+                }
+            });
+    });
+
+
 
 });
 

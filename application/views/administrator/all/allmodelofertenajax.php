@@ -1,3 +1,3 @@
-<?=model_load('allmodel', 'getAdresByCity', '')?>
+<?=model_load('allmodel', 'getOffertenActive', '')?>
 
  

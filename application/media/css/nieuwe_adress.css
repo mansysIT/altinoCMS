@@ -53,7 +53,7 @@
 }
 
 input {
-    height: auto;
+    height: 40px;
 }
 
 .navbar-nav a {
@@ -415,6 +415,8 @@ font-weight: 100;
 	width: 200px!important;
 }
 
+
+
 @media (max-width: 739px) {
 
 	
@@ -608,4 +610,15 @@ font-weight: 100;
 		text-align: center;
 		margin-top: 10px;
 	}
+
+	.wybor_liczb {
+		margin-left: auto!important;
+		margin-right: auto!important;
+	}
+	
+}
+
+
+.wybor_liczb {
+    width: 70px !important;
 }

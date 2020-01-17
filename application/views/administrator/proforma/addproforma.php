@@ -70,14 +70,13 @@ $d = new DateTime(date("Y-m-d"));
                     </select>
                 </div>
                 <div class="RekeningInside">
-                    <p class="rekaningText">Oferten</p>
-                    <select name="oferten" class="oferten form-control" id="exampleFormControlSelect1">
-                    <option value="">SELECT OFERTEN</option>
-                    <?php foreach($oferten as $row): ?>
-                        <li>
-                            <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
-                        </li>
-                    <?php endforeach; ?>
+                    <p class="rekaningText">Oferten</p> 
+                    <select name="oferten" class="oferty form-control wybor_liczb" id="exampleFormControlSelect1">
+
+
+                    <option value="0">KIEZ</option>
+                   
+                   
                     </select>
                 </div>  
                 <div class="RekeningInside">
@@ -185,6 +184,30 @@ $(document).ready(function()
                 success: function(html)
                 {
                     $(".adresy").html(html);
+                }
+            });
+    });
+
+
+    $(".adresy").change(function()
+    {
+        
+        var id_adres = $(this).val();
+        var dataString = {
+            action: "oferty",
+            id_adres: id_adres
+           
+            };
+            
+            $.ajax
+            ({
+                type: "POST",
+                url: "administrator/all/allmodelofertenajax",
+                data: dataString,
+                cache: false,
+                success: function(html)
+                {
+                    $(".oferty").html(html);
                 }
             });
     });

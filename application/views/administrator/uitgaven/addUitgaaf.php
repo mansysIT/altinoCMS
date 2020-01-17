@@ -78,14 +78,12 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                 
                 <div class="RekeningInside">
                     <p class="rekaningText">Oferten</p> 
-                    <select name="oferte_id" class="oferty form-control" id="exampleFormControlSelect1">
+                    <select name="oferte_id" class="oferty form-control wybor_liczb" id="exampleFormControlSelect1">
+
+
                     <option value="0">KIEZ</option>
                    
-                    <?php foreach($oferten as $row): ?> 
-                        <li>
-                            <option value="<?php echo $row[1]; ?>"<?php if(!empty($uitgavenModelData) && $row[0] == $uitgavenModelData[0]['oferte_id']) echo 'selected'; ?>><?php echo $row[1]; ?></option>
-                        </li>
-                    <?php endforeach; ?> 
+                   
                     </select>
                 </div>  
                 
@@ -100,6 +98,7 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                 
             
             <?php if($uitgavenModelData[0] != null): ?>
+               
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6 columnAlignText">
@@ -139,18 +138,22 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                             <input style="display: none;"name="id_factur" value="" >
                         </div>
                     </div> 
+                    
+                
                 <?php endif; ?>
                 <div class="row">
                         <div class="col-sm">
                             <button type="submit" class="btn btn-danger mb-2 btn-small" name="savewarfor">Toevoegen</button>
                         </div>
                 </div> 
-            </div>
+                </div>
             </form>
             </div>
             
             </div>
-        
+            <?php if($uitgavenModelData[0] == null): ?>
+                </div>
+            <?php endif; ?>
     </div>
 	<?=module_load('FOOTER')?>
 	</div>
@@ -215,10 +218,35 @@ if($uitgavenModelData){
             });
             };
 
-            </script>';
+
+       
+        var id_adres = '.$uitgavenModelData[0]["id"].'
+        var oferte_id = '.$uitgavenModelData[0]["oferte_numer"].'
+        var dataString = {
+            action: "oferty",
+            id_adres: id_adres,
+            oferte_id: oferte_id
+            };
+            
+            $.ajax
+            ({
+                type: "POST",
+                url: "administrator/all/allmodelofertenajax",
+                data: dataString,
+                cache: false,
+                success: function(html)
+                {
+                    $(".oferty").html(html);
+                }
+            });
+   
 
 
-  }   
+
+</script>';
+
+
+}   
 ?> 
 <script type="text/javascript" >
 

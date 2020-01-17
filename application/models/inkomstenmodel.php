@@ -183,6 +183,7 @@ class inkomstenmodel
 		if($this->__params['POST']['action'] == 'miasta') {
 			$adresy = $this->__db->querymy("SELECT id, adres FROM `bouw_adresy` WHERE city = ".$this->__params['POST']['id_miasto']);
 			
+			echo "<option value=''>Kiez een adres</option>";
 			foreach($adresy->fetch_all() as $q){
 				// array_push($this->adresArray, $q);
 				if(isset($this->__params['POST']['id_adres'])){
