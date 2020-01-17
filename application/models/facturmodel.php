@@ -46,7 +46,7 @@ class facturmodel
         -- adresy.rekening,
         factur.data,
         factur.factur_numer,
-        adresy.id AS adres_id,
+        adresy.id as adres_id,
         factur.oferten_id,
         factur.id
         
@@ -545,17 +545,17 @@ class facturmodel
                             }
         
                             if ($ilosc_znakow == 5) {
-                                $ilosc_znakow +=3;
+                                $ilosc_znakow +=9;
                             }
         
                             if ($ilosc_znakow == 4) {
-                                $ilosc_znakow +=5;
+                                $ilosc_znakow +=12;
                             }
 
                             $ilosc_znakow += 7;
         
                             $pdf->Cell(0, 10, ''.$row['name'].'', 0, 1);
-                            $pdf->SetXY(92 + $ilosc_znakow, $wysokosc);
+                            $pdf->SetXY(103 , $wysokosc);
         
                             if ($row['price']) {
                                 $pdf->Cell(0, 10, chr(128).' '.number_format($row['price'], 2, ',', '.').'', 0, 1);
@@ -701,11 +701,10 @@ class facturmodel
         if (isset($this->__params['POST']['editwarfor']) || isset($this->__params['POST']['savewarfor'])) {
             $dir = 'application/storage/factur';
             if($id != null){
-                $dirName = $id;
+                $dirName = $id; 
             } else {
                 $dirName = $this->__params['POST']['id_factur'];
             }
-				
             $this->mainModel->createNewFolder($dir, $dirName);
             $x = $dir."/".$dirName.'/';
             $this->mainModel->uploadFile($x);		

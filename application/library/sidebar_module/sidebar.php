@@ -1,4 +1,4 @@
-<?php $sidebarController=model_load('mainmodel', 'getCityName', '')?>
+<?php $cityList=model_load('sidebarmodel', 'getCityName', '')?>
 
 <div class="wrapper">
     <!-- Sidebar  -->
@@ -19,7 +19,7 @@
                     <li>
                         <a href="administrator/adressen/index">Alle</a>
                     </li>
-                    <?php foreach($sidebarController as $row): ?>
+                    <?php foreach($cityList as $row): ?>
                     <li>
                     <?=" <a href='administrator/adressen/index/stad/$row[0]'> $row[1]</a>" ?>
                     </li>

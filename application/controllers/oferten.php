@@ -56,12 +56,19 @@ class oferten extends controller
 		$this->main->directory_helper;
 		$this->main->translate_helper;
 	}
-
+	
 	public function sendoferten()
 	{
 		$this->model->administrator;
 		$this->main->model_helper;
 	}	
+
+	public function warforremove()
+	{
+		$this->model->administrator;
+		$this->main->model_helper;
+	}	
+	
 }
 
 

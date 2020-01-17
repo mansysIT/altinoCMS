@@ -24,7 +24,7 @@ $d = new DateTime($facturaModelData[0]['data']);
 
 <?=add_metatags()?>
 
-<?=add_title("Edit Factur")?>
+<?=add_title("Proforma")?>
 
 <?=add_basehref()?>
 
@@ -103,13 +103,13 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control form-control-small" name="warfortimespend[]" value="">
+                                            <input id="num1" class="form-control form-control-small getAllWarfor" placeholder="0" name="warfortimespend[]" value="">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control form-control-small" name="warforquantity[]" value="">
+                                            <input id="num2" class="form-control form-control-small getAllWarfor" placeholder="0" name="warforquantity[]" value="">
                                             <input style="display: none;"name="warforInputId[]" value="" >
                                         </td>
                                         <td class=" del blok_mansys">
@@ -140,13 +140,13 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <p class="rekaningText">Nummer</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control form-control-small" name="warfortimespend[]" value="'.$rows["quantity"].'">
+                                            <input id="num1" class="form-control form-control-small getAllWarfor" placeholder="0" name="warfortimespend[]" value="'.$rows["quantity"].'">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control form-control-small" name="warforquantity[]" value="'.$rows["price"].'">
+                                            <input id="num2" class="form-control form-control-small getAllWarfor" placeholder="0" name="warforquantity[]" value="'.$rows["price"].'">
                                             <input style="display: none;"name="warforInputId[]" value="'.$rows["id"].'" >
                                         </td>
                                         <td class=" del blok_mansys">';
@@ -168,6 +168,15 @@ $d = new DateTime($facturaModelData[0]['data']);
                 <?php if($facturaModelData[0]['is_factur'] != 1): ?>
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
                 <?php endif; ?>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6 columnAlignText">
+                        </div>
+                        <div class="col-sm-6 columnAlignText">
+                            <h2 class="sumValue"></h2>
+                        </div>
+                    </div>
+                </div>
 				<div class="RekeningInside">
                     <p class="rekaningText">Data</p>
                     <input class="inputNewHuurder" type="date" name="facturdata" value="<?php echo $facturaModelData[0]['data']?>">
@@ -257,6 +266,8 @@ window.onload = function() {
             }
         });
 
+        sum();
+
         var id_adres = <?=$facturaModelData[0]["adres_id"]?>;
         var oferte_id = <?=$facturaModelData[0]["oferten_id"]?>;
         var dataString = {
@@ -279,8 +290,6 @@ window.onload = function() {
 
 
         };
-
-
 
 var quan = 0;
 function addWarfor() {      

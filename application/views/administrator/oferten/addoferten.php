@@ -15,7 +15,7 @@
 
 <?=add_metatags()?>
 
-<?=add_title("Add Oferten")?>
+<?=add_title("Oferten")?>
 
 <?=add_basehref()?>
 
@@ -94,16 +94,16 @@ $d = new DateTime(date("Y-m-d"));
                                         <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
-                                            <input id="num" class="form-control form-control-small oferten" name="warfortimespend[]" placeholder="0" value="">
+                                            <input id="num1" class="form-control form-control-small getAllWarfor" placeholder="0" name="warfortimespend[]" value="">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
                                         </td>
-                                        <td class="" id="num">
-                                            <input id="num2" class="form-control form-control-small oferten" name="warforquantity[]" placeholder="0" value="">
+                                        <td class="">
+                                            <input id="num2" class="form-control form-control-small getAllWarfor" placeholder="0" name="warforquantity[]" value="">
                                         </td>
                                         <td class=" del blok_mansys">
-                                            <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="btn btn-danger" name="del-a" type="submit" value="X" >
+                                            <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="btn btn-danger remove" name="del-a" type="submit" value="X" >
                                         </td>
                                     </tr>
                                 </tbody>
@@ -113,6 +113,15 @@ $d = new DateTime(date("Y-m-d"));
 					?>
                 </div>
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6 columnAlignText">
+                        </div>
+                        <div class="col-sm-6 columnAlignText">
+                            <h2 class="sumValue"></h2>
+                        </div>
+                    </div>
+                </div>
 				<div class="RekeningInside">
                     <p class="rekaningText">Aanmaakdatum</p>
                     <input class="inputNewHuurder" type="date" name="ofertendata" value='<?=$d->format('Y-m-d')?>' >
@@ -144,8 +153,6 @@ $d = new DateTime(date("Y-m-d"));
 
 <script type="text/javascript" >
 
-
-
 $(document).ready(function()
 {
 
@@ -171,20 +178,11 @@ $(document).ready(function()
             });
     });
 
+
+
 });
 
-function sum() {
-    
-            var num1 = document.getElementById('num1').value;
-            var num2 = document.getElementById('num2').value;
-			var result = parseInt(num1) + parseInt(num2);
-            alert(result);
-			// var result1 = parseInt(num2) - parseInt(num1);
-            if (!isNaN(result)) {
-                document.getElementById('calculateSum').value = result;
-				// document.getElementById('subt').value = result1;
-            }
-        }
+
 
 var quan = 0;
 function addWarfor() {
@@ -212,9 +210,6 @@ function addWarfor() {
             });
     };
 
-    // $("body").on("click", ".oferten", function(){
-    // var element = document.querySelectorAll('#num1');
-    // alert(element.value);
-})
+
 
 </script>

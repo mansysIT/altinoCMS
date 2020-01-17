@@ -10,9 +10,11 @@
 
 <?php $getAllCityName=model_load('mainmodel', 'getCityName', '')?>
 
+<?php model_load('adressenmodel', 'editAdress', '')?>
+
 <?=add_metatags()?>
 
-<?=add_title("Design Klasy biznes - SuperCMS")?>
+<?=add_title("Adressen")?>
 
 <?=add_basehref()?>
 
@@ -35,12 +37,12 @@
  
 <?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
-    <h1>
+    <h1 class="title">
     <?=$getDataFromAdres['city']." ".$getDataFromAdres['adres']?>
     </h1> 
     <?=module_load('adresmenu')?>
     <div class="maincontainer">
-            <form action="administrator/nieuwe_adress/savenieuwe_adress" method="post">
+            <form action="" method="post">
             <div class="bottomHolder">
             <div class="rekaning">
 				<div class="RekeningInside">
@@ -69,8 +71,8 @@
             
         </div>
         <div class="info">										
-            <div class="infoUp" id="nieuweadressprivate">	
-				<button type="button" id="privatetoogler" style="margin-top: 1%; margin-left: 0.8%" class="btn btn-danger mb-2">Private</button>									
+            <div class="infoUp <?php if($getDataFromAdres['bedrijf_bedrijf'] != null) echo "active"; ?>" id="nieuweadressprivate">	
+				<button type="button" onclick="bedrijf()" id="privatetoogler" style="margin-top: auto; margin-left: 0.8%" class="btn btn-danger mb-2">Private</button>									
                 <p class="info pFirstChild">Naam
                 <input class="inputNewHuurder" type="text" name="private_naam" value='<?=$getDataFromAdres['private_naam']?>' >
                 </p>
@@ -87,9 +89,9 @@
                 <input class="inputNewHuurder" sty type="date" name="private_geboortedatum" value='<?=$getDataFromAdres['private_geboortedatum']?>' >
                 </p>
 			</div>
-			<div class="active" id="nieuweadressbedrijf">
+			<div class="<?php if($getDataFromAdres['bedrijf_bedrijf'] == null) echo "active"; ?>" id="nieuweadressbedrijf">
                 <div class="infoUp">	
-				<button type="button" id="bedrijftoogler" style="margin-top: 1%; margin-left: 0.8%" class="btn btn-danger mb-2">Bedrijf</button>
+				<button type="button" onclick="private()" id="bedrijftoogler" style="margin-top: auto; margin-left: 0.8%" class="btn btn-danger mb-2">Bedrijf</button>
                     <p class="info pFirstChildfirst">Bedrijf
                     <input class="inputNewHuurderfirst" type="text" name="bedrijf_bedrijf" value='<?=$getDataFromAdres['bedrijf_bedrijf']?>' >
                     </p>
@@ -115,7 +117,8 @@
                     </p>
 				</div>
 			</div>									
-		</div>
+        </div>
+        <input style="display: none" id="toogler"  type="text" name="privateBedrijfToogler" value='private' >
 		<div class="bottomHolder">
             <div class="rekaning">
 				<div class="RekeningInside">
@@ -126,7 +129,7 @@
                     <p class="rekaningText">Rekening</p>
                     <input type="text" name="rekening" value='<?=$getDataFromAdres['rekening']?>' >
                 </div>   
-                <button type="submit" class="btn btn-danger mb-2 btn-small" style="margin-left: 0.8%; margin-top: 10px;" name="adresbtn">Toevoegen</button>        
+                <button type="submit" class="btn btn-danger mb-2 btn-small" style="margin-left: 0.8%; margin-top: 10px;" name="editadres">Toevoegen</button>        
             </div>
             <div class="right">
 
@@ -145,3 +148,14 @@
 	</div>
 </body>
 </html>
+<script>
+
+function bedrijf() {
+    document.getElementById("toogler").value = "bedrijf";
+};
+
+function private() {
+    document.getElementById("toogler").value = "private";
+};
+
+</script>

@@ -58,8 +58,8 @@ class inkomstenmodel
 
         $this->clear();
 
-		if(isset($this->__params[2])){
-			return $this->adres($this->od, $this->do, $this->word , $this->__params[2]);   
+		if(isset($this->__params[1])){
+			return $this->adres($this->od, $this->do, $this->word , $this->__params[1]);   
 		} else {
 			return $this->adres($this->od, $this->do, $this->word , null);   
 		}
@@ -104,23 +104,49 @@ class inkomstenmodel
 
     // SELECT bouw_adresy.id, bouw_adresy.adres, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE bouw_factur.adres_id = 28
 
-    public function adres($od, $do, $word = null, $city_id = null) {
+    public function adres($od, $do, $word = null, $adres_id = null) {
 		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
-		if($word != null){
-			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, bouw_factur.oferten_id, bouw_factur.factur_numer, bouw_factur.data FROM `bouw_adresy`
+		if($word != null && $adres_id != null) {
+			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data 
+			FROM `bouw_adresy`
              INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
 			 INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
+			 INNER JOIN bouw_oferten AS oferten ON oferten.id = bouw_factur.oferten_id 
+			 WHERE 
+			bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' AND bouw_factur.adres_id = '".$adres_id."' OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.id = '".$word."' AND bouw_factur.adres_id = '".$adres_id."' OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_adresy.adres LIKE '%".$word."%' AND bouw_factur.adres_id = '".$adres_id."' OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  oferten.oferten_numer = '".$word."' AND bouw_factur.adres_id = '".$adres_id."' OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.factur_numer = '".$word."' AND bouw_factur.adres_id = '".$adres_id."' 
+			ORDER BY bouw_factur.id DESC");
+		}
+		else if($word != null){
+			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data 
+			FROM `bouw_adresy`
+             INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
+			 INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
+			 INNER JOIN bouw_oferten AS oferten ON oferten.id = bouw_factur.oferten_id 
 			 WHERE 
 			bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' OR
-            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.id = $word OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.id = '".$word."' OR
             bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_adresy.adres LIKE '%".$word."%' OR
-            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.oferten_id = $word OR
-            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.factur_numer = $word 
-			 ORDER BY bouw_factur.id DESC");
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  oferten.oferten_numer = '".$word."' OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.factur_numer = '".$word."' 
+			ORDER BY bouw_factur.id DESC");
+		} else if($adres_id != null) {
+			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data 
+			FROM `bouw_adresy`
+             INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
+			 INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
+			 INNER JOIN bouw_oferten AS oferten ON oferten.id = bouw_factur.oferten_id 
+			 WHERE 
+			bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.adres_id = '".$adres_id."'
+			ORDER BY bouw_factur.id DESC");
 		} else {
-			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, bouw_factur.oferten_id, bouw_factur.factur_numer, bouw_factur.data FROM `bouw_adresy`
+			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data FROM `bouw_adresy`
             INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
             INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
+			INNER JOIN bouw_oferten AS oferten ON oferten.id = bouw_factur.oferten_id 
 			WHERE bouw_factur.data BETWEEN '".$od."' AND '".$do."'
 			ORDER BY bouw_factur.id DESC");
 		}
@@ -146,17 +172,6 @@ class inkomstenmodel
 			header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
 		}
     }
-	
-	public function getAdressById() {
-		$data = $this->__db->execute("SELECT *, bouw_adresy.city AS adres_city_id FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE id = ".$this->__params[1]);
-
-		return $data[0];
-	}
-
-	public function adresMenuGetUrl() {
-		if(isset($this->__params[1]))
-		return $this->__params[1];
-	}
 
 	public function adresMenuPageName() {
 		if(isset($this->__params[0]))
@@ -164,7 +179,7 @@ class inkomstenmodel
 	}
 
 	public function getAdresByCity() {
-		if(isset($this->__params['POST']['action'])){
+	if(isset($this->__params['POST']['action'])){
 		if($this->__params['POST']['action'] == 'miasta') {
 			$adresy = $this->__db->querymy("SELECT id, adres FROM `bouw_adresy` WHERE city = ".$this->__params['POST']['id_miasto']);
 			
@@ -181,7 +196,7 @@ class inkomstenmodel
 				}
 			}
 			// echo $this->adresArray;
-			return $this->adresArray;
+			return $this->__params['POST']['id_adres'];
 		}
 	}
 	}

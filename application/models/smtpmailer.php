@@ -42,7 +42,7 @@ class smtpmailer {
         
         $mail->From       = 'info@khbemiddeling.nl';
         $mail->FromName   = 'KH Bemiddeling';
-        $mail->AddAddress('kw-53@wp.pl', 'someName');
+        $mail->AddAddress($do);
         $mail->Subject  = $temat;
 
         $mail->WordWrap   = 80; 

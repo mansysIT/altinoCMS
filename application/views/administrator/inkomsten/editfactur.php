@@ -22,7 +22,7 @@ $d = new DateTime($facturaModelData[0]['data']);
 
 <?=add_metatags()?>
 
-<?=add_title("Edit Factur")?>
+<?=add_title("Factur")?>
 
 <?=add_basehref()?>
 
@@ -101,13 +101,13 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control form-control-small" name="warfortimespend[]" value="">
+                                            <input id="num1" class="form-control form-control-small getAllWarfor" placeholder="0" name="warfortimespend[]" value="">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control form-control-small" name="warforquantity[]" value="">
+                                            <input id="num2" class="form-control form-control-small getAllWarfor" placeholder="0" name="warforquantity[]" value="">
                                             <input style="display: none;"name="warforInputId[]" value="" >
                                         </td>
                                         <td class=" del blok_mansys">
@@ -138,13 +138,13 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
-                                            <input id="aaa" class="form-control form-control-small" name="warfortimespend[]" value="'.$rows["quantity"].'">
+                                            <input id="num1" class="form-control form-control-small getAllWarfor" placeholder="0" name="warfortimespend[]" value="'.$rows["quantity"].'">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
                                         </td>
                                         <td class="">
-                                            <input class="form-control form-control-small" name="warforquantity[]" value="'.$rows["price"].'">
+                                            <input id="num2" class="form-control form-control-small getAllWarfor" placeholder="0" name="warforquantity[]" value="'.$rows["price"].'">
                                             <input style="display: none;"name="warforInputId[]" value="'.$rows["id"].'" >
                                         </td>
                                         <td class=" del blok_mansys">
@@ -164,6 +164,15 @@ $d = new DateTime($facturaModelData[0]['data']);
                         </div>';?>
                 </div>
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6 columnAlignText">
+                        </div>
+                        <div class="col-sm-6 columnAlignText">
+                            <h2 class="sumValue"></h2>
+                        </div>
+                    </div>
+                </div>
 				<div class="RekeningInside">
                     <p class="rekaningText">Data</p>
 
@@ -199,12 +208,12 @@ $d = new DateTime($facturaModelData[0]['data']);
                     <div class="row">
                         <div class="col-sm-4 addFiles">
                             <input type="file" name="fileToUpload" id="fileToUpload">
-                            <input style="display: none;"name="id_factur" value="<?=$uitgavenModelData[0]['id']; ?>" >
+                            <input style="display: none;"name="id_factur" value="<?=$facturaModelData[0]['id']; ?>" >
                         </div>
                     </div> 
                 <div class="row">
                         <div class="col-sm">
-                            <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Toevoegen</button>
+                            <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Toevoegen</button> 
                         </div>
                 </div> 
                 <div class="row">
@@ -275,7 +284,7 @@ window.onload = function() {
         id_miasto: id_miasto,
         id_adres: id_adres
         };
-        // alert(res);
+        
         $.ajax
         ({
             type: "POST",
@@ -289,6 +298,8 @@ window.onload = function() {
             }
         });
 
+        sum();
+  
         var id_adres = <?=$facturaModelData[0]["adres_id"]?>;
         var oferte_id = <?=$facturaModelData[0]["oferten_id"]?>;
         var dataString = {
@@ -311,8 +322,6 @@ window.onload = function() {
 
 
         };
-
-
 
 var quan = 0;
 function addWarfor() {      

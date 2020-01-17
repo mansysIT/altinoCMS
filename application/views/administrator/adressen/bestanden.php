@@ -7,16 +7,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <?php $nieuweadressmodel=model_load('adressenmodel', 'createAdresFolder', '')?>
-<?php $nieuweadressmodel=model_load('mainmodel', 'remove', '')?>
-<?php $nieuweadressmodel=model_load('mainmodel', 'uploadFile', '')?>
-<?php $nieuweadressmodel=model_load('mainmodel', 'getAllFilesInDirectory', '')?>
+<?php $nieuweadressmodel=model_load('adressenmodel', 'remove', '')?>
+<?php $uploadFileMessage=model_load('adressenmodel', 'uploadFiles', '')?>
+<?php $nieuweadressmodel=model_load('adressenmodel', 'getAllFiles', '')?>
 <?php $getParametrs=model_load('mainmodel', 'getParametrs', '')?>
 <?php $adresMenuGetUrl=model_load('adressenmodel', 'adresMenuGetUrl', '')?>
-
+<?php $firstParametr=model_load('mainmodel', 'getFirstParametrs', '')?>
+<?php $secoundParametr=model_load('mainmodel', 'getSecoundParametrs', '')?>
+<?php $getDataFromAdres=model_load('adressenmodel', 'getAdressById', '')?>
+ 
 
 <?=add_metatags()?>
 
-<?=add_title("Design Klasy biznes - SuperCMS")?>
+<?=add_title("Adressen")?>
 
 <?=add_basehref()?>
 
@@ -37,8 +40,12 @@
  
 <?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
+	<h1 class="title">
+    <?=$getDataFromAdres['city']." ".$getDataFromAdres['adres']?>
+    </h1> 
     <?=module_load('adresmenu')?>
     <div class="maincontainer">  
+		<?=$uploadFileMessage?>
 		<?php if(!$getParametrs): ?>     
 		<form style="justify-content: start; margin: 25px" class="form-inline" method="post" action="">
 		<div class="container-fluid"> 
@@ -72,7 +79,11 @@
 			<ul class="list-group list-group-flush">
 			<?php if($nieuweadressmodel[1] != null): ?>
 			<?php foreach($nieuweadressmodel[1] as $file): ?>
-				<li class="list-group-item"><?php echo $file; ?>
+				<?php if($secoundParametr == null): ?>
+					<li class="list-group-item"><a href="application/storage/adres/<?=$firstParametr.'/'.$file; ?>"><?=$file; ?></a>
+				<?php else: ?>
+					<li class="list-group-item"><a href="application/storage/adres/<?=$firstParametr.'/'.$secoundParametr.'/'.$file; ?>"><?=$file; ?></a>
+				<?php endif; ?>
 					<form style="width: 10%; float: right; padding: 0;" method="post" action="">
 					<button class="btnCityRemove" type="submit" name="removefile" value="<?php echo $file; ?>"><span class="oi oi-delete" title="delete" aria-hidden="true">
 					</span></button></form>
@@ -83,7 +94,7 @@
 		</div>
 		<form action="" method="post" enctype="multipart/form-data">
     		<input type="file" name="fileToUpload" id="fileToUpload">
-    		<input type="submit" value="Bestand Toevoegen" name="submit">
+    		<input type="submit" value="Bestand Toevoegen" name="fileUpload">
 		</form>
 		</div>
 	<?=module_load('FOOTER')?>

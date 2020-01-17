@@ -8,7 +8,7 @@
 
 <?=add_metatags()?>
 
-<?=add_title("Adressen Alle")?>
+<?=add_title("Factur")?>
 
 <?=add_basehref()?>
 

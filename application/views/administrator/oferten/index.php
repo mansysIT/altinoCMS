@@ -8,7 +8,7 @@
 
 <?=add_metatags()?>
 
-<?=add_title("Adressen Alle")?>
+<?=add_title("Oferten")?>
 
 <?=add_basehref()?>
 
@@ -18,7 +18,6 @@
     
 <?=icon_load("pp_fav.ico")?>
 <?php 
-$adress=model_load('adressenmodel', 'getAdress', '');
 $proforma=model_load('ofertenmodel', 'getoferten', '');
 
 $d = new DateTime(date("Y-m-d"));
@@ -36,7 +35,7 @@ $dOd->modify('first day of this month');
 </head>
 
 <body>
-
+ 
 	<?=module_load('SIDEBAR')?>
 
 	<div class="tableholder">
@@ -67,6 +66,7 @@ $dOd->modify('first day of this month');
 					<th onclick="sortTable(1)">STAD</th>
 					<th onclick="sortTable(2)">ADRES</th>
 					<th onclick="sortTable(3)">OFFERTEN</th>
+					<th onclick="sortTable(5)">BEDRAG</th>
 					<th onclick="sortTable(4)">INKOMSTEN</th>
 					<th onclick="sortTable(5)">UITGAVEN</th>
 					<th onclick="sortTable(6)">WINST</th>
@@ -76,18 +76,40 @@ $dOd->modify('first day of this month');
 		</thead>
 		<tbody>
 			<?php foreach($proforma as $row): ?>
+				<?php 
+					
+					$totalInkomsten += $row[8];
+					$totalUitgaven += $row[9];
+					$totalWinst += $row[10];
+					$totalBedrag += $row[11];
+						
+				?>
+
 				<tr <?php if($row[6] < $d->format('Y-m-d') && $row[4] < 2) echo "style='background-color: #dc3545;'"; ?> >
 					<?="<td><a style='color: #000!important;' href='administrator/oferten/sendoferten/$row[5]'>$row[0]</a><a style='color: #000!important;' href='administrator/oferten/sendoferten/$row[5]/$row[0]'> <span class='oi oi-envelope-closed' title='envelope-closed' aria-hidden='true'></span></a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>$row[1]</a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>$row[2]</a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='/application/storage/oferten/$row[0].pdf'>$row[5]</a><a style='color: #000!important;' href='/application/storage/oferten/$row[0].pdf'> <span class='oi oi-file' title='file' aria-hidden='true'></span></a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>0.00</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>0.00</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>0.00</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>€ ".number_format($row[11],2,',', '.')."</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>€ ".number_format($row[8],2,',', '.')."</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>€ ".number_format($row[9],2,',', '.')."</a>" ?></td>
+					<?php echo"<td><a "; if($row[10] < 0) { echo "style='color: red!important;'"; } else { echo "style='color: green!important;'"; } echo " href='administrator/oferten/editoferten/$row[5]'>€ ".number_format($row[10],2,',', '.')."</a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>$row[3]</a>" ?></td>
 					<td><span <?php if($row[4] == 0){ echo "style='color: orange'"; } else if($row[4] == 1) { echo "style='color: green'"; } else if($row[4] == 2) { echo "style='color: red'"; }?>  class="oi oi-media-record" title="media-record" aria-hidden="true"></span></td>
 				</tr>
 			<?php endforeach; ?>
+			<tr class="suma">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><?="€ ".number_format($totalBedrag,2,',', '.')."" ?></td>
+				<td><?="€ ".number_format($totalInkomsten,2,',', '.')."" ?></td>
+				<td><?="€ ".number_format($totalUitgaven,2,',', '.')."" ?></td>
+				<td><?="€ ".number_format($totalWinst,2,',', '.')."" ?></td>
+				<td></td>
+				<td></td>
+			</tr>
 		</tbody>
 		</table>
 	</div>

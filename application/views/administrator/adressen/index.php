@@ -7,9 +7,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
+
 <?=add_metatags()?>
 
-<?=add_title("Adressen Alle")?>
+<?=add_title("Adressen")?>
 
 <?=add_basehref()?>
 
@@ -20,6 +22,7 @@
 <?=icon_load("pp_fav.ico")?>
 <?php 
 $adress=model_load('adressenmodel', 'getAdress', '');
+$getAdresId = model_load('adressenmodel', 'adresMenuGetUrl', '');
 
 $d = new DateTime(date("Y-m-d"));
 			
@@ -82,23 +85,28 @@ $dOd->modify('-12 month');
 					<th onclick="sortTable(0)">ID</th>
 					<th onclick="sortTable(1)">STAD</th>
 					<th onclick="sortTable(2)">ADRES</th>
-					<th onclick="sortTable(3)">BEDRAG</th>
-					<th onclick="sortTable(4)">INKOMSTEN</th>
-					<th onclick="sortTable(5)">UITGAVEN</th>
-					<th onclick="sortTable(6)">WINST</th>
-					<th>ACTIVE</th>
+					<th onclick="sortTable(3)">INKOMSTEN</th>
+					<th onclick="sortTable(4)">UITGAVEN</th>
+					<th onclick="sortTable(5)">WINST</th>
+					<th >ACTIVE</th>
 				</tr>
 		</thead>
 		<tbody>
 			<?php foreach($adress as $row): ?>
+				<?php 
+					
+				$totalInkomsten += $row[4];
+				$totalUitgaven += $row[5];
+				$totalWinst += $row[6];
+					
+				?>
 				<tr>
 					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[0]</a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[3]</a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[1]</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>0.00</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/inkomsten/index/$row[0]'>€ ".number_format($row[4],2,',', '.')."</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>€ ".number_format($row[5],2,',', '.')."</a>" ?></td>
+					<?php echo"<td><a "; if($row[6] < 0) { echo "style='color: red!important;'"; } else { echo "style='color: green!important;'"; } echo " href='administrator/adressen/adres/$row[0]'>€ ".number_format($row[6],2,',', '.')."</a>" ?></td>
 					<?php if($row[2] == 1): ?>
 						<td><form method="post" action="administrator/adressen/setAdresActive"><button class="btnCityRemove" type="submit" name="active" value="<?php echo $row[0]; ?>"><span class="oi oi-check" title="check" aria-hidden="true"></span></button></form></td>
 					<?php  else: ?>
@@ -106,6 +114,15 @@ $dOd->modify('-12 month');
 					<?php endif; ?>
 				</tr>
 			<?php endforeach; ?>
+			<tr class="suma">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><?="€ ".number_format($totalInkomsten,2,',', '.')."" ?></td>
+				<td><?="€ ".number_format($totalUitgaven,2,',', '.')."" ?></td>
+				<td><?="€ ".number_format($totalWinst,2,',', '.')."" ?></td>
+				<td></td>
+			</tr>
 		</tbody>
 		</table>
 	</div>

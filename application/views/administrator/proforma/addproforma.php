@@ -16,7 +16,7 @@
 
 <?=add_metatags()?>
 
-<?=add_title("Add Factur")?>
+<?=add_title("Proforma")?>
 
 <?=add_basehref()?>
 
@@ -103,13 +103,13 @@ $d = new DateTime(date("Y-m-d"));
                                         <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
-                                            <input id="num1" class="form-control form-control-small" name="warfortimespend[]" placeholder="0" value="">
+                                            <input id="num1" class="form-control form-control-small sum getAllWarfor" placeholder="0" name="warfortimespend[]" placeholder="0" value="">
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Prijs</p>
                                         </td>
-                                        <td class="" id="num2">
-                                            <input id="num2" class="form-control form-control-small" name="warforquantity[]" placeholder="0" value="">
+                                        <td class="">
+                                            <input id="num2" class="form-control form-control-small sum getAllWarfor" placeholder="0" name="warforquantity[]" placeholder="0" value="">
                                         </td>
                                         <td class=" del blok_mansys">
                                             <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="btn btn-danger" name="del-a" type="submit" value="X" >
@@ -122,6 +122,15 @@ $d = new DateTime(date("Y-m-d"));
 					?>
                 </div>
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6 columnAlignText">
+                        </div>
+                        <div class="col-sm-6 columnAlignText">
+                            <h2 class="sumValue"></h2>
+                        </div>
+                    </div>
+                </div>
 				<div class="RekeningInside">
                     <p class="rekaningText">Data</p>
                     <input class="inputNewHuurder" type="date" name="proformadata" value='<?=$d->format('Y-m-d')?>' >
@@ -205,19 +214,6 @@ $(document).ready(function()
 
 });
 
-function sum() {
-    
-            var num1 = document.getElementById('num1').value;
-            var num2 = document.getElementById('num2').value;
-			var result = parseInt(num1) + parseInt(num2);
-            alert(result);
-			// var result1 = parseInt(num2) - parseInt(num1);
-            if (!isNaN(result)) {
-                document.getElementById('calculateSum').value = result;
-				// document.getElementById('subt').value = result1;
-            }
-        }
-
 var quan = 0;
 function addWarfor() {
         
@@ -243,7 +239,5 @@ function addWarfor() {
                 }
             });
     };
-
-
 
 </script>

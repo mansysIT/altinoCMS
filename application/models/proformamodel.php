@@ -202,22 +202,24 @@ class proformamodel
     public function adres($od, $do, $word = null, $city_id = null) {
 		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
 		if($word != null){
-			$this->query = $this->__db->querymy("SELECT proforma.id, city.city, adres.adres, proforma.oferten_id, proforma.proforma_numer, proforma.data, proforma.is_factur 
+			$this->query = $this->__db->querymy("SELECT proforma.id, city.city, adres.adres, oferten.oferten_numer, proforma.proforma_numer, proforma.data, proforma.is_factur 
             FROM bouw_adresy AS adres 
             INNER JOIN bouw_city AS city ON adres.city = city.city_id 
 			INNER JOIN bouw_proforma AS proforma ON proforma.adres_id = adres.id 
+            INNER JOIN bouw_oferten AS oferten ON oferten.id = proforma.oferten_id 
             WHERE 
             proforma.data BETWEEN '".$od."' AND '".$do."' AND  city.city LIKE '%".$word."%' OR
-            proforma.data BETWEEN '".$od."' AND '".$do."' AND  proforma.id = $word OR
+            proforma.data BETWEEN '".$od."' AND '".$do."' AND  proforma.id = '".$word."' OR
             proforma.data BETWEEN '".$od."' AND '".$do."' AND  adres.adres LIKE '%".$word."%' OR
-            proforma.data BETWEEN '".$od."' AND '".$do."' AND  proforma.oferten_id = $word OR
-            proforma.data BETWEEN '".$od."' AND '".$do."' AND  proforma.proforma_numer = $word
+            proforma.data BETWEEN '".$od."' AND '".$do."' AND  oferten.oferten_numer = '".$word."' OR
+            proforma.data BETWEEN '".$od."' AND '".$do."' AND  proforma.proforma_numer = '".$word."'
 			ORDER BY proforma.id DESC");
 		} else {
-			$this->query = $this->__db->querymy("SELECT proforma.id, city.city, adres.adres, proforma.oferten_id, proforma.proforma_numer, proforma.data, proforma.is_factur  
+			$this->query = $this->__db->querymy("SELECT proforma.id, city.city, adres.adres, oferten.oferten_numer, proforma.proforma_numer, proforma.data, proforma.is_factur  
             FROM bouw_adresy AS adres 
             INNER JOIN bouw_city AS city ON adres.city = city.city_id 
 			INNER JOIN bouw_proforma AS proforma ON proforma.adres_id = adres.id 
+            INNER JOIN bouw_oferten AS oferten ON oferten.id = proforma.oferten_id 
             WHERE proforma.data BETWEEN '".$od."' AND '".$do."'
 			ORDER BY proforma.id DESC");
 		}
@@ -343,7 +345,7 @@ class proformamodel
         -- adresy.rekening,
         proforma.data,
         proforma.proforma_numer,
-        adresy.id AS adres_id, 
+        adresy.id as adres_id,
         proforma.oferten_id,
         proforma.data_betalen,
         proforma.is_factur,
@@ -530,6 +532,7 @@ class proformamodel
     public function removewarfor() {
         if ($this->__params['POST']['action'] == 'removewarfor') {
             $this->__db->execute("DELETE FROM bouw_proforma_details WHERE id = ".$this->__params['POST']['warfor_id']);
+            
         }
 
     }
@@ -949,24 +952,24 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
                 $sum = $row['quantity'] * $row['price'];
                 $pdf->SetY($wysokosc);
 
-                $ilosc_znakow = 0;
-
-                $ilosc_znakow = strlen(number_format($row['price'],2,',', '.'));
+                $ilosc_znakow = strlen(number_format($sum, 2, ',', '.'));
 
                 if ($ilosc_znakow == 6) {
-                    $ilosc_znakow +=8;
+                    $ilosc_znakow +=5;
                 }
 
                 if ($ilosc_znakow == 5) {
-                    $ilosc_znakow +=12;
+                    $ilosc_znakow +=9;
                 }
 
                 if ($ilosc_znakow == 4) {
-                    $ilosc_znakow +=14;
+                    $ilosc_znakow +=12;
                 }
 
+                $ilosc_znakow += 7;
+
                 $pdf->Cell(0, 10, ''.$row['name'].'', 0, 1);
-                $pdf->SetXY(92 + $ilosc_znakow, $wysokosc);
+                $pdf->SetXY(103, $wysokosc);
 
                 if ($row['price']) {
                     $pdf->Cell(0, 10, chr(128).' '.number_format($row['price'], 2, ',', '.').'', 0, 1);

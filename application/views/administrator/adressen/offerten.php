@@ -7,7 +7,7 @@
 
 <?=add_metatags()?>
 
-<?=add_title("Adressen Alle")?>
+<?=add_title("Adressen")?>
 
 <?=add_basehref()?>
 

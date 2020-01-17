@@ -108,8 +108,8 @@ class uitgavenmodel
 			//echo 'jest'. $w[0][0];
 
 			$this->query = $this->__db->querymy("SELECT bouw_uitgaven.id, bouw_city.city, bouw_adresy.adres, bouw_oferten.oferten_numer  AS of_numer, bouw_uitgaven.price, bouw_uitgaven.data, bouw_uitgaven.waarvoor_id FROM `bouw_adresy`
-             INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
-             INNER JOIN bouw_uitgaven ON bouw_uitgaven.adres_id = bouw_adresy.id 
+       INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
+       INNER JOIN bouw_uitgaven ON bouw_uitgaven.adres_id = bouw_adresy.id 
 			 INNER JOIN bouw_oferten ON  bouw_uitgaven.oferte_numer = bouw_oferten.id WHERE 
 			 bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' OR
 			 bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.id = '".$word."' OR
@@ -118,8 +118,6 @@ class uitgavenmodel
 			 bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_oferten.oferten_numer = '".$word."' OR
 			 $dod
 			 bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.oferte_numer = '".$word."'
-			 
- 
 			 ORDER BY bouw_uitgaven.id DESC");
 		} else {
 			$this->query = $this->__db->querymy("SELECT bouw_uitgaven.id, bouw_city.city, bouw_adresy.adres, bouw_oferten.oferten_numer  AS of_numer, bouw_uitgaven.price, bouw_uitgaven.data, bouw_uitgaven.waarvoor_id FROM `bouw_adresy`
@@ -150,17 +148,6 @@ class uitgavenmodel
 			header("Location: ".SERVER_ADDRESS."administrator/uitgaven/index");
 		}
     }
-	
-	public function getAdressById() {
-		$data = $this->__db->execute("SELECT *, bouw_adresy.city AS adres_city_id FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE id = ".$this->__params[1]);
-
-		return $data[0];
-	}
-
-	public function adresMenuGetUrl() { 
-		if(isset($this->__params[1]))
-		return $this->__params[1];
-	}
 
 	public function adresMenuPageName() {
 		if(isset($this->__params[0]))
@@ -221,6 +208,9 @@ class uitgavenmodel
 				'".$price."',
 				'".$data."' 
 				)");
+
+				$id = $this->__db->getLastInsertedId();
+				$this->uploadUitgavenFiles($id);
 			}
 			else{
 
@@ -232,7 +222,7 @@ class uitgavenmodel
 				`price`=".$price.", 
 				`data`= '".$data."'
 				WHERE id = ".$this->__params[1]); 
-
+				$this->uploadUitgavenFiles($this->__params[1]);
 			}
 
 			// UPDATE `bouw_uitgaven` SET 
@@ -243,8 +233,7 @@ class uitgavenmodel
 			// `data`= '2002'  
 			// WHERE id = 16
 
-			$id = $this->__db->getLastInsertedId();
-			$this->uploadUitgavenFiles($id);
+			
 
 			header("Location: ".SERVER_ADDRESS."administrator/uitgaven/index");
 		}

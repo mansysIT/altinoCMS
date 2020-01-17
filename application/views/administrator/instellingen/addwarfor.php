@@ -8,7 +8,7 @@
 
 <?=add_metatags()?>
 
-<?=add_title("Instellingen Stedenlist")?>
+<?=add_title("Instellingen")?>
 
 <?=add_basehref()?>
 
