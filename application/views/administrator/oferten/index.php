@@ -91,8 +91,8 @@ $dOd->modify('first day of this month');
 					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>$row[2]</a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='/application/storage/oferten/$row[0].pdf'>$row[5]</a><a style='color: #000!important;' href='/application/storage/oferten/$row[0].pdf'> <span class='oi oi-file' title='file' aria-hidden='true'></span></a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>€ ".number_format($row[11],2,',', '.')."</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>€ ".number_format($row[8],2,',', '.')."</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>€ ".number_format($row[9],2,',', '.')."</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/inkomsten/index/$row[0]/oferten'>€ ".number_format($row[8],2,',', '.')."</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/uitgaven/index/$row[0]/oferten'>€ ".number_format($row[9],2,',', '.')."</a>" ?></td>
 					<?php echo"<td><a "; if($row[10] < 0) { echo "style='color: red!important;'"; } else { echo "style='color: green!important;'"; } echo " href='administrator/oferten/editoferten/$row[5]'>€ ".number_format($row[10],2,',', '.')."</a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>$row[3]</a>" ?></td>
 					<td><span <?php if($row[4] == 0){ echo "style='color: orange'"; } else if($row[4] == 1) { echo "style='color: green'"; } else if($row[4] == 2) { echo "style='color: red'"; }?>  class="oi oi-media-record" title="media-record" aria-hidden="true"></span></td>

@@ -95,8 +95,12 @@ $d = new DateTime(date("Y-m-d"));
                                            echo'</select>
                                         </td>
                                         <td class="">
+                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea" cols="30" rows="10"></textarea>
+                                        </td>
+                                        <td class="">
                                             <p class="rekaningText">Aantal</p>
                                         </td>
+
                                         <td class="">
                                             <input id="num1" class="form-control form-control-small getAllWarfor" name="warfortimespend[]" placeholder="0" value="">
                                         </td>
@@ -119,9 +123,9 @@ $d = new DateTime(date("Y-m-d"));
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-6 columnAlignText">
+                        <div class="col-sm-11 columnAlignText">
                         </div>
-                        <div class="col-sm-6 columnAlignText">
+                        <div class="col-sm-1 columnAlignText">
                             <h2 class="sumValue"></h2>
                         </div>
                     </div>

@@ -70,7 +70,8 @@ class proformamodel
         warfor.name,
         warfor.btw,
         details.quantity,
-        details.price
+        details.price,
+        details.opmerkingen
         FROM bouw_proforma_details AS details INNER JOIN bouw_waarvoor AS warfor ON details.waarvoor_id = warfor.id
         WHERE proforma_nr = ".$proforma_numer);
 
@@ -206,7 +207,7 @@ class proformamodel
             FROM bouw_adresy AS adres 
             INNER JOIN bouw_city AS city ON adres.city = city.city_id 
 			INNER JOIN bouw_proforma AS proforma ON proforma.adres_id = adres.id 
-            INNER JOIN bouw_oferten AS oferten ON oferten.id = proforma.oferten_id 
+            LEFT JOIN bouw_oferten AS oferten ON oferten.id = proforma.oferten_id 
             WHERE 
             proforma.data BETWEEN '".$od."' AND '".$do."' AND  city.city LIKE '%".$word."%' OR
             proforma.data BETWEEN '".$od."' AND '".$do."' AND  proforma.id = '".$word."' OR
@@ -219,7 +220,7 @@ class proformamodel
             FROM bouw_adresy AS adres 
             INNER JOIN bouw_city AS city ON adres.city = city.city_id 
 			INNER JOIN bouw_proforma AS proforma ON proforma.adres_id = adres.id 
-            INNER JOIN bouw_oferten AS oferten ON oferten.id = proforma.oferten_id 
+            LEFT JOIN bouw_oferten AS oferten ON oferten.id = proforma.oferten_id 
             WHERE proforma.data BETWEEN '".$od."' AND '".$do."'
 			ORDER BY proforma.id DESC");
 		}
@@ -287,12 +288,15 @@ class proformamodel
 			(proforma_nr, 
 			waarvoor_id, 
 			quantity,
-			price) 
+			price,
+            opmerkingen
+            ) 
 			VALUES (
 			".$row[0].",
 			".$this->__params['POST']['warfortype'][$i].",
 			".$this->__params['POST']['warfortimespend'][$i].",
-			".$this->__params['POST']['warforquantity'][$i]."
+            ".$this->__params['POST']['warforquantity'][$i].",
+            '".$this->__params['POST']['opmerkingen'][$i]."'
 			)");
                 }
             }
@@ -377,7 +381,8 @@ class proformamodel
         waarvoor_id,
         quantity,
         price,
-        id
+        id,
+        opmerkingen
         FROM bouw_proforma_details 
         WHERE proforma_nr = ".$this->__params[1]);
 
@@ -404,9 +409,14 @@ class proformamodel
             $oferten = $this->__params['POST']['oferten'];
             $data_betalen = $this->__params['POST']['data_betalen'];
             $proformaId = $this->__params['POST']['proformaId'];
+            $opmerkingen = $this->__params['POST']['opmerkingen'];
+
+            if($oferten == null) {
+                $oferten = 0;
+            }
 
             if($data_betalen != null){
-                $this->__db->execute("UPDATE bouw_proforma 
+                $query = $this->__db->execute("UPDATE bouw_proforma 
                 SET
                 adres_id = $adres,
                 oferten_id = $oferten, 
@@ -417,18 +427,19 @@ class proformamodel
                 WHERE proforma_numer = $factur
                 ");
 
-                $this->__db->execute("INSERT INTO bouw_factur 
-                (adres_id, 
-                oferten_id, 
-                factur_numer,
-                data) 
-                VALUES (
+                if($query){
+                    $this->__db->execute("INSERT INTO bouw_factur 
+                    (adres_id, 
+                    oferten_id, 
+                    factur_numer,
+                    data) 
+                    VALUES (
                     '".$adres."',
                     '".$oferten."',
                     '".$lastFacturNumer."',
                     '".$data_betalen."'
                     )");
-
+                }
 
             } else {
                 $this->__db->execute("UPDATE bouw_proforma 
@@ -455,7 +466,8 @@ class proformamodel
                     proforma_nr = '".$factur."',
                     waarvoor_id = '".$this->__params['POST']['warfortype'][$i]."', 
                     quantity = '".$this->__params['POST']['warfortimespend'][$i]."',
-                    price = '".$this->__params['POST']['warforquantity'][$i]."'
+                    price = '".$this->__params['POST']['warforquantity'][$i]."',
+                    opmerkingen = '".$this->__params['POST']['opmerkingen'][$i]."'
                     WHERE id = '".$this->__params['POST']['warforInputId'][$i]."'
                     ");
                         } else {
@@ -463,12 +475,14 @@ class proformamodel
                         (proforma_nr, 
                         waarvoor_id, 
                         quantity,
-                        price) 
+                        price,
+                        opmerkingen) 
                         VALUES (
                         ".$factur.",
                         ".$this->__params['POST']['warfortype'][$i].",
                         ".$this->__params['POST']['warfortimespend'][$i].",
-                        ".$this->__params['POST']['warforquantity'][$i]."
+                        ".$this->__params['POST']['warforquantity'][$i].",
+                        '".$this->__params['POST']['opmerkingen'][$i]."'
                         )");
                         }
                   
@@ -489,12 +503,14 @@ class proformamodel
                             (factur_nr, 
                             waarvoor_id, 
                             quantity,
-                            price) 
+                            price,
+                            opmerkingen) 
                             VALUES (
                             ".$lastFacturNumer.",
                             ".$this->__params['POST']['warfortype'][$x].",
                             ".$this->__params['POST']['warfortimespend'][$x].",
-                            ".$this->__params['POST']['warforquantity'][$x]."
+                            ".$this->__params['POST']['warforquantity'][$x].",
+                            '".$this->__params['POST']['opmerkingen'][$x]."'
                         )");
 
                         $x++;
@@ -928,7 +944,7 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
 
             $pdf->SetY(150);
             $pdf->SetFillColor(240, 240, 240);
-            $pdf->Cell(0, 10, 'Beschrijving                                                             Prijs                    Aantal     BTW%     Totaal ', T, 1, 1, true);
+            $pdf->Cell(0,10,'Beschrijving                 Opmerkingen                            Prijs              Aantal     BTW%           Totaal ',T,1,1,true);
 
             
             $wysokosc = 160;
@@ -945,10 +961,7 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
             //TO ZMIENIŁEM GDY BYŁ PROBLE Z FAKTURĄ NA KÓREJ BORG BYŁ TJ. HUUR
             //if($hu > 0 && $borg != $cala_kwota_incl){
             foreach (array_slice($data, 1) as $row) {
-                if ($wysokosc >= 270 && $wysokosc <= 275) {
-                    $pdf->AddPage();
-                    $wysokosc = 5;
-                }
+
                 $sum = $row['quantity'] * $row['price'];
                 $pdf->SetY($wysokosc);
 
@@ -968,9 +981,14 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
 
                 $ilosc_znakow += 7;
 
-                $pdf->Cell(0, 10, ''.$row['name'].'', 0, 1);
-                $pdf->SetXY(103, $wysokosc);
+                $text=$row['opmerkingen'];
+                $pdf->SetFont('Arial','',10);
+                $pdf->MultiCell(0, 10, ''.$row['name'].'', 0, 1);
+                $ile=$pdf->WordWrap($text,70);
+                $pdf->SetXY(30 , $wysokosc+3);
+                $pdf->MultiCell(75, 5, $text,0);
 
+                $pdf->SetXY(110 , $wysokosc);
                 if ($row['price']) {
                     $pdf->Cell(0, 10, chr(128).' '.number_format($row['price'], 2, ',', '.').'', 0, 1);
                 }
@@ -983,9 +1001,18 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
 
                 $pdf->Cell(0, 10, chr(128).' '.number_format($sum, 2, ',', '.').'', 0, 1);
 
+                $wysokosc += 5*$ile;
                 $wysokosc += 5;
+                if($wysokosc >= 245 && $wysokosc <= 275){
+                    $pdf->AddPage();
+                    $wysokosc = 5;
+                }
             }
             $wysokosc += 5;
+            if($wysokosc >= 240 && $wysokosc <= 280){
+                $pdf->AddPage();
+                $wysokosc = 5;
+            }
             $pdf->Line(150, $wysokosc, 200, $wysokosc);
             $pdf->SetXY(150, $wysokosc);
             $pdf->SetFont('Arial', '', 12);

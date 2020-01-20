@@ -84,9 +84,57 @@ $(document).ready(function () {
         index++;
     });
 
-	//Usuwanie i reset pól
-	$('#kopia_wiersz').on('click', ".del", function (e) {
-		e.preventDefault();
+	// Usuwanie i reset pól
+	// $('#kopia_wiersz').on('click', ".del", function (e) {
+	// 	e.preventDefault();
+	// 	alert(e.keyCode);
+	// 	if (e.keyCode != undefined) {
+	// 		alert(e.keyCode);
+	// 	// 
+	// 	id_del = $(this).parent().find("input[name='id_edycja[]']").val();  
+	// 	//adres_id = $(this).find("input[name='adres_id']").val();
+	// 	adres_id = $("input[name='adres_id']").val();	
+	// 	nowy_huurder = $("input[name='nowy_huurder']").val();  
+		
+	// 	//alert(adres_id);
+		
+	// 	$.ajax(
+	// 			{
+	// 				type:"POST", 
+	// 				url:"js/customer_del_rej.php", 
+	// 				data: {
+	// 					dane0:id_del,
+	// 					adres_id:adres_id,
+	// 					nowy_huurder:nowy_huurder
+	// 					},
+					
+	// 					success:function(data) 
+	// 					{
+	// 						console.log(data); 
+
+	// 					},
+
+	// 					error: function(blad) 
+	// 					{
+	// 						console.log(blad); 
+	// 					}
+	// 			});
+	// 	$(this).parent().remove();
+	// 	sum();
+	// }
+	// });
+
+	
+	
+});
+
+function removeWarfor(e) {
+        
+	e.preventDefault();
+	alert(e.keyCode);
+	if (e.keyCode != undefined) {
+		alert('aaa');
+	// // 
 		id_del = $(this).parent().find("input[name='id_edycja[]']").val();  
 		//adres_id = $(this).find("input[name='adres_id']").val();
 		adres_id = $("input[name='adres_id']").val();	
@@ -117,7 +165,5 @@ $(document).ready(function () {
 				});
 		$(this).parent().remove();
 		sum();
-	});
-	
-	
-});
+	}
+};

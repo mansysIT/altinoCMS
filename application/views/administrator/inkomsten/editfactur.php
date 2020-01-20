@@ -98,6 +98,9 @@ $d = new DateTime($facturaModelData[0]['data']);
                                            echo'</select>
                                         </td>
                                         <td class="">
+                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea" cols="30" rows="10"></textarea>
+                                        </td>
+                                        <td class="">
                                         <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
@@ -135,6 +138,9 @@ $d = new DateTime($facturaModelData[0]['data']);
                                            echo'</select>
                                         </td>
                                         <td class="">
+                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea" cols="30" rows="10">'.$rows["opmerkingen"].'</textarea>
+                                        </td>
+                                        <td class="">
                                         <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
@@ -166,16 +172,15 @@ $d = new DateTime($facturaModelData[0]['data']);
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-6 columnAlignText">
+                        <div class="col-sm-11 columnAlignText">
                         </div>
-                        <div class="col-sm-6 columnAlignText">
+                        <div class="col-sm-1 columnAlignText">
                             <h2 class="sumValue"></h2>
                         </div>
                     </div>
                 </div>
 				<div class="RekeningInside">
                     <p class="rekaningText">Data</p>
-
                     <input class="inputNewHuurder" type="date" name="facturdata" value="<?php echo $facturaModelData[0]['data']?>">
                 </div>
                 <div style="display: none" class="RekeningInside">
