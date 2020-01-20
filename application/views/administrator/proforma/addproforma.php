@@ -100,6 +100,9 @@ $d = new DateTime(date("Y-m-d"));
                                            echo'</select>
                                         </td>
                                         <td class="">
+                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea" cols="30" rows="10"></textarea>
+                                        </td>
+                                        <td class="">
                                         <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">

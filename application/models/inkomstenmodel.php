@@ -59,10 +59,14 @@ class inkomstenmodel
         $this->clear();
 
 		if(isset($this->__params[1])){
-			return $this->adres($this->od, $this->do, $this->word , $this->__params[1]);   
+            if (isset($this->__params[2])) {
+                return $this->adres($this->od, $this->do, $this->word, $this->__params[1], $this->__params[2]);
+            } else {
+				return $this->adres($this->od, $this->do, $this->word, $this->__params[1]);
+			}
 		} else {
 			return $this->adres($this->od, $this->do, $this->word , null);   
-		}
+		}	
 
 	}
 	
@@ -104,20 +108,27 @@ class inkomstenmodel
 
     // SELECT bouw_adresy.id, bouw_adresy.adres, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE bouw_factur.adres_id = 28
 
-    public function adres($od, $do, $word = null, $adres_id = null) {
+    public function adres($od, $do, $word = null, $id = null, $oferten_id = null) {
+
+		if($oferten_id != null){
+			$type = 'bouw_factur.oferten_id';
+		} else {
+			$type = 'bouw_factur.adres_id';
+		}
+
 		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
-		if($word != null && $adres_id != null) {
+		if($word != null && $id != null) {
 			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data 
 			FROM `bouw_adresy`
              INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
 			 INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
-			 INNER JOIN bouw_oferten AS oferten ON oferten.id = bouw_factur.oferten_id 
+			 LEFT JOIN bouw_oferten AS oferten ON oferten.id = bouw_factur.oferten_id 
 			 WHERE 
-			bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' AND bouw_factur.adres_id = '".$adres_id."' OR
-            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.id = '".$word."' AND bouw_factur.adres_id = '".$adres_id."' OR
-            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_adresy.adres LIKE '%".$word."%' AND bouw_factur.adres_id = '".$adres_id."' OR
-            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  oferten.oferten_numer = '".$word."' AND bouw_factur.adres_id = '".$adres_id."' OR
-            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.factur_numer = '".$word."' AND bouw_factur.adres_id = '".$adres_id."' 
+			bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' AND ".$type." = '".$id."' OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.id = '".$word."' AND ".$type." = '".$id."' OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_adresy.adres LIKE '%".$word."%' AND ".$type." = '".$id."' OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  oferten.oferten_numer = '".$word."' AND ".$type." = '".$id."' OR
+            bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.factur_numer = '".$word."' AND ".$type." = '".$id."' 
 			ORDER BY bouw_factur.id DESC");
 		}
 		else if($word != null){
@@ -125,7 +136,7 @@ class inkomstenmodel
 			FROM `bouw_adresy`
              INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
 			 INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
-			 INNER JOIN bouw_oferten AS oferten ON oferten.id = bouw_factur.oferten_id 
+			 LEFT JOIN bouw_oferten AS oferten ON oferten.id = bouw_factur.oferten_id 
 			 WHERE 
 			bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' OR
             bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.id = '".$word."' OR
@@ -133,20 +144,20 @@ class inkomstenmodel
             bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  oferten.oferten_numer = '".$word."' OR
             bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.factur_numer = '".$word."' 
 			ORDER BY bouw_factur.id DESC");
-		} else if($adres_id != null) {
+		} else if($id != null) {
 			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data 
 			FROM `bouw_adresy`
              INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
 			 INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
-			 INNER JOIN bouw_oferten AS oferten ON oferten.id = bouw_factur.oferten_id 
+			 LEFT JOIN bouw_oferten AS oferten ON oferten.id = bouw_factur.oferten_id 
 			 WHERE 
-			bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.adres_id = '".$adres_id."'
+			bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  ".$type." = '".$id."'
 			ORDER BY bouw_factur.id DESC");
 		} else {
 			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data FROM `bouw_adresy`
             INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
             INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
-			INNER JOIN bouw_oferten AS oferten ON oferten.id = bouw_factur.oferten_id 
+			LEFT JOIN bouw_oferten AS oferten ON oferten.id = bouw_factur.oferten_id 
 			WHERE bouw_factur.data BETWEEN '".$od."' AND '".$do."'
 			ORDER BY bouw_factur.id DESC");
 		}
@@ -249,12 +260,15 @@ class inkomstenmodel
 				(factur_nr, 
 				waarvoor_id, 
 				quantity,
-				price) 
+				price,
+				opmerkingen
+				) 
 				VALUES (
 				".$row[0].",
 				".$this->__params['POST']['warfortype'][$i].",
 				".$this->__params['POST']['warfortimespend'][$i].",
-				".$this->__params['POST']['warforquantity'][$i]."
+				".$this->__params['POST']['warforquantity'][$i].",
+				'".$this->__params['POST']['opmerkingen'][$i]."'
 				)");
             }
             }
@@ -326,7 +340,8 @@ class inkomstenmodel
         warfor.name,
         warfor.btw,
         details.quantity,
-        details.price
+        details.price,
+		details.opmerkingen
         FROM bouw_factur_details AS details INNER JOIN bouw_waarvoor AS warfor ON details.waarvoor_id = warfor.id
         WHERE factur_nr = ".$proforma_numer);
 

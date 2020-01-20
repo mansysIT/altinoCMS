@@ -103,7 +103,7 @@ $d = new DateTime(date("Y-m-d"));
                                             <input id="num2" class="form-control form-control-small getAllWarfor" placeholder="0" name="warforquantity[]" value="">
                                         </td>
                                         <td class=" del blok_mansys">
-                                            <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="btn btn-danger remove" name="del-a" type="submit" value="X" >
+                                            <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="btn btn-danger remove" name="del-a" type="submit" onclick="removeWarfor(); return false;" value="X" >
                                         </td>
                                     </tr>
                                 </tbody>

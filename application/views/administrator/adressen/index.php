@@ -105,7 +105,7 @@ $dOd->modify('-12 month');
 					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[3]</a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[1]</a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='administrator/inkomsten/index/$row[0]'>€ ".number_format($row[4],2,',', '.')."</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>€ ".number_format($row[5],2,',', '.')."</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/uitgaven/index/$row[0]'>€ ".number_format($row[5],2,',', '.')."</a>" ?></td>
 					<?php echo"<td><a "; if($row[6] < 0) { echo "style='color: red!important;'"; } else { echo "style='color: green!important;'"; } echo " href='administrator/adressen/adres/$row[0]'>€ ".number_format($row[6],2,',', '.')."</a>" ?></td>
 					<?php if($row[2] == 1): ?>
 						<td><form method="post" action="administrator/adressen/setAdresActive"><button class="btnCityRemove" type="submit" name="active" value="<?php echo $row[0]; ?>"><span class="oi oi-check" title="check" aria-hidden="true"></span></button></form></td>

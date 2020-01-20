@@ -100,6 +100,9 @@ $d = new DateTime($facturaModelData[0]['data']);
                                            echo'</select>
                                         </td>
                                         <td class="">
+                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea" cols="30" rows="10"></textarea>
+                                        </td>
+                                        <td class="">
                                         <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
@@ -137,7 +140,10 @@ $d = new DateTime($facturaModelData[0]['data']);
                                            echo'</select>
                                         </td>
                                         <td class="">
-                                        <p class="rekaningText">Nummer</p>
+                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea" cols="30" rows="10">'.$rows["opmerkingen"].'</textarea>
+                                        </td>
+                                        <td class="">
+                                        <p class="rekaningText">Aantal</p>
                                         </td>
                                         <td class="">
                                             <input id="num1" class="form-control form-control-small getAllWarfor" placeholder="0" name="warfortimespend[]" value="'.$rows["quantity"].'">

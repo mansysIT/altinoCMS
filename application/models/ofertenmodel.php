@@ -246,7 +246,7 @@ class ofertenmodel
         foreach($this->query->fetch_all() as $q){
             array_push($this->cityArray, $q);
 			$inkomsten = $this->mainModel->getAllInkomsten('oferten_id', $q[0]);
-			$uitgaven = $this->mainModel->getAllUitgaven('oferte_numer', $q[5]);
+			$uitgaven = $this->mainModel->getAllUitgaven('oferte_numer', $q[0]);
 			$sum = $this->mainModel->winst($inkomsten, $uitgaven);
 
 			array_push($this->cityArray[$i], $inkomsten);
@@ -622,15 +622,6 @@ class ofertenmodel
 
             //$mail -> wyslij_email(str_replace(' ', '', $email), $temat, $tresc);
             $pocztaKlient = str_replace(' ', '', $email);
-            
-        
-        
-        
-        
-        
-        
-        
-
 
             $this->__db->execute("INSERT INTO `bouw_oferten_mail`(`oferten_id`, `data_czas`) VALUES (" . $oferten_id . ", '" . date('Y-m-d H:i:s') . "') ");
 

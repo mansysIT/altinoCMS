@@ -76,7 +76,8 @@ class facturmodel
         waarvoor_id,
         quantity,
         price,
-        id
+        id,
+        opmerkingen
         FROM bouw_factur_details 
         WHERE factur_nr = ".$this->__params[1]);
 
@@ -100,14 +101,19 @@ class facturmodel
             $data = $this->__params['POST']['facturdata'];
             $oferten = $this->__params['POST']['oferten'];
             $facturId = $this->__params['POST']['facturId'];
+            $opmerkingen = $this->__params['POST']['opmerkingen'];
 
+
+            if($oferten == null) {
+                $oferten = 0;
+            }
 
 			$this->__db->execute("UPDATE bouw_factur 
             SET
 			adres_id = $adres,
 			oferten_id = $oferten, 
 			factur_numer = $factur,
-			data = '$data' 
+			data = '$data'   
             WHERE factur_numer = $factur
             ");
 
@@ -118,28 +124,31 @@ class facturmodel
                     $id = $this->__params['POST']['warforInputId'][$i];
                     $allwarfor = $this->getAllWarforForAdres()[$i - 1];
                     if (in_array($id, $allwarfor)) {
-                    $r = $this->__db->execute("UPDATE bouw_factur_details 
-                    SET
-                    factur_nr = '".$factur."',
-                    waarvoor_id = '".$this->__params['POST']['warfortype'][$i]."', 
-                    quantity = '".$this->__params['POST']['warfortimespend'][$i]."',
-                    price = '".$this->__params['POST']['warforquantity'][$i]."'
-                    WHERE id = '".$this->__params['POST']['warforInputId'][$i]."'
-                    ");
+                        $r = $this->__db->execute("UPDATE bouw_factur_details 
+                        SET
+                        factur_nr = '".$factur."',
+                        waarvoor_id = '".$this->__params['POST']['warfortype'][$i]."', 
+                        quantity = '".$this->__params['POST']['warfortimespend'][$i]."',
+                        price = '".$this->__params['POST']['warforquantity'][$i]."',
+                        opmerkingen = '".$this->__params['POST']['opmerkingen'][$i]."'
+                        WHERE id = '".$this->__params['POST']['warforInputId'][$i]."'
+                        ");
                         // print_r(" [ ".$r." / ");
-                        } else {
-                            $this->__db->execute("INSERT INTO bouw_factur_details 
+                    } else {
+                        $this->__db->execute("INSERT INTO bouw_factur_details 
                         (factur_nr, 
                         waarvoor_id, 
                         quantity,
-                        price) 
+                        price,
+                        opmerkingen) 
                         VALUES (
                         ".$factur.",
                         ".$this->__params['POST']['warfortype'][$i].",
                         ".$this->__params['POST']['warfortimespend'][$i].",
-                        ".$this->__params['POST']['warforquantity'][$i]."
+                        ".$this->__params['POST']['warforquantity'][$i].",
+                        '".$this->__params['POST']['opmerkingen'][$i]."'
                         )");
-                        }
+                    }
                   
                     $i++;
                     
@@ -509,7 +518,7 @@ class facturmodel
         
                 $pdf->SetY(150);
                 $pdf->SetFillColor(240, 240, 240);
-                $pdf->Cell(0,10,'Beschrijving                                                             Prijs                    Aantal     BTW%     Totaal ',T,1,1,true);
+                $pdf->Cell(0,10,'Beschrijving                 Opmerkingen                            Prijs              Aantal     BTW%           Totaal ',T,1,1,true);
         
                     
                 $wysokosc = 160;
@@ -525,12 +534,10 @@ class facturmodel
         
                 //TO ZMIENIŁEM GDY BYŁ PROBLE Z FAKTURĄ NA KÓREJ BORG BYŁ TJ. HUUR 
                 //if($hu > 0 && $borg != $cala_kwota_incl){
+                    
                     foreach(array_slice($data,1) as $row){
                         // print_r($row['name']);
-                        if($wysokosc >= 270 && $wysokosc <= 275){
-                            $pdf->AddPage();
-                            $wysokosc = 5;
-                        }
+
                             $sum = $row['quantity'] * $row['price'];
                             $pdf->SetY($wysokosc);
         
@@ -554,26 +561,39 @@ class facturmodel
 
                             $ilosc_znakow += 7;
         
-                            $pdf->Cell(0, 10, ''.$row['name'].'', 0, 1);
-                            $pdf->SetXY(103 , $wysokosc);
-        
+                            $text=$row['opmerkingen'];
+                            $pdf->SetFont('Arial','',10);
+                            $pdf->MultiCell(0, 10, ''.$row['name'].'', 0, 1);
+                            $ile=$pdf->WordWrap($text,70);
+                            $pdf->SetXY(30 , $wysokosc+3);
+                            $pdf->MultiCell(75, 5, $text,0);
+                            
+                            $pdf->SetXY(110 , $wysokosc);
                             if ($row['price']) {
-                                $pdf->Cell(0, 10, chr(128).' '.number_format($row['price'], 2, ',', '.').'', 0, 1);
+                                $pdf->MultiCell(0, 10, chr(128).' '.number_format($row['price'], 2, ',', '.').'', 0, 1);
                             }
         
                             $pdf->SetXY(140, $wysokosc);
-                            $pdf->Cell(0, 10, $row['quantity'], 0, 1);
+                            $pdf->MultiCell(0, 10, $row['quantity'], 0, 1);
                             $pdf->SetXY(155, $wysokosc);
-                            $pdf->Cell(0, 10, '  '.$row['btw'].' %', 0, 1);
+                            $pdf->MultiCell(0, 10, '  '.$row['btw'].' %', 0, 1);
                             $pdf->SetXY(162 + $ilosc_znakow, $wysokosc);
         
-                            $pdf->Cell(0, 10, chr(128).' '.number_format($sum, 2, ',', '.').'', 0, 1);
+                            $pdf->MultiCell(0, 10, chr(128).' '.number_format($sum, 2, ',', '.').'', 0, 1);
         
                             
-        
-                        $wysokosc += 5;
+                            $wysokosc += 5*$ile;
+                            $wysokosc += 5;
+                            if($wysokosc >= 245 && $wysokosc <= 275){
+                                $pdf->AddPage();
+                                $wysokosc = 5;
+                            }
                         }
                         $wysokosc += 5;
+                        if($wysokosc >= 240 && $wysokosc <= 280){
+                            $pdf->AddPage();
+                            $wysokosc = 5;
+                        }
                 $pdf->Line(150,$wysokosc,200,$wysokosc);
                 $pdf->SetXY(150,$wysokosc);
                 $pdf->SetFont('Arial','',12);
@@ -640,7 +660,7 @@ class facturmodel
                             }
         
         
-        
+
         
         
         
