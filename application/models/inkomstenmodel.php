@@ -255,6 +255,7 @@ class inkomstenmodel
                 for ($i=0; $i < 20; $i++) {
                     # code...
 
+                $price = str_replace(",",".",$this->__params['POST']['warforquantity'][$i]);
                 
                 $this->__db->execute("INSERT INTO bouw_factur_details 
 				(factur_nr, 
@@ -267,7 +268,7 @@ class inkomstenmodel
 				".$row[0].",
 				".$this->__params['POST']['warfortype'][$i].",
 				".$this->__params['POST']['warfortimespend'][$i].",
-				".$this->__params['POST']['warforquantity'][$i].",
+				".$price.",
 				'".$this->__params['POST']['opmerkingen'][$i]."'
 				)");
             }
@@ -364,24 +365,23 @@ class inkomstenmodel
 
         $warfor = $this->getdata($nr);
         $x = Array();
-
+        $y = Array();
+        $vatarray = Array();
         foreach(array_slice($warfor,1) as $row){
+			
             $z = $row['quantity'] * $row['price'];
-
-            if(!in_array($row['btw'], $x))
+			
+            if(!in_array($x, $row['btw']))
             $x += array($row['btw'] => 0) ;
-
+			
             foreach($x as $rows=>$val){
+				
+
                 if($rows == $row['btw']){
                     $x[$rows] += $z * ((int)$rows * 0.01);
                 }
-
             }
-
-        }
-
-
-
+		}
         return $x;
 
     }

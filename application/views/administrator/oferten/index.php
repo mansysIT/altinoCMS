@@ -39,7 +39,7 @@ $dOd->modify('first day of this month');
 	<?=module_load('SIDEBAR')?>
 
 	<div class="tableholder">
-	<h1>Oferten</h1> 
+	<h1>Offerten</h1> 
 	<form class="form-inline" method="post" action="">
 		<button type="submit" class="btn btn-danger mb-2" name="clear">Clear</button> 
 		<div class="form-group mx-sm-3 mb-2">
@@ -55,7 +55,7 @@ $dOd->modify('first day of this month');
 			<input type="date" class="form-control aaa" id="inputPassword2" style="line-height: 20px;" name="tot" value= <?php if(isset($sidebarController->__params['POST']['clear'])){echo $d->format('Y-m-d');} else if(isset($sidebarController->__params['POST']['tot'])){echo $sidebarController->__params['POST']['tot']; } else if(isset($_SESSION['tot'])){echo $_SESSION['tot']; } else {echo $d->format('Y-m-d'); }?>>
 		</div>
         <button type="submit" class="btn btn-danger mb-2" name="zoeken">Zoeken</button>
-		<a class="btn btn-danger mb-2" href="administrator/oferten/addoferten" role="button">+Oferten</a>
+		<a class="btn btn-danger mb-2" href="administrator/oferten/addoferten" role="button">+Offerte</a>
 	</form>
 
 	<div class="table-responsive">

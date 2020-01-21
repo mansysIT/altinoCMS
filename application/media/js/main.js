@@ -33,18 +33,3 @@ $(function() {
             
             
 });
-
-function changeLangTo(lang)
-{   
-    $.ajax({
-        type: "POST",
-        url: "application/media/_external/lang_ajax.php",
-        processdata: false,
-        data: "chlang=true&lang="+lang,
-        success: function(data)
-        {
-            window.location.reload();
-        }	            
-   	});
-    
-}

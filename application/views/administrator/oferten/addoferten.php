@@ -46,7 +46,7 @@ $d = new DateTime(date("Y-m-d"));
  
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
-    <h1 class="title">Oferten Aanmaken</h1>
+    <h1 class="title">Offerten Aanmaken</h1>
     <div class="maincontainer">  
     <form action="" method="post" id="myForm">
             <div class="bottomHolder">
@@ -78,7 +78,7 @@ $d = new DateTime(date("Y-m-d"));
                                 <tbody class="warforadd">                             
                                     <tr style="display: none" class="nag warforCenter" id="count">
                                         <td class="">
-                                        <p class="rekaningText">Warvoor</p>
+                                        <p class="rekaningText">Waarvoor</p>
                                         </td>
                                         <td class="">
                                         <select name="warfortype[]" class="form-control">';
@@ -89,6 +89,9 @@ $d = new DateTime(date("Y-m-d"));
                                         <?php endforeach;
 
                                            echo'</select>
+                                        </td>
+                                        <td class="">
+                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea" cols="30" rows="10">'.$rows["opmerkingen"].'</textarea>
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Aantal</p>
@@ -103,7 +106,7 @@ $d = new DateTime(date("Y-m-d"));
                                             <input id="num2" class="form-control form-control-small getAllWarfor" placeholder="0" name="warforquantity[]" value="">
                                         </td>
                                         <td class=" del blok_mansys">
-                                            <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="btn btn-danger remove" name="del-a" type="submit" onclick="removeWarfor(); return false;" value="X" >
+                                            <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="btn btn-danger remove" name="del-a" type="submit" value="X" >
                                         </td>
                                     </tr>
                                 </tbody>
@@ -115,20 +118,20 @@ $d = new DateTime(date("Y-m-d"));
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-6 columnAlignText">
+                        <div class="col-sm-11 columnAlignText">
                         </div>
-                        <div class="col-sm-6 columnAlignText">
+                        <div class="col-sm-1 columnAlignText">
                             <h2 class="sumValue"></h2>
                         </div>
                     </div>
                 </div>
 				<div class="RekeningInside">
-                    <p class="rekaningText">Aanmaakdatum</p>
+                    <p class="rekaningText">Start Datum</p>
                     <input class="inputNewHuurder" type="date" name="ofertendata" value='<?=$d->format('Y-m-d')?>' >
                 </div>
 
                 <div class="RekeningInside">
-                    <p class="rekaningText">Geplande Datum Van Voltooiing</p>
+                    <p class="rekaningText">Geplande</p>
                     <input class="inputNewHuurder" type="date" name="ofertendataend" value='<?=$d->format('Y-m-d')?>' >
                 </div>
                 <button type="submit" class="btn btn-danger mb-2 btn-small" name="saveoferten">Opslaan</button>
