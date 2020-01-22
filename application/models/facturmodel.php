@@ -172,7 +172,7 @@ class facturmodel
             $this->createfactur($factur);
             $proforma_pdf = 'application/storage/proformy/'.$facturId.'.pdf';
 
-            // header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
+            header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
         }
     }
 
@@ -608,10 +608,13 @@ class facturmodel
                             $ilosc_znakow += 4;
         
                             $text=$row['opmerkingen'];
+                            $name = $row['name'];
+                            $ilename=$pdf->WordWrap($name,25);
                             $pdf->SetFont('Arial','',10);
-                            $pdf->MultiCell(0, 10, ''.$row['name'].'', 0, 1);
+                            $pdf->SetXY(10 , $wysokosc+3);
+                            $pdf->MultiCell(25, 5,$name, 0);
                             $ile=$pdf->WordWrap($text,70);
-                            $pdf->SetXY(30 , $wysokosc+3);
+                            $pdf->SetXY(35 , $wysokosc+3);
                             $pdf->MultiCell(75, 5, $text,0);
                             
                             $pdf->SetXY(107 , $wysokosc);
@@ -620,7 +623,7 @@ class facturmodel
                                 $pdf->SetXY(100 + $ilosc_znakow_price, $wysokosc);
                                 $pdf->MultiCell(0, 10, number_format($row['price'], 2, ',', '.').'', 0, 1);
                             }
-        
+            
                             $pdf->SetXY(140, $wysokosc);
                             $pdf->MultiCell(0, 10, $row['quantity'], 0, 1);
                             $pdf->SetXY(155, $wysokosc);
@@ -629,9 +632,16 @@ class facturmodel
                             $pdf->MultiCell(0, 10, chr(128).'', 0, 1);
                             $pdf->SetXY(164 + $ilosc_znakow, $wysokosc);
                             $pdf->MultiCell(0, 10,number_format($sum, 2, ',', '.').'', 0, 1);
-        
-                            
-                            $wysokosc += 5*$ile;
+            
+                            $wysokoscname = 5*$ilename;
+                            $wysokoscopmerkingen = 5*$ile;
+
+                            if($wysokoscname > $wysokoscopmerkingen){
+                                $wysokosc += $wysokoscname;
+                            } else {
+                                $wysokosc += $wysokoscopmerkingen;
+                            }
+
                             $wysokosc += 5;
                             if($wysokosc >= 245 && $wysokosc <= 275){
                                 $pdf->AddPage();

@@ -46,7 +46,7 @@ $d = new DateTime(date("Y-m-d"));
  
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
-    <h1 class="title">Offerten Aanmaken</h1>
+    <h1 class="title">Offerte Aanmaken</h1>
     <div class="maincontainer">  
     <form action="" method="post" id="myForm">
             <div class="bottomHolder">
@@ -56,9 +56,7 @@ $d = new DateTime(date("Y-m-d"));
                     <select name="city" class="miasta form-control" id="exampleFormControlSelect1">
                     <option value="">SELECT CITY</option>
                     <?php foreach($sidebarController as $row): ?>
-                        <li>
-                            <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
-                        </li>
+                        <option value="<?php echo $row[0]; ?>"><?php echo $row[1]; ?></option>
                     <?php endforeach; ?>
                     </select>
                 </div>  
@@ -83,9 +81,7 @@ $d = new DateTime(date("Y-m-d"));
                                         <td class="">
                                         <select name="warfortype[]" class="form-control">';
                                         foreach($getWarforTypes as $row): ?>
-                                            <li>
-                                                <option value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
-                                            </li>
+                                            <option value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
                                         <?php endforeach;
 
                                            echo'</select>

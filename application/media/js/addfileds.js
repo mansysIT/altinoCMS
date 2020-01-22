@@ -6,7 +6,7 @@ const formatter = new Intl.NumberFormat('nl-NL', {
 function sum() {
     
     var element1 = document.querySelectorAll('#num1');
-    var element2 = document.querySelectorAll('#num2');
+	var element2 = document.querySelectorAll('#num2'); 
     var x = [];
     var y =[];
     var i = 0;
@@ -16,13 +16,18 @@ function sum() {
 	var yVal = 0;
 
     element1.forEach(function(userItem) {
-        xVal = userItem.value.replace(",", ".");
+		// alert(userItem.value);
+		xVal = userItem.value.replace(",", ".");
+		
+		// alert(xVal);
+
 		x.push(parseFloat(xVal));	
     });
 	x.shift()
 
     element2.forEach(function(userItem) {
 		yVal = userItem.value.replace(",", ".");
+		// alert(yVal);
 		y.push(parseFloat(yVal));
   
 	});

@@ -49,7 +49,7 @@ $d = new DateTime($facturaModelData[0]['data']);
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h1 class="ofertenTitle" >Offerten Bewerken</h1>
+                    <h1 class="ofertenTitle" >Offerte Bewerken</h1>
                 </div>
                 <div class="col-sm-6 align-self-end ml-auto">
                     <form action="" method="post">
@@ -68,9 +68,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                     <option value="">SELECT CITY</option>
                     
                     <?php foreach($getCityId as $row): ?>
-                        <li>
                             <option value="<?php echo $row[0]; ?>"<?php if($row[0] == $facturaModelData[0]['city_id']) echo" selected" ?>><?php echo $row[1]; ?></option>
-                        </li> 
                     <?php endforeach; ?>
                     </select>
                 </div>  

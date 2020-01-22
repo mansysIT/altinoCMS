@@ -638,7 +638,7 @@ class proformamodel
 
 			
 			if($betaald == 1){
-				$temat = 'BETALINGSHERINNERING - Proforma van KH Bemiddeling';
+				$temat = 'BETALINGSHERINNERING - Proforma van AGUIAR BOUW B.V';
 
 				$tresc = '
 							Beste <br><br>
@@ -661,7 +661,7 @@ class proformamodel
 			}
 			
 			if($betaald == 2){
-				$temat = 'AANMANING - Proforma van KH Bemiddeling'; 
+				$temat = 'AANMANING - Proforma van AGUIAR BOUW B.V'; 
 
 				$tresc = '
 							Beste <br><br>
@@ -687,7 +687,7 @@ class proformamodel
 		} else{
 		
 	
-			$temat = 'proforma Factuur van KH Bemiddeling';
+			$temat = 'Proforma van AGUIAR BOUW B.V';
 
 			$tresc = '
 						Beste <br><br>
@@ -1031,42 +1031,51 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
 
                 $ilosc_znakow += 4;
 
-                $text=$row['opmerkingen'];
-                $pdf->SetFont('Arial','',10);
-                $pdf->MultiCell(0, 10, ''.$row['name'].'', 0, 1);
-                $ile=$pdf->WordWrap($text,70);
-                $pdf->SetXY(30 , $wysokosc+3);
-                $pdf->MultiCell(75, 5, $text,0);
-                
-                $pdf->SetXY(107 , $wysokosc);
-                if ($row['price']) {
+                    $text=$row['opmerkingen'];
+                    $name = $row['name'];
+                    $ilename=$pdf->WordWrap($name,25);
+                    $pdf->SetFont('Arial','',10);
+                    $pdf->SetXY(10 , $wysokosc+3);
+                    $pdf->MultiCell(25, 5,$name, 0);
+                    $ile=$pdf->WordWrap($text,70);
+                    $pdf->SetXY(35 , $wysokosc+3);
+                    $pdf->MultiCell(75, 5, $text,0);
+                    
+                    $pdf->SetXY(107 , $wysokosc);
+                    if ($row['price']) {
+                        $pdf->MultiCell(0, 10, chr(128).'', 0, 1);
+                        $pdf->SetXY(100 + $ilosc_znakow_price, $wysokosc);
+                        $pdf->MultiCell(0, 10, number_format($row['price'], 2, ',', '.').'', 0, 1);
+                    }
+
+                    $pdf->SetXY(140, $wysokosc);
+                    $pdf->MultiCell(0, 10, $row['quantity'], 0, 1);
+                    $pdf->SetXY(155, $wysokosc);
+                    $pdf->MultiCell(0, 10, '  '.$row['btw'].' %', 0, 1);
+                    $pdf->SetXY(175, $wysokosc);
                     $pdf->MultiCell(0, 10, chr(128).'', 0, 1);
-                    $pdf->SetXY(100 + $ilosc_znakow_price, $wysokosc);
-                    $pdf->MultiCell(0, 10, number_format($row['price'], 2, ',', '.').'', 0, 1);
+                    $pdf->SetXY(164 + $ilosc_znakow, $wysokosc);
+                    $pdf->MultiCell(0, 10,number_format($sum, 2, ',', '.').'', 0, 1);
+
+                    $wysokoscname = 5*$ilename;
+                    $wysokoscopmerkingen = 5*$ile;
+
+                    if($wysokoscname > $wysokoscopmerkingen){
+                        $wysokosc += $wysokoscname;
+                    } else {
+                        $wysokosc += $wysokoscopmerkingen;
+                    }
+                    $wysokosc += 5;
+                    if($wysokosc >= 245 && $wysokosc <= 275){
+                        $pdf->AddPage();
+                        $wysokosc = 5;
+                    }
                 }
-
-                $pdf->SetXY(140, $wysokosc);
-                $pdf->MultiCell(0, 10, $row['quantity'], 0, 1);
-                $pdf->SetXY(155, $wysokosc);
-                $pdf->MultiCell(0, 10, '  '.$row['btw'].' %', 0, 1);
-                $pdf->SetXY(175, $wysokosc);
-                $pdf->MultiCell(0, 10, chr(128).'', 0, 1);
-                $pdf->SetXY(164 + $ilosc_znakow, $wysokosc);
-                $pdf->MultiCell(0, 10,number_format($sum, 2, ',', '.').'', 0, 1);
-
-                
-                $wysokosc += 5*$ile;
                 $wysokosc += 5;
-                if($wysokosc >= 245 && $wysokosc <= 275){
+                if($wysokosc >= 240 && $wysokosc <= 280){
                     $pdf->AddPage();
                     $wysokosc = 5;
                 }
-            }
-            $wysokosc += 5;
-            if($wysokosc >= 240 && $wysokosc <= 280){
-                $pdf->AddPage();
-                $wysokosc = 5;
-            }
             $pdf->Line(134,$wysokosc,200,$wysokosc);
             $pdf->SetXY(134,$wysokosc);
             $pdf->SetFont('Arial','',12);
