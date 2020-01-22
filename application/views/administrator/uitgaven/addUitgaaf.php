@@ -77,7 +77,7 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                 </div>
                 
                 <div class="RekeningInside">
-                    <p class="rekaningText">Oferten</p> 
+                    <p class="rekaningText">Offerten</p> 
                     <select name="oferte_id" class="oferty form-control wybor_liczb" id="exampleFormControlSelect1">
 
 

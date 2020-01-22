@@ -123,13 +123,14 @@ class facturmodel
                 foreach (array_slice($this->__params['POST']['warforInputId'], 1) as $row) {
                     $id = $this->__params['POST']['warforInputId'][$i];
                     $allwarfor = $this->getAllWarforForAdres()[$i - 1];
+                    $price = str_replace(",",".",$this->__params['POST']['warforquantity'][$i]);
                     if (in_array($id, $allwarfor)) {
                         $r = $this->__db->execute("UPDATE bouw_factur_details 
                         SET
                         factur_nr = '".$factur."',
                         waarvoor_id = '".$this->__params['POST']['warfortype'][$i]."', 
                         quantity = '".$this->__params['POST']['warfortimespend'][$i]."',
-                        price = '".$this->__params['POST']['warforquantity'][$i]."',
+                        price = '".$price."',
                         opmerkingen = '".$this->__params['POST']['opmerkingen'][$i]."'
                         WHERE id = '".$this->__params['POST']['warforInputId'][$i]."'
                         ");
@@ -145,7 +146,7 @@ class facturmodel
                         ".$factur.",
                         ".$this->__params['POST']['warfortype'][$i].",
                         ".$this->__params['POST']['warfortimespend'][$i].",
-                        ".$this->__params['POST']['warforquantity'][$i].",
+                        ".$price.",
                         '".$this->__params['POST']['opmerkingen'][$i]."'
                         )");
                     }
@@ -171,7 +172,7 @@ class facturmodel
             $this->createfactur($factur);
             $proforma_pdf = 'application/storage/proformy/'.$facturId.'.pdf';
 
-            header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
+            // header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
         }
     }
 
@@ -262,7 +263,7 @@ class facturmodel
     public function factur_mail_wyslij($email, $factur_id, $wystaw_i_wyslij = null, $factur_numer = null) {
 		
 		
-			$temat = 'Factuur van KH Bemiddeling';
+			$temat = 'Factuur van AGUIAR BOUW B.V';
 
 			$tresc = '
 						Beste <br><br>
@@ -270,7 +271,7 @@ class facturmodel
 									
 						
 						met vriendelijke groet <br />
-                        KHBemiddeling';
+                        AGUIAR BOUW B.V';
                         
 	 
             $proforma_pdf = 'application/storage/factur/'.$factur_id.'.pdf';
@@ -543,23 +544,68 @@ class facturmodel
         
                            
         
+                            $ilosc_znakow_price = strlen(number_format($row['price'], 2, ',', '.'));
+
+                            if ($ilosc_znakow_price == 10) {
+                                $ilosc_znakow_price +=0;
+                            }
+
+                            if ($ilosc_znakow_price == 9) {
+                                $ilosc_znakow_price +=3;
+                            }
+
+                            if ($ilosc_znakow_price == 8) {
+                                $ilosc_znakow_price +=6;
+                            }
+
+                            if ($ilosc_znakow_price == 7) {
+                                $ilosc_znakow_price +=3;
+                            }
+
+                            if ($ilosc_znakow_price == 6) {
+                                $ilosc_znakow_price +=11;
+                            }
+        
+                            if ($ilosc_znakow_price == 5) {
+                                $ilosc_znakow_price +=14;
+                            }
+        
+                            if ($ilosc_znakow_price == 4) {
+                                $ilosc_znakow_price +=16;
+                            }
+
+
                             $ilosc_znakow = strlen(number_format($sum, 2, ',', '.'));
 
- 
+                            if ($ilosc_znakow == 10) {
+                                $ilosc_znakow +=0;
+                            }
+
+                            if ($ilosc_znakow == 9) {
+                                $ilosc_znakow +=3;
+                            }
+
+                            if ($ilosc_znakow == 8) {
+                                $ilosc_znakow +=6;
+                            }
+
+                            if ($ilosc_znakow == 7) {
+                                $ilosc_znakow +=3;
+                            }
 
                             if ($ilosc_znakow == 6) {
-                                $ilosc_znakow +=5;
+                                $ilosc_znakow +=11;
                             }
         
                             if ($ilosc_znakow == 5) {
-                                $ilosc_znakow +=9;
+                                $ilosc_znakow +=14;
                             }
         
                             if ($ilosc_znakow == 4) {
-                                $ilosc_znakow +=12;
+                                $ilosc_znakow +=16;
                             }
 
-                            $ilosc_znakow += 7;
+                            $ilosc_znakow += 4;
         
                             $text=$row['opmerkingen'];
                             $pdf->SetFont('Arial','',10);
@@ -568,18 +614,21 @@ class facturmodel
                             $pdf->SetXY(30 , $wysokosc+3);
                             $pdf->MultiCell(75, 5, $text,0);
                             
-                            $pdf->SetXY(110 , $wysokosc);
+                            $pdf->SetXY(107 , $wysokosc);
                             if ($row['price']) {
-                                $pdf->MultiCell(0, 10, chr(128).' '.number_format($row['price'], 2, ',', '.').'', 0, 1);
+                                $pdf->MultiCell(0, 10, chr(128).'', 0, 1);
+                                $pdf->SetXY(100 + $ilosc_znakow_price, $wysokosc);
+                                $pdf->MultiCell(0, 10, number_format($row['price'], 2, ',', '.').'', 0, 1);
                             }
         
                             $pdf->SetXY(140, $wysokosc);
                             $pdf->MultiCell(0, 10, $row['quantity'], 0, 1);
                             $pdf->SetXY(155, $wysokosc);
                             $pdf->MultiCell(0, 10, '  '.$row['btw'].' %', 0, 1);
-                            $pdf->SetXY(162 + $ilosc_znakow, $wysokosc);
-        
-                            $pdf->MultiCell(0, 10, chr(128).' '.number_format($sum, 2, ',', '.').'', 0, 1);
+                            $pdf->SetXY(175, $wysokosc);
+                            $pdf->MultiCell(0, 10, chr(128).'', 0, 1);
+                            $pdf->SetXY(164 + $ilosc_znakow, $wysokosc);
+                            $pdf->MultiCell(0, 10,number_format($sum, 2, ',', '.').'', 0, 1);
         
                             
                             $wysokosc += 5*$ile;
@@ -594,8 +643,8 @@ class facturmodel
                             $pdf->AddPage();
                             $wysokosc = 5;
                         }
-                $pdf->Line(150,$wysokosc,200,$wysokosc);
-                $pdf->SetXY(150,$wysokosc);
+                $pdf->Line(134,$wysokosc,200,$wysokosc);
+                $pdf->SetXY(134,$wysokosc);
                 $pdf->SetFont('Arial','',12);
                 $pdf->Cell(0,10,'Subtotaal',0,1);
         
@@ -603,19 +652,31 @@ class facturmodel
                 $ilosc_znakow = 0;
         
                 $ilosc_znakow = strlen(number_format($total,2,',', '.'));
-        
+                if($ilosc_znakow == 10)
+                $ilosc_znakow +=4;
+    
+                if($ilosc_znakow == 9)
+                $ilosc_znakow +=7;
+    
+                if($ilosc_znakow == 8)
+                $ilosc_znakow +=10;
+    
+                if($ilosc_znakow == 7)
+                $ilosc_znakow +=13;
+    
                 if($ilosc_znakow == 6)
-                $ilosc_znakow +=5;
+                $ilosc_znakow +=16;
         
                 if($ilosc_znakow == 5)
-                $ilosc_znakow +=9;
+                $ilosc_znakow +=19;
         
                 if($ilosc_znakow == 4)
-                $ilosc_znakow +=10;
+                $ilosc_znakow +=22;
         
-                $pdf->SetXY(169 + $ilosc_znakow,$wysokosc);
-
-                $pdf->Cell(0,10,chr(128).' '.number_format($total, 2,',', '.'),0,1);
+                $pdf->SetXY(171,$wysokosc);
+                $pdf->MultiCell(0, 10, chr(128).'', 0, 1);
+                $pdf->SetXY(161 + $ilosc_znakow,$wysokosc);
+                $pdf->Cell(0,10, number_format($total, 2,',', '.'),0,1);
         
         
         
@@ -624,7 +685,6 @@ class facturmodel
         
                 $totalBtW = 0;
                 foreach($btw as $k => $stawki_vat){
-                    
                     // print_r($stawki_vat);
                     
                     
@@ -632,7 +692,7 @@ class facturmodel
         
                                     // $kwota_vat = round($kw - ($kw / $dzielnik),2) ;
                                 
-                                    $pdf->SetX(142);
+                                    $pdf->SetX(134);
         
                                     $pdf->Cell(0,5, $k.'% BTW over',0,1);
                                 
@@ -640,18 +700,32 @@ class facturmodel
                                     $ilosc_znakow = strlen(number_format($stawki_vat,2,',', '.'));
                                     
         
+                                    if($ilosc_znakow == 10)
+                                    $ilosc_znakow +=4;
+                    
+                                    if($ilosc_znakow == 9)
+                                    $ilosc_znakow +=7;
+                    
+                                    if($ilosc_znakow == 8)
+                                    $ilosc_znakow +=10;
+                    
+                                    if($ilosc_znakow == 7)
+                                    $ilosc_znakow +=13;
+                    
                                     if($ilosc_znakow == 6)
-                                    $ilosc_znakow +=5;
-        
+                                    $ilosc_znakow +=16;
+                            
                                     if($ilosc_znakow == 5)
-                                    $ilosc_znakow +=9;
-                     
+                                    $ilosc_znakow +=19;
+                            
                                     if($ilosc_znakow == 4)
-                                    $ilosc_znakow +=12;
+                                    $ilosc_znakow +=22;
                                 
                                     $totalBtW += $stawki_vat;
-                                $pdf->SetXY(169 + $ilosc_znakow,$wysokosc+10+$wys);
-                                $pdf->Cell(0,5,chr(128).' '.number_format($stawki_vat, 2,',', '.'),0,1);
+                                $pdf->SetXY(171,$wysokosc+8+$wys);
+                                $pdf->MultiCell(0, 10, chr(128).'', 0, 1);
+                                $pdf->SetXY(161 + $ilosc_znakow,$wysokosc+10+$wys);
+                                $pdf->Cell(0,5, number_format($stawki_vat, 2,',', '.'),0,1);
                                 
                                 $wys += 5;
                                 
@@ -671,9 +745,9 @@ class facturmodel
         
         
         
-                $pdf->SetXY(169 + $ilosc_znakow,$wysokosc+30);
+                $pdf->SetXY(168 + $ilosc_znakow,$wysokosc+30);
 
-                $pdf->Cell(20,10,chr(128).' '.number_format($total,2,',', '.').'',0,1,true);
+                $pdf->Cell(20,10,chr(128).' '.number_format($total + $totalBtW,2,',', '.').'',0,1,true);
 
             $nr = $data[0]['id'];
 

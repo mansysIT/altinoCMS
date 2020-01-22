@@ -70,7 +70,7 @@ $d = new DateTime(date("Y-m-d"));
                     </select>
                 </div>
                 <div class="RekeningInside">
-                    <p class="rekaningText">Oferten</p> 
+                    <p class="rekaningText">Offerten</p> 
                     <select name="oferten" class="oferty form-control wybor_liczb" id="exampleFormControlSelect1">
 
 
@@ -87,7 +87,7 @@ $d = new DateTime(date("Y-m-d"));
                                 <tbody class="warforadd">                             
                                     <tr style="display: none" class="nag " id="count">
                                         <td class="">
-                                        <p class="rekaningText">Warvoor</p>
+                                        <p class="rekaningText">Waarvoor</p>
                                         </td>
                                         <td class="">
                                         <select name="warfortype[]" class="form-control">';

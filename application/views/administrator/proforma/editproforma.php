@@ -73,7 +73,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                     </select>
                 </div>
                 <div class="RekeningInside">
-                    <p class="rekaningText">Oferten</p> 
+                    <p class="rekaningText">Offerten</p> 
                     <select name="oferten" class="oferty form-control wybor_liczb" id="exampleFormControlSelect1">
                     <option value="0">KIEZ</option>
                     </select>
@@ -87,7 +87,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                                 <tr style="display: none" class="nag ">
                                         
                                         <td class="">
-                                        <p class="rekaningText">Warvoor</p>
+                                        <p class="rekaningText">Waarvoor</p>
                                         </td>
                                         <td class="">
                                         <select name="warfortype[]" class="form-control">';
@@ -127,7 +127,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                 <?php echo '<tr style="display: flex" class="">
                                         
                                         <td class="">
-                                        <p class="rekaningText">Warvoor</p>
+                                        <p class="rekaningText">Waarvoor</p>
                                         </td>
                                         <td class="">
                                         <select name="warfortype[]" class="form-control">';

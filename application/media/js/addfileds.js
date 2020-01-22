@@ -10,22 +10,21 @@ function sum() {
     var x = [];
     var y =[];
     var i = 0;
-    var sum = 0;
+	var sum = 0;
+	
+	var xVal = 0;
+	var yVal = 0;
 
     element1.forEach(function(userItem) {
-        
-		x.push(parseInt(userItem.value));
-		
+        xVal = userItem.value.replace(",", ".");
+		x.push(parseFloat(xVal));	
     });
 	x.shift()
 
     element2.forEach(function(userItem) {
-		
-		y.push(parseInt(userItem.value));
-		
-        
-
-        
+		yVal = userItem.value.replace(",", ".");
+		y.push(parseFloat(yVal));
+  
 	});
 	y.shift()
 	
@@ -63,6 +62,14 @@ function zamiana_daty(date)
 
 $(document).ready(function () {
 
+
+	$("form").keypress(function(e) {
+		//Enter key
+		if (e.which == 13) {
+		  return false;
+		}
+	  });
+
     $("body").on("blur", ".getAllWarfor", function(){
         sum();
     });
@@ -82,59 +89,11 @@ $(document).ready(function () {
 
 		nowywiersz(index, "<tr style='display: flex' class='warforadd warforCenter'>"+row_one+"</tr>");
         index++;
-    });
-
+	});
+	
 	// Usuwanie i reset pól
-	// $('#kopia_wiersz').on('click', ".del", function (e) {
-	// 	e.preventDefault();
-	// 	alert(e.keyCode);
-	// 	if (e.keyCode != undefined) {
-	// 		alert(e.keyCode);
-	// 	// 
-	// 	id_del = $(this).parent().find("input[name='id_edycja[]']").val();  
-	// 	//adres_id = $(this).find("input[name='adres_id']").val();
-	// 	adres_id = $("input[name='adres_id']").val();	
-	// 	nowy_huurder = $("input[name='nowy_huurder']").val();  
-		
-	// 	//alert(adres_id);
-		
-	// 	$.ajax(
-	// 			{
-	// 				type:"POST", 
-	// 				url:"js/customer_del_rej.php", 
-	// 				data: {
-	// 					dane0:id_del,
-	// 					adres_id:adres_id,
-	// 					nowy_huurder:nowy_huurder
-	// 					},
-					
-	// 					success:function(data) 
-	// 					{
-	// 						console.log(data); 
-
-	// 					},
-
-	// 					error: function(blad) 
-	// 					{
-	// 						console.log(blad); 
-	// 					}
-	// 			});
-	// 	$(this).parent().remove();
-	// 	sum();
-	// }
-	// });
-
-	
-	
-});
-
-function removeWarfor(e) {
-        
-	e.preventDefault();
-	alert(e.keyCode);
-	if (e.keyCode != undefined) {
-		alert('aaa');
-	// // 
+	$('#kopia_wiersz').on('click', ".del", function (event) {
+		event.preventDefault();
 		id_del = $(this).parent().find("input[name='id_edycja[]']").val();  
 		//adres_id = $(this).find("input[name='adres_id']").val();
 		adres_id = $("input[name='adres_id']").val();	
@@ -165,5 +124,49 @@ function removeWarfor(e) {
 				});
 		$(this).parent().remove();
 		sum();
-	}
-};
+	});
+	
+});
+
+// function removeWarfor(event) {
+        
+// 	e.preventDefault();
+// 	alert('aaa');
+// 		event.preventDefault();
+// 		var x = event.which || event.keyCode;
+// 		alert(x);
+// 	if (e.keyCode != undefined) {
+// 		alert('aaa');
+// 	// // 
+// 		id_del = $(this).parent().find("input[name='id_edycja[]']").val();  
+// 		//adres_id = $(this).find("input[name='adres_id']").val();
+// 		adres_id = $("input[name='adres_id']").val();	
+// 		nowy_huurder = $("input[name='nowy_huurder']").val();  
+		
+// 		//alert(adres_id);
+		
+// 		$.ajax(
+// 				{
+// 					type:"POST", 
+// 					url:"js/customer_del_rej.php", 
+// 					data: {
+// 						dane0:id_del,
+// 						adres_id:adres_id,
+// 						nowy_huurder:nowy_huurder
+// 						},
+					
+// 						success:function(data) 
+// 						{
+// 							console.log(data); 
+
+// 						},
+
+// 						error: function(blad) 
+// 						{
+// 							console.log(blad); 
+// 						}
+// 				});
+// 		$(this).parent().remove();
+// 		sum();
+// 	}
+// };

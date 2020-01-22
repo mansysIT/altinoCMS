@@ -97,7 +97,7 @@ class proformamodel
         foreach(array_slice($warfor,1) as $row){
             $z = $row['quantity'] * $row['price'];
 
-            if(!in_array($row['btw'], $x))
+            if(!in_array($x, $row['btw']))
             $x += array($row['btw'] => 0) ;
 
             foreach($x as $rows=>$val){
@@ -282,7 +282,7 @@ class proformamodel
             foreach ($proforma_nr->fetch_all() as $row) {
                 for ($i=0; $i < 20; $i++) {
                     # code...
-
+                    $price = str_replace(",",".",$this->__params['POST']['warforquantity'][$i]);
                 
                     $this->__db->execute("INSERT INTO bouw_proforma_details 
 			(proforma_nr, 
@@ -295,7 +295,7 @@ class proformamodel
 			".$row[0].",
 			".$this->__params['POST']['warfortype'][$i].",
 			".$this->__params['POST']['warfortimespend'][$i].",
-            ".$this->__params['POST']['warforquantity'][$i].",
+            ".$price.",
             '".$this->__params['POST']['opmerkingen'][$i]."'
 			)");
                 }
@@ -460,13 +460,14 @@ class proformamodel
                 foreach (array_slice($this->__params['POST']['warforInputId'], 1) as $row) {
                     $id = $this->__params['POST']['warforInputId'][$i];
                     $allwarfor = $this->getAllWarforForAdres()[$i - 1];
+                    $price = str_replace(",",".",$this->__params['POST']['warforquantity'][$i]);
                     if (in_array($id, $allwarfor)) {
                     $r = $this->__db->execute("UPDATE bouw_proforma_details 
                     SET
                     proforma_nr = '".$factur."',
                     waarvoor_id = '".$this->__params['POST']['warfortype'][$i]."', 
                     quantity = '".$this->__params['POST']['warfortimespend'][$i]."',
-                    price = '".$this->__params['POST']['warforquantity'][$i]."',
+                    price = '".$price."',
                     opmerkingen = '".$this->__params['POST']['opmerkingen'][$i]."'
                     WHERE id = '".$this->__params['POST']['warforInputId'][$i]."'
                     ");
@@ -481,7 +482,7 @@ class proformamodel
                         ".$factur.",
                         ".$this->__params['POST']['warfortype'][$i].",
                         ".$this->__params['POST']['warfortimespend'][$i].",
-                        ".$this->__params['POST']['warforquantity'][$i].",
+                        ".$price.",
                         '".$this->__params['POST']['opmerkingen'][$i]."'
                         )");
                         }
@@ -495,8 +496,10 @@ class proformamodel
                 $x = 1;
 
                 if (count($this->__params['POST']['warforInputId']) >= count($facturWarfor)) {
+                    
                     foreach (array_slice($this->__params['POST']['warforInputId'], 1) as $row) {
                         $id = $this->__params['POST']['warforInputId'][$x];
+                        $price1 = str_replace(",",".",$this->__params['POST']['warforquantity'][$x]);
                         $allwarfor = $facturWarfor[$x - 1];
 
                         $this->__db->execute("INSERT INTO bouw_factur_details 
@@ -509,7 +512,7 @@ class proformamodel
                             ".$lastFacturNumer.",
                             ".$this->__params['POST']['warfortype'][$x].",
                             ".$this->__params['POST']['warfortimespend'][$x].",
-                            ".$this->__params['POST']['warforquantity'][$x].",
+                            ".$price1.",
                             '".$this->__params['POST']['opmerkingen'][$x]."'
                         )");
 
@@ -635,15 +638,15 @@ class proformamodel
 
 			
 			if($betaald == 1){
-				$temat = 'BETALINGSHERINNERING - proforma factuur van KH Bemiddeling';
+				$temat = 'BETALINGSHERINNERING - Proforma van KH Bemiddeling';
 
 				$tresc = '
 							Beste <br><br>
-							In de bijlage kunt u de proforma factuur inzien en uitprinten.<br /><br />
+							In de bijlage kunt u de proforma inzien en uitprinten.<br /><br />
 										
 							
 							met vriendelijke groet <br />
-							KHBemiddeling';
+							AGUIAR BOUW B.V';
 		 
 				
 				
@@ -658,15 +661,15 @@ class proformamodel
 			}
 			
 			if($betaald == 2){
-				$temat = 'AANMANING - proforma factuur van KH Bemiddeling'; 
+				$temat = 'AANMANING - Proforma van KH Bemiddeling'; 
 
 				$tresc = '
 							Beste <br><br>
-							In de bijlage kunt u de proforma factuur inzien en uitprinten.<br /><br />
+							In de bijlage kunt u de proforma inzien en uitprinten.<br /><br />
 										
 							
 							met vriendelijke groet <br />
-							KHBemiddeling';
+							AGUIAR BOUW B.V';
 		 
 				
 				
@@ -688,11 +691,11 @@ class proformamodel
 
 			$tresc = '
 						Beste <br><br>
-						In de bijlage kunt u de proforma factuur inzien en uitprinten.<br /><br />
+						In de bijlage kunt u de proforma inzien en uitprinten.<br /><br />
 									
 						
 						met vriendelijke groet <br />
-                        KHBemiddeling';
+                        AGUIAR BOUW B.V';
                         
 			$proforma_pdf = 'application/storage/proformy/'.$proforma_id.'.pdf';
 			
@@ -724,11 +727,11 @@ class proformamodel
 
         $msg = 'E-mail was verstuurd.';
 
+        
+
+        $mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $proforma_pdf);
+
         print_r('send');
-
-        //$mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $proforma_pdf);
-
-
         //header('Location:proformy.php?msg=' . $msg);
     
     }
@@ -965,21 +968,68 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
                 $sum = $row['quantity'] * $row['price'];
                 $pdf->SetY($wysokosc);
 
+                $ilosc_znakow_price = strlen(number_format($row['price'], 2, ',', '.'));
+
+                if ($ilosc_znakow_price == 10) {
+                    $ilosc_znakow_price +=0;
+                }
+
+                if ($ilosc_znakow_price == 9) {
+                    $ilosc_znakow_price +=3;
+                }
+
+                if ($ilosc_znakow_price == 8) {
+                    $ilosc_znakow_price +=6;
+                }
+
+                if ($ilosc_znakow_price == 7) {
+                    $ilosc_znakow_price +=3;
+                }
+
+                if ($ilosc_znakow_price == 6) {
+                    $ilosc_znakow_price +=11;
+                }
+
+                if ($ilosc_znakow_price == 5) {
+                    $ilosc_znakow_price +=14;
+                }
+
+                if ($ilosc_znakow_price == 4) {
+                    $ilosc_znakow_price +=16;
+                }
+
+
                 $ilosc_znakow = strlen(number_format($sum, 2, ',', '.'));
 
+                if ($ilosc_znakow == 10) {
+                    $ilosc_znakow +=0;
+                }
+
+                if ($ilosc_znakow == 9) {
+                    $ilosc_znakow +=3;
+                }
+
+                if ($ilosc_znakow == 8) {
+                    $ilosc_znakow +=6;
+                }
+
+                if ($ilosc_znakow == 7) {
+                    $ilosc_znakow +=3;
+                }
+
                 if ($ilosc_znakow == 6) {
-                    $ilosc_znakow +=5;
+                    $ilosc_znakow +=11;
                 }
 
                 if ($ilosc_znakow == 5) {
-                    $ilosc_znakow +=9;
+                    $ilosc_znakow +=14;
                 }
 
                 if ($ilosc_znakow == 4) {
-                    $ilosc_znakow +=12;
+                    $ilosc_znakow +=16;
                 }
 
-                $ilosc_znakow += 7;
+                $ilosc_znakow += 4;
 
                 $text=$row['opmerkingen'];
                 $pdf->SetFont('Arial','',10);
@@ -987,20 +1037,24 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
                 $ile=$pdf->WordWrap($text,70);
                 $pdf->SetXY(30 , $wysokosc+3);
                 $pdf->MultiCell(75, 5, $text,0);
-
-                $pdf->SetXY(110 , $wysokosc);
+                
+                $pdf->SetXY(107 , $wysokosc);
                 if ($row['price']) {
-                    $pdf->Cell(0, 10, chr(128).' '.number_format($row['price'], 2, ',', '.').'', 0, 1);
+                    $pdf->MultiCell(0, 10, chr(128).'', 0, 1);
+                    $pdf->SetXY(100 + $ilosc_znakow_price, $wysokosc);
+                    $pdf->MultiCell(0, 10, number_format($row['price'], 2, ',', '.').'', 0, 1);
                 }
 
                 $pdf->SetXY(140, $wysokosc);
-                $pdf->Cell(0, 10, $row['quantity'], 0, 1);
+                $pdf->MultiCell(0, 10, $row['quantity'], 0, 1);
                 $pdf->SetXY(155, $wysokosc);
-                $pdf->Cell(0, 10, '  '.$row['btw'].' %', 0, 1);
-                $pdf->SetXY(162 + $ilosc_znakow, $wysokosc);
+                $pdf->MultiCell(0, 10, '  '.$row['btw'].' %', 0, 1);
+                $pdf->SetXY(175, $wysokosc);
+                $pdf->MultiCell(0, 10, chr(128).'', 0, 1);
+                $pdf->SetXY(164 + $ilosc_znakow, $wysokosc);
+                $pdf->MultiCell(0, 10,number_format($sum, 2, ',', '.').'', 0, 1);
 
-                $pdf->Cell(0, 10, chr(128).' '.number_format($sum, 2, ',', '.').'', 0, 1);
-
+                
                 $wysokosc += 5*$ile;
                 $wysokosc += 5;
                 if($wysokosc >= 245 && $wysokosc <= 275){
@@ -1013,32 +1067,41 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
                 $pdf->AddPage();
                 $wysokosc = 5;
             }
-            $pdf->Line(150, $wysokosc, 200, $wysokosc);
-            $pdf->SetXY(150, $wysokosc);
-            $pdf->SetFont('Arial', '', 12);
-            $pdf->Cell(0, 10, 'Subtotaal', 0, 1);
-        
-        
+            $pdf->Line(134,$wysokosc,200,$wysokosc);
+            $pdf->SetXY(134,$wysokosc);
+            $pdf->SetFont('Arial','',12);
+            $pdf->Cell(0,10,'Subtotaal',0,1);
+    
+    
             $ilosc_znakow = 0;
+    
+            $ilosc_znakow = strlen(number_format($total,2,',', '.'));
+    
+            if($ilosc_znakow == 10)
+            $ilosc_znakow +=4;
 
+            if($ilosc_znakow == 9)
+            $ilosc_znakow +=7;
 
-            $ilosc_znakow = strlen(number_format($total, 2, ',', '.'));
-        
-            if ($ilosc_znakow == 6) {
-                $ilosc_znakow +=5;
-            }
-        
-            if ($ilosc_znakow == 5) {
-                $ilosc_znakow +=9;
-            }
-        
-            if ($ilosc_znakow == 4) {
-                $ilosc_znakow +=10;
-            }
-        
-            $pdf->SetXY(169 + $ilosc_znakow, $wysokosc);
+            if($ilosc_znakow == 8)
+            $ilosc_znakow +=10;
 
-            $pdf->Cell(0, 10, chr(128).' '.number_format($total, 2, ',', '.'), 0, 1);
+            if($ilosc_znakow == 7)
+            $ilosc_znakow +=13;
+
+            if($ilosc_znakow == 6)
+            $ilosc_znakow +=16;
+    
+            if($ilosc_znakow == 5)
+            $ilosc_znakow +=19;
+    
+            if($ilosc_znakow == 4)
+            $ilosc_znakow +=22;
+    
+            $pdf->SetXY(171,$wysokosc);
+            $pdf->MultiCell(0, 10, chr(128).'', 0, 1);
+            $pdf->SetXY(161 + $ilosc_znakow,$wysokosc);
+            $pdf->Cell(0,10, number_format($total, 2,',', '.'),0,1);
         
         
         
@@ -1048,53 +1111,62 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
             $totalBtW = 0;
             foreach ($btw as $k => $stawki_vat) {
   
-                if ($k !=0) {
+                if($k !=0){
         
-                                    // $kwota_vat = round($kw - ($kw / $dzielnik),2) ;
-                                
-                    $pdf->SetX(142);
-        
-                    $pdf->Cell(0, 5, $k.'% BTW over', 0, 1);
-                                
-                    $ilosc_znakow = 0;
-                    $ilosc_znakow = strlen(number_format($stawki_vat, 2, ',', '.'));
-                                    
-        
-                    if ($ilosc_znakow == 6) {
-                        $ilosc_znakow +=5;
-                    }
-        
-                    if ($ilosc_znakow == 5) {
-                        $ilosc_znakow +=9;
-                    }
-                     
-                    if ($ilosc_znakow == 4) {
-                        $ilosc_znakow +=12;
-                    }
-                                
-                    $totalBtW += $stawki_vat;
-                    $pdf->SetXY(169 + $ilosc_znakow, $wysokosc+10+$wys);
-                    $pdf->Cell(0, 5, chr(128).' '.number_format($stawki_vat, 2, ',', '.'), 0, 1);
-                                
-                    $wys += 5;
-                }
-            }
-        
-        
-        
-        
-        
-        
-            $pdf->SetXY(135, $wysokosc+30);
-            $ilosc_znakow = 10;
-            $pdf->Cell(55 + $ilosc_znakow, 10, 'Totaal incl. BTW', T, 0, 1, true);
-        
-        
-        
-        
-            $pdf->SetXY(169 + $ilosc_znakow, $wysokosc+30);
+                    // $kwota_vat = round($kw - ($kw / $dzielnik),2) ;
+                
+                    $pdf->SetX(134);
 
-            $pdf->Cell(20, 10, chr(128).' '.number_format($total, 2, ',', '.').'', 0, 1, true);
+                    $pdf->Cell(0,5, $k.'% BTW over',0,1);
+                
+                    $ilosc_znakow = 0;
+                    $ilosc_znakow = strlen(number_format($stawki_vat,2,',', '.'));
+                    
+
+                    if($ilosc_znakow == 10)
+                    $ilosc_znakow +=4;
+    
+                    if($ilosc_znakow == 9)
+                    $ilosc_znakow +=7;
+    
+                    if($ilosc_znakow == 8)
+                    $ilosc_znakow +=10;
+    
+                    if($ilosc_znakow == 7)
+                    $ilosc_znakow +=13;
+    
+                    if($ilosc_znakow == 6)
+                    $ilosc_znakow +=16;
+            
+                    if($ilosc_znakow == 5)
+                    $ilosc_znakow +=19;
+            
+                    if($ilosc_znakow == 4)
+                    $ilosc_znakow +=22;
+
+                    if($ilosc_znakow == 3)
+                    $ilosc_znakow +=25;
+                
+                    $totalBtW += $stawki_vat;
+                $pdf->SetXY(171,$wysokosc+8+$wys);
+                $pdf->MultiCell(0, 10, chr(128).'', 0, 1);
+                $pdf->SetXY(161 + $ilosc_znakow,$wysokosc+10+$wys);
+                $pdf->Cell(0,5, number_format($stawki_vat, 2,',', '.'),0,1);
+                
+                $wys += 5;
+                
+                }
+            
+            }
+
+            $pdf->SetXY(135,$wysokosc+30);
+            $ilosc_znakow = 10;
+            $pdf->Cell(55 + $ilosc_znakow,10,'Totaal incl. BTW',T,0,1,true);
+
+            $pdf->SetXY(171,$wysokosc+30);
+            $pdf->MultiCell(0, 10, chr(128).'', 0, 1);
+            $pdf->SetXY(168 + $ilosc_znakow,$wysokosc+30);
+            $pdf->Cell(20,10,number_format($total+$totalBtW,2,',', '.').'',0,1,true);
 
             $nr = $data[0]['id'];
             

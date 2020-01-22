@@ -15,6 +15,7 @@
 <?php $facturaModelData=model_load('ofertenmodel', 'showdata', '')?>
 <?php $getWarforTypes = model_load('mainmodel', 'getWaarvoor', '')?>
 <?php $mailhistory=model_load('ofertenmodel', 'getofertenidbynumer', '')?>
+<?=model_load('ofertenmodel', 'removeoferten', '')?>
 
 <?php
 // if($facturaModelData[0]['data']));
@@ -45,7 +46,19 @@ $d = new DateTime($facturaModelData[0]['data']);
 	<?=module_load('SIDEBAR')?>
     <div class="Mycontainer">
     <div class="maincontainer">
-    <h1>Oferten Bewerken</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1 class="ofertenTitle" >Offerten Bewerken</h1>
+                </div>
+                <div class="col-sm-6 align-self-end ml-auto">
+                    <form action="" method="post">
+                    <button type="submit" style="float: right" type="submit" class="btn btn-danger mb-2 btn-small" name="removeoferte">Opslaan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     <form action="" method="post" id="myForm">
             <div class="bottomHolder">
             <div class="rekaning">
@@ -82,7 +95,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                                 <tr style="display: none" class="nag">
                                         
                                         <td class="">
-                                        <p class="rekaningText">Warvoor</p>
+                                        <p class="rekaningText">Waarvoor</p>
                                         </td>
                                         <td class="">
                                         <select name="warfortype[]" class="form-control">';
@@ -93,6 +106,9 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <?php };
 
                                            echo'</select>
+                                        </td>
+                                        <td class="">
+                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea" cols="30" rows="10"></textarea>
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Aantal</p>
@@ -119,7 +135,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                     <?php echo '<tr style="display: flex" class="warforCenter">
                                         
                                         <td class="">
-                                        <p class="rekaningText">Warvoor</p>
+                                        <p class="rekaningText">Waarvoor</p>
                                         </td>
                                         <td class="">
                                         <select name="warfortype[]" class="form-control">';
@@ -130,6 +146,9 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <?php };
 
                                            echo'</select>
+                                        </td>
+                                        <td class="">
+                                            <textarea id="autoresizing" name="opmerkingen[]" class="inputNewHuurder warforTextArea" rows="1">'.$rows["opmerkingen"].'</textarea>
                                         </td>
                                         <td class="">
                                         <p class="rekaningText">Aantal</p>
@@ -144,7 +163,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                                             <input id="num2" class="form-control form-control-small getAllWarfor" name="warforquantity[]" placeholder="0" value="'.$rows["price"].'">
                                             <input style="display: none;"name="warforInputId[]" value="'.$rows["id"].'" >
                                         </td>
-                                        <td class=" del blok_mansys">
+                                        <td class="del blok_mansys">
                                         <button type="submit" class="warfor_id btn btn-danger mb-2" value="'.$rows["id"].'" onclick="removeWarfor('.$rows["id"].')" name="del-a" >X</button>
                                         </td>
                                         
@@ -161,19 +180,19 @@ $d = new DateTime($facturaModelData[0]['data']);
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-6 columnAlignText">
+                        <div class="col-sm-11 columnAlignText">
                         </div>
-                        <div class="col-sm-6 columnAlignText">
+                        <div class="col-sm-1 columnAlignText">
                             <h2 class="sumValue"></h2>
                         </div>
                     </div>
                 </div>
 				<div class="RekeningInside">
-                    <p class="rekaningText">Aanmaakdatum</p>
+                    <p class="rekaningText">Start Datum</p>
                     <input class="inputNewHuurder" type="date" name="facturdata" value="<?php echo $facturaModelData[0]['data']?>">
                 </div>
                 <div class="RekeningInside">
-                    <p class="rekaningText">Geplande Datum Van Voltooiing</p>
+                    <p class="rekaningText">Geplande</p>
                     <input class="inputNewHuurder" type="date" name="planned_date" value="<?php echo $facturaModelData[0]['planned_date']?>">
                 </div>
                 <div style="display: none" class="RekeningInside">
@@ -182,7 +201,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                     <input class="inputNewHuurder form-control-small " type="number" name="facturnumer" value="<?=$facturaModelData[0]['oferten_numer'] ?>">
                 </div>
                 <div class="RekeningInside">
-                    <p class="rekaningText">Einddatum</p>
+                    <p class="rekaningText">Einde Datum</p>
                     <input class="inputNewHuurder" type="date" name="data_end" value="<?php echo $facturaModelData[0]['data_end']?>">
                 </div>
                 <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Opslaan</button>
@@ -262,6 +281,12 @@ window.onload = function() {
 
         sum();
 
+        $('#autoresizing').on('input', function () { 
+    this.style.height = 'auto'; 
+      
+    this.style.height =  
+            (this.scrollHeight) + 'px'; 
+}); 
 };
 
 
@@ -310,6 +335,13 @@ function removeWarfor(id) {
             }
         });
 };
+
+$('#autoresizing').on('input', function () { 
+    this.style.height = 'auto'; 
+      
+    this.style.height =  
+            (this.scrollHeight) + 'px'; 
+}); 
 
 </script>
 <?php

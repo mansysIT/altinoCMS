@@ -52,6 +52,7 @@ class uitgaafmodel
             $adres = $this->__params['POST']['adres'];
             $factur =$this->__params['POST']['facturnumer'];
             $data = $this->__params['POST']['facturdata'];
+            
 
 			$this->__db->execute("UPDATE bouw_uitgave
             SET
@@ -75,13 +76,14 @@ class uitgaafmodel
                // print_r($warfortype." / ");
               //  print_r($warfortimespend." / ");
 //print_r($warforquantity." / ");
+            $price = str_replace(",",".",$this->__params['POST']['warforquantity'][$i]);
             $r = $this->__db->execute("UPDATE bouw_factur_details 
             SET
             factur_nr = '".$factur."',
             waarvoor_id = '".$this->__params['POST']['warfortype'][$i]."', 
             quantity = '".$this->__params['POST']['warfortimespend'][$i]."',
             price = '".$this->__params['POST']['warforquantity'][$i]."'
-            WHERE factur_nr = ".$this->__params['POST']['warforInputId'][$i]."
+            WHERE factur_nr = ".$price."
             ");
             // print_r($this->__params['POST']['warfortype'][$i]." / ");
             }
