@@ -30,10 +30,10 @@ class smtpmailer {
         $mail->isHTML(true); 
         $mail->SMTPAuth   = true; 
         $mail->SMTPSecure = "ssl";                 
-        $mail->Port       = '465';                    
-        $mail->Host       = 'smtp.gmail.com'; 
-        $mail->Username   = 'marcelrosa1999@gmail.com';     
-        $mail->Password   = '!Tacrac!66!';
+        $mail->Port       = '587';                    
+        $mail->Host       = 'khbemiddeling.e-kei.pl'; 
+        $mail->Username   = 'info@khbemiddeling.nl';     
+        $mail->Password   = 'Altino28';
         
         if(!empty($plik))
         $mail -> AddAttachment($plik); 	
@@ -41,7 +41,7 @@ class smtpmailer {
         $mail->IsSendmail();  
         
         $mail->From       = 'info@khbemiddeling.nl';
-        $mail->FromName   = 'KH Bemiddeling';
+        $mail->FromName   = 'AGUIAR BOUW B.V';
         $mail->AddAddress($do);
         $mail->Subject  = $temat;
 

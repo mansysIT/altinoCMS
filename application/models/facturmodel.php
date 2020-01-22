@@ -263,7 +263,7 @@ class facturmodel
     public function factur_mail_wyslij($email, $factur_id, $wystaw_i_wyslij = null, $factur_numer = null) {
 		
 		
-			$temat = 'Factuur van KH Bemiddeling';
+			$temat = 'Factuur van AGUIAR BOUW B.V';
 
 			$tresc = '
 						Beste <br><br>
@@ -271,7 +271,7 @@ class facturmodel
 									
 						
 						met vriendelijke groet <br />
-                        KHBemiddeling';
+                        AGUIAR BOUW B.V';
                         
 	 
             $proforma_pdf = 'application/storage/factur/'.$factur_id.'.pdf';

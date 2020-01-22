@@ -614,15 +614,15 @@ class ofertenmodel
     public function proformy_mail_wyslij($email, $oferten_id, $betaald = null, $wystaw_i_wyslij = null, $oferten_numer = null) {
 		
 		
-            $temat = 'oferten Factuur van KH Bemiddeling';
+            $temat = 'Offerten van KH Bemiddeling';
 
             $tresc = '
 						Beste <br><br>
-						In de bijlage kunt u de oferten factuur inzien en uitprinten.<br /><br />
+						In de bijlage kunt u de offerten inzien en uitprinten.<br /><br />
 									
 						
 						met vriendelijke groet <br />
-                        KHBemiddeling';
+                        AGUIAR BOUW B.V';
                         
             $oferten_pdf = 'application/storage/oferten/'.$oferten_id.'.pdf';
             
@@ -672,7 +672,7 @@ class ofertenmodel
 		// $nr='KH-00'.$id;
 
 		$pdf->SetFont('ArialMT','',14);
-		$pdf->Cell(0,0,'Oferten: '.$data[0]['oferten_numer'],0,1);
+		$pdf->Cell(0,0,'Offerte: '.$data[0]['oferten_numer'],0,1);
 		$pdf->SetY(45);
 		$pdf->SetFont('ArialMT','',17);
 		$pdf->SetTextColor(0, 0, 0);
@@ -696,7 +696,7 @@ class ofertenmodel
 
 		$pdf->SetXY(130,45);
 		$pdf->SetFont('Arial','',12);
-		$pdf->Cell(0,5,'oferten voor:',0,1);
+		$pdf->Cell(0,5,'Offerte voor:',0,1);
 		$pdf->SetX(130);
 
         $pdf->SetFont('ArialMT','',10);
@@ -841,7 +841,7 @@ class ofertenmodel
                 $pdf->SetFont('Arial', '', 12);
 
                 $pdf->SetFillColor(240, 240, 240);
-                $pdf->Cell(0, 10, 'Oferten: '.$data[0]['oferten_numer'].' van '.$data[0]['data'].' '.$wynajem, T, 1, 1, true);
+                $pdf->Cell(0, 10, 'Offerten: '.$data[0]['oferten_numer'].' van '.$data[0]['data'].' '.$wynajem, T, 1, 1, true);
 
 
                 $pdf->Cell(100, 10, 'Order: '.$data[0]['id'], 0, 1);

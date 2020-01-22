@@ -638,15 +638,15 @@ class proformamodel
 
 			
 			if($betaald == 1){
-				$temat = 'BETALINGSHERINNERING - proforma factuur van KH Bemiddeling';
+				$temat = 'BETALINGSHERINNERING - Proforma van KH Bemiddeling';
 
 				$tresc = '
 							Beste <br><br>
-							In de bijlage kunt u de proforma factuur inzien en uitprinten.<br /><br />
+							In de bijlage kunt u de proforma inzien en uitprinten.<br /><br />
 										
 							
 							met vriendelijke groet <br />
-							KHBemiddeling';
+							AGUIAR BOUW B.V';
 		 
 				
 				
@@ -661,15 +661,15 @@ class proformamodel
 			}
 			
 			if($betaald == 2){
-				$temat = 'AANMANING - proforma factuur van KH Bemiddeling'; 
+				$temat = 'AANMANING - Proforma van KH Bemiddeling'; 
 
 				$tresc = '
 							Beste <br><br>
-							In de bijlage kunt u de proforma factuur inzien en uitprinten.<br /><br />
+							In de bijlage kunt u de proforma inzien en uitprinten.<br /><br />
 										
 							
 							met vriendelijke groet <br />
-							KHBemiddeling';
+							AGUIAR BOUW B.V';
 		 
 				
 				
@@ -691,11 +691,11 @@ class proformamodel
 
 			$tresc = '
 						Beste <br><br>
-						In de bijlage kunt u de proforma factuur inzien en uitprinten.<br /><br />
+						In de bijlage kunt u de proforma inzien en uitprinten.<br /><br />
 									
 						
 						met vriendelijke groet <br />
-                        KHBemiddeling';
+                        AGUIAR BOUW B.V';
                         
 			$proforma_pdf = 'application/storage/proformy/'.$proforma_id.'.pdf';
 			
@@ -727,11 +727,11 @@ class proformamodel
 
         $msg = 'E-mail was verstuurd.';
 
+        
+
+        $mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $proforma_pdf);
+
         print_r('send');
-
-        //$mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $proforma_pdf);
-
-
         //header('Location:proformy.php?msg=' . $msg);
     
     }
