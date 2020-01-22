@@ -36,7 +36,7 @@
                 <a href="administrator/proforma/index">Proforma</a> 
             </li>
             <li>
-                <a href="administrator/oferten/index">Oferten</a>
+                <a href="administrator/oferten/index">Offerten</a>
             </li>
             <li>
                 <a href="administrator/instellingen/stedenlijst">Instellingen</a>

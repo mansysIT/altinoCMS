@@ -20,7 +20,7 @@
 
 <?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css,factur.css')?>
 
-<?=javascript_load('main.js,sidebar.js,nieuwe_adress.js')?> 
+<?=javascript_load('main.js,sidebar.js,nieuwe_adress.js,addfileds.js')?> 
      
 <?=icon_load("pp_fav.ico")?>
 
@@ -51,9 +51,7 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                     <select name="city" class="miasta form-control" id="exampleFormControlSelect1">
                     <option value="">SELECT CITY</option>
                     <?php foreach($sidebarController as $row): ?>
-                        <li> 
                         <option value="<?php echo $row[0]; ?>"<?php if(!empty($uitgavenModelData) && $row[0] == $uitgavenModelData[0]['city_id']) echo "selected" ?>><?php echo $row[1]; ?></option>
-                        </li>
                     <?php endforeach; ?> 
                     </select>
                 </div>  
@@ -69,9 +67,7 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                     <select name="waarvoor" class="form-control" id="exampleFormControlSelect1">
                     <option value="">KIEZ</option>
                     <?php foreach($waarvoor as $row): ?> 
-                        <li>
-                            <option value="<?php echo $row[0]; ?>"<?php if(!empty($uitgavenModelData) && $row[0] == $uitgavenModelData[0]['waarvoor_id']) echo 'selected'; ?>><?php echo $row[1]; ?></option>
-                        </li>
+                            <option value="<?php echo $row[0]; ?>"<?php if(!empty($uitgavenModelData) && $row[0] == $uitgavenModelData[0]['waarvoor_id']) echo 'id="num1" selected'; ?>><?php echo $row[1].' ('.$row[2].'%)'; ?></option>
                     <?php endforeach; ?> 
                     </select>
                 </div>

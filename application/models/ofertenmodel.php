@@ -614,7 +614,7 @@ class ofertenmodel
     public function proformy_mail_wyslij($email, $oferten_id, $betaald = null, $wystaw_i_wyslij = null, $oferten_numer = null) {
 		
 		
-            $temat = 'Offerten van KH Bemiddeling';
+            $temat = 'Offerten van AGUIAR BOUW B.V';
 
             $tresc = '
 						Beste <br><br>
@@ -841,7 +841,7 @@ class ofertenmodel
                 $pdf->SetFont('Arial', '', 12);
 
                 $pdf->SetFillColor(240, 240, 240);
-                $pdf->Cell(0, 10, 'Offerten: '.$data[0]['oferten_numer'].' van '.$data[0]['data'].' '.$wynajem, T, 1, 1, true);
+                $pdf->Cell(0, 10, 'Offerte: '.$data[0]['oferten_numer'].' van '.$data[0]['data'].' '.$wynajem, T, 1, 1, true);
 
 
                 $pdf->Cell(100, 10, 'Order: '.$data[0]['id'], 0, 1);
@@ -943,10 +943,13 @@ class ofertenmodel
                             $ilosc_znakow += 4;
         
                             $text=$row['opmerkingen'];
+                            $name = $row['name'];
+                            $ilename=$pdf->WordWrap($name,25);
                             $pdf->SetFont('Arial','',10);
-                            $pdf->MultiCell(0, 10, ''.$row['name'].'', 0, 1);
+                            $pdf->SetXY(10 , $wysokosc+3);
+                            $pdf->MultiCell(25, 5,$name, 0);
                             $ile=$pdf->WordWrap($text,70);
-                            $pdf->SetXY(30 , $wysokosc+3);
+                            $pdf->SetXY(35 , $wysokosc+3);
                             $pdf->MultiCell(75, 5, $text,0);
                             
                             $pdf->SetXY(107 , $wysokosc);
@@ -965,8 +968,15 @@ class ofertenmodel
                             $pdf->SetXY(164 + $ilosc_znakow, $wysokosc);
                             $pdf->MultiCell(0, 10,number_format($sum, 2, ',', '.').'', 0, 1);
             
-                            
-                            $wysokosc += 5*$ile;
+                            $wysokoscname = 5*$ilename;
+                            $wysokoscopmerkingen = 5*$ile;
+
+                            if($wysokoscname > $wysokoscopmerkingen){
+                                $wysokosc += $wysokoscname;
+                            } else {
+                                $wysokosc += $wysokoscopmerkingen;
+                            }
+
                             $wysokosc += 5;
                             if($wysokosc >= 245 && $wysokosc <= 275){
                                 $pdf->AddPage();
