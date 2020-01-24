@@ -126,18 +126,18 @@ class mainmodel
 		}
 	}
 
-	public function getWaarvoor($params=null){
+	public function getWaarvoor($params=null){ 
 
         $waarvoorArray = array();
 
        // $waarvoor_id = 1;
-
         $dod = '';
-         if($params[0] != 0)
-              $dod = 'WHERE id = '.$params[0];
+         if($params != 0)
+			$dod = 'WHERE id = '.$params;
 
-        if(isset($params[1]))
-            $dod = "WHERE name LIKE '".$params[1]."'"; 
+
+		// if(isset($params[1]))
+		// $dod = "WHERE name LIKE '".$params[1]."'"; 
 
 		$this->query = $this->__db->querymy("SELECT * FROM `bouw_waarvoor` ".$dod);
         

@@ -21,7 +21,7 @@
 
 <?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css,factur.css')?>
 
-<?=javascript_load('sidebar.js,addfileds.js')?> 
+<?=javascript_load('sidebar.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
 
@@ -33,7 +33,7 @@ $d = new DateTime(date("Y-m-d"));
 
 
 
-<!-- <script src="/application/media/js/addfileds.js"></script> -->
+<script src="/application/media/js/addfileds.js"></script>
 
 
 
@@ -50,7 +50,7 @@ $d = new DateTime(date("Y-m-d"));
     <div class="maincontainer">  
     <form action="" method="post" id="myForm">
             <div class="bottomHolder">
-            <div class="rekaning">
+            <div class="">
                 <div class="RekeningInside">
                     <p class="rekaningText">City</p>
                     <select name="city" class="miasta form-control" id="exampleFormControlSelect1">
@@ -77,10 +77,9 @@ $d = new DateTime(date("Y-m-d"));
                                     <tr style="display: none" class="nag warforCenter" id="count">
                                         <td class="">
                                             <p class="alignItem rekaningText columnAlignText">Waarvoor</p>
-                                            <select id="mySelect" name="warfortype[]" class="alignItem form-control selectValid">
-                                            <option value="">KIEZ</option>';
+                                            <select name="warfortype[]" class="alignItem form-control">';
                                             foreach($getWarforTypes as $row): ?>
-                                                <option id="<?=$row[2]?>" value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
+                                                <option value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
                                             <?php endforeach;
 
                                            echo'</select>
@@ -94,8 +93,12 @@ $d = new DateTime(date("Y-m-d"));
                                             <input id="num1" class="alignItem form-control form-control-small getAllWarfor" placeholder="0" name="warfortimespend[]" value="">
                                         </td>
                                         <td class="">
-                                            <p class="alignItem rekaningText columnAlignText">PRIJS</p>
-                                            <input id="num2" class="alignItem form-control form-control-small getAllWarfor calculateBTW" placeholder="0" name="warforquantity[]" value="">
+                                            <p class="alignItem rekaningText columnAlignText">PRIJS EXCL. BTW</p>
+                                            <input id="num2" class="alignItem form-control form-control-small getAllWarfor" placeholder="0" name="warforquantity[]" value="">
+                                        </td>
+                                        <td class="">
+                                            <p class="alignItem rekaningText columnAlignText">PRIJS INCL. BTW</p>
+                                            <input class="alignItem form-control form-control-small" placeholder="0" readonly>
                                         </td>
                                         <td class=" del blok_mansys">
                                             <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="remove btn btn-danger" name="del-a" type="submit" value="X" >
@@ -108,6 +111,36 @@ $d = new DateTime(date("Y-m-d"));
 					?>
                 </div>
                 <div class="container-fluid">
+                    <div class="row nag" style="display: none">
+                        <div class="col-sm columnAlignText my-auto">
+                            <p class="alignItem warforText columnAlignText">Waarvoor</p>
+                            <select name="warfortype[]" class="alignItem form-control">
+                                <?php foreach($getWarforTypes as $row): ?>
+                                    <option value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>'
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="col-sm columnAlignText my-auto">
+                            <p class="alignItem warforText columnAlignText">Opmerkingen</p>
+                            <textarea name="opmerkingen[]" class="alignItem inputNewHuurder warforTextArea" heigh></textarea>
+                        </div>
+                        <div class="col-sm columnAlignText my-auto">
+                            <p class="alignItem warforText columnAlignText">Aantal</p>
+                            <input id="num1" class="alignItem form-control form-control-small getAllWarfor" placeholder="0" name="warfortimespend[]" value="">
+                        </div>
+                        <div class="col-sm columnAlignText my-auto">
+                            <p class="alignItem warforText columnAlignText">PRIJS EXCL. BTW</p>
+                            <input id="num2" class="alignItem form-control form-control-small getAllWarfor" placeholder="0" name="warforquantity[]" value="">
+                        </div>
+                        <div class="col-sm columnAlignText my-auto">
+                            <p class="alignItem warforText columnAlignText">PRIJS INCL. BTW</p>
+                            <input class="alignItem form-control form-control-small" placeholder="0" readonly>
+                        </div>
+                        <div class="col-sm columnAlignText del blok_mansys my-auto">
+                            <input style=" width: auto; display:block; margin:0 auto; height: auto;" class=" remove btn btn-danger" name="del-a" type="submit" value="X" >
+                        </div>
+                    </div>
+
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
                 
                     <div class="row">
@@ -120,7 +153,7 @@ $d = new DateTime(date("Y-m-d"));
                             <h3></h3>
                         </div>
                         <div class="col-sm-1 columnAlignText">
-                            <h3 class="sumBtw"></h3>
+                            <h3 class="sumValue"></h3>
                         </div>
                     </div>
                 </div>
@@ -134,12 +167,7 @@ $d = new DateTime(date("Y-m-d"));
                     <input class="inputNewHuurder" type="date" name="ofertendataend" value='<?=$d->format('Y-m-d')?>' >
                 </div>
                 <button type="submit" class="btn btn-danger mb-2 btn-small" name="saveoferten">Opslaan</button>
-            </div>
-            <div class="right">
-
-
-            </div>
-            
+            </div>         
         </div>
         
 

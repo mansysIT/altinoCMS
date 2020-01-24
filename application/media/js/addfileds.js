@@ -11,6 +11,7 @@ function sum() {
     var y =[];
     var i = 0;
 	var sum = 0;
+	var btw = 0;
 	
 	var xVal = 0;
 	var yVal = 0;
@@ -47,8 +48,26 @@ function sum() {
 	if(isNaN(sum)) {
 		sum = 0;
 	}
-    $(".sumValue").html(formatter.format(sum));
 
+		
+
+
+
+	$(".sumValue").html(formatter.format(sum));
+	$(".sumBtw").html(formatter.format(btw));
+
+}
+
+function getBTW() {
+	var element1 = document.querySelectorAll('#mySelect');
+	element1.forEach(function(userItem) {
+		var opt;
+		for ( var i = 1, len = userItem.options.length; i < len; i++ ) {
+			opt = userItem.options[i];
+			if ( opt.selected == true ) {
+			}
+		}
+	});
 }
 
 
@@ -57,6 +76,20 @@ function nowywiersz(index, row_one, id )
 	index++;
 
 		$(".nag").parent().append(row_one).children().last().attr("id", "nag_" + index);
+
+		var sel = document.querySelectorAll('.selectValid');
+		var x = [];
+
+		sel.forEach(function(userItem) {
+			x.push(userItem);	
+			
+		});
+		x.shift()
+		x.forEach(function(userItem) {
+			userItem.setAttribute("required", ""); 
+		});
+
+		// $(".select").parent().append(row_one).children().last().setAttribute("required", "");
 }
 
 function zamiana_daty(date)

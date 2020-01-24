@@ -50,6 +50,7 @@
     width: 100%;
 	padding: 30px!important;
 	padding: 5px;
+	min-width: 460px;
 }
 
 input {
@@ -71,6 +72,10 @@ font-weight: 100;
 	padding: 0!important;
 }
 
+.check {
+	width: 50px!important;
+}
+
 @media only screen and (max-width: 768px) {
     .list-group {
         width: 100%;
@@ -81,13 +86,15 @@ font-weight: 100;
         padding: 0;
         margin: 0;
         width: 100%;
-    }
+	}
+	.check input{
+		width: 50px!important;
+	}
 
     .Mycontainer input {
         width: 99%!important;
-    }
-
-    
+	}
+	 
     .navbar-nav {
         display: block!important;
         margin: 0!important;

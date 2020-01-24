@@ -1,0 +1,35 @@
+.mainContainer {
+    background-color: #eee;
+    padding-bottom: 20px;
+}
+
+.row {
+    margin-left: 0!important;
+    margin-right: 0!important;
+}
+
+.inputKlanten {
+    width: 210px;
+}
+
+.fullWidth {
+    width: 100%!important;
+}
+
+.noMargins {
+    margin: 0!important;
+}
+
+.smallMargin {
+    margin: 10px!important;
+}
+
+.noPadding {
+    padding: 0!important;
+}
+
+@media (max-width: 739px) {
+    .inputKlanten {
+        width: 100%;
+    }
+}

@@ -179,9 +179,14 @@ class inkomstenmodel
     
     public function removeFactur(){
 		if(isset($this->__params['POST']['facturremove']) && $this->__params['POST']['facturremove'] != null) {
-			$this->__db->execute("DELETE FROM bouw_factur WHERE id = '".$this->__params['POST']['facturremove']."'");
+			$this->__db->execute("DELETE FROM bouw_factur WHERE factur_numer = '".$this->__params['POST']['facturremove']."'");
+			$this->removewarforById($this->__params['POST']['facturremove']);
 			header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
 		}
+	}
+	
+	private function removewarforById($id) {
+            $this->__db->execute("DELETE FROM bouw_factur_details WHERE factur_nr = ".$id);
     }
 
 	public function adresMenuPageName() {

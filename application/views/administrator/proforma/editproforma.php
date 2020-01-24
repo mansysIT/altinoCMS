@@ -30,7 +30,7 @@ $d = new DateTime($facturaModelData[0]['data']);
 
 <?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css,factur.css')?>
 
-<?=javascript_load('main.js,sidebar.js,nieuwe_adress.js')?> 
+<?=javascript_load('main.js,sidebar.js,nieuwe_adress.js,addfileds.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
 
@@ -40,8 +40,6 @@ $d = new DateTime($facturaModelData[0]['data']);
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="/application/media/js/nieuwe_adress.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-<script src="/application/media/js/addfileds.js"></script>
 
 </head>
 
@@ -90,7 +88,8 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <p class="rekaningText">Waarvoor</p>
                                         </td>
                                         <td class="">
-                                        <select name="warfortype[]" class="form-control">';
+                                        <select name="warfortype[]" class="form-control selectValid">
+                                        <option value="">KIEZ</option>';
                                         foreach($getWarforTypes as $row){ ?>
                                             <li>
                                                 <option value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
@@ -130,7 +129,8 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <p class="rekaningText">Waarvoor</p>
                                         </td>
                                         <td class="">
-                                        <select name="warfortype[]" class="form-control">';
+                                        <select name="warfortype[]" class="form-control required>
+                                        <option value="">KIEZ</option>';
                                         foreach($getWarforTypes as $row){ ?>
                                             <li>
                                                 <option value="<?php echo $row[0]; ?>"<?php if($row[0] == $rows['waarvoor_id']) echo" selected" ?>><?php echo $row[1]." (".$row[2]."%)"; ?></option>

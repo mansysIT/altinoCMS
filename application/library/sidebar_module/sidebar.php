@@ -39,6 +39,9 @@
                 <a href="administrator/oferten/index">Offerten</a>
             </li>
             <li>
+                <a href="administrator/klanten/index">Klanten</a>
+            </li>
+            <li>
                 <a href="administrator/instellingen/stedenlijst">Instellingen</a>
             </li>
 

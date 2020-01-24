@@ -86,7 +86,7 @@ $dOd->modify('first day of this month');
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>€ ".number_format($row[6],2,',', '.')."</a>" ?></td>
 					<?="<td> <a style='color: #000!important;' href='/application/storage/factur/$row[0].pdf'>$row[4]</a><a style='color: #000!important;' href='/application/storage/factur/$row[0].pdf'> <span class='oi oi-file' title='file' aria-hidden='true'></span></a> " ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[5]</a>" ?></td>
-					<td> <form  method="post" action=""><button class="btnCityRemove" type="submit" name="facturremove" value="<?php echo $row[0]; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form></td>
+					<td> <form  method="post" action=""><button class="btnCityRemove" type="submit" name="facturremove" value="<?php echo $row[4]; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form></td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
