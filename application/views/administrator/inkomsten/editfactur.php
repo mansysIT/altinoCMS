@@ -88,7 +88,8 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <p class="rekaningText">Waarvoor</p>
                                         </td>
                                         <td class="">
-                                        <select name="warfortype[]" class="form-control">';
+                                        <select name="warfortype[]" class="form-control selectValid">
+                                        <option value="">KIEZ</option>';
                                         foreach($getWarforTypes as $row){ ?>
                                             <li>
                                                 <option value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
@@ -128,11 +129,10 @@ $d = new DateTime($facturaModelData[0]['data']);
                                         <p class="rekaningText">Waarvoor</p>
                                         </td>
                                         <td class="">
-                                        <select name="warfortype[]" class="form-control">';
+                                        <select name="warfortype[]" class="form-control" required>
+                                        <option value="">KIEZ</option>';
                                         foreach($getWarforTypes as $row){ ?>
-                                            <li>
                                                 <option value="<?php echo $row[0]; ?>"<?php if($row[0] == $rows['waarvoor_id']) echo" selected" ?>><?php echo $row[1]." (".$row[2]."%)"; ?></option>
-                                            </li>
                                         <?php };
 
                                            echo'</select>

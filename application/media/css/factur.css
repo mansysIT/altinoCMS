@@ -1,6 +1,6 @@
 .warforadd .rekaningText {
     margin: 0;
-    width: auto;
+    width: 128px;
     padding: 0;
     line-height: 42px;
 }
@@ -10,9 +10,27 @@
     text-align: center;
 }
 
+.warforText {
+    width: 150px;
+}
+
+.warforTextArea {
+    height: 37px;
+    width: 350px;
+}
+
+.row {
+    margin-bottom: 20px!important;
+}
+
 @media only screen and (max-width: 768px) {
     .warforadd tr{
         display: flex;
         flex-direction: column;
+    }
+
+    .warforTextArea {
+        height: 100px;
+        width: 100%;
     }
 }

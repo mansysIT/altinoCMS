@@ -22,7 +22,7 @@
 
 <?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,nieuwe_adress.css,factur.css')?>
 
-<?=javascript_load('sidebar.js')?> 
+<?=javascript_load('sidebar.js,addfileds.js')?> 
     
 <?=icon_load("pp_fav.ico")?>
 
@@ -34,7 +34,7 @@ $d = new DateTime(date("Y-m-d"));
 
 
 
-<script src="/application/media/js/addfileds.js"></script>
+<!-- <script src="/application/media/js/addfileds.js"></script> -->
 
 
 
@@ -90,7 +90,8 @@ $d = new DateTime(date("Y-m-d"));
                                         <p class="rekaningText">Waarvoor</p>
                                         </td>
                                         <td class="">
-                                        <select name="warfortype[]" class="form-control">';
+                                        <select name="warfortype[]" class="form-control selectValid">
+                                        <option value="">KIEZ</option>';
                                         foreach($getWarforTypes as $row): ?>
                                             <li>
                                                 <option value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
