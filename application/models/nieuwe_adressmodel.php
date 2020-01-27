@@ -26,37 +26,11 @@ class nieuwe_adressmodel
 			$adres = $this->__params['POST']['adres'];
 			$postcode = $this->__params['POST']['postcode'];
 			$city = $this->__params['POST']['city'];
+			$klanten = $this->__params['POST']['klanten'];
 
-			$private_naam = $this->__params['POST']['private_naam'];
-			$private_achternaam = $this->__params['POST']['private_achternaam'];
-			$private_id_kaart = $this->__params['POST']['private_id_kaart'];
-			$private_tel = $this->__params['POST']['private_tel'];
-			$private_geboortedatum = $this->__params['POST']['private_geboortedatum'];
 
-			$bedrijf_bedrijf = $this->__params['POST']['bedrijf_bedrijf'];
-			$bedrijf_adres = $this->__params['POST']['bedrijf_adres'];
-			$bedrijf_postcode = $this->__params['POST']['bedrijf_postcode'];
-			$bedrijf_stad = $this->__params['POST']['bedrijf_stad'];
-			$bedrijf_kvk = $this->__params['POST']['bedrijf_kvk'];
-			$bedrijf_btw = $this->__params['POST']['bedrijf_btw'];
-			$bedrijf_tel = $this->__params['POST']['bedrijf_tel'];
-
-			$email = $this->__params['POST']['email'];
-			$rekening = $this->__params['POST']['rekening'];
-
-			$badrijfPrivateToogler = $this->__params['POST']['privateBedrijfToogler'];
-
-			if($badrijfPrivateToogler == 'private') {
-				$this->__db->execute("INSERT INTO bouw_adresy (
-					city, adres, postcode, private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, bedrijf_adres, bedrijf_postcode, bedrijf_stad, 
-					bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, rekening) VALUES ('$city', '$adres', '$postcode' , '$private_naam' , '$private_achternaam' , '$private_id_kaart' , '$private_tel' , '$private_geboortedatum' ,
-					 '' , '' , '' , '' , '' , '' , '' , '$email' , '$rekening')");
-			} else {
-				$this->__db->execute("INSERT INTO bouw_adresy (
-					city, adres, postcode, private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, bedrijf_adres, bedrijf_postcode, bedrijf_stad, 
-					bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, rekening) VALUES ('$city', '$adres', '$postcode' , '' , '' , '' , '' , '' ,
-					 '$bedrijf_bedrijf' , '$bedrijf_adres' , '$bedrijf_postcode' , '$bedrijf_stad' , '$bedrijf_kvk' , '$bedrijf_btw' , '$bedrijf_tel' , '$email' , '$rekening')");
-			}
+			$this->__db->execute("INSERT INTO bouw_adresy (
+			city, adres, postcode, klanten_id) VALUES ('$city', '$adres', '$postcode' , '$klanten')");
 
 
 

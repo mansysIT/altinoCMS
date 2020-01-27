@@ -10,6 +10,8 @@
 
 <?php $getAllCityName=model_load('mainmodel', 'getCityName', '')?>
 
+<?php $getAllKlanten=model_load('mainmodel', 'getAllClanten', '')?>
+
 <?php model_load('adressenmodel', 'editAdress', '')?>
 
 <?=add_metatags()?>
@@ -62,7 +64,16 @@
                     </li>
                     <?php endforeach; ?>
                     </select>
-                </div>      
+                </div>  
+                <div class="RekeningInside">
+                    <p class="rekaningText">Klanten</p>
+                    <select name="klanten" class="form-control" id="exampleFormControlSelect1">
+                    <?php foreach($getAllKlanten as $row): ?>
+                        <option value="<?php echo $row[0]; ?>" <?php if($row[0] == $getDataFromAdres['klanten_id']) echo" selected" ?>><?php if(!empty($row[1]) && !empty($row[2])){ echo $row[0]." ".$row[1]." ".$row[2];} else if(!empty($row[6])) {echo $row[0]." ".$row[6];} else {echo $row[0];} ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                </div>  
+                <button type="submit" class="btn btn-danger mb-2 btn-small" style="margin-left: 0.8%; margin-top: 10px;" name="editadres">Toevoegen</button>    
             </div>
             <div class="right">
 
@@ -70,73 +81,6 @@
             </div>
             
         </div>
-        <div class="info">										
-            <div class="infoUp <?php if($getDataFromAdres['bedrijf_bedrijf'] != null) echo "active"; ?>" id="nieuweadressprivate">	
-				<button type="button" onclick="bedrijf()" id="privatetoogler" style="margin-top: auto; margin-left: 0.8%" class="btn btn-danger mb-2">Private</button>									
-                <p class="info pFirstChild">Naam
-                <input class="inputNewHuurder" type="text" name="private_naam" value='<?=$getDataFromAdres['private_naam']?>' >
-                </p>
-                <p class="info p">Achternaam 
-                <input class="inputNewHuurder" type="text" name="private_achternaam" value='<?=$getDataFromAdres['private_achternaam']?>'>
-                </p>
-                <p class="info p">Nr en serie van ID-kaart
-                <input class="inputNewHuurder" type="text" name="private_id_kaart" value='<?=$getDataFromAdres['private_id_kaart']?>' >
-                </p>
-                <p class="info p">Telefoon  
-                <input class="inputNewHuurder" type="text" name="private_tel" value='<?=$getDataFromAdres['private_tel']?>' >
-                </p>
-                <p class="info p">Geboortedatum  
-                <input class="inputNewHuurder" sty type="date" name="private_geboortedatum" value='<?=$getDataFromAdres['private_geboortedatum']?>' >
-                </p>
-			</div>
-			<div class="<?php if($getDataFromAdres['bedrijf_bedrijf'] == null) echo "active"; ?>" id="nieuweadressbedrijf">
-                <div class="infoUp">	
-				<button type="button" onclick="private()" id="bedrijftoogler" style="margin-top: auto; margin-left: 0.8%" class="btn btn-danger mb-2">Bedrijf</button>
-                    <p class="info pFirstChildfirst">Bedrijf
-                    <input class="inputNewHuurderfirst" type="text" name="bedrijf_bedrijf" value='<?=$getDataFromAdres['bedrijf_bedrijf']?>' >
-                    </p>
-                    <p class="info p">Adres 
-                    <input class="inputNewHuurder" type="text" name="bedrijf_adres" value='<?=$getDataFromAdres['bedrijf_adres']?>' >
-                    </p>
-                    <p class="info p">Post code
-                    <input class="inputNewHuurder" type="text" name="bedrijf_postcode" value='<?=$getDataFromAdres['bedrijf_postcode']?>' >
-                    </p>
-                    <p class="info p">Stad 
-                    <input class="inputNewHuurder" type="text" name="bedrijf_stad" value='<?=$getDataFromAdres['bedrijf_stad']?>' >
-                    </p>
-                </div>
-                <div class="infoDown">
-                    <p class="info pFirstChild">KvK 
-                    <input class="inputNewHuurder" type="text" name="bedrijf_kvk" value='<?=$getDataFromAdres['bedrijf_kvk']?>' >
-                    </p>
-                    <p class="info p">BTW  
-                    <input class="inputNewHuurder" type="text" name="bedrijf_btw" value='<?=$getDataFromAdres['bedrijf_btw']?>' >
-                    </p>
-                    <p class="info p">Tel 
-                    <input class="inputNewHuurder" type="text" name="bedrijf_tel" value='<?=$getDataFromAdres['bedrijf_tel']?>' >
-                    </p>
-				</div>
-			</div>									
-        </div>
-        <input style="display: none" id="toogler"  type="text" name="privateBedrijfToogler" value='private' >
-		<div class="bottomHolder">
-            <div class="rekaning">
-				<div class="RekeningInside">
-                    <p class="rekaningText">Email</p>
-                    <input type="text" name="email" value='<?=$getDataFromAdres['email']?>' >
-                </div>
-                <div class="RekeningInside">
-                    <p class="rekaningText">Rekening</p>
-                    <input type="text" name="rekening" value='<?=$getDataFromAdres['rekening']?>' >
-                </div>   
-                <button type="submit" class="btn btn-danger mb-2 btn-small" style="margin-left: 0.8%; margin-top: 10px;" name="editadres">Toevoegen</button>        
-            </div>
-            <div class="right">
-
-
-                </div>
-                
-        </div>							
 
                 
             </form>		

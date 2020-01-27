@@ -12,6 +12,10 @@
     width: 210px;
 }
 
+.colWidth {
+    min-width: 215px!important;
+}
+
 .fullWidth {
     width: 100%!important;
 }
@@ -28,8 +32,30 @@
     padding: 0!important;
 }
 
+.smallMarginBottom {
+    margin-bottom: 10px;
+}
+
+.klantenForm h4{
+    margin-right: 5px;
+}
+
 @media (max-width: 739px) {
     .inputKlanten {
         width: 100%;
+    }
+
+    .colWidth {
+        min-width: 100%!important;;
+    }
+
+    .klantenTable {
+        width: 90%!important;
+    }
+
+    .klantenForm button, a, div{
+        width: 100%;
+        margin-bottom: 5px!important;
+        margin-top: 5px!important;
     }
 }

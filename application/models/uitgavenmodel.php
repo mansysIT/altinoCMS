@@ -89,10 +89,6 @@ class uitgavenmodel
 		}
 	}
 
-
-
-    // SELECT bouw_adresy.id, bouw_adresy.adres, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE bouw_factur.adres_id = 28
-
     public function adres($od, $do, $word, $id = null, $oferten_id = null) {
 
 		if($oferten_id != null){
@@ -101,7 +97,6 @@ class uitgavenmodel
 			$type = 'bouw_uitgaven.adres_id';
 		}
 
-		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
 		if($word != null && $id != null){
 
 			$params[0] = 0;
