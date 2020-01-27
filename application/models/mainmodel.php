@@ -6,6 +6,7 @@ class mainmodel
 {
 	public $query;
 	public $cityArray = Array();
+	public $klantenArray = Array();
 
 	private $__config;
 	private $__router;
@@ -26,6 +27,14 @@ class mainmodel
             array_push($this->cityArray, $q);
         }
        return $this->cityArray;
+	} 
+
+	public function getAllClanten(){
+        $this->query = $this->__db->querymy("SELECT * FROM bouw_klanten");
+        foreach($this->query->fetch_all() as $q){
+            array_push($this->klantenArray, $q);
+        }
+       return $this->klantenArray;
 	} 
     
     public function getAllFilesInDirectory($dir) {

@@ -133,81 +133,116 @@ class klantenmodel
 		return $data[0];
 	}
 
-	public function editAdress(){
-		if(isset($this->__params['POST']['editadres']))
-		{	
-			echo "<pre>";
-			print_r($this->__params['POST']);
-			$adres = $this->__params['POST']['adres'];
-			$postcode = $this->__params['POST']['postcode'];
-			$city = $this->__params['POST']['city'];
-
-			$private_naam = $this->__params['POST']['private_naam'];
-			$private_achternaam = $this->__params['POST']['private_achternaam'];
-			$private_id_kaart = $this->__params['POST']['private_id_kaart'];
-			$private_tel = $this->__params['POST']['private_tel'];
-			$private_geboortedatum = $this->__params['POST']['private_geboortedatum'];
-
-			$bedrijf_bedrijf = $this->__params['POST']['bedrijf_bedrijf'];
-			$bedrijf_adres = $this->__params['POST']['bedrijf_adres'];
-			$bedrijf_postcode = $this->__params['POST']['bedrijf_postcode'];
-			$bedrijf_stad = $this->__params['POST']['bedrijf_stad'];
-			$bedrijf_kvk = $this->__params['POST']['bedrijf_kvk'];
-			$bedrijf_btw = $this->__params['POST']['bedrijf_btw'];
-			$bedrijf_tel = $this->__params['POST']['bedrijf_tel'];
-
-			$email = $this->__params['POST']['email'];
-			$rekening = $this->__params['POST']['rekening'];
-
-			$badrijfPrivateToogler = $this->__params['POST']['privateBedrijfToogler'];
-
-			if($badrijfPrivateToogler == 'private') {
-				$this->__db->execute("UPDATE bouw_adresy 
-				SET
-				city = '".$city."',
-				adres = '".$adres."', 
-				postcode = '".$postcode."',
-				private_naam = '".$private_naam."',
-				private_achternaam = '".$private_achternaam."',
-				private_id_kaart = '".$private_id_kaart."',
-				private_tel = '".$private_tel."',
-				private_geboortedatum = '".$private_geboortedatum."',
-				bedrijf_bedrijf = '',
-				bedrijf_adres = '',
-				bedrijf_postcode = '',
-				bedrijf_stad = '',
-				bedrijf_kvk = '',
-				bedrijf_btw = '',
-				bedrijf_tel = '',
-				email = '".$email."',
-				rekening = '".$rekening."'
-				WHERE id = ".$this->__params[1]);
+	public function klantenActionType() {
+		if(isset($this->__params['POST']['toevoegen'])) {
+			if(isset($this->__params[1])) {
+				$this->editKlanten();
 			} else {
-				$this->__db->execute("UPDATE bouw_adresy 
-				SET
-				city = '".$city."',
-				adres = '".$adres."', 
-				postcode = '".$postcode."',
-				private_naam = '',
-				private_achternaam = '',
-				private_id_kaart = '',
-				private_tel = '',
-				private_geboortedatum = '',
-				bedrijf_bedrijf = '".$bedrijf_bedrijf."',
-				bedrijf_adres = '".$bedrijf_adres."',
-				bedrijf_postcode = '".$bedrijf_postcode."',
-				bedrijf_stad = '".$bedrijf_stad."',
-				bedrijf_kvk = '".$bedrijf_kvk."',
-				bedrijf_btw = '".$bedrijf_btw."',
-				bedrijf_tel = '".$bedrijf_tel."',
-				email = '".$email."',
-				rekening = '".$rekening."'
-				WHERE id = ".$this->__params[1]);
+				$this->saveNewKlanten();
 			}
-
-			header("Location: ".SERVER_ADDRESS."administrator/klanten/index/");
 		}
-	}	
+	}
+
+	private function editKlanten(){
+
+		$private_naam = $this->__params['POST']['private_naam'];
+		$private_achternaam = $this->__params['POST']['private_achternaam'];
+		$private_id_kaart = $this->__params['POST']['private_id_kaart'];
+		$private_tel = $this->__params['POST']['private_tel'];
+		$private_geboortedatum = $this->__params['POST']['private_geboortedatum'];
+
+		$bedrijf_bedrijf = $this->__params['POST']['bedrijf_bedrijf'];
+		$bedrijf_adres = $this->__params['POST']['bedrijf_adres'];
+		$bedrijf_postcode = $this->__params['POST']['bedrijf_postcode'];
+		$bedrijf_stad = $this->__params['POST']['bedrijf_stad'];
+		$bedrijf_kvk = $this->__params['POST']['bedrijf_kvk'];
+		$bedrijf_btw = $this->__params['POST']['bedrijf_btw'];
+		$bedrijf_tel = $this->__params['POST']['bedrijf_tel'];
+
+		$email = $this->__params['POST']['email'];
+		$rekening = $this->__params['POST']['rekening'];
+
+		$badrijfPrivateToogler = $this->__params['POST']['privateBedrijfToogler'];
+
+		if($badrijfPrivateToogler == 'private') {
+			
+			$x = $this->__db->execute("UPDATE bouw_klanten 
+			SET
+			private_naam = '".$private_naam."',
+			private_achternaam = '".$private_achternaam."',
+			private_id_kaart = '".$private_id_kaart."',
+			private_tel = '".$private_tel."',
+			private_geboortedatum = '".$private_geboortedatum."',
+			bedrijf_bedrijf = '',
+			bedrijf_adres = '',
+			bedrijf_postcode = '',
+			bedrijf_stad = '',
+			bedrijf_kvk = '',
+			bedrijf_btw = '',
+			bedrijf_tel = '',
+			email = '".$email."',
+			rekening = '".$rekening."',
+			private = 1
+			WHERE id = ".$this->__params[1]);
+		} else {
+			
+			$y = $this->__db->execute("UPDATE bouw_klanten  
+			SET
+			private_naam = '',
+			private_achternaam = '',
+			private_id_kaart = '',
+			private_tel = '',
+			private_geboortedatum = '',
+			bedrijf_bedrijf = '".$bedrijf_bedrijf."',
+			bedrijf_adres = '".$bedrijf_adres."',
+			bedrijf_postcode = '".$bedrijf_postcode."',
+			bedrijf_stad = '".$bedrijf_stad."',
+			bedrijf_kvk = '".$bedrijf_kvk."',
+			bedrijf_btw = '".$bedrijf_btw."',
+			bedrijf_tel = '".$bedrijf_tel."',
+			email = '".$email."',
+			rekening = '".$rekening."',
+			private = 0
+			WHERE id = ".$this->__params[1]);
+		}
+
+		header("Location: ".SERVER_ADDRESS."administrator/klanten/index/");
+	}
+
+	private function saveNewKlanten(){
+
+		$private_naam = $this->__params['POST']['private_naam'];
+		$private_achternaam = $this->__params['POST']['private_achternaam'];
+		$private_id_kaart = $this->__params['POST']['private_id_kaart'];
+		$private_tel = $this->__params['POST']['private_tel'];
+		$private_geboortedatum = $this->__params['POST']['private_geboortedatum'];
+
+		$bedrijf_bedrijf = $this->__params['POST']['bedrijf_bedrijf'];
+		$bedrijf_adres = $this->__params['POST']['bedrijf_adres'];
+		$bedrijf_postcode = $this->__params['POST']['bedrijf_postcode'];
+		$bedrijf_stad = $this->__params['POST']['bedrijf_stad'];
+		$bedrijf_kvk = $this->__params['POST']['bedrijf_kvk'];
+		$bedrijf_btw = $this->__params['POST']['bedrijf_btw'];
+		$bedrijf_tel = $this->__params['POST']['bedrijf_tel'];
+
+		$email = $this->__params['POST']['email'];
+		$rekening = $this->__params['POST']['rekening'];
+
+		$badrijfPrivateToogler = $this->__params['POST']['privateBedrijfToogler'];
+
+		if($badrijfPrivateToogler == 'private') {
+			$this->__db->execute("INSERT INTO bouw_klanten (
+				private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, bedrijf_adres, bedrijf_postcode, bedrijf_stad, 
+				bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, rekening, private) VALUES ('$private_naam' , '$private_achternaam' , '$private_id_kaart' , '$private_tel' , '$private_geboortedatum' ,
+					'' , '' , '' , '' , '' , '' , '' , '$email' , '$rekening', 1)");
+		} else {
+			$this->__db->execute("INSERT INTO bouw_klanten (
+				private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, bedrijf_adres, bedrijf_postcode, bedrijf_stad, 
+				bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, rekening, private) VALUES ('' , '' , '' , '' , '' ,
+					'$bedrijf_bedrijf' , '$bedrijf_adres' , '$bedrijf_postcode' , '$bedrijf_stad' , '$bedrijf_kvk' , '$bedrijf_btw' , '$bedrijf_tel' , '$email' , '$rekening', 0)");
+		}
+		header("Location: ".SERVER_ADDRESS."administrator/klanten/klanten/".$this->__db->getLastInsertedId()."");
+	}
 }
 
 ?>

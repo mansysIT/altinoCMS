@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <?php $sidebarController=model_load('mainmodel', 'getCityName', '')?>
+<?php $getAllKlanten=model_load('mainmodel', 'getAllClanten', '')?>
 
 <?=add_metatags()?>
 
@@ -56,7 +57,16 @@
                     </li>
                     <?php endforeach; ?>
                     </select>
-                </div>      
+                </div> 
+                <div class="RekeningInside">
+                    <p class="rekaningText">Klanten</p>
+                    <select name="klanten" class="form-control" id="exampleFormControlSelect1">
+                    <?php foreach($getAllKlanten as $row): ?>
+                        <option value="<?php echo $row[0]; ?>" <?php if($row[0] == $getDataFromAdres['klanten_id']) echo" selected" ?>><?php if(!empty($row[1]) && !empty($row[2])){ echo $row[0]." ".$row[1]." ".$row[2];} else if(!empty($row[6])) {echo $row[0]." ".$row[6];} else {echo $row[0];} ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                </div>  
+                <button type="submit" class="btn btn-danger mb-2 btn-small" style="margin-left: 0.8%; margin-top: 30px;" name="adresbtn">Toevoegen</button>      
             </div>
             <div class="right">
 
@@ -64,73 +74,6 @@
             </div>
             
         </div>
-        <div class="info">										
-            <div class="infoUp" id="nieuweadressprivate">	
-				<button type="button" onclick="bedrijf()" id="privatetoogler" style="margin-top: auto; margin-left: 0.8%" class="btn btn-danger mb-2">Private</button>									
-                <p class="info pFirstChild">Naam
-                <input class="inputNewHuurder" id="tttt" type="text" name="private_naam" value='' >
-                </p>
-                <p class="info p">Achternaam 
-                <input class="inputNewHuurder" type="text" name="private_achternaam" value=''>
-                </p>
-                <p class="info p">Nr en serie van ID-kaart
-                <input class="inputNewHuurder" type="text" name="private_id_kaart" value='' >
-                </p>
-                <p class="info p">Telefoon  
-                <input class="inputNewHuurder" type="text" name="private_tel" value='' >
-                </p>
-                <p class="info p">Geboortedatum  
-                <input class="inputNewHuurder" sty type="date" name="private_geboortedatum" value='' >
-                </p>
-			</div>
-			<div class="active" id="nieuweadressbedrijf">
-                <div class="infoUp">	
-				<button type="button" onclick="private()" id="bedrijftoogler" style="margin-top: auto; margin-left: 0.8%" class="btn btn-danger mb-2">Bedrijf</button>
-                    <p class="info pFirstChildfirst">Bedrijf
-                    <input class="inputNewHuurderfirst" type="text" name="bedrijf_bedrijf" value='' >
-                    </p>
-                    <p class="info p">Adres 
-                    <input class="inputNewHuurder" type="text" name="bedrijf_adres" value='' >
-                    </p>
-                    <p class="info p">Post code
-                    <input class="inputNewHuurder" type="text" name="bedrijf_postcode" value='' >
-                    </p>
-                    <p class="info p">Stad 
-                    <input class="inputNewHuurder" type="text" name="bedrijf_stad" value='' >
-                    </p>
-                </div>
-                <div class="infoDown">
-                    <p class="info pFirstChild">KvK 
-                    <input class="inputNewHuurder" type="text" name="bedrijf_kvk" value='' >
-                    </p>
-                    <p class="info p">BTW  
-                    <input class="inputNewHuurder" type="text" name="bedrijf_btw" value='' >
-                    </p>
-                    <p class="info p">Tel 
-                    <input class="inputNewHuurder" type="text" name="bedrijf_tel" value='' >
-                    </p>
-				</div>
-			</div>									
-        </div>
-        <input style="display: none" id="toogler"  type="text" name="privateBedrijfToogler" value='private' >
-		<div class="bottomHolder">
-            <div class="rekaning">
-				<div class="RekeningInside">
-                    <p class="rekaningText">Email</p>
-                    <input type="text" name="email" value='' >
-                </div>
-                <div class="RekeningInside">
-                    <p class="rekaningText">Rekening</p>
-                    <input type="text" name="rekening" value='' >
-                </div>  
-                <button type="submit" class="btn btn-danger mb-2 btn-small" style="margin-left: 0.8%; margin-top: 30px;" name="adresbtn">Toevoegen</button>         
-            </div>
-            <div class="right">
-
-
-                </div>
-        </div>							
-
                
             </form>		
 

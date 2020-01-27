@@ -106,8 +106,6 @@ class inkomstenmodel
         return $bedgarSum;
     }
 
-    // SELECT bouw_adresy.id, bouw_adresy.adres, bouw_city.city FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id WHERE bouw_factur.adres_id = 28
-
     public function adres($od, $do, $word = null, $id = null, $oferten_id = null) {
 
 		if($oferten_id != null){
@@ -116,7 +114,6 @@ class inkomstenmodel
 			$type = 'bouw_factur.adres_id';
 		}
 
-		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
 		if($word != null && $id != null) {
 			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data 
 			FROM `bouw_adresy`
@@ -315,26 +312,27 @@ class inkomstenmodel
         city.city,
         adresy.adres, 
         adresy.postcode,
-        adresy.private_naam,
-        adresy.private_achternaam,
-        adresy.private_id_kaart,
-        adresy.private_tel,
-        adresy.private_geboortedatum,
-        adresy.bedrijf_bedrijf,
-        adresy.bedrijf_adres,
-        adresy.bedrijf_postcode,
-        adresy.bedrijf_stad,
-        adresy.bedrijf_kvk,
-        adresy.bedrijf_btw,
-        adresy.bedrijf_tel,
-        adresy.email,
-        adresy.rekening,
+        klanten.private_naam,
+        klanten.private_achternaam,
+        klanten.private_id_kaart,
+        klanten.private_tel,
+        klanten.private_geboortedatum,
+        klanten.bedrijf_bedrijf,
+        klanten.bedrijf_adres,
+        klanten.bedrijf_postcode,
+        klanten.bedrijf_stad,
+        klanten.bedrijf_kvk,
+        klanten.bedrijf_btw,
+        klanten.bedrijf_tel,
+        klanten.email,
+        klanten.rekening,
         factur.data,
         factur.factur_numer,
         factur.id
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
         INNER JOIN bouw_factur AS factur ON adresy.id = factur.adres_id 
+		INNER JOIN bouw_klanten AS klanten ON klanten.id = adresy.klanten_id 
         WHERE factur.factur_numer = ".$proforma_numer);
         $x = array();
         foreach($data as $q){

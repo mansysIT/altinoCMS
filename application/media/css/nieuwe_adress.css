@@ -415,7 +415,6 @@ font-weight: 100;
 
 #nieuweadressbedrijf {
     display: flex;
-    flex-direction: column;
 }
 
 .form-control {

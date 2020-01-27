@@ -215,72 +215,15 @@ class adressenmodel
 			$adres = $this->__params['POST']['adres'];
 			$postcode = $this->__params['POST']['postcode'];
 			$city = $this->__params['POST']['city'];
+			$klanten = $this->__params['POST']['klanten'];
 
-			$private_naam = $this->__params['POST']['private_naam'];
-			$private_achternaam = $this->__params['POST']['private_achternaam'];
-			$private_id_kaart = $this->__params['POST']['private_id_kaart'];
-			$private_tel = $this->__params['POST']['private_tel'];
-			$private_geboortedatum = $this->__params['POST']['private_geboortedatum'];
-
-			$bedrijf_bedrijf = $this->__params['POST']['bedrijf_bedrijf'];
-			$bedrijf_adres = $this->__params['POST']['bedrijf_adres'];
-			$bedrijf_postcode = $this->__params['POST']['bedrijf_postcode'];
-			$bedrijf_stad = $this->__params['POST']['bedrijf_stad'];
-			$bedrijf_kvk = $this->__params['POST']['bedrijf_kvk'];
-			$bedrijf_btw = $this->__params['POST']['bedrijf_btw'];
-			$bedrijf_tel = $this->__params['POST']['bedrijf_tel'];
-
-			$email = $this->__params['POST']['email'];
-			$rekening = $this->__params['POST']['rekening'];
-
-			$badrijfPrivateToogler = $this->__params['POST']['privateBedrijfToogler'];
-
-			if($badrijfPrivateToogler == 'private') {
-				$this->__db->execute("UPDATE bouw_adresy 
-				SET
-				city = '".$city."',
-				adres = '".$adres."', 
-				postcode = '".$postcode."',
-				private_naam = '".$private_naam."',
-				private_achternaam = '".$private_achternaam."',
-				private_id_kaart = '".$private_id_kaart."',
-				private_tel = '".$private_tel."',
-				private_geboortedatum = '".$private_geboortedatum."',
-				bedrijf_bedrijf = '',
-				bedrijf_adres = '',
-				bedrijf_postcode = '',
-				bedrijf_stad = '',
-				bedrijf_kvk = '',
-				bedrijf_btw = '',
-				bedrijf_tel = '',
-				email = '".$email."',
-				rekening = '".$rekening."'
-				WHERE id = ".$this->__params[1]);
-
-			} else {
-
-				$this->__db->execute("UPDATE bouw_adresy 
-				SET
-				city = '".$city."',
-				adres = '".$adres."', 
-				postcode = '".$postcode."',
-				private_naam = '',
-				private_achternaam = '',
-				private_id_kaart = '',
-				private_tel = '',
-				private_geboortedatum = '',
-				bedrijf_bedrijf = '".$bedrijf_bedrijf."',
-				bedrijf_adres = '".$bedrijf_adres."',
-				bedrijf_postcode = '".$bedrijf_postcode."',
-				bedrijf_stad = '".$bedrijf_stad."',
-				bedrijf_kvk = '".$bedrijf_kvk."',
-				bedrijf_btw = '".$bedrijf_btw."',
-				bedrijf_tel = '".$bedrijf_tel."',
-				email = '".$email."',
-				rekening = '".$rekening."'
-				WHERE id = ".$this->__params[1]);
-
-			}
+			$this->__db->execute("UPDATE bouw_adresy 
+			SET
+			city = '".$city."',
+			adres = '".$adres."', 
+			postcode = '".$postcode."',
+			klanten_id = '".$klanten."'
+			WHERE id = ".$this->__params[1]);
 
 			$this->createAdresDirectory($this->__params[1]);
 			header("Location: ".SERVER_ADDRESS."administrator/adressen/index/");

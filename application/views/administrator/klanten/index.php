@@ -15,7 +15,7 @@
 
 <?=add_basehref()?>
 
-<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,all.css,instellingenmenu.css')?>
+<?=stylesheet_load('screen.css,sidebar.css,table.css,style.css,all.css,instellingenmenu.css,klanten.css')?>
 
 <?=javascript_load('main.js,sidebar.js,table.js')?> 
     
@@ -36,71 +36,81 @@ $klanten=model_load('klantenmodel', 'getKlanten', '');
 <body>
 
 	<?=module_load('SIDEBAR')?>
-
-	<div class="tableholder">
-	<h1>Klanten</h1> 
-	<form class="form-inline" method="post" action="">
-		<button type="submit" class="btn btn-danger mb-2" name="clear">Clear</button> 
-		<div class="form-group mx-sm-3 mb-2">
-			<label class="sr-only">Woord</label>
-			<input type="text" class="form-control" id="inputPassword2" name="word" placeholder="Key Word" value= <?php if(isset($sidebarController->__params['POST']['clear'])){echo '';} else if(isset($sidebarController->__params['POST']['word'])){echo $sidebarController->__params['POST']['word']; } else if(isset($_SESSION['word'])){echo $_SESSION['word']; } else {echo '';}?> >
+	<div class="container-fluid klantenTable">
+		<div class="row">
+			<h1 class="title">Klanten</h1> 
 		</div>
-        <button type="submit" class="btn btn-danger mb-2" name="zoeken">Zoeken</button>
-		<a class="btn btn-danger mb-2" href="administrator/nieuwe_adress/nieuwe_adress" role="button">Nieuwe</a>
-		<?php 
-		if(isset($sidebarController->__params['POST']['private']) ):
-				if($sidebarController->__params['POST']['private'] == 0):?>
-				<button type="submit" class="btn btn-danger mb-2" name="private" value="1">Private</button>
-			<?php else: ?>
-				<button type="submit" class="btn btn-danger mb-2" name="private" value="0">Bedrijf</button>
-			<?php endif; 
-		elseif(isset($_SESSION['private'])): 
-			if($_SESSION['private'] == 0):?>
-				<button type="submit" class="btn btn-danger mb-2" name="private" value="1">Private</button>
-			<?php else: ?>
-				<button type="submit" class="btn btn-danger mb-2" name="private" value="0">Bedrijf</button>
-			<?php endif; 
-		else: ?>
-			<button type="submit" class="btn btn-danger mb-2" name="private" value="0">Bedrijf</button>
-		<?php endif; ?>
-	</form>
+		<div class="row columnAlignText my-auto">
+			<div class="col-sm">
+				<form class="form-inline klantenForm" method="post" action="">
+					<button type="submit" class="btn btn-danger mb-2" name="clear">Clear</button> 
+					<div class="form-group mx-sm-3 mb-2">
+						<h4>Woord</h4>
+						<input type="text" class="form-control" id="inputPassword2" name="word" placeholder="Key Word" value= <?php if(isset($sidebarController->__params['POST']['clear'])){echo '';} else if(isset($sidebarController->__params['POST']['word'])){echo $sidebarController->__params['POST']['word']; } else if(isset($_SESSION['word'])){echo $_SESSION['word']; } else {echo '';}?> >
+					</div>
+					<button type="submit" class="btn btn-danger mb-2" name="zoeken">Zoeken</button>
+					<a class="btn btn-danger mb-2" href="administrator/klanten/klanten" role="button">Nieuwe</a>
+					<?php 
+					if(isset($sidebarController->__params['POST']['private']) ):
+							if($sidebarController->__params['POST']['private'] == 0):?>
+							<button type="submit" class="btn btn-danger mb-2" name="private" value="1">Private</button>
+						<?php else: ?>
+							<button type="submit" class="btn btn-danger mb-2" name="private" value="0">Bedrijf</button>
+						<?php endif; 
+					elseif(isset($_SESSION['private'])): 
+						if($_SESSION['private'] == 0):?>
+							<button type="submit" class="btn btn-danger mb-2" name="private" value="1">Private</button>
+						<?php else: ?>
+							<button type="submit" class="btn btn-danger mb-2" name="private" value="0">Bedrijf</button>
+						<?php endif; 
+					else: ?>
+						<button type="submit" class="btn btn-danger mb-2" name="private" value="0">Bedrijf</button>
+					<?php endif; ?>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="table-responsive">
+				<table class="table table-striped" id="myTable2">
+					<thead>
+						<tr>
+							<th onclick="sortTable(0)">ID</th>
+							<th onclick="sortTable(1)"><?=$klanten[0][0]?></th>
+							<th onclick="sortTable(2)"><?=$klanten[0][1]?></th>
+							<th onclick="sortTable(3)"><?=$klanten[0][2]?></th>
+							<th onclick="sortTable(4)">TELEFOON</th>
+							<th onclick="sortTable(5)">E-MAIL</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach(array_slice($klanten, 1) as $row): ?>
+						<tr>
+							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[0]</a>" ?></td>
+							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[1]</a>" ?></td>
+							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[2]</a>" ?></td>
+							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[3]</a>" ?></td>
+							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[4]</a>" ?></td>
+							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[5]</a>" ?></td>
 
-	<div class="table-responsive">
-	<table class="table table-striped" id="myTable2">
-		<thead>
-				<tr>
-					<th onclick="sortTable(0)">ID</th>
-					<th onclick="sortTable(1)"><?=$klanten[0][0]?></th>
-					<th onclick="sortTable(2)"><?=$klanten[0][1]?></th>
-					<th onclick="sortTable(3)"><?=$klanten[0][2]?></th>
-					<th onclick="sortTable(4)">TELEFOON</th>
-					<th onclick="sortTable(5)">E-MAIL</th>
-				</tr>
-		</thead>
-		<tbody>
-			<?php foreach(array_slice($klanten, 1) as $row): ?>
-				<tr>
-					<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[0]</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[1]</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[2]</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[3]</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[4]</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[5]</a>" ?></td>
-
-				</tr>
-			<?php endforeach; ?>
-			<tr class="suma">
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</tbody>
-		</table>
-	</div>
-	<?=module_load('FOOTER')?>
+						</tr>
+						<?php endforeach; ?>
+						<tr class="suma">
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm">
+				<?=module_load('FOOTER')?>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
