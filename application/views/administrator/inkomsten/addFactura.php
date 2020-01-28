@@ -149,7 +149,7 @@ $d = new DateTime(date("Y-m-d"));
                     </div> 
                     <div class="row">
                         <div class="col-sm">
-                            <button type="submit" class="btn btn-danger mb-2 btn-small" name="savewarfor">Toevoegen</button>
+                            <button type="submit" class="btn btn-danger mb-2 btn-small" name="savewarfor">Opslaan</button>
                         </div>
                     </div> 
                 </div>

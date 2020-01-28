@@ -799,11 +799,11 @@ class proformamodel
     }
 
     public function createproforma($ilemaili = null, $proforma_numer = null) {
-$data = $this->getdata($proforma_numer);
-$btw=model_load('proformamodel', 'getbtw', $proforma_numer);
-$total=model_load('proformamodel', 'gettotal', $proforma_numer);
-$company=model_load('proformamodel', 'getCompanyData', '');
-$ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
+        $data = $this->getdata($proforma_numer);
+        $btw=model_load('proformamodel', 'getbtw', $proforma_numer);
+        $total=model_load('proformamodel', 'gettotal', $proforma_numer);
+        $company=model_load('proformamodel', 'getCompanyData', '');
+        $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
 
 		$pdf = new FPDF();
 		$pdf->AddFont('ArialMT','','arial.php');
@@ -811,8 +811,8 @@ $ilemail=model_load('proformamodel', 'proform_ilosc_maili', '');
 		$pdf->SetFont('ArialMT','',10);
 
 
-
-		$pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/logo.png',7,10,75);
+        $pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/logo.png',10,10,50);
+	
         if ($ilemail == 1 || $ilemaili == 1) {
             $pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/betaligsherinnering.jpg',7,50,200);
         }

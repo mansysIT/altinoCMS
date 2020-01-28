@@ -197,7 +197,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                     <input class="inputNewHuurder form-control-small" type="number" name="facturnumer" value="<?=$facturaModelData[0]['proforma_numer'] ?>">
                 </div>
                 <?php if($facturaModelData[0]['is_factur'] != 1): ?>
-                <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Toevoegen</button>
+                <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Opslaan</button>
                 <?php endif; ?>
                 <h3 style="margin: 15px 0 15px 0;">Email Geschiedenis</h3>
                 <ul class="list-group list-group-flush">

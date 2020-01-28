@@ -151,7 +151,7 @@ $d = new DateTime(date("Y-m-d"));
             </div>
             
         </div>
-        <button type="submit" class="btn btn-danger mb-2" name="saveproforma">Toevoegen</button>
+        <button type="submit" class="btn btn-danger mb-2" name="saveproforma">Opslaan</button>
 
         </form>
 

@@ -687,7 +687,7 @@ class ofertenmodel
 
 
 
-		$pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/logo.png',7,10,75);
+		$pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/logo.png',10,10,50);
 		
 		$pdf->SetX(160);
 		
@@ -863,6 +863,9 @@ class ofertenmodel
 
                 $d = new DateTime($data[0]['data']);
 
+                $d2 = new DateTime($d->format('d-m-Y'));
+                $d2 = $d2->modify('+1 month');
+
                 $pdf->SetFont('Arial', '', 10);
 
                 $pdf->SetFillColor(240, 240, 240);
@@ -872,8 +875,7 @@ class ofertenmodel
                 $pdf->Cell(100, 10, 'Order: '.$data[0]['id'], 0, 1);
 
                 $pdf->SetXY(110, 95);
-                $betaalmethode= '7 dagen';
-                $pdf->Cell(90, 20, 'Betalingstermijn: '.$betaalmethode, 0, 1);
+                $pdf->Cell(90, 20, 'Offerte geldig tot '.$d2->format('d-m-Y'), 0, 1);
 
 
                 // $cena=$kwota;

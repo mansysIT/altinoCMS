@@ -147,7 +147,7 @@ $getDataFromKlantens['private'] = 1;
         </div>
         <div class="row fullWidth">
             <div class="col-sm-2 my-auto">
-                <button type="submit" class="btn btn-danger mb-2 btn-small" style="margin-left: 0.8%; margin-top: 10px;" name="toevoegen">Toevoegen</button>
+                <button type="submit" class="btn btn-danger mb-2 btn-small" style="margin-left: 0.8%; margin-top: 10px;" name="toevoegen">Opslaan</button>
             </div>
         </div>
     </form>
