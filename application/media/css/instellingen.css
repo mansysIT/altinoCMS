@@ -67,7 +67,6 @@
     margin: 0;
     width: 30%;
     padding-bottom: 30px!important;
-    min-width: 460px;
 }
 
 @media only screen and (max-width: 768px) {

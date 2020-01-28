@@ -816,7 +816,6 @@ input {
 .warforCenter td{
     margin-left: auto;
     margin-right: auto;
-    height: 50%;
 }
 
 .btn-small{
@@ -832,6 +831,9 @@ input {
     width: 85%;
 }
 
+.bottomAlign {
+    margin-top: auto!important;
+}
 
 
 @media only screen and (max-width: 768px) {

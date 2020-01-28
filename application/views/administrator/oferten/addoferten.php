@@ -77,7 +77,7 @@ $d = new DateTime(date("Y-m-d"));
                                     <tr style="display: none" class="nag warforCenter" id="count">
                                         <td class="">
                                             <p class="alignItem rekaningText columnAlignText">Waarvoor</p>
-                                            <select id="mySelect" name="warfortype[]" class="alignItem form-control selectValid">
+                                            <select id="warfortype" name="warfortype[]" class="alignItem form-control selectValid">
                                             <option value="">KIEZ</option>';
                                             foreach($getWarforTypes as $row): ?>
                                                 <option id="<?=$row[2]?>" value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
@@ -87,17 +87,21 @@ $d = new DateTime(date("Y-m-d"));
                                         </td>
                                         <td class="">
                                             <p class="alignItem rekaningText columnAlignText">Opmerkingen</p>
-                                            <textarea name="opmerkingen[]" class="alignItem inputNewHuurder warforTextArea" cols="30" rows="10">'.$rows["opmerkingen"].'</textarea>
+                                            <textarea name="opmerkingen[]" class="alignItem inputNewHuurder warforTextArea" cols="30" rows="10"></textarea>
                                         </td>
                                         <td class="">
                                             <p class="alignItem rekaningText columnAlignText">Aantal</p>
                                             <input id="num1" class="alignItem form-control form-control-small getAllWarfor" placeholder="0" name="warfortimespend[]" value="">
                                         </td>
                                         <td class="">
-                                            <p class="alignItem rekaningText columnAlignText">PRIJS</p>
+                                            <p class="alignItem rekaningText columnAlignText">PRIJS EXCL. BTW</p>
                                             <input id="num2" class="alignItem form-control form-control-small getAllWarfor calculateBTW" placeholder="0" name="warforquantity[]" value="">
                                         </td>
-                                        <td class=" del blok_mansys">
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">PRIJS INCL. BTW</p>
+                                            <input id="sumfield" class="form-control form-control-small alignItem" type="text" readonly>
+                                        </td>
+                                        <td class=" del blok_mansys bottomAlign">
                                             <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="remove btn btn-danger" name="del-a" type="submit" value="X" >
                                         </td>
                                     </tr>
@@ -109,18 +113,18 @@ $d = new DateTime(date("Y-m-d"));
                 </div>
                 <div class="container-fluid">
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
-                
                     <div class="row">
-                        <div class="col-sm-9 columnAlignText">
+                        <div class="col-sm-4 columnAlignText">
+                            <h3>TOTAAL EXCL.BTW:</h3>
                         </div>
-                        <div class="col-sm-1 columnAlignText">
+                        <div class="col-sm-2 columnAlignText">
                             <h3 class="sumValue"></h3>
                         </div>
-                        <div class="col-sm-1 columnAlignText">
-                            <h3></h3>
+                        <div class="col-sm-4 columnAlignText">
+                            <h3>TOTAAL INCL.BTW:</h3>
                         </div>
-                        <div class="col-sm-1 columnAlignText">
-                            <h3 class="sumBtw"></h3>
+                        <div class="col-sm-2 columnAlignText">
+                            <h3 class="sumBtwValue"></h3>
                         </div>
                     </div>
                 </div>
@@ -131,7 +135,7 @@ $d = new DateTime(date("Y-m-d"));
 
                 <div class="RekeningInside">
                     <p class="rekaningText">Geplande</p>
-                    <input class="inputNewHuurder" type="date" name="ofertendataend" value='<?=$d->format('Y-m-d')?>' >
+                    <input class="inputNewHuurder" type="date" name="ofertendataend" value='<?=$d->format('Y-m-d')?>' > 
                 </div>
                 <button type="submit" class="btn btn-danger mb-2 btn-small" name="saveoferten">Opslaan</button>
             </div>

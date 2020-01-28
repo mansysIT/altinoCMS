@@ -7,14 +7,28 @@ function sum() {
     
     var element1 = document.querySelectorAll('#num1');
 	var element2 = document.querySelectorAll('#num2'); 
+	var element3 = document.querySelectorAll('#sumfield'); 
+	var element4 = document.querySelectorAll('#warfortype');
+	var element5 = document.querySelectorAll('#checkboxOnProforma');
     var x = [];
-    var y =[];
+	var y =[];
+	var z = [];
+	var checkboxOnProformaArray = [];
+	var btwValue = [];
     var i = 0;
 	var sum = 0;
-	var btw = 0;
+	var sumBtw = 0;
+	var sumOnProforma = 0;
+	var sumBtwOnProforma = 0;
+	
+
+	var fieldSum = [];
 	
 	var xVal = 0;
 	var yVal = 0;
+
+
+	// z.shift()
 
     element1.forEach(function(userItem) {
 		// alert(userItem.value);
@@ -34,6 +48,18 @@ function sum() {
 	});
 	y.shift()
 	
+	element3.forEach(function(userItem) {
+		z.push(userItem);
+	});
+
+	z.shift();
+
+	element5.forEach(function(userItem) {
+		checkboxOnProformaArray.push(userItem);
+	});
+
+	checkboxOnProformaArray.shift();
+
 	y.forEach(function(userItem) {
 		if(isNaN(x[i])) {
 			x[i] = 0;
@@ -41,6 +67,10 @@ function sum() {
 		if(isNaN(userItem)) {
 			userItem = 0;
 		}
+
+		// fieldSum[i] = x[i] * userItem
+// alert(z[i])
+		// z[i].html(formatter.format(fieldSum[i]));
 		sum = sum + (x[i] * userItem);
 		i++
 	});
@@ -49,12 +79,40 @@ function sum() {
 		sum = 0;
 	}
 
-		
 
 
+	element4.forEach(function(userItem) {
+		btwValue.push($(userItem).children(":selected").attr("id"));
+	});
+	btwValue.shift()
+
+	var k = 0
+
+	z.forEach(function(userItem) {
+		var a = (x[k] * y[k]) * (btwValue[k] * 0.01)
+		fieldSum[k] = x[k] * y[k] + a;
+		if(isNaN(fieldSum[k])) {
+			fieldSum[k] = 0;
+		}
+
+		sumBtw = sumBtw + fieldSum[k];
+
+		$(z[k]).val(formatter.format(fieldSum[k]));
+		if(checkboxOnProformaArray[k] != undefined) {
+			if(checkboxOnProformaArray[k].checked == true) 
+			{
+				sumOnProforma = sumOnProforma + (x[k] * y[k]);
+				sumBtwOnProforma = sumBtwOnProforma + fieldSum[k];
+			}
+		}
+
+		k++
+	});
 
 	$(".sumValue").html(formatter.format(sum));
-	$(".sumBtw").html(formatter.format(btw));
+	$(".sumBtwValue").html(formatter.format(sumBtw));
+	$(".sumValueOnProforma").html(formatter.format(sumOnProforma));
+	$(".sumBtwValueOnProforma").html(formatter.format(sumBtwOnProforma));
 
 }
 
@@ -111,7 +169,15 @@ $(document).ready(function () {
     $("body").on("blur", ".getAllWarfor", function(){
         sum();
     });
-    
+	
+	$("body").on("change", "#warfortype", function(){
+		sum();
+	});
+
+	$("body").on("change", "#checkboxOnProforma", function(){
+		sum();
+	});
+
 	var row_one = $(".nag:first").html();   
 	var fields_line_one = $(".nag").find("input, select, textarea");
 	var index = 1; 

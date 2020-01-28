@@ -50,7 +50,6 @@
     width: 100%;
 	padding: 30px!important;
 	padding: 5px;
-	min-width: 460px;
 }
 
 input {
@@ -104,6 +103,11 @@ font-weight: 100;
 	.Mycontainer .navbar-collapse {
 		padding: 0;
 		margin-top: 0;
+	}
+	.Mycontainer {
+		width: 90%;
+		margin-left: 1%;
+		margin-right: 1%;
 	}
 
 }
