@@ -17,7 +17,7 @@ class dashboardmodel
 	
 	public function getCredentials()
 	{
-		$q = $this->__db->execute("SELECT * FROM administrator WHERE nick = '".$_SESSION[$this->__config->default_session_admin_auth_var]."' LIMIT 1");
+		$q = $this->__db->execute("SELECT * FROM bouw_administrator WHERE nick = '".$_SESSION[$this->__config->default_session_admin_auth_var]."' LIMIT 1");
 		return $q[0]['imie']." ".$q[0]['nazwisko'];
 	}
 	
@@ -39,13 +39,13 @@ class dashboardmodel
 	
 	public function getUsersCount()
 	{
-		$q = $this->__db->execute("SELECT COUNT(id) as cu FROM users");
+		$q = $this->__db->execute("SELECT COUNT(id) as cu FROM bouw_users");
 		return $q[0]['cu'];
 	}
 	
 	public function getAdminsCount()
 	{
-		$q = $this->__db->execute("SELECT COUNT(id) as cu FROM administrator");
+		$q = $this->__db->execute("SELECT COUNT(id) as cu FROM bouw_administrator");
 		return $q[0]['cu'];
 	}
 	

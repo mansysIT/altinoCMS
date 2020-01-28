@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl"> 
 
 <head>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -84,37 +84,36 @@ $d = new DateTime($facturaModelData[0]['data']);
                                 <tbody class="warforadd">
                                 <tr style="display: none" class="nag warforCenter">
                                         
-                                        <td class="">
-                                        <p class="rekaningText">Waarvoor</p>
-                                        </td>
-                                        <td class="">
-                                        <select name="warfortype[]" class="form-control selectValid">
+                                <td class="columnAlignText">
+                                    <p class="rekaningText alignItem">Waarvoor</p>
+                                        <select name="warfortype[]" class="form-control selectValid" id="warfortype">
                                         <option value="">KIEZ</option>';
                                         foreach($getWarforTypes as $row){ ?>
                                             <li>
-                                                <option value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
+                                                <option id="<?=$row[2]?>" value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
                                             </li>
                                         <?php };
 
                                            echo'</select>
                                         </td>
-                                        <td class="">
-                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea" cols="30" rows="10"></textarea>
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText alignItem">Opmerkingen</p>
+                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea alignItem" cols="30" rows="10"></textarea>
                                         </td>
-                                        <td class="">
-                                        <p class="rekaningText">Aantal</p>
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">Aantal</p>
+                                            <input id="num1" class="form-control form-control-small getAllWarfor alignItem" placeholder="0" name="warfortimespend[]" value="">
                                         </td>
-                                        <td class="">
-                                            <input id="num1" class="form-control form-control-small getAllWarfor" placeholder="0" name="warfortimespend[]" value="">
-                                        </td>
-                                        <td class="">
-                                        <p class="rekaningText">Prijs</p>
-                                        </td>
-                                        <td class="">
-                                            <input id="num2" class="form-control form-control-small getAllWarfor" placeholder="0" name="warforquantity[]" value="">
+                                        <td class="columnAlignText">
+                                        <p class="rekaningText">PRIJS EXCL. BTW</p>
+                                            <input id="num2" class="form-control form-control-small getAllWarfor alignItem" placeholder="0" name="warforquantity[]" value="">
                                             <input style="display: none;"name="warforInputId[]" value="" >
                                         </td>
-                                        <td class=" del blok_mansys">
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">PRIJS INCL. BTW</p>
+                                            <input id="sumfield" class="form-control form-control-small alignItem" type="text" readonly>
+                                        </td>
+                                        <td class=" del blok_mansys bottomAlign">
                                             <button type="submit" class="warfor_id btn btn-danger mb-2" value="'.$rows["id"].'" onclick="removeWarfor('.$rows["id"].')" name="del-a" >X</button>
                                             
                                         </td>
@@ -125,35 +124,34 @@ $d = new DateTime($facturaModelData[0]['data']);
                      foreach(array_slice($facturaModelData, 1)  as $rows): ?>
                 <?php echo '<tr style="display: flex" class="warforCenter">
                                         
-                                        <td class="">
-                                        <p class="rekaningText">Waarvoor</p>
-                                        </td>
-                                        <td class="">
-                                        <select name="warfortype[]" class="form-control" required>
+                                    <td class="columnAlignText">
+                                        <p class="rekaningText alignItem">Waarvoor</p>
+                                        <select id="warfortype" name="warfortype[]" class="form-control alignItem" required>
                                         <option value="">KIEZ</option>';
                                         foreach($getWarforTypes as $row){ ?>
-                                                <option value="<?php echo $row[0]; ?>"<?php if($row[0] == $rows['waarvoor_id']) echo" selected" ?>><?php echo $row[1]." (".$row[2]."%)"; ?></option>
+                                                <option id="<?=$row[2]?>" value="<?php echo $row[0]; ?>"<?php if($row[0] == $rows['waarvoor_id']) echo" selected" ?>><?php echo $row[1]." (".$row[2]."%)"; ?></option>
                                         <?php };
 
                                            echo'</select>
                                         </td>
-                                        <td class="">
-                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea" cols="30" rows="10">'.$rows["opmerkingen"].'</textarea>
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText alignItem">Opmerkingen</p>
+                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea alignItem" cols="30" rows="10">'.$rows["opmerkingen"].'</textarea>
                                         </td>
-                                        <td class="">
-                                        <p class="rekaningText">Aantal</p>
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">Aantal</p>
+                                            <input id="num1" class="form-control form-control-small getAllWarfor alignItem" placeholder="0" name="warfortimespend[]" value="'.$rows["quantity"].'">
                                         </td>
-                                        <td class="">
-                                            <input id="num1" class="form-control form-control-small getAllWarfor" placeholder="0" name="warfortimespend[]" value="'.$rows["quantity"].'">
-                                        </td>
-                                        <td class="">
-                                        <p class="rekaningText">Prijs</p>
-                                        </td>
-                                        <td class="">
-                                            <input id="num2" class="form-control form-control-small getAllWarfor" placeholder="0" name="warforquantity[]" value="'.$rows["price"].'">
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">PRIJS EXCL. BTW</p>
+                                            <input id="num2" class="form-control form-control-small getAllWarfor alignItem" placeholder="0" name="warforquantity[]" value="'.$rows["price"].'">
                                             <input style="display: none;"name="warforInputId[]" value="'.$rows["id"].'" >
                                         </td>
-                                        <td class=" del blok_mansys">
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">PRIJS INCL. BTW</p>
+                                            <input id="sumfield" class="form-control form-control-small alignItem" type="text" readonly>
+                                        </td>
+                                        <td class=" del blok_mansys bottomAlign">
                                             <button type="submit" class="warfor_id btn btn-danger mb-2" value="'.$rows["id"].'" onclick="removeWarfor('.$rows["id"].')" name="del-a" >X</button>
                                             
                                         </td>
@@ -172,10 +170,17 @@ $d = new DateTime($facturaModelData[0]['data']);
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-11 columnAlignText">
+                        <div class="col-sm-4 columnAlignText">
+                            <h3>TOTAAL EXCL.BTW:</h3>
                         </div>
-                        <div class="col-sm-1 columnAlignText">
-                            <h2 class="sumValue"></h2>
+                        <div class="col-sm-2 columnAlignText">
+                            <h3 class="sumValue"></h3>
+                        </div>
+                        <div class="col-sm-4 columnAlignText">
+                            <h3>TOTAAL INCL.BTW:</h3>
+                        </div>
+                        <div class="col-sm-2 columnAlignText">
+                            <h3 class="sumBtwValue"></h3>
                         </div>
                     </div>
                 </div>

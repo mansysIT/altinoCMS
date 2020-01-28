@@ -86,36 +86,35 @@ $d = new DateTime(date("Y-m-d"));
                             <table id="kopia_wiersz" class="container"> 
                                 <tbody class="warforadd">                             
                                     <tr style="display: none" class="nag " id="count">
-                                        <td class="">
-                                        <p class="rekaningText">Waarvoor</p>
-                                        </td>
-                                        <td class="">
-                                        <select name="warfortype[]" class="form-control selectValid">
+                                    <td class="">
+                                        <p class="alignItem rekaningText columnAlignText">Waarvoor</p>
+                                        <select name="warfortype[]" class="form-control selectValid alignItem" id="warfortype">
                                         <option value="">KIEZ</option>';
                                         foreach($getWarforTypes as $row): ?>
                                             <li>
-                                                <option value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
+                                                <option id="<?=$row[2]?>" value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
                                             </li>
                                         <?php endforeach;
 
                                            echo'</select>
                                         </td>
                                         <td class="">
-                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea" cols="30" rows="10"></textarea>
+                                            <p class="alignItem rekaningText columnAlignText">Opmerkingen</p>
+                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea alignItem" cols="30" rows="10"></textarea>
                                         </td>
                                         <td class="">
-                                        <p class="rekaningText">Aantal</p>
+                                            <p class="alignItem rekaningText columnAlignText">Aantal</p>
+                                            <input id="num1" class="form-control form-control-small sum getAllWarfor alignItem" placeholder="0" name="warfortimespend[]" placeholder="0" value="">
                                         </td>
                                         <td class="">
-                                            <input id="num1" class="form-control form-control-small sum getAllWarfor" placeholder="0" name="warfortimespend[]" placeholder="0" value="">
+                                            <p class="alignItem rekaningText columnAlignText">PRIJS EXCL. BTW</p>
+                                            <input id="num2" class="form-control form-control-small sum getAllWarfor alignItem" placeholder="0" name="warforquantity[]" placeholder="0" value="">
                                         </td>
-                                        <td class="">
-                                        <p class="rekaningText">Prijs</p>
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">PRIJS INCL. BTW</p>
+                                            <input id="sumfield" class="form-control form-control-small alignItem" type="text" readonly>
                                         </td>
-                                        <td class="">
-                                            <input id="num2" class="form-control form-control-small sum getAllWarfor" placeholder="0" name="warforquantity[]" placeholder="0" value="">
-                                        </td>
-                                        <td class=" del blok_mansys">
+                                        <td class=" del blok_mansys bottomAlign">
                                             <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="btn btn-danger" name="del-a" type="submit" value="X" >
                                         </td>
                                     </tr>
@@ -128,10 +127,17 @@ $d = new DateTime(date("Y-m-d"));
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-6 columnAlignText">
+                        <div class="col-sm-4 columnAlignText">
+                            <h3>TOTAAL EXCL.BTW:</h3>
                         </div>
-                        <div class="col-sm-6 columnAlignText">
-                            <h2 class="sumValue"></h2>
+                        <div class="col-sm-2 columnAlignText">
+                            <h3 class="sumValue"></h3>
+                        </div>
+                        <div class="col-sm-4 columnAlignText">
+                            <h3>TOTAAL INCL.BTW:</h3>
+                        </div>
+                        <div class="col-sm-2 columnAlignText">
+                            <h3 class="sumBtwValue"></h3>
                         </div>
                     </div>
                 </div>

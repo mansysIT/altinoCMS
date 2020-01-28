@@ -18,7 +18,7 @@ class metatags
 	
 	public function _load()
 	{
-		$query = "SELECT * FROM meta_tags, meta_tags_index WHERE meta_tags.id = meta_tags_index.meta_tags_id AND meta_tags_index.name = '{$this->__view}'";
+		$query = "SELECT * FROM bouw_meta_tags, bouw_meta_tags_index WHERE bouw_meta_tags.id = bouw_meta_tags_index.meta_tags_id AND bouw_meta_tags_index.name = '{$this->__view}'";
 		$query = $this->_db->execute($query);
 		
 		return $query;

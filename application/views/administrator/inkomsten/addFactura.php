@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl"> 
 
 <head>
 
@@ -81,37 +81,35 @@ $d = new DateTime(date("Y-m-d"));
                             <table id="kopia_wiersz" class="container"> 
                                 <tbody class="warforadd">                             
                                     <tr style="display: none" class="nag warforCenter">
-                                        <td class="">
-                                            <p class="rekaningText">Waarvoor</p>
-                                        </td>
-                                        <td class="">
-                                        <select name="warfortype[]" class="form-control selectValid">
+                                    <td class="">
+                                        <p class="alignItem rekaningText columnAlignText">Waarvoor</p>
+                                        <select id="warfortype" name="warfortype[]" class="form-control selectValid">
                                         <option value="">KIEZ</option>';
                                         foreach($getWarforTypes as $row): ?>
                                             <li>
-                                                <option value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
+                                                <option id="<?=$row[2]?>" value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
                                             </li>
                                         <?php endforeach;
 
                                            echo'</select>
                                         </td>
                                         <td class="">
-                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea" cols="30" rows="10"></textarea>
+                                            <p class="alignItem rekaningText columnAlignText">Opmerkingen</p>
+                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea alignItem" cols="30" rows="30"></textarea>
                                         </td>
                                         <td class="">
-                                            <p class="rekaningText">Aantal</p>
-                                        </td>
-
-                                        <td class="">
-                                            <input id="num1" class="form-control form-control-small getAllWarfor" name="warfortimespend[]" placeholder="0" value="">
+                                            <p class="alignItem rekaningText columnAlignText">Aantal</p>
+                                            <input id="num1" class="form-control form-control-small getAllWarfor alignItem" name="warfortimespend[]" placeholder="0" value="">
                                         </td>
                                         <td class="">
-                                        <p class="rekaningText">Prijs</p>
+                                            <p class="alignItem rekaningText columnAlignText">PRIJS EXCL. BTW</p>
+                                            <input id="num2" class="form-control form-control-small getAllWarfor alignItem" name="warforquantity[]" placeholder="0" value="">
                                         </td>
-                                        <td class="">
-                                            <input id="num2" class="form-control form-control-small getAllWarfor" name="warforquantity[]" placeholder="0" value="">
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">PRIJS INCL. BTW</p>
+                                            <input id="sumfield" class="form-control form-control-small alignItem" type="text" readonly>
                                         </td>
-                                        <td class=" del blok_mansys">
+                                        <td class=" del blok_mansys bottomAlign">
                                             <input style=" width: auto; display:block; margin:0 auto; height: auto;" class="btn btn-danger" name="del-a" type="submit" value="X" >
                                         </td>
                                     </tr>
@@ -124,10 +122,17 @@ $d = new DateTime(date("Y-m-d"));
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-11 columnAlignText">
+                        <div class="col-sm-4 columnAlignText">
+                            <h3>TOTAAL EXCL.BTW:</h3>
                         </div>
-                        <div class="col-sm-1 columnAlignText">
-                            <h2 class="sumValue"></h2>
+                        <div class="col-sm-2 columnAlignText">
+                            <h3 class="sumValue"></h3>
+                        </div>
+                        <div class="col-sm-4 columnAlignText">
+                            <h3>TOTAAL INCL.BTW:</h3>
+                        </div>
+                        <div class="col-sm-2 columnAlignText">
+                            <h3 class="sumBtwValue"></h3>
                         </div>
                     </div>
                 </div>

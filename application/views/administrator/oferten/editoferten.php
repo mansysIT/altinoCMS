@@ -108,40 +108,39 @@ $d = new DateTime($facturaModelData[0]['data']);
                             <table id="kopia_wiersz" class="container"> 
                                 <tbody class="warforadd">
                                 <tr style="display: none" class="nag">
-                                        <td class="check">
-                                            <input type="checkbox" '.$isProformaDisableRemoveButton.' class="check" name="onproforma[]" value="">
+                                        <td class="check bottomAlign ">
+                                            <input id="checkboxOnProforma" type="checkbox" '.$isProformaDisableRemoveButton.' class="check" name="onproforma[]" value="">
                                         </td>
-                                        <td class="">
-                                        <p class="rekaningText">Waarvoor</p>
-                                        </td>
-                                        <td class="">
-                                        <select name="warfortype[]" class="form-control selectValid">
+                                        <td class="columnAlignText">
+                                        <p class="rekaningText alignItem">Waarvoor</p>
+                                        <select name="warfortype[]" id="warfortype" class="form-control selectValid getAllWarfor alignItem">
                                         <option value="">KIEZ</option>';
                                         foreach($getWarforTypes as $row){ ?>
                                             <li>
-                                                <option value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
+                                                <option id="<?=$row[2]?>" value="<?php echo $row[0]; ?>"><?php echo $row[1]." (".$row[2]."%)"; ?></option>
                                             </li>
                                         <?php };
 
                                            echo'</select>
                                         </td>
-                                        <td class="">
-                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea" '.$isProformareadonly.' cols="30" rows="10"></textarea>
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText alignItem">Opmerkingen</p>
+                                            <textarea name="opmerkingen[]" class="inputNewHuurder warforTextArea alignItem" '.$isProformareadonly.' cols="30" rows="10"></textarea>
                                         </td>
-                                        <td class="">
-                                        <p class="rekaningText">Aantal</p>
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">Aantal</p>
+                                            <input id="num1" class="form-control form-control-small getAllWarfor alignItem" '.$isProformareadonly.' name="warfortimespend[]" placeholder="0" value="">
                                         </td>
-                                        <td class="">
-                                            <input id="num1" class="form-control form-control-small getAllWarfor" '.$isProformareadonly.' name="warfortimespend[]" placeholder="0" value="">
-                                        </td>
-                                        <td class="">
-                                        <p class="rekaningText">Prijs</p>
-                                        </td>
-                                        <td class="">
-                                            <input id="num2" class="form-control form-control-small getAllWarfor" '.$isProformareadonly.' name="warforquantity[]" placeholder="0" value="">
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">PRIJS EXCL. BTW</p>
+                                            <input id="num2" class="form-control form-control-small getAllWarfor alignItem" '.$isProformareadonly.' name="warforquantity[]" placeholder="0" value="">
                                             <input style="display: none;"name="warforInputId[]" value="" >
                                         </td>
-                                        <td class=" del blok_mansys">
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">PRIJS INCL. BTW</p>
+                                            <input id="sumfield" class="form-control form-control-small alignItem" type="text" readonly>
+                                        </td>
+                                        <td class=" del blok_mansys bottomAlign">
                                             <button type="submit" class="warfor_id btn btn-danger mb-2"  name="del-a" >X</button>
                                             
                                         </td>
@@ -162,42 +161,41 @@ $d = new DateTime($facturaModelData[0]['data']);
                          $isProformaDisableRemoveButton = 'style="visibility: hidden;"';
                      }?>
                     <?php echo '<tr style="display: flex" class="warforCenter">
-                                        <td class="check">
-                                            <input type="checkbox" '.$isProformaDisableRemoveButton.'  class="check" name="onproforma[]" value="'.$rows['id'].'">
+                                        <td class="check bottomAlign">
+                                            <input id="checkboxOnProforma" type="checkbox" '.$isProformaDisableRemoveButton.'  class="bottomAlign check" name="onproforma[]" value="'.$rows['id'].'">
                                         </td>
-                                        <td class="">
-                                        <p class="rekaningText">Waarvoor</p>
-                                        </td>
-                                        <td class="">
-                                        <select name="warfortype[]" class="form-control" required>
+                                        <td class="columnAlignText">
+                                        <p class="rekaningText alignItem">Waarvoor</p>
+                                        <select name="warfortype[]" class="form-control alignItem" id="warfortype" required>
                                         <option value="">KIEZ</option>';
                                         foreach($getWarforTypes as $row){ ?>
                                             <li>
-                                                <option value="<?php echo $row[0]; ?>"<?php if($row[0] == $rows['waarvoor_id']) {echo" selected"; } else {echo $isProformadisable; } ?>><?php echo $row[1]." (".$row[2]."%)"; ?></option>
+                                                <option id="<?=$row[2]?>" value="<?php echo $row[0]; ?>"<?php if($row[0] == $rows['waarvoor_id']) {echo" selected"; } else {echo $isProformadisable; } ?>><?php echo $row[1]." (".$row[2]."%)"; ?></option>
                                             </li>
                                         <?php };
 
                                            echo'</select>
                                         </td>
-                                        <td class="">
-                                            <textarea id="autoresizing" name="opmerkingen[]" class="inputNewHuurder warforTextArea" '.$isProformareadonly.' rows="1">'.$rows["opmerkingen"].'</textarea>
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText alignItem">Opmerkingen</p>
+                                            <textarea id="autoresizing" name="opmerkingen[]" class="inputNewHuurder warforTextArea alignItem" '.$isProformareadonly.' rows="1">'.$rows["opmerkingen"].'</textarea>
                                         </td>
-                                        <td class="">
-                                        <p class="rekaningText">Aantal</p>
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">Aantal</p>
+                                            <input id="num1" class="form-control form-control-small getAllWarfor alignItem" '.$isProformareadonly.' name="warfortimespend[]" placeholder="0" value="'.$rows["quantity"].'">
                                         </td>
-                                        <td class="">
-                                            <input id="num1" class="form-control form-control-small getAllWarfor" '.$isProformareadonly.' name="warfortimespend[]" placeholder="0" value="'.$rows["quantity"].'">
-                                        </td>
-                                        <td class="">
-                                        <p class="rekaningText">Prijs</p>
-                                        </td>
-                                        <td class="">
-                                            <input id="num2" class="form-control form-control-small getAllWarfor" '.$isProformareadonly.' name="warforquantity[]" placeholder="0" value="'.$rows["price"].'">
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">PRIJS EXCL. BTW</p>
+                                            <input id="num2" class="form-control form-control-small getAllWarfor alignItem" '.$isProformareadonly.' name="warforquantity[]" placeholder="0" value="'.$rows["price"].'">
                                             <input style="display: none;"name="warforInputId[]" value="'.$rows["id"].'" >
                                         </td>
-                                            <td '.$isProformaDisableRemoveButton.' class="del blok_mansys">
-                                                <button '.$isProformaDisableRemoveButton.' type="submit" class="warfor_id btn btn-danger mb-2" value="'.$rows["id"].'" onclick="removeWarfor('.$rows["id"].')" name="del-a" >X</button>
-                                            </td>
+                                        <td class="columnAlignText">
+                                            <p class="rekaningText">PRIJS INCL. BTW</p>
+                                            <input id="sumfield" class="form-control form-control-small alignItem" type="text" readonly>
+                                        </td>
+                                        <td '.$isProformaDisableRemoveButton.' class="del blok_mansys bottomAlign">
+                                            <button '.$isProformaDisableRemoveButton.' type="submit" class="warfor_id btn btn-danger mb-2" value="'.$rows["id"].'" onclick="removeWarfor('.$rows["id"].')" name="del-a" >X</button>
+                                        </td>
                                         
                                         </tr>';
                                     // $facturaModelData[0]['warforInputId'][] = $rows['id']
@@ -212,10 +210,36 @@ $d = new DateTime($facturaModelData[0]['data']);
                 <button type="button" class="btn btn-danger mb-2 btn-small" id="dodaj">Toevoegen + </button>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-11 columnAlignText">
+                        <div class="col-sm-4 columnAlignText">
+                            <h3>TOTAAL EXCL.BTW:</h3>
                         </div>
-                        <div class="col-sm-1 columnAlignText">
-                            <h2 class="sumValue"></h2>
+                        <div class="col-sm-2 columnAlignText">
+                            <h3 class="sumValue"></h3>
+                        </div>
+                        <div class="col-sm-4 columnAlignText">
+                            <h3>TOTAAL INCL.BTW:</h3>
+                        </div>
+                        <div class="col-sm-2 columnAlignText">
+                            <h3 class="sumBtwValue"></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 columnAlignText">
+                            <h3>Op Proforma:</h3>
+                        </div>      
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 columnAlignText">
+                            <h3>TOTAAL EXCL.BTW:</h3>
+                        </div>
+                        <div class="col-sm-2 columnAlignText">
+                            <h3 class="sumValueOnProforma"></h3>
+                        </div>
+                        <div class="col-sm-4 columnAlignText">
+                            <h3>TOTAAL INCL.BTW:</h3>
+                        </div>
+                        <div class="col-sm-2 columnAlignText">
+                            <h3 class="sumBtwValueOnProforma"></h3>
                         </div>
                     </div>
                 </div>

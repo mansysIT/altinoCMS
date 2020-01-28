@@ -17,13 +17,13 @@ class przypomnienie_haslamodel
 	
 	private function updateUserPasswd($LOGIN, $newPw)
 	{
-		$query = $this->__db->execute("UPDATE users SET password = '{$newPw}' WHERE username = '{$LOGIN}'");
+		$query = $this->__db->execute("UPDATE bouw_users SET password = '{$newPw}' WHERE username = '{$LOGIN}'");
 		return $query;
 	}
 	
 	private function isExistByLoginMail($LOGIN, $MAIL)
 	{
-		$query = $this->__db->execute("SELECT * FROM users WHERE username = '{$LOGIN}' AND mail = '{$MAIL}' LIMIT 1");
+		$query = $this->__db->execute("SELECT * FROM bouw_users WHERE username = '{$LOGIN}' AND mail = '{$MAIL}' LIMIT 1");
 		return $query;
 	}
 	

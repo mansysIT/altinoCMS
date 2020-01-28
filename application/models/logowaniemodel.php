@@ -17,7 +17,7 @@ class logowaniemodel
 	
 	private function isExist($LOGIN, $PASSWORD)
 	{
-		$query = $this->__db->execute("SELECT * FROM users WHERE username = '{$LOGIN}' AND password = '{$PASSWORD}' LIMIT 1");
+		$query = $this->__db->execute("SELECT * FROM bouw_users WHERE username = '".addslashes($LOGIN)."' AND password = '{$PASSWORD}' LIMIT 1"); 
 		return $query;
 	}
 	
