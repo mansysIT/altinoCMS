@@ -329,7 +329,7 @@ class facturmodel
                 $pdf->AddPage();
                 $pdf->SetFont('ArialMT','',10);
         
-                $pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/logo.png',7,10,75);
+                $pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/logo.png',10,10,50);
 
         
 		

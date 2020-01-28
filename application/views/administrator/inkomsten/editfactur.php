@@ -218,7 +218,7 @@ $d = new DateTime($facturaModelData[0]['data']);
                     </div> 
                 <div class="row">
                         <div class="col-sm">
-                            <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Toevoegen</button> 
+                            <button type="submit" class="btn btn-danger mb-2 btn-small" name="editwarfor">Opslaan</button> 
                         </div>
                 </div> 
                 <div class="row">
