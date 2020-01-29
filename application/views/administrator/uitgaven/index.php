@@ -94,7 +94,6 @@ $dOd->modify('first day of this month');
 				$total += $row[4];
 
 				$file = $files[1][0];
-				print_r($file[1][0]);
 
 				if(isset($file)){
 					$fileRow = " <a style='color: #000!important;' href='/application/storage/uitgaven/$row[0]/$file'><span class='oi oi-image' title='image' aria-hidden='true'></span></a>";
