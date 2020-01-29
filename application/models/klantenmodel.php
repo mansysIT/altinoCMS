@@ -76,7 +76,7 @@ class klantenmodel
     public function klanten( $word, $private){
         if($private == 1){
             if($word != null){
-                $this->query = $this->__db->querymy("SELECT id, private_naam, private_achternaam, private_id_kaart, private_tel, email
+                $this->query = $this->__db->querymy("SELECT id, private_naam, private_achternaam, private_id_kaart, private_tel, email, adres, stad, postcode
                 FROM bouw_klanten
                 WHERE 
                 private = ".$private." AND private_naam LIKE '%".$word."%' OR 
@@ -86,14 +86,14 @@ class klantenmodel
                 private = ".$private." AND email LIKE '%".$word."%'
                 ORDER BY id DESC");
             } else {
-                $this->query = $this->__db->querymy("SELECT id, private_naam, private_achternaam, private_id_kaart, private_tel, email 
+                $this->query = $this->__db->querymy("SELECT id, private_naam, private_achternaam, private_id_kaart, private_tel, email, adres, stad, postcode
                 FROM bouw_klanten
                 WHERE private = '".$private."'
                 ORDER BY id DESC");
             }
         } else {
             if($word != null){
-                $this->query = $this->__db->querymy("SELECT id, bedrijf_bedrijf, bedrijf_stad, bedrijf_adres, bedrijf_tel, email 
+                $this->query = $this->__db->querymy("SELECT id, bedrijf_bedrijf, bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, adres, stad, postcode 
                 FROM bouw_klanten
                 WHERE 
                 private = ".$private." AND bedrijf_bedrijf LIKE '%".$word."%' OR 
@@ -103,7 +103,7 @@ class klantenmodel
                 private = ".$private." AND email LIKE '%".$word."%'
                 ORDER BY id DESC");
             } else {
-                $this->query = $this->__db->querymy("SELECT id, bedrijf_bedrijf, bedrijf_stad, bedrijf_adres, bedrijf_tel, email 
+                $this->query = $this->__db->querymy("SELECT id, bedrijf_bedrijf, bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, adres, stad, postcode 
                 FROM bouw_klanten
                 WHERE private = ".$private."
                 ORDER BY id DESC");
@@ -122,7 +122,7 @@ class klantenmodel
         if($private == 1) {
             return array('NAAM', 'ACHTERNAAM', 'ID-KAART');
         } else {
-            return array('BEDRIJF', 'STAD', 'ADRES');
+            return array('BEDRIJF', 'BEDRIJF KVK', 'BEDRIJF BTW');
         }
 
     }
@@ -145,6 +145,7 @@ class klantenmodel
 
 	private function editKlanten(){
 
+
 		$private_naam = $this->__params['POST']['private_naam'];
 		$private_achternaam = $this->__params['POST']['private_achternaam'];
 		$private_id_kaart = $this->__params['POST']['private_id_kaart'];
@@ -152,9 +153,9 @@ class klantenmodel
 		$private_geboortedatum = $this->__params['POST']['private_geboortedatum'];
 
 		$bedrijf_bedrijf = $this->__params['POST']['bedrijf_bedrijf'];
-		$bedrijf_adres = $this->__params['POST']['bedrijf_adres'];
-		$bedrijf_postcode = $this->__params['POST']['bedrijf_postcode'];
-		$bedrijf_stad = $this->__params['POST']['bedrijf_stad'];
+		$adres = $this->__params['POST']['adres'];
+		$postcode = $this->__params['POST']['postcode'];
+		$stad = $this->__params['POST']['stad'];
 		$bedrijf_kvk = $this->__params['POST']['bedrijf_kvk'];
 		$bedrijf_btw = $this->__params['POST']['bedrijf_btw'];
 		$bedrijf_tel = $this->__params['POST']['bedrijf_tel'];
@@ -174,12 +175,12 @@ class klantenmodel
 			private_tel = '".$private_tel."',
 			private_geboortedatum = '".$private_geboortedatum."',
 			bedrijf_bedrijf = '',
-			bedrijf_adres = '',
-			bedrijf_postcode = '',
-			bedrijf_stad = '',
 			bedrijf_kvk = '',
 			bedrijf_btw = '',
 			bedrijf_tel = '',
+			adres = '".$adres."',
+			postcode = '".$postcode."',
+			stad = '".$stad."',
 			email = '".$email."',
 			rekening = '".$rekening."',
 			private = 1
@@ -194,12 +195,12 @@ class klantenmodel
 			private_tel = '',
 			private_geboortedatum = '',
 			bedrijf_bedrijf = '".$bedrijf_bedrijf."',
-			bedrijf_adres = '".$bedrijf_adres."',
-			bedrijf_postcode = '".$bedrijf_postcode."',
-			bedrijf_stad = '".$bedrijf_stad."',
 			bedrijf_kvk = '".$bedrijf_kvk."',
 			bedrijf_btw = '".$bedrijf_btw."',
 			bedrijf_tel = '".$bedrijf_tel."',
+			adres = '".$adres."',
+			postcode = '".$postcode."',
+			stad = '".$stad."',
 			email = '".$email."',
 			rekening = '".$rekening."',
 			private = 0
@@ -218,9 +219,9 @@ class klantenmodel
 		$private_geboortedatum = $this->__params['POST']['private_geboortedatum'];
 
 		$bedrijf_bedrijf = $this->__params['POST']['bedrijf_bedrijf'];
-		$bedrijf_adres = $this->__params['POST']['bedrijf_adres'];
-		$bedrijf_postcode = $this->__params['POST']['bedrijf_postcode'];
-		$bedrijf_stad = $this->__params['POST']['bedrijf_stad'];
+		$adres = $this->__params['POST']['adres'];
+		$postcode = $this->__params['POST']['postcode'];
+		$stad = $this->__params['POST']['stad'];
 		$bedrijf_kvk = $this->__params['POST']['bedrijf_kvk'];
 		$bedrijf_btw = $this->__params['POST']['bedrijf_btw'];
 		$bedrijf_tel = $this->__params['POST']['bedrijf_tel'];
@@ -232,14 +233,14 @@ class klantenmodel
 
 		if($badrijfPrivateToogler == 'private') {
 			$this->__db->execute("INSERT INTO bouw_klanten (
-				private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, bedrijf_adres, bedrijf_postcode, bedrijf_stad, 
+				private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, adres, postcode, stad, 
 				bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, rekening, private) VALUES ('$private_naam' , '$private_achternaam' , '$private_id_kaart' , '$private_tel' , '$private_geboortedatum' ,
-					'' , '' , '' , '' , '' , '' , '' , '$email' , '$rekening', 1)");
+					'' , '$adres' , '$postcode' , '$stad' , '' , '' , '' , '$email' , '$rekening', 1)");
 		} else {
 			$this->__db->execute("INSERT INTO bouw_klanten (
-				private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, bedrijf_adres, bedrijf_postcode, bedrijf_stad, 
+				private_naam, private_achternaam, private_id_kaart, private_tel, private_geboortedatum, bedrijf_bedrijf, adres, postcode, stad, 
 				bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, rekening, private) VALUES ('' , '' , '' , '' , '' ,
-					'$bedrijf_bedrijf' , '$bedrijf_adres' , '$bedrijf_postcode' , '$bedrijf_stad' , '$bedrijf_kvk' , '$bedrijf_btw' , '$bedrijf_tel' , '$email' , '$rekening', 0)");
+					'$bedrijf_bedrijf' , '$adres' , '$postcode' , '$stad' , '$bedrijf_kvk' , '$bedrijf_btw' , '$bedrijf_tel' , '$email' , '$rekening', 0)");
 		}
 		header("Location: ".SERVER_ADDRESS."administrator/klanten/klanten/".$this->__db->getLastInsertedId()."");
 	}

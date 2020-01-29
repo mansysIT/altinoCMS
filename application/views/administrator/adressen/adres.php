@@ -69,7 +69,7 @@
                     <p class="rekaningText">Klanten</p>
                     <select name="klanten" class="form-control" id="exampleFormControlSelect1">
                     <?php foreach($getAllKlanten as $row): ?>
-                        <option value="<?php echo $row[0]; ?>" <?php if($row[0] == $getDataFromAdres['klanten_id']) echo" selected" ?>><?php if(!empty($row[1]) && !empty($row[2])){ echo $row[0]." ".$row[1]." ".$row[2];} else if(!empty($row[6])) {echo $row[0]." ".$row[6];} else {echo $row[0];} ?></option>
+                        <option value="<?php echo $row[0]; ?>" <?php if($row[0] == $getDataFromAdres['klanten_id']) echo" selected" ?>><?php if(!empty($row[1]) && !empty($row[2])){ echo $row[1]." ".$row[2]." ".$row[0];} else if(!empty($row[6])) {echo $row[6]." ".$row[0];} else {echo $row[0];} ?></option>
                     <?php endforeach; ?>
                     </select>
                 </div>  

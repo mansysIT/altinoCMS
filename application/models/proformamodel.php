@@ -35,18 +35,15 @@ class proformamodel
 
         $data = $this->__db->execute("SELECT 
         city.city_id,
-        city.city,
-        adresy.adres, 
-        adresy.postcode,
+        klanten.stad,
+        klanten.adres, 
+        klanten.postcode,
         klanten.private_naam,
         klanten.private_achternaam,
         klanten.private_id_kaart,
         klanten.private_tel,
         klanten.private_geboortedatum,
         klanten.bedrijf_bedrijf,
-        klanten.bedrijf_adres,
-        klanten.bedrijf_postcode,
-        klanten.bedrijf_stad,
         klanten.bedrijf_kvk,
         klanten.bedrijf_btw,
         klanten.bedrijf_tel,
@@ -856,85 +853,84 @@ class proformamodel
 		$pdf->SetX(130);
 
         $pdf->SetFont('ArialMT','',8);
-        if(!empty($data[0]['bedrijf_bedrijf'])){
-		if($data[0]['bedrijf_bedrijf']){
-			$pdf->Cell(0,5,''.$data[0]['bedrijf_bedrijf'],0,1);
-			$pdf->SetX(130);
-		}
-
-		if($data['bedrijf']){
-			$pdf->Cell(0,5,$data['bedrijf'],0,1);
-			$pdf->SetX(130);
-        }
+                if(!empty($data[0]['bedrijf_bedrijf'])){
+                    // echo"aaaaaaaaa";
+                if($data[0]['bedrijf_bedrijf']){
+                    $pdf->Cell(0,5,''.$data[0]['bedrijf_bedrijf'],0,1);
+                    $pdf->SetX(130);
+                }
         
-		if($data[0]['bedrijf_adres']){
-            $pdf->Cell(0,5,''.$data[0]['bedrijf_adres'],0,1);
-            $pdf->SetX(130);
-            }
-    
-            if($data[0]['bedrijf_postcode']){
-            $pdf->Cell(0,5,$data[0]['bedrijf_postcode'],0,1);
-            $pdf->SetX(130);
-            }
-    
-            if($data[0]['bedrijf_stad']){
-                $pdf->Cell(0,5,''.$data[0]['bedrijf_stad'],0,1);
-                $pdf->SetX(130);
-            }
-
-            if($data[0]['bedrijf_kvk']){
-                $pdf->Cell(0,5,''.$data[0]['bedrijf_kvk'],0,1);
-                $pdf->SetX(130);
-            }
-
-            if($data[0]['bedrijf_btw']){
-                $pdf->Cell(0,5,''.$data[0]['bedrijf_btw'],0,1);
-                $pdf->SetX(130);
-            }
-    
-            if($data[0]['email']){
-			$pdf->Cell(0,5,''.$data[0]['email'],0,1);
-			$pdf->SetX(130);
-            }
+                if($data['bedrijf']){
+                    $pdf->Cell(0,5,$data['bedrijf'],0,1);
+                    $pdf->SetX(130);
+                }
+                       
+                    if($data[0]['bedrijf_kvk']){
+                        $pdf->Cell(0,5,''.$data[0]['bedrijf_kvk'],0,1);
+                        $pdf->SetX(130);
+                    }
+        
+                    if($data[0]['bedrijf_btw']){
+                        $pdf->Cell(0,5,''.$data[0]['bedrijf_btw'],0,1);
+                        $pdf->SetX(130);
+                    }
+                    if($data[0]['adres']){
+                        $pdf->Cell(0,5,''.$data[0]['adres'],0,1);
+                        $pdf->SetX(130);
+                        }
+                
+                        if($data[0]['postcode']){
+                        $pdf->Cell(0,5,$data[0]['postcode'],0,1);
+                        $pdf->SetX(130);
+                        }
+                
+                        if($data[0]['stad']){
+                            $pdf->Cell(0,5,''.$data[0]['stad'],0,1);
+                            $pdf->SetX(130);
+                        }
             
-            if($data[0]['bedrijf_tel']){
-				$pdf->Cell(0,5,''.$data[0]['private_tel'],0,1);
-				$pdf->SetX(130);
-            }
-    } else {
-
-        if($data[0]['private_naam'] || $data[0]['private_achternaam']){
-			$pdf->Cell(0,5,''.$data[0]['private_naam'].' '.$data[0]['private_achternaam'],0,1);
-			$pdf->SetX(130);
-		}
-
-		if($data[0]['adres']){
-		$pdf->Cell(0,5,''.$data[0]['adres'],0,1);
-		$pdf->SetX(130);
-		}
-
-		if($data[0]['postcode']){
-		$pdf->Cell(0,5,$data[0]['postcode'],0,1);
-		$pdf->SetX(130);
-		}
-
-		if($data[0]['city']){
-			$pdf->Cell(0,5,''.$data[0]['city'],0,1);
-			$pdf->SetX(130);
-		}
-
-		if($data[0]['email']){
-		$pdf->Cell(0,5,''.$data[0]['email'],0,1);
-		$pdf->SetX(130);
-        }
+                    if($data[0]['email']){
+                    $pdf->Cell(0,5,''.$data[0]['email'],0,1);
+                    }
+                    
+                    if($data[0]['bedrijf_tel']){
+                        $pdf->Cell(0,5,''.$data[0]['private_tel'],0,1);
+                    }
+            } else {
+                // echo"bbbbb";
         
-        if($data[0]['private_tel']){
-			$pdf->Cell(0,5,''.$data[0]['private_tel'],0,1);
-			$pdf->SetX(130);
-        }
-    }
-
-		$pdf->SetY(90);
+                if($data[0]['private_naam'] || $data[0]['private_achternaam']){
+                    $pdf->Cell(0,5,''.$data[0]['private_naam'].' '.$data[0]['private_achternaam'],0,1);
+                    $pdf->SetX(130);
+                }
+        
+                if($data[0]['adres']){
+                    $pdf->Cell(0,5,''.$data[0]['adres'],0,1);
+                    $pdf->SetX(130);
+                    }
+            
+                    if($data[0]['postcode']){
+                    $pdf->Cell(0,5,$data[0]['postcode'],0,1);
+                    $pdf->SetX(130);
+                    }
+            
+                    if($data[0]['stad']){
+                        $pdf->Cell(0,5,''.$data[0]['stad'],0,1);
+                        $pdf->SetX(130);
+                    }
+        
+                if($data[0]['email']){
+                $pdf->Cell(0,5,''.$data[0]['email'],0,1);
+                $pdf->SetX(130);
+                }
+                
+                if($data[0]['private_tel']){
+                    $pdf->Cell(0,5,''.$data[0]['private_tel'],0,1);
+                    $pdf->SetX(130);
+                }
+            }
+        
+                $pdf->SetY(90);
 		// $date=substr ($data_dod, 0, 10) ;
 
 

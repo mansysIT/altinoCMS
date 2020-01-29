@@ -75,6 +75,9 @@ $klanten=model_load('klantenmodel', 'getKlanten', '');
 					<thead>
 						<tr>
 							<th onclick="sortTable(0)">ID</th>
+							<th onclick="sortTable(0)">ADRES</th>
+							<th onclick="sortTable(0)">STAD</th>
+							<th onclick="sortTable(0)">POSTCODE</th>
 							<th onclick="sortTable(1)"><?=$klanten[0][0]?></th>
 							<th onclick="sortTable(2)"><?=$klanten[0][1]?></th>
 							<th onclick="sortTable(3)"><?=$klanten[0][2]?></th>
@@ -86,6 +89,9 @@ $klanten=model_load('klantenmodel', 'getKlanten', '');
 						<?php foreach(array_slice($klanten, 1) as $row): ?>
 						<tr>
 							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[0]</a>" ?></td>
+							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[6]</a>" ?></td>
+							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[7]</a>" ?></td>
+							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[8]</a>" ?></td>
 							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[1]</a>" ?></td>
 							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[2]</a>" ?></td>
 							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[3]</a>" ?></td>
@@ -95,6 +101,9 @@ $klanten=model_load('klantenmodel', 'getKlanten', '');
 						</tr>
 						<?php endforeach; ?>
 						<tr class="suma">
+							<td></td>
+							<td></td>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>

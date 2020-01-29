@@ -378,22 +378,7 @@ class facturmodel
                     $pdf->Cell(0,5,$data['bedrijf'],0,1);
                     $pdf->SetX(130);
                 }
-                
-                if($data[0]['bedrijf_adres']){
-                    $pdf->Cell(0,5,''.$data[0]['bedrijf_adres'],0,1);
-                    $pdf->SetX(130);
-                    }
-            
-                    if($data[0]['bedrijf_postcode']){
-                    $pdf->Cell(0,5,$data[0]['bedrijf_postcode'],0,1);
-                    $pdf->SetX(130);
-                    }
-            
-                    if($data[0]['bedrijf_stad']){
-                        $pdf->Cell(0,5,''.$data[0]['bedrijf_stad'],0,1);
-                        $pdf->SetX(130);
-                    }
-        
+                       
                     if($data[0]['bedrijf_kvk']){
                         $pdf->Cell(0,5,''.$data[0]['bedrijf_kvk'],0,1);
                         $pdf->SetX(130);
@@ -403,6 +388,20 @@ class facturmodel
                         $pdf->Cell(0,5,''.$data[0]['bedrijf_btw'],0,1);
                         $pdf->SetX(130);
                     }
+                    if($data[0]['adres']){
+                        $pdf->Cell(0,5,''.$data[0]['adres'],0,1);
+                        $pdf->SetX(130);
+                        }
+                
+                        if($data[0]['postcode']){
+                        $pdf->Cell(0,5,$data[0]['postcode'],0,1);
+                        $pdf->SetX(130);
+                        }
+                
+                        if($data[0]['stad']){
+                            $pdf->Cell(0,5,''.$data[0]['stad'],0,1);
+                            $pdf->SetX(130);
+                        }
             
                     if($data[0]['email']){
                     $pdf->Cell(0,5,''.$data[0]['email'],0,1);
@@ -420,19 +419,19 @@ class facturmodel
                 }
         
                 if($data[0]['adres']){
-                $pdf->Cell(0,5,''.$data[0]['adres'],0,1);
-                $pdf->SetX(130);
-                }
-        
-                if($data[0]['postcode']){
-                $pdf->Cell(0,5,$data[0]['postcode'],0,1);
-                $pdf->SetX(130);
-                }
-        
-                if($data[0]['city']){
-                    $pdf->Cell(0,5,''.$data[0]['city'],0,1);
+                    $pdf->Cell(0,5,''.$data[0]['adres'],0,1);
                     $pdf->SetX(130);
-                }
+                    }
+            
+                    if($data[0]['postcode']){
+                    $pdf->Cell(0,5,$data[0]['postcode'],0,1);
+                    $pdf->SetX(130);
+                    }
+            
+                    if($data[0]['stad']){
+                        $pdf->Cell(0,5,''.$data[0]['stad'],0,1);
+                        $pdf->SetX(130);
+                    }
         
                 if($data[0]['email']){
                 $pdf->Cell(0,5,''.$data[0]['email'],0,1);

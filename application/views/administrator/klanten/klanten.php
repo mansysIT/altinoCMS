@@ -98,18 +98,6 @@ $getDataFromKlantens['private'] = 1;
                         <input class="inputKlanten" type="text" name="bedrijf_bedrijf" value='<?php if(!empty($getDataFromKlantens['id'])) echo $getDataFromKlantens['bedrijf_bedrijf']?>'>
                     </div>
                     <div class="col-sm-3 colWidth">
-                        <p class="info p">Adres</p>   
-                        <input class="inputKlanten" type="text" name="bedrijf_adres" value='<?php if(!empty($getDataFromKlantens['id'])) echo $getDataFromKlantens['bedrijf_adres']?>'>
-                    </div>
-                    <div class="col-sm-3 colWidth">
-                        <p class="info p">Post code</p>  
-                        <input class="inputKlanten" type="text" name="bedrijf_postcode" value='<?php if(!empty($getDataFromKlantens['id'])) echo $getDataFromKlantens['bedrijf_postcode']?>' >
-                    </div>
-                    <div class="col-sm-3 colWidth">
-                        <p class="info p">Stad</p>  
-                        <input class="inputKlanten" type="text" name="bedrijf_stad" value='<?php if(!empty($getDataFromKlantens['id'])) echo $getDataFromKlantens['bedrijf_stad']?>' >
-                    </div>
-                    <div class="col-sm-3 colWidth">
                         <p class="info p">KvK</p>
                         <input class="inputKlanten" sty type="text" name="bedrijf_kvk" value='<?php if(!empty($getDataFromKlantens['id'])) echo $getDataFromKlantens['bedrijf_kvk']?>' >
                     </div>
@@ -125,6 +113,36 @@ $getDataFromKlantens['private'] = 1;
             </div>
         </div>
         <input style="display: none" id="toogler"  type="text" name="privateBedrijfToogler" value='<?php if($getDataFromKlantens['private'] == 0) echo "bedrijf"; else echo "private"; ?>' >
+        <div class="row fullWidth ">
+            <div class="col-sm-2 my-auto ">
+                <p class="info p">Adres</p>     
+            </div>
+            <div class="col-sm-10 noPadding">
+                <div class="col-sm-3 colWidth text-center ">
+                    <input class="inputKlanten" type="text" name="adres" value='<?php if(!empty($getDataFromKlantens['id'])) echo $getDataFromKlantens['adres']?>'>
+                </div>
+            </div>
+        </div>
+        <div class="row fullWidth ">
+            <div class="col-sm-2 my-auto ">
+                <p class="info p">Stad</p> 
+            </div>
+            <div class="col-sm-10 noPadding">
+                <div class="col-sm-3 colWidth text-center ">
+                    <input class="inputKlanten" type="text" name="stad" value='<?php if(!empty($getDataFromKlantens['id'])) echo $getDataFromKlantens['stad']?>' >
+                </div>
+            </div>
+        </div>
+        <div class="row fullWidth ">
+            <div class="col-sm-2 my-auto ">
+                <p class="info p">Post code</p>  
+            </div>
+            <div class="col-sm-10 noPadding">
+                <div class="col-sm-3 colWidth text-center ">
+                    <input class="inputKlanten" type="text" name="postcode" value='<?php if(!empty($getDataFromKlantens['id'])) echo $getDataFromKlantens['postcode']?>' >
+                </div>
+            </div>
+        </div>
         <div class="row fullWidth ">
             <div class="col-sm-2 my-auto ">
                 <p class="info p">Email</p>
