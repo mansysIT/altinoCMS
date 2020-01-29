@@ -32,7 +32,7 @@ class smtpmailer {
         $mail->SMTPSecure = "ssl";                 
         $mail->Port       = '587';                    
         $mail->Host       = 'khbemiddeling.e-kei.pl'; 
-        $mail->Username   = 'info@aguiarbouw.nl';     
+        $mail->Username   = 'info@khbemiddeling.nl';     
         $mail->Password   = 'Altino28';
         
         if(!empty($plik))
@@ -40,7 +40,7 @@ class smtpmailer {
 
         $mail->IsSendmail();  
         
-        $mail->From       = 'info@aguiarbouw.nl';
+        $mail->From       = 'info@khbemiddeling.nl';
         $mail->FromName   = 'AGUIAR BOUW B.V';
         $mail->AddAddress($do);
         $mail->Subject  = $temat;
