@@ -492,12 +492,14 @@ class proformamodel
                     (adres_id, 
                     oferten_id, 
                     factur_numer,
-                    data) 
+                    data,
+                    proforma_nr) 
                     VALUES (
                     '".$adres."',
                     '".$oferten."',
                     '".$lastFacturNumer."',
-                    '".$data_betalen."'
+                    '".$data_betalen."',
+                    '".$factur."'
                     )");
                 }
 
@@ -667,7 +669,6 @@ class proformamodel
 
         header("Location: ".SERVER_ADDRESS."administrator/proforma/index");
 
-        // $this->wyslij_maila_smtp('kw-53@wp.pl', 'testsmtp', 'testowa tresc wiadomosci',$_SERVER['DOCUMENT_ROOT'].'proforma.pdf');
     }
 
     public function proform_ilosc_maili($id_proforma) {

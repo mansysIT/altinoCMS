@@ -38,7 +38,6 @@ class mainmodel
 	} 
     
     public function getAllFilesInDirectory($dir) {
-
 			if(scandir($dir) != null){
 				$files = scandir($dir);
 				$foldersArray = array();

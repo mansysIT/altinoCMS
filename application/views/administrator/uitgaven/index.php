@@ -77,6 +77,7 @@ $dOd->modify('first day of this month');
 					<th onclick="sortTable(4)">WAARVOOR</th>  
 					<th onclick="sortTable(5)">BEDRAG</th>
 					<th onclick="sortTable(6)">DATUM</th>
+					<th>FILE</th>
 					<th>ACTION</th>
 				</tr>
 		</thead>
@@ -87,10 +88,19 @@ $dOd->modify('first day of this month');
 			$total  = 0;
 			
 			foreach($adress as $k=>$row): 
-
+				$files = model_load('uitgavenmodel', 'getAllFilesFromUitgaven', $row[0]);
 				$w = model_load('mainmodel', 'getwaarvoor', $row[6]); 
 				$waar = $w[0][1]; 
 				$total += $row[4];
+
+				$file = $files[1][0];
+				print_r($file[1][0]);
+
+				if(isset($file)){
+					$fileRow = " <a style='color: #000!important;' href='/application/storage/uitgaven/$row[0]/$file'><span class='oi oi-image' title='image' aria-hidden='true'></span></a>";
+				} else {
+					$fileRow = "";
+				}
 	
 				// $w = '';
 				// echo '<pre>';
@@ -106,6 +116,7 @@ $dOd->modify('first day of this month');
 					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$waar</a>" ?></td> 
 					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>€ ".number_format($row[4],2,',', '.')."</a>" ?></td>
 					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$row[5]</a>" ?></td>
+					<td><?=$fileRow?></td>
 					<td> <form  method="post" action=""><button class="btnCityRemove" type="submit" name="uitgaafremove" value="<?php echo $row[0]; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form></td>
 				</tr>
 			<?php endforeach; ?> 
@@ -117,6 +128,7 @@ $dOd->modify('first day of this month');
 				<td></td>
 				<td></td>
 				<td><?="€ ".number_format($total,2,',', '.')."" ?></td>
+				<td></td>
 				<td></td>
 				<td></td>
 			</tr>

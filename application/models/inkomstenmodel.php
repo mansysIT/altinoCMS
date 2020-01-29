@@ -115,7 +115,7 @@ class inkomstenmodel
 		}
 
 		if($word != null && $id != null) {
-			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data 
+			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data, bouw_factur.proforma_nr
 			FROM `bouw_adresy`
              INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
 			 INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
@@ -129,7 +129,7 @@ class inkomstenmodel
 			ORDER BY bouw_factur.id DESC");
 		}
 		else if($word != null){
-			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data 
+			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data, bouw_factur.proforma_nr
 			FROM `bouw_adresy`
              INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
 			 INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
@@ -142,7 +142,7 @@ class inkomstenmodel
             bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  bouw_factur.factur_numer = '".$word."' 
 			ORDER BY bouw_factur.id DESC");
 		} else if($id != null) {
-			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data 
+			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data, bouw_factur.proforma_nr
 			FROM `bouw_adresy`
              INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
 			 INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
@@ -151,7 +151,8 @@ class inkomstenmodel
 			bouw_factur.data BETWEEN '".$od."' AND '".$do."' AND  ".$type." = '".$id."'
 			ORDER BY bouw_factur.id DESC");
 		} else {
-			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data FROM `bouw_adresy`
+			$this->query = $this->__db->querymy("SELECT bouw_factur.id, bouw_city.city, bouw_adresy.adres, oferten.oferten_numer, bouw_factur.factur_numer, bouw_factur.data, bouw_factur.proforma_nr
+			FROM `bouw_adresy`
             INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
             INNER JOIN bouw_factur ON bouw_factur.adres_id = bouw_adresy.id 
 			LEFT JOIN bouw_oferten AS oferten ON oferten.id = bouw_factur.oferten_id 
@@ -328,7 +329,8 @@ class inkomstenmodel
         klanten.rekening,
         factur.data,
         factur.factur_numer,
-        factur.id
+        factur.id,
+		factur.proforma_nr
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
         INNER JOIN bouw_factur AS factur ON adresy.id = factur.adres_id 

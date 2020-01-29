@@ -510,7 +510,9 @@ class facturmodel
                 $pdf->SetFillColor(240, 240, 240);
                 $pdf->Cell(0,10,'Factuur: '.$data[0]['factur_numer'].' van '.$d->format('d-m-Y').' ',T,1,1,true);
         
-        
+                if(!empty($data[0]['proforma_nr']))
+                $pdf->Cell(100,10,'Order: '.$data[0]['id']." (Proforma nr: ".$data[0]['proforma_nr'].")",0,1);
+                else
                 $pdf->Cell(100,10,'Order: '.$data[0]['id'],0,1);
         
                 $pdf->SetXY(110,95);
