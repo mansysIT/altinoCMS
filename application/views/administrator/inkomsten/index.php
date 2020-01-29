@@ -68,6 +68,7 @@ $dOd->modify('first day of this month');
 					<th onclick="sortTable(2)">STAD</th>
 					<th onclick="sortTable(3)">ADRES</th>
 					<th onclick="sortTable(4)">OFFERTEN</th>
+					<th onclick="sortTable(4)">PROFORM</th>
 					<th onclick="sortTable(5)">BEDRAG</th>
 					<th onclick="sortTable(6)">FACTUR</th>
 					<th onclick="sortTable(8)">DATUM</th>
@@ -77,13 +78,15 @@ $dOd->modify('first day of this month');
 		<tbody>
         <?php $sum = 0?>
 			<?php foreach($adress as $row): ?>
-				<?php $sum += $row[6] ?>
+			<?php if($row[6] == 0) $row[6] = null ?>
+				<?php $sum += $row[7] ?>
 				<tr>
 					<?="<td> <a style='color: #000!important;' href='administrator/factuur/sendfactur/$row[4]/$row[0]'>$row[0]</a><a style='color: #000!important;' href='administrator/factuur/sendfactur/$row[4]/$row[0]'> <span class='oi oi-envelope-closed' title='envelope-closed' aria-hidden='true'></span></a> " ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[1]</a>" ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[2]</a>" ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[3]</a>" ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>€ ".number_format($row[6],2,',', '.')."</a>" ?></td>
+					<?="<td> <a style='color: #000!important;' href='administrator/proforma/editproforma/$row[6]'>$row[6]</a>" ?></td>
+					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>€ ".number_format($row[7],2,',', '.')."</a>" ?></td>
 					<?="<td> <a style='color: #000!important;' href='/application/storage/factur/$row[0].pdf'>$row[4]</a><a style='color: #000!important;' href='/application/storage/factur/$row[0].pdf'> <span class='oi oi-file' title='file' aria-hidden='true'></span></a> " ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[5]</a>" ?></td>
 					<td> <form  method="post" action=""><button class="btnCityRemove" type="submit" name="facturremove" value="<?php echo $row[4]; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form></td>
@@ -92,6 +95,7 @@ $dOd->modify('first day of this month');
 		</tbody>
 		<tfoot style="background-color: #212529; color: white">
 		<tr>
+			<td></td>
 			<td></td>
 			<td></td>
 			<td></td>
