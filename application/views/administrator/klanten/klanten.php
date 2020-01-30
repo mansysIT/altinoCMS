@@ -50,6 +50,7 @@ $getDataFromKlantens['private'] = 1;
     </div>
     <div class="row mainContainer"> 
     <form action="" method="post">
+        <input style="display: none" type="text" name="id" value="<?=$getDataFromKlantens['id']?>">
         <div class="row fullWidth smallMarginBottom <?php if($getDataFromKlantens['private'] != 1) echo "active"; ?>" id="nieuweadressprivate">
             <div class="col-sm-2  my-auto">
                 <div class="row">

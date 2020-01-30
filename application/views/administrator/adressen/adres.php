@@ -45,6 +45,7 @@
     <?=module_load('adresmenu')?>
     <div class="maincontainer">
             <form action="" method="post">
+            <input style="display: none" type="text" name="id" value="<?=$getDataFromAdres['id']?>">
             <div class="bottomHolder">
             <div class="rekaning">
 				<div class="RekeningInside">

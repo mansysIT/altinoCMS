@@ -3,7 +3,7 @@
 
 <head>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <?=add_metatags()?>
@@ -28,10 +28,11 @@
 
 
 <?php 
+$id = model_load('mainmodel', 'getScroolPosition', '');
 $adress=model_load('uitgavenmodel', 'removeUitgaaf', '');
 $adress=model_load('uitgavenmodel', 'getFactur', ''); 
 //$waarvoor=model_load('waarvoormodel', 'getwaarvoor', '1');
-
+header("Cache-Control: no-store, no-cache, must-revalidate");
 //print_r($waarvoor); 
  
 $d = new DateTime(date("Y-m-d"));
@@ -107,7 +108,7 @@ $dOd->modify('first day of this month');
 				// //print_r($waarvoor);
 				// echo '<br>bbb:'.$w;
 				?>  
-				<tr>
+				<tr id="<?=$row[0]?>">
 					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$row[0]</a>" ?></td>
 					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$row[1]</a>" ?></td>
 					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$row[2]</a>" ?></td>
@@ -138,3 +139,8 @@ $dOd->modify('first day of this month');
 	</div>
 </body>
 </html>
+<script language="JavaScript" type="text/javascript">
+$("html, body").animate({
+scrollTop: $("#<?=$id?>").offset().top -155
+}, 1000);
+</script>
