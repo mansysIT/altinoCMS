@@ -4,7 +4,7 @@
 <head>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
@@ -22,7 +22,9 @@
 <?=icon_load("pp_fav.ico")?>
 <?php 
 $adress=model_load('adressenmodel', 'getAdress', '');
-$getAdresId = model_load('adressenmodel', 'adresMenuGetUrl', '');
+$getAdresId = model_load('adressenmodel', 'adresMenuGetUrl', ''); 
+$id = model_load('mainmodel', 'getScroolPosition', '');
+header("Cache-Control: no-store, no-cache, must-revalidate");
 
 $d = new DateTime(date("Y-m-d"));
 			
@@ -100,7 +102,7 @@ $dOd->modify('-12 month');
 				$totalWinst += $row[6];
 					
 				?>
-				<tr>
+				<tr id="<?=$row[0]?>">
 					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[0]</a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[3]</a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='administrator/adressen/adres/$row[0]'>$row[1]</a>" ?></td>
@@ -130,3 +132,8 @@ $dOd->modify('-12 month');
 	</div>
 </body>
 </html>
+<script language="JavaScript" type="text/javascript">
+$("html, body").animate({
+scrollTop: $("#<?=$id?>").offset().top -155
+}, 1000);
+</script>

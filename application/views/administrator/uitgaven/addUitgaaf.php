@@ -44,6 +44,7 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
     <h1>Uitgaaf</h1>
     <div class="maincontainer">
     <form action="" method="post" enctype="multipart/form-data">
+        <input style="display: none" type="text" name="id" value="<?php if(!empty($uitgavenModelData)) echo $uitgavenModelData[0]['uitgaven_id']; ?>">
             <div class="bottomHolder">
             <div class="rekaning">
                 <div class="RekeningInside">
@@ -58,8 +59,8 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                 <div class="RekeningInside"> 
                     <p class="rekaningText">Adres</p>
                     <select name="adres" class="adresy form-control" id="exampleFormControlSelect1">
-                        <option value="999">SELECT ADRES</option>
-                        <option value="999222">SELECT ADRES2</option>
+                        <option value="">SELECT ADRES</option>
+                        <option value="">SELECT ADRES2</option>
                     </select>
                 </div>
                 <div class="RekeningInside">

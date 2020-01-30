@@ -165,6 +165,8 @@ class klantenmodel
 
 		$badrijfPrivateToogler = $this->__params['POST']['privateBedrijfToogler'];
 
+		$_SESSION['id'] =  $this->__params['POST']['id'];
+
 		if($badrijfPrivateToogler == 'private') {
 			
 			$x = $this->__db->execute("UPDATE bouw_klanten 

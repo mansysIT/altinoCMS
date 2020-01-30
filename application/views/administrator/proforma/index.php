@@ -3,7 +3,7 @@
 
 <head>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <?error_reporting(E_ERROR | E_PARSE);?>
@@ -23,8 +23,8 @@
 <?php 
 model_load('proformamodel', 'removeproforma', '');
 $proforma=model_load('proformamodel', 'getproforma', '');
-
-
+$id = model_load('mainmodel', 'getScroolPosition', '');
+header("Cache-Control: no-store, no-cache, must-revalidate");
 $d = new DateTime(date("Y-m-d"));
 			
 $dOd = new DateTime(date("Y-m-d"));
@@ -81,7 +81,7 @@ $dOd->modify('first day of this month');
         
 			<?php foreach($proforma as $row): ?>
 				<?php $sum += $row[7] ?>
-				<tr <?php if($row[6] == 0){echo "class='proformared'"; } else { echo "class='proformablack'"; } ?>>
+				<tr id="<?=$row[0]?>" <?php if($row[6] == 0){echo "class='proformared'"; } else { echo "class='proformablack'"; } ?>>
 					<?="<td> <a href='administrator/proforma/sendproforma/$row[4]/$row[0]'>$row[0]</a><a href='administrator/proforma/sendproforma/$row[4]/$row[0]'> <span class='oi oi-envelope-closed' title='envelope-closed' aria-hidden='true'></span></a> " ?></td>
 					<?="<td> <a href='administrator/proforma/editproforma/$row[4]'>$row[1]</a>" ?></td>
                     <?="<td> <a href='administrator/proforma/editproforma/$row[4]'>$row[2]</a>" ?></td>
@@ -109,3 +109,8 @@ $dOd->modify('first day of this month');
 	</div>
 </body>
 </html>
+<script language="JavaScript" type="text/javascript">
+$("html, body").animate({
+scrollTop: $("#<?=$id?>").offset().top -155
+}, 1000);
+</script>

@@ -53,6 +53,7 @@ class uitgaafmodel
             $factur =$this->__params['POST']['facturnumer'];
             $data = $this->__params['POST']['facturdata'];
             
+            
 
 			$this->__db->execute("UPDATE bouw_uitgave
             SET

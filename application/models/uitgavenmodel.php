@@ -238,7 +238,7 @@ class uitgavenmodel
 			$data = $d->format('Y-m-d');
 
 			$price = str_replace(",",".",$this->__params['POST']['price']);
-			
+			$_SESSION['id'] =  $this->__params['POST']['id'];
 			if(empty($this->__params[1])){
 
 				$this->__db->execute("INSERT INTO bouw_uitgaven 

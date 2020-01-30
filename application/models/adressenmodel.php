@@ -216,6 +216,8 @@ class adressenmodel
 			$postcode = $this->__params['POST']['postcode'];
 			$city = $this->__params['POST']['city'];
 			$klanten = $this->__params['POST']['klanten'];
+			
+			$_SESSION['id'] =  $this->__params['POST']['id'];
 
 			$this->__db->execute("UPDATE bouw_adresy 
 			SET

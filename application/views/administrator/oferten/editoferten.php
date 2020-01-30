@@ -77,6 +77,7 @@ $d = new DateTime($facturaModelData[0]['data']);
         </div>
 
     <form action="" method="post" id="myForm">
+    <input style="display: none" type="text" name="id" value="<?=$facturaModelData[0]['id']?>">
             <div class="bottomHolder">
             <div class="rekaning">
                 <div class="RekeningInside">

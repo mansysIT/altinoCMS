@@ -47,6 +47,7 @@ $d = new DateTime($facturaModelData[0]['data']);
     <h1 class="title">Factuur Bewerken</h1>
     <div class="maincontainer">
     <form action="" method="post" id="myForm" enctype="multipart/form-data">
+        <input style="display: none" type="text" name="id" value="<?=$facturaModelData[0]['id']?>">
             <div class="bottomHolder">
             <div class="rekaning">
                 <div class="RekeningInside">

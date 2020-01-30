@@ -4,7 +4,7 @@
 <head>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
@@ -21,9 +21,9 @@
     
 <?=icon_load("pp_fav.ico")?>
 <?php 
-
+$id = model_load('mainmodel', 'getScroolPosition', '');
 $klanten=model_load('klantenmodel', 'getKlanten', '');
-
+header("Cache-Control: no-store, no-cache, must-revalidate");
 ?>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -87,7 +87,7 @@ $klanten=model_load('klantenmodel', 'getKlanten', '');
 					</thead>
 					<tbody>
 						<?php foreach(array_slice($klanten, 1) as $row): ?>
-						<tr>
+						<tr id="<?=$row[0]?>">
 							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[0]</a>" ?></td>
 							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[6]</a>" ?></td>
 							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[7]</a>" ?></td>
@@ -123,3 +123,8 @@ $klanten=model_load('klantenmodel', 'getKlanten', '');
 	</div>
 </body>
 </html>
+<script language="JavaScript" type="text/javascript">
+$("html, body").animate({
+scrollTop: $("#<?=$id?>").offset().top -155
+}, 1000);
+</script>

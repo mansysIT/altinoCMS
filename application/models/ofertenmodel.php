@@ -465,6 +465,8 @@ class ofertenmodel
             $planedEndData = $this->__params['POST']['planned_date'];
             $endData = $this->__params['POST']['data_end'];
 
+            $_SESSION['id'] =  $this->__params['POST']['id'];
+
             $status = $this->__params['POST']['status'];
             if($endData != null){
                 $this->__db->execute("UPDATE bouw_oferten 

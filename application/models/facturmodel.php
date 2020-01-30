@@ -102,7 +102,8 @@ class facturmodel
             $oferten = $this->__params['POST']['oferten'];
             $facturId = $this->__params['POST']['facturId'];
             $opmerkingen = $this->__params['POST']['opmerkingen'];
-
+            
+            $_SESSION['id'] =  $this->__params['POST']['id'];
 
             if($oferten == null) {
                 $oferten = 0;

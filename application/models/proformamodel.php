@@ -468,6 +468,8 @@ class proformamodel
             $proformaId = $this->__params['POST']['proformaId'];
             $opmerkingen = $this->__params['POST']['opmerkingen'];
 
+            $_SESSION['id'] =  $this->__params['POST']['id'];
+
             if($oferten == null) {
                 $oferten = 0;
             }
