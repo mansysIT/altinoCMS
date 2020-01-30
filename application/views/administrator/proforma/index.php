@@ -24,7 +24,7 @@
 model_load('proformamodel', 'removeproforma', '');
 $proforma=model_load('proformamodel', 'getproforma', '');
 $id = model_load('mainmodel', 'getScroolPosition', '');
-header("Cache-Control: no-store, no-cache, must-revalidate");
+
 $d = new DateTime(date("Y-m-d"));
 			
 $dOd = new DateTime(date("Y-m-d"));
@@ -80,7 +80,8 @@ $dOd->modify('first day of this month');
 		<tbody>
         
 			<?php foreach($proforma as $row): ?>
-				<?php $sum += $row[7] ?>
+				<?php $sum += $row[7];
+				$d = new DateTime(date($row[5])); ?>
 				<tr id="<?=$row[0]?>" <?php if($row[6] == 0){echo "class='proformared'"; } else { echo "class='proformablack'"; } ?>>
 					<?="<td> <a href='administrator/proforma/sendproforma/$row[4]/$row[0]'>$row[0]</a><a href='administrator/proforma/sendproforma/$row[4]/$row[0]'> <span class='oi oi-envelope-closed' title='envelope-closed' aria-hidden='true'></span></a> " ?></td>
 					<?="<td> <a href='administrator/proforma/editproforma/$row[4]'>$row[1]</a>" ?></td>
@@ -88,7 +89,7 @@ $dOd->modify('first day of this month');
                     <?="<td> <a href='administrator/proforma/editproforma/$row[4]'>$row[3]</a>" ?></td>
 					<?="<td> <a href='administrator/proforma/editproforma/$row[4]'>€ ".number_format($row[7],2,',', '.')."</a>" ?></td>
 					<?="<td> <a href='/application/storage/proformy/$row[0].pdf'>$row[4]</a><a href='/application/storage/proformy/$row[0].pdf'> <span class='oi oi-file' title='file' aria-hidden='true'></span></a> " ?></td>
-					<?="<td> <a href='administrator/proforma/editproforma/$row[4]'>$row[5]</a>" ?></td>
+					<?="<td> <a href='administrator/proforma/editproforma/$row[4]'>".$d->format('d-m-Y')."</a>" ?></td>
 					<td> <form  method="post" action=""><button class="btnCityRemove" type="submit" name="proformremove" value="<?php echo $row[4]; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form></td>
 				</tr>
 			<?php endforeach; ?>

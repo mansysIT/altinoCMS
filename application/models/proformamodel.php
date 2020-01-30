@@ -424,8 +424,9 @@ class proformamodel
         
         $y = $this->getAllWarforForAdres();
 
+        
         $z = array_merge($x, $y);
-       
+        setcookie('aaa',$z[0]['id'], 0, "/");
 
 
         return $z;
@@ -467,8 +468,6 @@ class proformamodel
             $data_betalen = $this->__params['POST']['data_betalen'];
             $proformaId = $this->__params['POST']['proformaId'];
             $opmerkingen = $this->__params['POST']['opmerkingen'];
-
-            $_SESSION['id'] =  $this->__params['POST']['id'];
 
             if($oferten == null) {
                 $oferten = 0;

@@ -39,7 +39,7 @@
                 <a href="administrator/oferten/index">Offerten</a>
             </li>
             <li>
-                <a href="administrator/klanten/index">Klanten</a>
+                <a href="administrator/klanten/index/1">Klanten</a>
             </li>
             <li>
                 <a href="administrator/instellingen/stedenlijst">Instellingen</a>

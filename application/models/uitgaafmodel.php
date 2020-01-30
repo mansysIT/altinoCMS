@@ -41,6 +41,8 @@ class uitgaafmodel
 
         }
 
+        setcookie('aaa',$x[0]['uitgaven_id'], 0, "/");
+
         return $x;
 
     } 

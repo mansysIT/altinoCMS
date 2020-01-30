@@ -26,7 +26,6 @@ $d = new DateTime(date("Y-m-d"));
 			
 $dOd = new DateTime(date("Y-m-d"));
 $dOd->modify('first day of this month');  
-header("Cache-Control: no-store, no-cache, must-revalidate");
 ?>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -79,7 +78,8 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
         <?php $sum = 0?>
 			<?php foreach($adress as $row): ?>
 			<?php if($row[6] == 0) $row[6] = null ?>
-				<?php $sum += $row[7] ?>
+				<?php $sum += $row[7];
+				$d = new DateTime(date($row[5]));?>
 				<tr id="<?=$row[0]?>">
 					<?="<td> <a style='color: #000!important;' href='administrator/factuur/sendfactur/$row[4]/$row[0]'>$row[0]</a><a style='color: #000!important;' href='administrator/factuur/sendfactur/$row[4]/$row[0]'> <span class='oi oi-envelope-closed' title='envelope-closed' aria-hidden='true'></span></a> " ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[1]</a>" ?></td>
@@ -88,7 +88,7 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 					<?="<td> <a style='color: #000!important;' href='administrator/proforma/editproforma/$row[6]'>$row[6]</a>" ?></td>
 					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>€ ".number_format($row[7],2,',', '.')."</a>" ?></td>
 					<?="<td> <a style='color: #000!important;' href='/application/storage/factur/$row[0].pdf'>$row[4]</a><a style='color: #000!important;' href='/application/storage/factur/$row[0].pdf'> <span class='oi oi-file' title='file' aria-hidden='true'></span></a> " ?></td>
-					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>$row[5]</a>" ?></td>
+					<?="<td> <a style='color: #000!important;' href='administrator/inkomsten/editfactur/$row[4]'>".$d->format('d-m-Y')."</a>" ?></td>
 					<td> <form  method="post" action=""><button class="btnCityRemove" type="submit" name="facturremove" value="<?php echo $row[4]; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form></td>
 				</tr>
 			<?php endforeach; ?>

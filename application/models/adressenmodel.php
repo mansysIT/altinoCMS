@@ -106,7 +106,6 @@ class adressenmodel
 	}
 
     public function adres($od, $do, $word, $active, $city_id = null){
-		//$this->query = $this->__db->querymy("SELECT * FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE date BETWEEN '".$od."' AND '".$do."' AND active = ".$active." AND  bouw_city.city LIKE '%".$word."%' ");
 		if($city_id != null){
 			$this->query = $this->__db->querymy("SELECT bouw_adresy.id, bouw_adresy.adres, bouw_adresy.active, bouw_city.city
 			FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
@@ -140,7 +139,7 @@ class adressenmodel
 	
 	public function getAdressById() {
 		$data = $this->__db->execute("SELECT *, bouw_adresy.city AS adres_city_id FROM `bouw_adresy` INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id WHERE id = ".$this->__params[1]);
-
+		setcookie('aaa',$data[0]['id'], 0, "/");
 		return $data[0];
 	}
 
@@ -216,8 +215,6 @@ class adressenmodel
 			$postcode = $this->__params['POST']['postcode'];
 			$city = $this->__params['POST']['city'];
 			$klanten = $this->__params['POST']['klanten'];
-			
-			$_SESSION['id'] =  $this->__params['POST']['id'];
 
 			$this->__db->execute("UPDATE bouw_adresy 
 			SET

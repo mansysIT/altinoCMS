@@ -20,7 +20,6 @@
 <?php 
 $proforma=model_load('ofertenmodel', 'getoferten', '');
 $id = model_load('mainmodel', 'getScroolPosition', '');
-header("Cache-Control: no-store, no-cache, must-revalidate");
 
 $d = new DateTime(date("Y-m-d"));
 			
@@ -65,14 +64,14 @@ $dOd->modify('first day of this month');
 		<thead>
 				<tr>
 					<th onclick="sortTable(0)"> ID </th>
-					<th onclick="sortTable(1)">STAD</th>
-					<th onclick="sortTable(2)">ADRES</th>
-					<th onclick="sortTable(3)">OFFERTEN</th>
-					<th onclick="sortTable(5)">BEDRAG</th>
-					<th onclick="sortTable(4)">INKOMSTEN</th>
-					<th onclick="sortTable(5)">UITGAVEN</th>
-					<th onclick="sortTable(6)">WINST</th>
-					<th onclick="sortTable(8)">DATUM</th>
+					<th onclick="sortTable(2)">STAD</th>
+					<th onclick="sortTable(3)">ADRES</th>
+					<th onclick="sortTable(4)">OFFERTEN</th>
+					<th onclick="sortTable(6)">BEDRAG</th>
+					<th onclick="sortTable(7)">INKOMSTEN</th>
+					<th onclick="sortTable(8)">UITGAVEN</th>
+					<th onclick="sortTable(9)">WINST</th>
+					<th onclick="sortTable(10)">DATUM</th>
 					<th>STATUS</th>
 				</tr>
 		</thead>
@@ -84,7 +83,7 @@ $dOd->modify('first day of this month');
 					$totalUitgaven += $row[9];
 					$totalWinst += $row[10];
 					$totalBedrag += $row[11];
-						
+					$data = new DateTime(date($row[3]));
 				?>
 
 				<tr id="<?=$row[0]?>" <?php if($row[6] < $d->format('Y-m-d') && $row[4] < 2) echo "style='background-color: #dc3545;'"; ?> >
@@ -96,7 +95,7 @@ $dOd->modify('first day of this month');
 					<?="<td><a style='color: #000!important;' href='administrator/inkomsten/index/$row[0]/oferten'>€ ".number_format($row[8],2,',', '.')."</a>" ?></td>
 					<?="<td><a style='color: #000!important;' href='administrator/uitgaven/index/$row[0]/oferten'>€ ".number_format($row[9],2,',', '.')."</a>" ?></td>
 					<?php echo"<td><a "; if($row[10] < 0) { echo "style='color: red!important;'"; } else { echo "style='color: green!important;'"; } echo " href='administrator/oferten/editoferten/$row[5]'>€ ".number_format($row[10],2,',', '.')."</a>" ?></td>
-					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>$row[3]</a>" ?></td>
+					<?="<td><a style='color: #000!important;' href='administrator/oferten/editoferten/$row[5]'>".$data->format('d-m-Y')."</a>" ?></td>
 					<td><span <?php if($row[4] == 0){ echo "style='color: orange'"; } else if($row[4] == 1) { echo "style='color: green'"; } else if($row[4] == 2) { echo "style='color: red'"; }?>  class="oi oi-media-record" title="media-record" aria-hidden="true"></span></td>
 				</tr>
 			<?php endforeach; ?>

@@ -835,6 +835,22 @@ input {
     margin-top: auto!important;
 }
 
+.pagination {
+    justify-content: center;
+}
+
+.pagination a{
+    color: #000!important;
+    font-weight: 350;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 25px;
+    line-height: 1.5;
+}
+
+.pagination li{
+    margin: 10px;
+}
+
 
 @media only screen and (max-width: 768px) {
     .btn-small{

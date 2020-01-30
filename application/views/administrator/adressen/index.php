@@ -24,7 +24,6 @@
 $adress=model_load('adressenmodel', 'getAdress', '');
 $getAdresId = model_load('adressenmodel', 'adresMenuGetUrl', ''); 
 $id = model_load('mainmodel', 'getScroolPosition', '');
-header("Cache-Control: no-store, no-cache, must-revalidate");
 
 $d = new DateTime(date("Y-m-d"));
 			
