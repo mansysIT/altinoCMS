@@ -178,7 +178,7 @@ class mainmodel
         $query = $this->__db->querymy("SELECT details.quantity, details.price
 		FROM bouw_factur_details AS details INNER JOIN bouw_factur AS factur ON details.factur_nr = factur.factur_numer 
 		WHERE factur.".$colName." = ".$id);
-
+      
         foreach ($query->fetch_all() as $q) {
             $sum += $q[0] * $q[1];
         }
