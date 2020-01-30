@@ -192,7 +192,6 @@ class mainmodel
 	}
 
 	public function getScroolPosition() {
-		print_r('aaa'.$_SESSION['id']);
 		$id = $_SESSION['id'];
 		unset($_SESSION['id']);
 		return $id;
