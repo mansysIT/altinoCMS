@@ -19,6 +19,7 @@
 <?=icon_load("pp_fav.ico")?>
 
 
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -32,7 +33,7 @@ $id = model_load('mainmodel', 'getScroolPosition', '');
 $adress=model_load('uitgavenmodel', 'removeUitgaaf', '');
 $adress=model_load('uitgavenmodel', 'getFactur', ''); 
 //$waarvoor=model_load('waarvoormodel', 'getwaarvoor', '1');
-header("Cache-Control: no-store, no-cache, must-revalidate");
+
 //print_r($waarvoor); 
  
 $d = new DateTime(date("Y-m-d"));
@@ -101,7 +102,9 @@ $dOd->modify('first day of this month');
 				} else {
 					$fileRow = "";
 				}
-	
+
+				$d = new DateTime(date($row[5]));
+				
 				// $w = '';
 				// echo '<pre>';
 				// $w =  $waarvoor[$k][1];  
@@ -115,7 +118,7 @@ $dOd->modify('first day of this month');
 					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$row[3]</a>" ?></td>
 					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$waar</a>" ?></td> 
 					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>€ ".number_format($row[4],2,',', '.')."</a>" ?></td>
-					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>$row[5]</a>" ?></td>
+					<td><?=" <a style='color: #000!important;' href='administrator/uitgaven/addUitgaaf/$row[0]'>".$d->format('d-m-Y')."</a>"?></td>
 					<td><?=$fileRow?></td>
 					<td> <form  method="post" action=""><button class="btnCityRemove" type="submit" name="uitgaafremove" value="<?php echo $row[0]; ?>"><span class="oi oi-trash" title="trash" aria-hidden="true"></span></button></form></td>
 				</tr>

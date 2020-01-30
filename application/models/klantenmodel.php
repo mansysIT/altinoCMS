@@ -12,6 +12,8 @@ class klantenmodel
     public $__params;
 	private $__db;
 	private $mainModel;
+
+	private $elementsOnPage = 15;
 	
 	public function __construct()
 	{
@@ -21,6 +23,8 @@ class klantenmodel
 		$this->__db = registry::register("db");
 		
 		$this->clearPrivate();
+
+		
 
 		$this->mainModel = new mainmodel;
 	}
@@ -32,23 +36,43 @@ class klantenmodel
 			$this->word = $this->__params['POST']['word'];
 			if(isset($this->__params['POST']['private'])){
 				$this->private = $this->__params['POST']['private'];
-			} else if(isset($_SESSION['private'])) {
-				$this->private = $_SESSION['private'];
-				$this->__params['POST']['private'] = $_SESSION['private'];
+			} else if(isset($_COOKIE['private'])) {
+				$this->private = $_COOKIE['private'];
+				$this->__params['POST']['private'] = $_COOKIE['private'];
 			} else {
 				$this->private = 1;		
 			}
 			$_SESSION['word'] = $this->word; 
-			$_SESSION['private'] = $this->private; 
+			$_COOKIE['private'] = $this->private; 
 		} else {
 			$this->word = '';
 			$this->private = 1;
 		}
 
         $this->clear();
-        
-		return $this->klanten($this->word , $this->private);   
+		
+		if($this->__params[1]) {
+			$pageno = $this->__params[1];
+		} else {
+			$pageno = 1;
+		}
 
+		$offset = ($pageno-1) * $this->elementsOnPage;
+
+		$result = $this->__db->querymy("SELECT COUNT(*) FROM bouw_klanten WHERE private = ".$_COOKIE['private']."");
+		$total_rows = mysqli_fetch_array($result)[0];
+		$total_pages = ceil($total_rows / $this->elementsOnPage);
+
+		// unset($_COOKIE['page']);
+		// setcookie('page', null, time() - 3600, '/'); 
+
+		setcookie('page',$this->__params[1], 0, "/");
+		if(isset($_COOKIE['private'])){
+			$private = $_COOKIE['private'];
+		} else {
+			$private = 1;
+		}
+		return $this->klanten($this->word , $private, $offset, $pageno, $total_pages); 
 	}
 	
 	private function clear() {
@@ -69,11 +93,13 @@ class klantenmodel
 		{
 			unset($this->__params['POST']['private']);
 			unset($_SESSION['private']);
+
+			
 		}
 
 	}
 
-    public function klanten( $word, $private){
+    public function klanten( $word, $private, $offset, $pageno, $total_pages){
         if($private == 1){
             if($word != null){
                 $this->query = $this->__db->querymy("SELECT id, private_naam, private_achternaam, private_id_kaart, private_tel, email, adres, stad, postcode
@@ -84,12 +110,14 @@ class klantenmodel
                 private = ".$private." AND private_id_kaart LIKE '%".$word."%' OR
                 private = ".$private." AND private_tel LIKE '%".$word."%' OR
                 private = ".$private." AND email LIKE '%".$word."%'
-                ORDER BY id DESC");
+				ORDER BY id DESC 
+				LIMIT $offset, $this->elementsOnPage");
             } else {
                 $this->query = $this->__db->querymy("SELECT id, private_naam, private_achternaam, private_id_kaart, private_tel, email, adres, stad, postcode
                 FROM bouw_klanten
                 WHERE private = '".$private."'
-                ORDER BY id DESC");
+				ORDER BY id DESC
+				LIMIT $offset, $this->elementsOnPage");
             }
         } else {
             if($word != null){
@@ -101,15 +129,21 @@ class klantenmodel
                 private = ".$private." AND bedrijf_stad LIKE '%".$word."%' OR
                 private = ".$private." AND bedrijf_tel LIKE '%".$word."%' OR
                 private = ".$private." AND email LIKE '%".$word."%'
-                ORDER BY id DESC");
+				ORDER BY id DESC
+				LIMIT $offset, $this->elementsOnPage");
             } else {
                 $this->query = $this->__db->querymy("SELECT id, bedrijf_bedrijf, bedrijf_kvk, bedrijf_btw, bedrijf_tel, email, adres, stad, postcode 
                 FROM bouw_klanten
                 WHERE private = ".$private."
-                ORDER BY id DESC");
+				ORDER BY id DESC
+				LIMIT $offset, $this->elementsOnPage");
             }
-        }
-        array_push($this->klantenArray, $this->getKlantenTableName($private));
+		}
+		
+		$paginateParams = array($pageno, $total_pages, $this->__params[1]);
+
+		array_push($this->klantenArray, $this->getKlantenTableName($private));
+		array_push($this->klantenArray, $paginateParams);
         foreach($this->query->fetch_all() as $q){
             array_push($this->klantenArray, $q);
             
@@ -130,6 +164,7 @@ class klantenmodel
     public function getKlantenById() {
 		$data = $this->__db->execute("SELECT * FROM bouw_klanten WHERE id = ".$this->__params[1]);
 
+		setcookie('aaa',$data[0]['id'], 0, "/");
 		return $data[0];
 	}
 
@@ -164,8 +199,6 @@ class klantenmodel
 		$rekening = $this->__params['POST']['rekening'];
 
 		$badrijfPrivateToogler = $this->__params['POST']['privateBedrijfToogler'];
-
-		$_SESSION['id'] =  $this->__params['POST']['id'];
 
 		if($badrijfPrivateToogler == 'private') {
 			
@@ -209,7 +242,7 @@ class klantenmodel
 			WHERE id = ".$this->__params[1]);
 		}
 
-		header("Location: ".SERVER_ADDRESS."administrator/klanten/index/");
+		header("Location: ".SERVER_ADDRESS."administrator/klanten/index/".$_COOKIE['page']);
 	}
 
 	private function saveNewKlanten(){

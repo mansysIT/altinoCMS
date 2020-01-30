@@ -23,7 +23,9 @@
 <?php 
 $id = model_load('mainmodel', 'getScroolPosition', '');
 $klanten=model_load('klantenmodel', 'getKlanten', '');
-header("Cache-Control: no-store, no-cache, must-revalidate");
+// $pageno = 
+header("Cache-Control: no-cache, must-revalidate");
+header('Cache-Control: max-age=900');
 ?>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -42,7 +44,7 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 		</div>
 		<div class="row columnAlignText my-auto">
 			<div class="col-sm">
-				<form class="form-inline klantenForm" method="post" action="">
+			<form class="form-inline klantenForm" method="post" action="">
 					<button type="submit" class="btn btn-danger mb-2" name="clear">Clear</button> 
 					<div class="form-group mx-sm-3 mb-2">
 						<h4>Woord</h4>
@@ -53,17 +55,22 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 					<?php 
 					if(isset($sidebarController->__params['POST']['private']) ):
 							if($sidebarController->__params['POST']['private'] == 0):?>
+							<?php setcookie('private',0, 0, "/"); ?>
 							<button type="submit" class="btn btn-danger mb-2" name="private" value="1">Private</button>
 						<?php else: ?>
+							<?php setcookie('private',1, 0, "/"); ?>
 							<button type="submit" class="btn btn-danger mb-2" name="private" value="0">Bedrijf</button>
 						<?php endif; 
-					elseif(isset($_SESSION['private'])): 
-						if($_SESSION['private'] == 0):?>
+					elseif(isset($_COOKIE['private'])): 
+						if($_COOKIE['private'] == 0):?>
+						<?php setcookie('private',0, 0, "/"); ?>
 							<button type="submit" class="btn btn-danger mb-2" name="private" value="1">Private</button>
 						<?php else: ?>
+							<?php setcookie('private',1, 0, "/"); ?>
 							<button type="submit" class="btn btn-danger mb-2" name="private" value="0">Bedrijf</button>
 						<?php endif; 
 					else: ?>
+					<?php setcookie('private',1, 0, "/"); ?>
 						<button type="submit" class="btn btn-danger mb-2" name="private" value="0">Bedrijf</button>
 					<?php endif; ?>
 				</form>
@@ -86,7 +93,7 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach(array_slice($klanten, 1) as $row): ?>
+						<?php foreach(array_slice($klanten, 2) as $row): ?>
 						<tr id="<?=$row[0]?>">
 							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[0]</a>" ?></td>
 							<?="<td><a style='color: #000!important;' href='administrator/klanten/klanten/$row[0]'>$row[6]</a>" ?></td>
@@ -114,6 +121,29 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 					</tbody>
 				</table>
 			</div>
+		</div>
+		<div class="container-fluid">
+		<ul class="pagination">
+			<?php
+			$pageno = $klanten[1][0];
+			$total_pages = $klanten[1][1];
+			$currentPage = $klanten[1][2];
+			
+			?>
+			<li><a href="administrator/klanten/index/1">First</a></li>
+			<li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
+				<a href="<?php if($pageno <= 1){ echo 'administrator/klanten/index/1'; } else { echo "administrator/klanten/index/".($pageno - 1); } ?>">Prev</a>
+			</li>
+			<?php for($x = 1; $x <= $total_pages;$x++): ?>
+				<li>
+					<a <?php if($currentPage == $x){ echo "style='color: red!important;'"; } ?> href="administrator/klanten/index/<?=$x?>"><?=$x?></a>
+				</li>
+			<?php endfor; ?>
+			<li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
+				<a href="<?php if($pageno >= $total_pages){ echo 'administrator/klanten/index/'.$total_pages; } else { echo "administrator/klanten/index/".($pageno + 1); } ?>">Next</a>
+			</li>
+			<li><a href="administrator/klanten/index/<?=$total_pages?>">Last</a></li>
+		</ul>
 		</div>
 		<div class="row">
 			<div class="col-sm">

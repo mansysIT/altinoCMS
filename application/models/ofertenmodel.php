@@ -79,8 +79,6 @@ class ofertenmodel
         }
 
         $z = array_merge($x, $y);
-       
-        // print_r($z);
 
         return $z;
 
@@ -192,7 +190,6 @@ class ofertenmodel
             $result = $q[0]*$q[1];
             $bedgarSum += $result;
         }
-		// array_push($bedgarSum, $result);
         return $bedgarSum;
     }
 
@@ -325,7 +322,6 @@ class ofertenmodel
             $oferten_nr = $this->__db->querymy("SELECT oferten_numer FROM `bouw_oferten` WHERE id = ".$id);
             foreach ($oferten_nr->fetch_all() as $row) {
                 for ($i=0; $i < 20; $i++) {
-                    # code...
                     $price = str_replace(",",".",$this->__params['POST']['warforquantity'][$i]);
                 
                         $this->__db->execute("INSERT INTO bouw_oferten_details 
@@ -343,7 +339,6 @@ class ofertenmodel
                 )");
                 }
             }
-            // print_r($ofertenNumer);
 
             $proforma_pdf = 'application/storage/oferten/'.$id.'.pdf';
 			
@@ -376,20 +371,6 @@ class ofertenmodel
         city.city,
         adresy.adres, 
         adresy.postcode,
-        -- adresy.private_naam,
-        -- adresy.private_achternaam,
-        -- adresy.private_id_kaart,
-        -- adresy.private_tel,
-        -- adresy.private_geboortedatum,
-        -- adresy.bedrijf_bedrijf,
-        -- adresy.bedrijf_adres,
-        -- adresy.bedrijf_postcode,
-        -- adresy.bedrijf_stad,
-        -- adresy.bedrijf_kvk,
-        -- adresy.bedrijf_btw,
-        -- adresy.bedrijf_tel,
-        -- adresy.email,
-        -- adresy.rekening,
         adresy.id as adres_id,
         oferten.id,
         oferten.in_progres,
@@ -413,7 +394,7 @@ class ofertenmodel
         $y = $this->getAllWarforForAdres();
 
         $z = array_merge($x, $y);
-
+        setcookie('aaa',$z[0]['id'], 0, "/");
         return $z;
 
     } 
@@ -464,8 +445,6 @@ class ofertenmodel
             $data = $this->__params['POST']['facturdata'];
             $planedEndData = $this->__params['POST']['planned_date'];
             $endData = $this->__params['POST']['data_end'];
-
-            $_SESSION['id'] =  $this->__params['POST']['id'];
 
             $status = $this->__params['POST']['status'];
             if($endData != null){
@@ -607,7 +586,6 @@ class ofertenmodel
         $this->proformy_mail_wyslij($email, $oferten_id, $betaald, TRUE, $oferten_numer);
 
         header("Location: ".SERVER_ADDRESS."administrator/oferten/index");
-        // $this->wyslij_maila_smtp('kw-53@wp.pl', 'testsmtp', 'testowa tresc wiadomosci',$_SERVER['DOCUMENT_ROOT'].'oferten.pdf');
     }
 
     public function proform_ilosc_maili($id_oferten) {
@@ -658,7 +636,6 @@ class ofertenmodel
         
             $mail = new smtpmailer();
 
-            //$mail -> wyslij_email(str_replace(' ', '', $email), $temat, $tresc);
             $pocztaKlient = str_replace(' ', '', $email);
 
             $this->__db->execute("INSERT INTO `bouw_oferten_mail`(`oferten_id`, `data_czas`) VALUES (" . $oferten_id . ", '" . date('Y-m-d H:i:s') . "') ");
@@ -668,9 +645,6 @@ class ofertenmodel
             print_r('send');
 
             $mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $oferten_pdf);
-
-
-        //header('Location:proformy.php?msg=' . $msg);
     }
 
     public function createoferten($oferten_numer = null) {
@@ -689,9 +663,6 @@ class ofertenmodel
 		$pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/logo.png',10,10,50);
 		
 		$pdf->SetX(160);
-		
-	
-		// $nr='KH-00'.$id;
 
 		$pdf->SetFont('ArialMT','',12);
 		$pdf->Cell(0,0,'Offerte: '.$data[0]['oferten_numer'],0,1);
@@ -723,7 +694,6 @@ class ofertenmodel
 
         $pdf->SetFont('ArialMT','',8);
                 if(!empty($data[0]['bedrijf_bedrijf'])){
-                    // echo"aaaaaaaaa";
                 if($data[0]['bedrijf_bedrijf']){
                     $pdf->Cell(0,5,''.$data[0]['bedrijf_bedrijf'],0,1);
                     $pdf->SetX(130);
@@ -766,7 +736,6 @@ class ofertenmodel
                         $pdf->Cell(0,5,''.$data[0]['private_tel'],0,1);
                     }
             } else {
-                // echo"bbbbb";
         
                 if($data[0]['private_naam'] || $data[0]['private_achternaam']){
                     $pdf->Cell(0,5,''.$data[0]['private_naam'].' '.$data[0]['private_achternaam'],0,1);
@@ -800,10 +769,7 @@ class ofertenmodel
             }
         
                 $pdf->SetY(90);
-            // $date=substr ($data_dod, 0, 10) ;
-
-
-            
+         
             $wynajem=''; 
 
             if ($data[0]['data']) {
@@ -851,12 +817,6 @@ class ofertenmodel
                     break;
                 
             }
-        
-
-                // if($kwoty_faktura['miesiac_rok'] != '0000-00-00')
-                // 	$wynajem = '('.$miesiac.' '.$ddd[0].')';
-
-                // }
 
                 $d = new DateTime($data[0]['data']);
 
@@ -874,9 +834,6 @@ class ofertenmodel
                 $pdf->SetXY(110, 95);
                 $pdf->Cell(90, 20, 'Offerte geldig tot '.$d2->format('d-m-Y'), 0, 1);
 
-
-                // $cena=$kwota;
-
                 $pdf->SetY(115);
                 $pdf->SetFillColor(240, 240, 240);
                 $pdf->Cell(0,10,'Beschrijving                                Opmerkingen                                                Prijs              Aantal     BTW%         Totaal ',T,1,1,true);
@@ -887,16 +844,8 @@ class ofertenmodel
                 $pdf->SetY($Y1 + 2);
                 $Y1 = $pdf->GetY();
                 $X1 = $pdf->GetX();
-                    
 
-
-
-
-
-                //TO ZMIENIŁEM GDY BYŁ PROBLE Z FAKTURĄ NA KÓREJ BORG BYŁ TJ. HUUR
-                //if($hu > 0 && $borg != $cala_kwota_incl){
                     foreach(array_slice($data,1) as $row){
-                        // print_r($row['name']);
 
                             $sum = $row['quantity'] * $row['price'];
                             $pdf->SetY($wysokosc);
@@ -1055,13 +1004,8 @@ class ofertenmodel
             
                 $totalBtW = 0;
                 foreach ($btw as $k => $stawki_vat) {
-                        
-                        // print_r($stawki_vat);
-                        
-                        
+
                         if($k !=0){
-        
-                            // $kwota_vat = round($kw - ($kw / $dzielnik),2) ;
                         
                             $pdf->SetX(134);
         
@@ -1119,9 +1063,6 @@ class ofertenmodel
                 $nr = $data[0]['id'];
 
                     file_put_contents('application/storage/oferten/'.$nr.'.pdf',$pdf->Output($nr.'.pdf', 'S'));
-
-                    // $pdf->Output('oferten-'.$nr.'.pdf', 'D');
-                    // $pdf->Output();
                 
     }
 
@@ -1154,7 +1095,6 @@ class ofertenmodel
           
             array_push($historia_maili, $q);
         }
-        // print_r($historia_maili);
         return $historia_maili;
     }
 }

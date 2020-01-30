@@ -30,20 +30,6 @@ class facturmodel
         city.city,
         adresy.adres, 
         adresy.postcode,
-        -- adresy.private_naam,
-        -- adresy.private_achternaam,
-        -- adresy.private_id_kaart,
-        -- adresy.private_tel,
-        -- adresy.private_geboortedatum,
-        -- adresy.bedrijf_bedrijf,
-        -- adresy.bedrijf_adres,
-        -- adresy.bedrijf_postcode,
-        -- adresy.bedrijf_stad,
-        -- adresy.bedrijf_kvk,
-        -- adresy.bedrijf_btw,
-        -- adresy.bedrijf_tel,
-        -- adresy.email,
-        -- adresy.rekening,
         factur.data,
         factur.factur_numer,
         adresy.id as adres_id,
@@ -60,12 +46,12 @@ class facturmodel
         }
 
         
+
+        
         $y = $this->getAllWarforForAdres();
 
         $z = array_merge($x, $y);
-       
-        // print_r($z);
-
+        setcookie('aaa',$z[0]['id'], 0, "/");
         return $z;
 
     } 
@@ -85,7 +71,6 @@ class facturmodel
         foreach($dataWarfor as $q){
 
             array_push($y, $q);
-            // print_r($q);
 
         }
 
@@ -103,7 +88,8 @@ class facturmodel
             $facturId = $this->__params['POST']['facturId'];
             $opmerkingen = $this->__params['POST']['opmerkingen'];
             
-            $_SESSION['id'] =  $this->__params['POST']['id'];
+            
+            // $_SESSION['id'] =  $this->__params['POST']['id'];
 
             if($oferten == null) {
                 $oferten = 0;
@@ -135,7 +121,6 @@ class facturmodel
                         opmerkingen = '".$this->__params['POST']['opmerkingen'][$i]."'
                         WHERE id = '".$this->__params['POST']['warforInputId'][$i]."'
                         ");
-                        // print_r(" [ ".$r." / ");
                     } else {
                         $this->__db->execute("INSERT INTO bouw_factur_details 
                         (factur_nr, 
@@ -236,7 +221,6 @@ class facturmodel
         $this->factur_mail_wyslij($email, $proforma_id, TRUE, $proforma_numer);
 
         header("Location: ".SERVER_ADDRESS."administrator/inkomsten/index");
-        // $this->wyslij_maila_smtp('kw-53@wp.pl', 'testsmtp', 'testowa tresc wiadomosci',$_SERVER['DOCUMENT_ROOT'].'proforma.pdf');
     }
 
     public function factur_ilosc_maili($id_factur) {
@@ -250,7 +234,6 @@ class facturmodel
         } else {
             $db_query_m = $this->__db->execute("SELECT `id` FROM `bouw_factur_mail` WHERE `factur_id` =  ".$id_factur." ");
         }
-        // print_r($db_query_m);
 
         foreach ($db_query_m as $row) {
 	
@@ -258,7 +241,6 @@ class facturmodel
 				$this->ilosc_maili++;
 	
 		}
-		// print_r($this->ilosc_maili);
 		return $this->ilosc_maili;
 	
     }	
@@ -292,26 +274,16 @@ class facturmodel
             $this->createfactur($factur_numer);
             $proforma_pdf = 'application/storage/factur/'.$factur_id.'.pdf';
 		
-			$mail = new smtpmailer();
-
-			//$mail -> wyslij_email(str_replace(' ', '', $email), $temat, $tresc);
+            $mail = new smtpmailer();
+            
 			$pocztaKlient = str_replace(' ', '', $email);
-			
-		
-		
-		
-		
-		
-        
-		
-
 
         $this->__db->execute("INSERT INTO `bouw_factur_mail`(`factur_id`, `data_czas`) VALUES (" . $factur_id . ", '" . date('Y-m-d H:i:s') . "') ");
 
         $msg = 'E-mail was verstuurd.';
 
         $mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $proforma_pdf);
-        //header('Location:proformy.php?msg=' . $msg);
+
     
     }
 
@@ -320,8 +292,6 @@ class facturmodel
         $btw=model_load('inkomstenmodel', 'getbtw', $factur_numer);
         $total=model_load('inkomstenmodel', 'gettotal', $factur_numer);
         $company=model_load('proformamodel', 'getCompanyData', '');
-        // echo"<pre>";
-        // print_r($btw);
         
         $pdf = new FPDF();
 
@@ -332,12 +302,7 @@ class facturmodel
         
                 $pdf->Image($_SERVER['DOCUMENT_ROOT'].'/application/media/images/logo.png',10,10,50);
 
-        
-		
 		        $pdf->SetX(160);
-                
-            
-                // $nr='KH-00'.$id;
         
                 $pdf->SetFont('ArialMT','',12);
                 $pdf->Cell(0,0,'Factuur: '.$data[0]['factur_numer'],0,1);
@@ -347,20 +312,16 @@ class facturmodel
                 $pdf->Cell(0,5,$company[1],0,1);
                 $pdf->SetFont('ArialMT','',8);
         
-        
-        
                 $pdf->Cell(0,5,$company[4],0,1);
                 $pdf->Cell(0,5,$company[3].$company[2],0,1);
         
                 $pdf->Cell(0,5,'Tel: '.$company[5],0,1);
                 $pdf->Cell(0,5,$company[6],0,1);
-        
                  
                 $pdf->Cell(0,5,'KvK: '.$company[8],0,1);
         
                 $pdf->Cell(0,5,'BTW: '.$company[7],0,1);
                 $pdf->Cell(0,5,'IBAN: '.$company[10],0,1);
-        
         
                 $pdf->SetXY(130,45);
                 $pdf->SetFont('Arial','',10);
@@ -369,7 +330,6 @@ class facturmodel
         
                 $pdf->SetFont('ArialMT','',8);
                 if(!empty($data[0]['bedrijf_bedrijf'])){
-                    // echo"aaaaaaaaa";
                 if($data[0]['bedrijf_bedrijf']){
                     $pdf->Cell(0,5,''.$data[0]['bedrijf_bedrijf'],0,1);
                     $pdf->SetX(130);
@@ -412,7 +372,6 @@ class facturmodel
                         $pdf->Cell(0,5,''.$data[0]['private_tel'],0,1);
                     }
             } else {
-                // echo"bbbbb";
         
                 if($data[0]['private_naam'] || $data[0]['private_achternaam']){
                     $pdf->Cell(0,5,''.$data[0]['private_naam'].' '.$data[0]['private_achternaam'],0,1);
@@ -446,9 +405,6 @@ class facturmodel
             }
         
                 $pdf->SetY(90);
-                // $date=substr ($data_dod, 0, 10) ;
-        
-        
                  
                 $wynajem=''; 
         
@@ -498,11 +454,7 @@ class facturmodel
                         break;
                     
                 }
-        
-                // if($kwoty_faktura['miesiac_rok'] != '0000-00-00')
-                //     $wynajem = '('.$miesiac.' '.$ddd[0].')';
-        
-                // }
+
                 $d = new DateTime($data[0]['data']);
 
                 $pdf->SetFont('Arial','',10);
@@ -518,10 +470,7 @@ class facturmodel
                 $pdf->SetXY(110,95);
                 $betaalmethode= '7 dagen';
                 $pdf->Cell(90,20,'Betalingstermijn: '.$betaalmethode,0,1);
-        
-        
-                // $cena=$kwota;
-        
+
                 $pdf->SetY(115);
                 $pdf->SetFillColor(240, 240, 240);
                 $pdf->Cell(0,10,'Beschrijving                                Opmerkingen                                                Prijs              Aantal     BTW%         Totaal ',T,1,1,true);
@@ -532,16 +481,8 @@ class facturmodel
                 $pdf->SetY($Y1 + 2);
                 $Y1 = $pdf->GetY();
                 $X1 = $pdf->GetX();
-                    
 
-
-
-
-
-                //TO ZMIENIŁEM GDY BYŁ PROBLE Z FAKTURĄ NA KÓREJ BORG BYŁ TJ. HUUR
-                //if($hu > 0 && $borg != $cala_kwota_incl){
                     foreach(array_slice($data,1) as $row){
-                        // print_r($row['name']);
 
                             $sum = $row['quantity'] * $row['price'];
                             $pdf->SetY($wysokosc);
@@ -701,12 +642,7 @@ class facturmodel
                 $totalBtW = 0;
                 foreach ($btw as $k => $stawki_vat) {
                         
-                        // print_r($stawki_vat);
-                        
-                        
                         if($k !=0){
-        
-                            // $kwota_vat = round($kw - ($kw / $dzielnik),2) ;
                         
                             $pdf->SetX(134);
         
@@ -764,9 +700,6 @@ class facturmodel
             $nr = $data[0]['id'];
 
                     file_put_contents('application/storage/factur/'.$nr.'.pdf',$pdf->Output($nr.'.pdf', 'S'));
-
-                // $pdf->Output('factur-'.$nr.'.pdf', 'D');
-                // $pdf->Output();
              
         }
 
@@ -799,7 +732,6 @@ class facturmodel
           
             array_push($historia_maili, $q);
         }
-        // print_r($historia_maili);
         return $historia_maili;
     }
 
