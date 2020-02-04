@@ -144,6 +144,73 @@ class dashboardmodel
         return $y[0];
 	}
 
+	private function getInkomstenByYear() {
+		$d = new DateTime(date("Y-m-d"));
+		if(isset($this->__params['POST']['year']))
+		$year = $this->__params['POST']['year'];
+		else 
+		$year = $d->format("Y");
+		
+		$y = array();
+		$dOd = new DateTime($year."01-01");
+		$dOd->modify('first day of this month');
+		for($i =  1; $i <= 12;$i++){
+			$dOd = new DateTime($year."-".$i."-01");
+			$dDo = new DateTime($year."-".$i."-01");
+			$dDo->modify('last day of this month');
+			$dOd->modify('first day of this month');
+			$z = $i + 1;
+			$dataWarfor = $this->__db->execute("SELECT 
+			details.quantity,
+			details.price
+			FROM bouw_factur_details AS details 
+			INNER JOIN bouw_factur AS factur ON details.factur_nr = factur.factur_numer
+			WHERE factur.data BETWEEN '".$dOd->format("Y-m-d")."' AND '".$dDo->format("Y-m-d")."'
+			");
+			$total = 0;
+			foreach($dataWarfor as $q){
+				$x = $q['quantity'] * $q['price'];
+				$total += $x;
+			}
+			array_push($y, $total);
+		}
+
+        return $y;
+	}
+
+	private function getUitgavenByYear() {
+		$d = new DateTime(date("Y-m-d"));
+		if(isset($this->__params['POST']['year']))
+		$year = $this->__params['POST']['year'];
+		else 
+		$year = $d->format("Y");
+		$y = array();
+		for($i =  1; $i <= 12;$i++){
+			$z = $i + 1;
+			$dataWarfor = $this->__db->execute("SELECT 
+			uitgaven.price
+			FROM bouw_uitgaven AS uitgaven  
+			WHERE uitgaven.data BETWEEN '".$year."-".$i."-1' AND '".$year."-".$z."-1'
+			");
+			$total = 0;
+			foreach($dataWarfor as $q){
+				$x = $q['price'];
+				$total += $x;
+			}
+			array_push($y, $total);
+		}
+
+        return $y;
+	}
+
+	public function getYearForChart() {
+		$d = new DateTime(date("Y-m-d"));
+		if(isset($this->__params['POST']['year']))
+		return $this->__params['POST']['year'];
+		else 
+		return $d->format("Y");
+	}
+
 	private function clear() {
 		if(isset($this->__params['POST']['clear'])){
 			print_r($this->__params['POST']['clear']);
@@ -204,6 +271,8 @@ class dashboardmodel
 		array_push($z, $totalBTWUitgaven);
 		array_push($z, $this->getAllInkomsten());
 		array_push($z, $this->getAllUitgavenn());
+		array_push($z, $this->getInkomstenByYear());
+		array_push($z, $this->getUitgavenByYear());
 		return $z;
 	}
 

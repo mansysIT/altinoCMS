@@ -41,6 +41,18 @@
     margin-top: 40px;
 }
 
+#inkomstenBtwHeight {
+    height: auto;
+}
+
+#uitgavenBtwHeight {
+    height: auto;
+}
+
+.col-sm-12{
+    margin-bottom: -1px;
+}
+
 @media (max-width: 739px) {
     .dashboard .row {
         margin: 0!important;
