@@ -1,0 +1,72 @@
+.dashboardForm h4 {
+    margin-right: 10px;
+}
+
+.dashboardForm {
+    margin-bottom: 20px;
+}
+
+.borderBottom {
+    border-bottom: 1px solid;
+    border-color: gray;
+}
+
+.borderTop {
+    border-top: 2px solid;
+    border-color: gray;
+}
+
+.dashboard .noPadding {
+    padding: 0;
+}
+
+.mainContainer {
+    padding: 20px;
+}
+
+.dashboard .margin-top-8 {
+    margin-top: 8px!important;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+.contentCenter {
+    margin-left: auto!important;
+    margin-right: auto!important;
+}
+
+.margin-top-40 {
+    margin-top: 40px;
+}
+
+#inkomstenBtwHeight {
+    height: auto;
+}
+
+#uitgavenBtwHeight {
+    height: auto;
+}
+
+.col-sm-12{
+    margin-bottom: -1px;
+}
+
+@media (max-width: 739px) {
+    .dashboard .row {
+        margin: 0!important;
+    }
+    .mainContainer {
+        padding: 0;
+    }
+
+    .dashboard .title {
+        margin-left: auto!important;
+        margin-right: auto!important;
+    }
+
+    .margin-top-40 {
+        margin-top: 20px;
+    }
+}
