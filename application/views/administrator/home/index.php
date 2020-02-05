@@ -47,7 +47,7 @@ $dOd->modify('first day of this month');
     <div class="row">
         <h1 class="title">DASHBOARD</h1> 
     </div>
-<?php if(false): ?>
+<?php if(true): ?>
     <div class="row mainContainer"> 
     <div class="col-sm-12">
         <div class="row columnAlignText my-auto">
@@ -94,7 +94,7 @@ $dOd->modify('first day of this month');
                         <h2 class="contentCenter ">BTW</h2>
                     </div>
                     <div class="row" id="inkomstenBtwHeight">
-                        <div class="col-sm-12" >
+                        <div class="col-sm-12 noPadding" >
                             <?php foreach($BtwValue[0] as $row => $stawki_vat): ?>
                                 <div class="row borderBottom margin-top-8">
                                     <div class="col-5">
@@ -155,7 +155,7 @@ $dOd->modify('first day of this month');
                     <h2 class="contentCenter ">BTW</h2>
                 </div>
                     <div class="row" id="uitgavenBtwHeight">
-                        <div class="col-sm-12" >
+                        <div class="col-sm-12 noPadding" >
                             <?php foreach($BtwValue[2] as $row => $stawki_vat): ?>
                                 <div class="row borderBottom margin-top-8">
                                     <div class="col-5">
