@@ -15,7 +15,9 @@ class dashboardmodel
         $this->__config = registry::register("config");
         $this->__router = registry::register("router");
         $this->__db = registry::register("db");
-        $this->__params = $this->__router->getParams();
+		$this->__params = $this->__router->getParams();
+		
+		$this->mainModel = new mainmodel;
 	}
 
 	private function getBtwData() {
@@ -42,25 +44,7 @@ class dashboardmodel
     }
 	
     private function getbtw() {
-
-        $warfor = $this->getBtwData();
-        $x = Array();
-        foreach($warfor as $row){
-			
-            $z = $row['quantity'] * $row['price'];
-            if(!in_array($row['btw'], $x))
-            $x += array($row['btw'] => 0) ;
-			
-            foreach($x as $rows=>$val){
-				
-
-                if($rows == $row['btw']){
-                    $x[$rows] += $z * ((int)$rows * 0.01);
-                }
-            }
-		}
-        return $x;
-
+		return $this->mainModel->getBTW($this->getBtwData());
 	}
 
 	private function getBtwDataUitgaven() {
@@ -222,23 +206,23 @@ class dashboardmodel
 			$this->od = $dOd->format('Y-m-d');
 			$this->do = $d->format('Y-m-d');
 
-			unset($this->__params['POST']['vanafStatistic']);
-			unset($this->__params['POST']['totStatistic']);
-			unset($_SESSION['vanafStatistic']);
-			unset($_SESSION['totStatistic']);
+			unset($this->__params['POST']['vanaf']);
+			unset($this->__params['POST']['tot']);
+			unset($_SESSION['vanaf']);
+			unset($_SESSION['tot']);
 		}
 	}
 	
 	public function getAllStatistic() {
-		if (isset($this->__params['POST']['vanafStatistic'])) {
-			$this->od = $this->__params['POST']['vanafStatistic'];
-			$this->do = $this->__params['POST']['totStatistic'];
+		if (isset($this->__params['POST']['vanaf'])) {
+			$this->od = $this->__params['POST']['vanaf'];
+			$this->do = $this->__params['POST']['tot'];
 
-			$_SESSION['vanafStatistic'] = $this->od; 
-			$_SESSION['totStatistic'] = $this->do; 
-		} else if(isset($_SESSION['vanafStatistic']) && $_SESSION['vanafStatistic'] != null) {
-			$this->od = $_SESSION['vanafStatistic'];
-            $this->do = $_SESSION['totStatistic'];
+			$_SESSION['vanaf'] = $this->od; 
+			$_SESSION['tot'] = $this->do; 
+		} else if(isset($_SESSION['vanaf']) && $_SESSION['vanaf'] != null) {
+			$this->od = $_SESSION['vanaf'];
+			$this->do = $_SESSION['tot'];
 		} else {
 			$d = new DateTime(date("Y-m-d"));
 			$dOd = new DateTime(date("Y-m-d"));
