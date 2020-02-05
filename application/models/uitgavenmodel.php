@@ -56,11 +56,15 @@ class uitgavenmodel
         $this->clear();
 		
 		if(isset($this->__params[1])){
-            if (isset($this->__params[2])) {
-                return $this->adres($this->od, $this->do, $this->word, $this->__params[1], $this->__params[2]);
-            } else {
-				return $this->adres($this->od, $this->do, $this->word, $this->__params[1]);
-			}
+			if($this->__params[1] == "statistiek") {
+				return $this->adres($this->od, $this->do, $this->word, null, null, $this->__params[2]);
+			} else {
+                if (isset($this->__params[2])) {
+                    return $this->adres($this->od, $this->do, $this->word, $this->__params[1], $this->__params[2]);
+                } else {
+                    return $this->adres($this->od, $this->do, $this->word, $this->__params[1]);
+                }
+            }
 		} else {
 			return $this->adres($this->od, $this->do, $this->word , null);   
 		}	
@@ -89,7 +93,7 @@ class uitgavenmodel
 		}
 	}
 
-    public function adres($od, $do, $word, $id = null, $oferten_id = null) {
+    public function adres($od, $do, $word, $id = null, $oferten_id = null, $warvoorBTW = null) {
 
 		if($oferten_id != null){
 			$type = 'bouw_uitgaven.oferte_numer';
@@ -103,11 +107,11 @@ class uitgavenmodel
 			$params[1] = $word;
 
 			$dod = '';
-			$w = model_load('mainmodel', 'getwaarvoor', $params); 
-			$waarvoorId = $w[0][0]; 
+			// $w = model_load('mainmodel', 'getwaarvoor', $params); 
+			// $waarvoorId = $w[0][0]; 
 
-			if(!empty($waarvoorId))
-				$dod = "bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.waarvoor_id = '".$waarvoorId."' AND ".$type." = '".$id."' OR";
+			// if(!empty($waarvoorId))
+			// 	$dod = "bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.waarvoor_id = '".$waarvoorId."' AND ".$type." = '".$id."' OR";
 			 
 			$this->query = $this->__db->querymy("SELECT bouw_uitgaven.id, bouw_city.city, bouw_adresy.adres, bouw_oferten.oferten_numer  AS of_numer, bouw_uitgaven.price, bouw_uitgaven.data, bouw_uitgaven.waarvoor_id 
 			FROM `bouw_adresy`
@@ -116,12 +120,35 @@ class uitgavenmodel
 			LEFT JOIN bouw_oferten ON  bouw_uitgaven.oferte_numer = bouw_oferten.id 
 			WHERE 
 			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' AND ".$type." = '".$id."' OR
-			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.id = '".$word."' AND ".$type." = '".$id."' OR OR
-			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_adresy.adres LIKE '%".$word."%' AND ".$type." = '".$id."' OR OR
-			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.price LIKE '%".$word."%' AND ".$type." = '".$id."' OR OR 
-			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_oferten.oferten_numer = '".$word."' AND ".$type." = '".$id."' OR OR
+			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.id = '".$word."' AND ".$type." = '".$id."' OR 
+			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_adresy.adres LIKE '%".$word."%' AND ".$type." = '".$id."' OR 
+			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.price LIKE '%".$word."%' AND ".$type." = '".$id."' OR  
+			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_oferten.oferten_numer = '".$word."' AND ".$type." = '".$id."' OR 
 			$dod
 			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.oferte_numer = '".$word."' AND ".$type." = '".$id."'
+			ORDER BY bouw_uitgaven.id DESC");
+
+		} else if($word != null && $warvoorBTW != null){
+
+			$params[0] = 0;
+			$params[1] = $word;
+
+			$dod = '';
+
+			$this->query = $this->__db->querymy("SELECT bouw_uitgaven.id, bouw_city.city, bouw_adresy.adres, bouw_oferten.oferten_numer  AS of_numer, bouw_uitgaven.price, bouw_uitgaven.data, bouw_uitgaven.waarvoor_id 
+			FROM `bouw_adresy`
+			LEFT JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
+       		LEFT JOIN bouw_uitgaven ON bouw_uitgaven.adres_id = bouw_adresy.id  
+			LEFT JOIN bouw_oferten ON  bouw_uitgaven.oferte_numer = bouw_oferten.id 
+			INNER JOIN  bouw_waarvoor AS waarvoor ON bouw_uitgaven.waarvoor_id = waarvoor.id
+			WHERE 
+			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' AND waarvoor.btw = '".$warvoorBTW."' OR
+			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.id = '".$word."' AND waarvoor.btw = '".$warvoorBTW."' OR 
+			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_adresy.adres LIKE '%".$word."%' AND waarvoor.btw = '".$warvoorBTW."' OR 
+			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.price LIKE '%".$word."%' AND waarvoor.btw = '".$warvoorBTW."' OR  
+			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_oferten.oferten_numer = '".$word."' AND waarvoor.btw = '".$warvoorBTW."' OR 
+			$dod
+			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.oferte_numer = '".$word."' AND waarvoor.btw = '".$warvoorBTW."'
 			ORDER BY bouw_uitgaven.id DESC");
 
 		} else if($id != null){
@@ -129,8 +156,7 @@ class uitgavenmodel
 			$params[1] = $word;
 
 			$dod = '';
-			$w = model_load('mainmodel', 'getwaarvoor', $params); 
-			$waarvoorId = $w[0][0]; 
+; 
 
 			$this->query = $this->__db->querymy("SELECT bouw_uitgaven.id, bouw_city.city, bouw_adresy.adres, bouw_oferten.oferten_numer  AS of_numer, bouw_uitgaven.price, bouw_uitgaven.data, bouw_uitgaven.waarvoor_id 
 			FROM `bouw_adresy`
@@ -140,18 +166,23 @@ class uitgavenmodel
 			WHERE 
 			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND ".$type." = '".$id."'
 			ORDER BY bouw_uitgaven.id DESC");
+		} else if($warvoorBTW != null){
+			$this->query = $this->__db->querymy("SELECT bouw_uitgaven.id, bouw_city.city, bouw_adresy.adres, bouw_oferten.oferten_numer  AS of_numer, bouw_uitgaven.price, bouw_uitgaven.data, bouw_uitgaven.waarvoor_id 
+			FROM `bouw_adresy`
+			RIGHT JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
+       		LEFT JOIN bouw_uitgaven ON bouw_uitgaven.adres_id = bouw_adresy.id  
+			LEFT JOIN bouw_oferten ON  bouw_uitgaven.oferte_numer = bouw_oferten.id 
+			INNER JOIN  bouw_waarvoor AS waarvoor ON bouw_uitgaven.waarvoor_id = waarvoor.id
+			WHERE 
+			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND waarvoor.btw = '".$warvoorBTW."'
+			ORDER BY bouw_uitgaven.id DESC");
 		} else if($word != null){
 
 			$params[0] = 0;
 			$params[1] = $word;
 
 			$dod = '';
-			$w = model_load('mainmodel', 'getwaarvoor', $params); 
-			$waarvoorId = $w[0][0]; 
 
-			if(!empty($waarvoorId))
-				$dod = "bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.waarvoor_id = '".$waarvoorId."' OR ";
-			 
 			$this->query = $this->__db->querymy("SELECT bouw_uitgaven.id, bouw_city.city, bouw_adresy.adres, bouw_oferten.oferten_numer  AS of_numer, bouw_uitgaven.price, bouw_uitgaven.data, bouw_uitgaven.waarvoor_id 
 			FROM `bouw_adresy`
        		INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
