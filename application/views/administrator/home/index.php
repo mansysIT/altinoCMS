@@ -47,7 +47,7 @@ $dOd->modify('first day of this month');
     <div class="row">
         <h1 class="title">DASHBOARD</h1> 
     </div>
-
+<?php if(false): ?>
     <div class="row mainContainer"> 
     <div class="col-sm-12">
         <div class="row columnAlignText my-auto">
@@ -221,6 +221,7 @@ $dOd->modify('first day of this month');
             </div>
         </div>
     </div>
+                            <?php endif; ?>
     <div class="row justify-content-center">
         <?=module_load('FOOTER')?>
     </div>
