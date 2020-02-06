@@ -4,7 +4,7 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-        <a class="btn btn-danger" href="wylogowanie/index" role="button">Wyloguj</a>
+        <a class="btn logoutbutton" href="wylogowanie/index" role="button">Wyloguj</a>
             <img src="/application/media/images/logo.png">
         </div>
 
@@ -47,4 +47,4 @@
 
         </ul>
     </nav>
-    <button id="sidebarCollapse" class="btn btn-danger mb-2">X</button>
+    <button id="sidebarCollapse" class="btn  mb-2 sidebarGray">X</button>

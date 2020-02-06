@@ -93,6 +93,10 @@ color:
     font-weight: 200;
 }
 
+tbody {
+    font-size: 14px;
+}
+
 @media only screen and (max-width: 768px) {
     .table-responsive {
         margin: 0;

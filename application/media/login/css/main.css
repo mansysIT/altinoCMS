@@ -175,10 +175,10 @@ iframe {
   top: 0;
   left: 0;
   background: rgba(93,84,240,0.5);
-  background: -webkit-linear-gradient(left, rgba(255, 28, 28, 0.651), rgba(41, 41, 41, 0.651));
-  background: -o-linear-gradient(left, rgba(255, 28, 28, 0.651), rgba(41, 41, 41, 0.651));
-  background: -moz-linear-gradient(left, rgba(255, 28, 28, 0.651), rgba(41, 41, 41, 0.651));
-  background: linear-gradient(left, rgba(255, 28, 28, 0.651), rgba(41, 41, 41, 0.651));
+  background: -webkit-linear-gradient(left, rgba(248, 211, 104, 0.751), rgba(248, 211, 104, 0.751));
+  background: -o-linear-gradient(left, rgba(248, 211, 104, 0.751), rgba(248, 211, 104, 0.71));
+  background: -moz-linear-gradient(left, rgba(248, 211, 104, 0.751), rgba(248, 211, 104, 0.751));
+  background: linear-gradient(left, rgba(248, 211, 104, 0.751), rgba(248, 211, 104, 0.751));
   pointer-events: none;
 }
 
@@ -294,7 +294,7 @@ iframe {
   padding: 0 20px;
   min-width: 160px;
   height: 50px;
-  background-color: #dc3545;
+  background-color: #eca726;
   border-radius: 0.25em;
 
   font-family: SourceSansPro-SemiBold;
@@ -308,20 +308,20 @@ iframe {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 
-  box-shadow: 0 10px 30px 0px rgba(255, 47, 47, 0.644);
-  -moz-box-shadow: 0 10px 30px 0px rgba(255, 47, 47, 0.644);
-  -webkit-box-shadow: 0 10px 30px 0px rgba(255, 47, 47, 0.644);
-  -o-box-shadow: 0 10px 30px 0px rgba(255, 47, 47, 0.644);
-  -ms-box-shadow: 0 10px 30px 0px rgba(255, 47, 47, 0.644);
+  box-shadow: 0 10px 30px 0px rgba(236, 167, 38, 0.644);
+  -moz-box-shadow: 0 10px 30px 0px rgba(236, 167, 38, 0.644);
+  -webkit-box-shadow: 0 10px 30px 0px rgba(236, 167, 38, 0.644);
+  -o-box-shadow: 0 10px 30px 0px rgba(236, 167, 38, 0.644);
+  -ms-box-shadow: 0 10px 30px 0px rgba(236, 167, 38, 0.644);
 }
 
 .login100-form-btn:hover {
-  background-color: #b61f1f;
-  box-shadow: 0 10px 30px 0px rgba(179, 36, 36, 0.644);
-  -moz-box-shadow: 0 10px 30px 0px rgba(179, 36, 36, 0.644);
-  -webkit-box-shadow: 0 10px 30px 0px rgba(179, 36, 36, 0.644);
-  -o-box-shadow: 0 10px 30px 0px rgba(179, 36, 36, 0.644);
-  -ms-box-shadow: 0 10px 30px 0px rgba(179, 36, 36, 0.644);
+  background-color: #da9109;
+  box-shadow: 0 10px 30px 0px rgba(236, 167, 38, 0.8);
+  -moz-box-shadow: 0 10px 30px 0px rgba(236, 167, 38, 0.8);
+  -webkit-box-shadow: 0 10px 30px 0px rgba(236, 167, 38, 0.8);
+  -o-box-shadow: 0 10px 30px 0px rgba(236, 167, 38, 0.8);
+  -ms-box-shadow: 0 10px 30px 0px rgba(236, 167, 38, 0.8);
 }
 
 

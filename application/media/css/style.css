@@ -851,6 +851,15 @@ input {
     margin: 10px;
 }
 
+.btn-danger {
+    background-color: #eaa100!important;
+    border: none!important;
+}
+
+.btn-danger:hover{
+    background-color: #d49101!important;
+    border: none!important;
+}
 
 @media only screen and (max-width: 768px) {
     .btn-small{
