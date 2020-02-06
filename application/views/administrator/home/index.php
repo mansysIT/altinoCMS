@@ -347,7 +347,7 @@ var randomScalingFactor = function() {
                             }
                         ?>
 					],
-					backgroundColor: 'rgb(220,53,69)',
+					backgroundColor: 'rgb(212,145,1)',
 					label: 'INKOMSTEN'
 				} , {
                     data: [
