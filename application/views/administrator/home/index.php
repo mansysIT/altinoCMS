@@ -56,11 +56,11 @@ $dOd->modify('first day of this month');
                     <button type="submit" class="btn btn-danger mb-2" name="clear">Clear</button> 
                     <div class="form-group mx-sm-3 mb-2">
                         <h4>Vanaf</h4>
-                        <input type="date" class="form-control" id="inputPassword2" style="line-height: 20px;" name="vanafStatistic" value=<?php if(isset($sidebarController->__params['POST']['clear'])){echo $dOd->format('Y-m-d');} else if(isset($sidebarController->__params['POST']['vanafStatistic'])){echo $sidebarController->__params['POST']['vanafStatistic']; } else if(isset($_SESSION['vanafStatistic'])){echo $_SESSION['vanafStatistic']; } else {echo $dOd->format('Y-m-d'); }?>>
+                        <input type="date" class="form-control" id="inputPassword2" style="line-height: 20px;" name="vanaf" value=<?php if(isset($sidebarController->__params['POST']['clear'])){echo $dOd->format('Y-m-d');} else if(isset($sidebarController->__params['POST']['vanaf'])){echo $sidebarController->__params['POST']['vanaf']; } else if(isset($_SESSION['vanaf'])){echo $_SESSION['vanaf']; } else {echo $dOd->format('Y-m-d'); }?>>
                     </div>
                     <div class="form-group mx-sm-3 mb-2">
                         <h4>Tot</h4>
-                        <input type="date" class="form-control aaa" id="inputPassword2" style="line-height: 20px;" name="totStatistic" value= <?php if(isset($sidebarController->__params['POST']['clear'])){echo $d->format('Y-m-d');} else if(isset($sidebarController->__params['POST']['totStatistic'])){echo $sidebarController->__params['POST']['totStatistic']; } else if(isset($_SESSION['totStatistic'])){echo $_SESSION['totStatistic']; } else {echo $d->format('Y-m-d'); }?>>
+                        <input type="date" class="form-control aaa" id="inputPassword2" style="line-height: 20px;" name="tot" value= <?php if(isset($sidebarController->__params['POST']['clear'])){echo $d->format('Y-m-d');} else if(isset($sidebarController->__params['POST']['tot'])){echo $sidebarController->__params['POST']['tot']; } else if(isset($_SESSION['tot'])){echo $_SESSION['tot']; } else {echo $d->format('Y-m-d'); }?>>
                     </div>
                     <button type="submit" class="btn btn-danger mb-2" name="zoeken">Zoeken</button>
                 </form>
@@ -106,7 +106,7 @@ $dOd->modify('first day of this month');
                                                 <h4>€</h4>
                                             </div>
                                             <div class="col-9 noPadding text-right">
-                                                <h4><?=number_format($stawki_vat,2,',', '.')?></h4>
+                                                <h4><a style="color: black!important" href="administrator/inkomsten/index/statistiek/<?=$row?>"><?=number_format($stawki_vat,2,',', '.')?></a></h4>
                                             </div>
                                         </div> 
                                     </div>
@@ -138,7 +138,7 @@ $dOd->modify('first day of this month');
                         </div>
                     </div>
                     <div class="row contentCenter">
-                        <h3 class="contentCenter "><?="€ ".number_format($BtwValue[4],2,',', '.')?></h3>
+                        <h3 class="contentCenter "><a style="color: black!important" href="administrator/inkomsten/index"><?="€ ".number_format($BtwValue[4],2,',', '.')?></a></h3>
                     </div>
                 </div>
                 <div class="col-sm-3"></div>
@@ -167,7 +167,7 @@ $dOd->modify('first day of this month');
                                                 <h4>€</h4>
                                             </div>
                                             <div class="col-9 noPadding text-right">
-                                                <h4><?=number_format($stawki_vat,2,',', '.')?></h4>
+                                                <h4><a style="color: black!important" href="administrator/uitgaven/index/statistiek/<?=$row?>"><?=number_format($stawki_vat,2,',', '.')?></a></h4>
                                             </div>
                                         </div> 
                                     </div>
@@ -199,7 +199,7 @@ $dOd->modify('first day of this month');
                         </div>
                     </div>
                     <div class="row contentCenter">
-                        <h3 class="contentCenter "><?="€ ".number_format($BtwValue[5],2,',', '.')?></h3>
+                        <h3 class="contentCenter "><a style="color: black!important" href="administrator/uitgaven/index"><?="€ ".number_format($BtwValue[5],2,',', '.')?></a></h3>
                     </div>
                 </div>
                 <div class="col-sm-3"></div>
@@ -351,7 +351,7 @@ var randomScalingFactor = function() {
 				} , {
                     data: [
                         <?php 
-                            foreach($BtwValue[6] as $row => $stawki_vat){
+                            foreach($BtwValue[7] as $row => $stawki_vat){
                                 echo -$stawki_vat.",";
                             }
                         ?>

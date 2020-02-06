@@ -211,6 +211,32 @@ class mainmodel
             return null;
         }
     }
+
+    public function getBTW($data) {
+
+		$warfor = $data;
+		
+        $x = Array();
+        $y = Array();
+        $vatarray = Array();
+        foreach(array_slice($warfor,1) as $row){
+			
+            $z = $row['quantity'] * $row['price'];
+			
+            if(!in_array($x, $row['btw']))
+            $x += array($row['btw'] => 0) ;
+			
+            foreach($x as $rows=>$val){
+				
+
+                if($rows == $row['btw']){
+                    $x[$rows] += $z * ((int)$rows * 0.01);
+                }
+            }
+		}
+        return $x;
+
+    }
 }
 
 ?>

@@ -21,7 +21,9 @@ class proformamodel
 		$this->__config = registry::register("config");
 		$this->__router = registry::register("router");
         $this->__params = $this->__router->getParams();
-		$this->__db = registry::register("db");
+        $this->__db = registry::register("db");
+        
+        $this->mainModel = new mainmodel;
     }
     
     public function getdata($request = null) {
@@ -87,30 +89,7 @@ class proformamodel
     }
 
     public function getbtw($nr) {
-
-        $warfor = $this->getdata($nr);
-        $x = Array();
-        $y = Array();
-        $vatarray = Array();
-        foreach(array_slice($warfor,1) as $row){
-            $z = $row['quantity'] * $row['price'];
-
-            if(!in_array($x, $row['btw']))
-            $x += array($row['btw'] => 0) ;
-
-            foreach($x as $rows=>$val){
-                if($rows == $row['btw']){
-                    $x[$rows] += $z * ((int)$rows * 0.01);
-                }
-
-            }
-
-        }
-
-
-
-        return $x;
-
+        return $this->mainModel->getBTW($this->getdata($nr));
     }
 
     public function gettotal($nr){
