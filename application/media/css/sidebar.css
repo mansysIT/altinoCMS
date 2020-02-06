@@ -61,7 +61,7 @@ a:focus {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #333;
+    background: #eaa100;
     color: #fff;
     transition: all 0.3s;
 }
@@ -72,7 +72,7 @@ a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #333;
+    background: #eaa100;
     justify-content: center;
     display: flex;
     flex-direction: column;
@@ -175,6 +175,34 @@ a.article:hover {
 
 #sidebar img {
     margin-top: 21px;
+}
+
+.sidebarGray {
+    background-color: #333!important;
+    color: white!important;
+    border-radius: 0!important;
+}
+
+.logoutbutton {
+    background-color: #333!important;
+    color: white!important;
+}
+
+.sidebarGray:hover{
+    background-color: #222!important;
+    color: white!important;
+}
+
+#sidebar ul li a:hover {
+    background: #333;
+}
+
+ul ul a {
+    background-color: #ffb20a;;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    background-color: #ffb20a;
 }
 
 @media only screen and (max-width: 768px) {
