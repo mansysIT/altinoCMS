@@ -45,7 +45,7 @@
   }
 
   .maincontainer {
-    background-color: #eee;
+    background-color: #fff;
     margin: 0;
     width: 100%;
 	padding: 30px!important;
@@ -81,7 +81,7 @@ font-weight: 100;
         background-color: #eee !important;
     }
     .maincontainer {
-        background-color: #eee;
+        background-color: #fff;
         padding: 0;
         margin: 0;
         width: 100%;

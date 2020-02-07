@@ -56,23 +56,37 @@ a:focus {
     display: flex;
     width: 100%;
     align-items: stretch;
+    background-color: #eee;
+}
+
+#sidebarCollapse {
+    transition: all 0.3s;
+    margin-left: 250px;
 }
 
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #eaa100;
+    background: #ee8500;
     color: #fff;
     transition: all 0.3s;
+    position: fixed;
+    height: 100%;
 }
 
 #sidebar.active {
     margin-left: -250px;
+    
+}
+
+#sidebarCollapse.active {
+    transition: all 0.3s;
+    margin-left: 0;
 }
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #eaa100;
+    background: #ee8500;
     justify-content: center;
     display: flex;
     flex-direction: column;
@@ -216,5 +230,14 @@ ul ul a {
     .wrapper
     {
        /* padding-right: 8%; */
+    }
+
+    #sidebarCollapse {
+        margin-left: 0;
+    }
+
+    #sidebarCollapse.active {
+        transition: all 0.3s;
+        margin-left: 250px;
     }
 }
