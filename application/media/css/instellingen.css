@@ -62,7 +62,7 @@
 }
 
 .maincontainer {
-    background-color: #eee;
+    background-color: #fff;
     padding: 0;
     margin: 0;
     width: 30%;
@@ -75,7 +75,7 @@
         background-color: #eee !important;
     }
     .maincontainer {
-        background-color: #eee;
+        background-color: #fff;
         padding: 0;
         margin: 0;
         width: 100%;

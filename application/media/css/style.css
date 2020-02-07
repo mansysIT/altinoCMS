@@ -852,12 +852,12 @@ input {
 }
 
 .btn-danger {
-    background-color: #eaa100!important;
+    background-color: #ee8200!important;
     border: none!important;
 }
 
 .btn-danger:hover{
-    background-color: #d49101!important;
+    background-color: #ee8500!important;
     border: none!important;
 }
 
