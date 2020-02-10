@@ -61,6 +61,8 @@ class inkomstenmodel
 		if(isset($this->__params[1])){
 			if($this->__params[1] == "statistiek") {
 				return $this->adres($this->od, $this->do, $this->word, null, null, $this->__params[2]);
+			} else if ($this->__params[1] == "waarvoor"){
+
 			} else {
                 if (isset($this->__params[2])) {
                     return $this->adres($this->od, $this->do, $this->word, $this->__params[1], $this->__params[2]);
@@ -118,10 +120,14 @@ class inkomstenmodel
 
     public function adres($od, $do, $word = null, $id = null, $oferten_id = null, $warvoorBTW = null) {
 
-		if($oferten_id != null){
-			$type = 'bouw_factur.oferten_id';
+		if($this->__params[1] == "waarvoor"){
+			$type  = 
 		} else {
-			$type = 'bouw_factur.adres_id';
+			if($oferten_id != null){
+				$type = 'bouw_factur.oferten_id';
+			} else {
+				$type = 'bouw_factur.adres_id';
+			}
 		}
 
 		if($word != null && $id != null) {
