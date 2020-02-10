@@ -175,15 +175,19 @@ class mainmodel
     
     public function getAllInkomsten($colName, $id)
     {
-        $query = $this->__db->querymy("SELECT details.quantity, details.price
-		FROM bouw_factur_details AS details INNER JOIN bouw_factur AS factur ON details.factur_nr = factur.factur_numer 
+        $query = $this->__db->querymy("SELECT details.quantity, details.price, waarvoor.btw
+		FROM bouw_factur_details AS details 
+        INNER JOIN bouw_factur AS factur ON details.factur_nr = factur.factur_numer 
+        INNER JOIN bouw_waarvoor AS waarvoor ON waarvoor.id = details.waarvoor_id 
 		WHERE factur.".$colName." = ".$id);
       
         foreach ($query->fetch_all() as $q) {
-            $sum += $q[0] * $q[1];
+            $sum = $q[0] * $q[1];
+            $btw = $sum * ((int)$q[2] * 0.01);
+			$total += ($sum + $btw);
         }
 
-        return $sum;
+        return $total;
     }
 
     public function getAllUitgaven($colName, $id)
@@ -257,7 +261,8 @@ class mainmodel
 
                 if($rows == $row['name']." (".$row['btw']."%)"){
                     // $x[$rows] += $z * ((int)$rows * 0.01);
-                    $x[$rows] += $z;
+                    $btw = $z * ((int)$row['btw'] * 0.01);
+                    $x[$rows] += ($z + $btw);
                 }
             }
 		}
@@ -284,7 +289,8 @@ class mainmodel
 
                 if($rows == $row['name']." (".$row['btw']."%)"){
                     // $x[$rows] += $z * ((int)$rows * 0.01);
-                    $x[$rows] += $z;
+                                        $btw = $z * ((int)$row['btw'] * 0.01);
+                    $x[$rows] += ($z + $btw);
                 }
             }
 		}

@@ -95,9 +95,11 @@ class dashboardmodel
 	private function getAllInkomsten() {
         $dataWarfor = $this->__db->execute("SELECT 
         details.quantity,
-        details.price
+        details.price,
+		waarvoor.btw
         FROM bouw_factur_details AS details 
 		INNER JOIN bouw_factur AS factur ON details.factur_nr = factur.factur_numer
+		INNER JOIN bouw_waarvoor AS waarvoor ON waarvoor.id = details.waarvoor_id 
 		WHERE factur.data BETWEEN '".$this->od."' AND '".$this->do."'
 		");
 
@@ -105,7 +107,8 @@ class dashboardmodel
 		$total = 0;
         foreach($dataWarfor as $q){
 			$z = $q['quantity'] * $q['price'];
-			$total += $z;
+			$btw = $z * ((int)$q['btw'] * 0.01);
+			$total += ($z + $btw);
 		}
 		
 		array_push($y, $total);
