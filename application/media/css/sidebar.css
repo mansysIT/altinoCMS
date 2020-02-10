@@ -57,11 +57,21 @@ a:focus {
     width: 100%;
     align-items: stretch;
     background-color: #eee;
+    margin-top: 0!important;
 }
 
 #sidebarCollapse {
     transition: all 0.3s;
     margin-left: 250px;
+    display: flex;
+    min-height: 100vh;
+    padding-top: 50vh;
+    min-width: 40px;
+}
+
+#sidebarCollapse p{
+    color: white;
+    position: fixed;
 }
 
 #sidebar {

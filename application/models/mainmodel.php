@@ -223,7 +223,7 @@ class mainmodel
 			
             $z = $row['quantity'] * $row['price'];
 			
-            if(!in_array($x, $row['btw']))
+            if(!in_array($x, $row['btw'])) 
             $x += array($row['btw'] => 0) ;
 			
             foreach($x as $rows=>$val){
@@ -231,6 +231,60 @@ class mainmodel
 
                 if($rows == $row['btw']){
                     $x[$rows] += $z * ((int)$rows * 0.01);
+                }
+            }
+		}
+        return $x;
+
+    }
+
+    public function getAllWaarvoorUitgaven($data) {
+
+		$warfor = $data;
+		
+        $x = Array();
+        $y = Array();
+        $vatarray = Array();
+        foreach($warfor as $row){
+			
+            $z = $row['price'];
+			
+            if(!in_array($x, $row['name'])) 
+            $x += array($row['name']." (".$row['btw']."%)" => 0) ;
+			
+            foreach($x as $rows=>$val){
+				
+
+                if($rows == $row['name']." (".$row['btw']."%)"){
+                    // $x[$rows] += $z * ((int)$rows * 0.01);
+                    $x[$rows] += $z;
+                }
+            }
+		}
+        return $x;
+
+    }
+
+    public function getAllWaarvoor($data) {
+
+		$warfor = $data;
+		
+        $x = Array();
+        $y = Array();
+        $vatarray = Array();
+        foreach($warfor as $row){
+			
+            $z = $row['quantity'] * $row['price'];
+			
+            if(!in_array($x, $row['name'])) 
+            $x += array($row['name']." (".$row['btw']."%)" => 0) ;
+			
+            foreach($x as $rows=>$val){
+				
+
+                if($rows == $row['name']." (".$row['btw']."%)"){
+                    // $x[$rows] += $z * ((int)$rows * 0.01);
+                    $x[$rows] += $z;
                 }
             }
 		}

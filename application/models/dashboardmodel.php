@@ -25,7 +25,8 @@ class dashboardmodel
         $dataWarfor = $this->__db->execute("SELECT 
         warfor.btw,
         details.quantity,
-        details.price
+        details.price,
+		warfor.name
         FROM bouw_factur_details AS details 
 		INNER JOIN bouw_waarvoor AS warfor ON details.waarvoor_id = warfor.id
 		INNER JOIN bouw_factur AS factur ON details.factur_nr = factur.factur_numer
@@ -51,7 +52,8 @@ class dashboardmodel
 
         $dataWarfor = $this->__db->execute("SELECT 
         warfor.btw,
-        uitgaven.price
+        uitgaven.price,
+		warfor.name
         FROM bouw_uitgaven AS uitgaven 
 		INNER JOIN bouw_waarvoor AS warfor ON uitgaven.waarvoor_id = warfor.id
 		WHERE uitgaven.data BETWEEN '".$this->od."' AND '".$this->do."'
@@ -258,6 +260,14 @@ class dashboardmodel
 		array_push($z, $this->getInkomstenByYear());
 		array_push($z, $this->getUitgavenByYear());
 		return $z;
+	}
+
+	public function AllWaarfoor() {
+		return $this->mainModel->getAllWaarvoor($this->getBtwData());
+	}
+
+	public function AllWaarfoorUitgaven() {
+		return $this->mainModel->getAllWaarvoorUitgaven($this->getBtwDataUitgaven());
 	}
 
 
