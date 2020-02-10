@@ -47,4 +47,4 @@
 
         </ul>
     </nav>
-    <button id="sidebarCollapse" class="btn  mb-2 sidebarGray">X</button>
+    <button id="sidebarCollapse" class="btn  mb-2 sidebarGray"><p>X</p></button>

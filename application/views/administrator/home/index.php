@@ -22,6 +22,11 @@
 
 $BtwValue = model_load('dashboardmodel', 'getAllStatistic', '');
 $yearForChart = model_load('dashboardmodel', 'getYearForChart', '');
+$waarvoorValue = model_load('dashboardmodel', 'AllWaarfoor', '');
+$waarvoorValueUitgaven = model_load('dashboardmodel', 'AllWaarfoorUitgaven', '');
+
+$waarvoorTotalInkomsten = 0;
+$waarvoorTotalUitgaven = 0;
 
 $d = new DateTime(date("Y-m-d"));
 			
@@ -91,16 +96,57 @@ $dOd->modify('first day of this month');
                         <h1 class="contentCenter">INKOMSTEN</h1>
                     </div>
                     <div class="row borderBottom">
+                        <h2 class="contentCenter ">WAARVOOR</h2>
+                    </div>
+                    <div class="row" id="inkomstenWaarvoorHeight">
+                        <div class="col-sm-12 noPadding" >
+                            <?php foreach($waarvoorValue as $row => $stawki_vat): ?>
+                                
+                                <div class="row borderBottom margin-top-8">
+                                    <div class="col-7">
+                                        <h4><?=$row?></h4>
+                                    </div>
+                                    <div class="col-5 noPadding col-sm-offset-2">
+                                        <div class="row">
+                                            <div class="col-3 noPadding text-right">
+                                                <h4>€</h4>
+                                            </div>
+                                            <div class="col-9 noPadding text-right">
+                                                <?php $waarvoorTotalInkomsten += $stawki_vat; ?>
+                                                <h4><a style="color: black!important" href="administrator/inkomsten/index/statistiek/<?=$row?>"><?=number_format($stawki_vat,2,',', '.')?></a></h4>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <div class="row borderTop">
+                        <div class="col-7">
+                            <h4>Totaal</h4>
+                        </div>
+                        <div class="col-5 noPadding col-sm-offset-2">
+                            <div class="row">
+                                <div class="col-3 noPadding text-right">
+                                    <h4>€</h4>
+                                </div>
+                                <div class="col-9 noPadding text-right">
+                                    <h4><?=number_format($waarvoorTotalInkomsten,2,',', '.')?></h4>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="row borderBottom">
                         <h2 class="contentCenter ">BTW</h2>
                     </div>
                     <div class="row" id="inkomstenBtwHeight">
                         <div class="col-sm-12 noPadding" >
                             <?php foreach($BtwValue[0] as $row => $stawki_vat): ?>
                                 <div class="row borderBottom margin-top-8">
-                                    <div class="col-5">
+                                    <div class="col-7">
                                         <h4><?=$row?> %</h4>
                                     </div>
-                                    <div class="col-7 noPadding col-sm-offset-2">
+                                    <div class="col-5 noPadding col-sm-offset-2">
                                         <div class="row">
                                             <div class="col-3 noPadding text-right">
                                                 <h4>€</h4>
@@ -113,12 +159,12 @@ $dOd->modify('first day of this month');
                                 </div>
                             <?php endforeach; ?>
                         </div>
-                    </div>
+                    </div>                    
                     <div class="row borderTop">
-                        <div class="col-5">
+                        <div class="col-7">
                             <h4>Totaal</h4>
                         </div>
-                        <div class="col-7 noPadding col-sm-offset-2">
+                        <div class="col-5 noPadding col-sm-offset-2">
                             <div class="row">
                                 <div class="col-3 noPadding text-right">
                                     <h4>€</h4>
@@ -152,16 +198,56 @@ $dOd->modify('first day of this month');
                     <h1 class="contentCenter">UITGAVEN</h1>
                 </div>
                 <div class="row borderBottom">
+                        <h2 class="contentCenter ">WAARVOOR</h2>
+                    </div>
+                    <div class="row" id="uitgavenWaarvoorHeight">
+                        <div class="col-sm-12 noPadding" >
+                            <?php foreach($waarvoorValueUitgaven as $row => $stawki_vat): ?>
+                                <div class="row borderBottom margin-top-8">
+                                    <div class="col-7">
+                                        <h4><?=$row?></h4>
+                                    </div>
+                                    <div class="col-5 noPadding col-sm-offset-2">
+                                        <div class="row">
+                                            <div class="col-3 noPadding text-right">
+                                                <h4>€</h4>
+                                            </div>
+                                            <div class="col-9 noPadding text-right">
+                                            <?php $waarvoorTotalUitgaven += $stawki_vat; ?>
+                                                <h4><a style="color: black!important" href="administrator/inkomsten/index/statistiek/<?=$row?>"><?=number_format($stawki_vat,2,',', '.')?></a></h4>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <div class="row borderTop">
+                        <div class="col-7">
+                            <h4>Totaal</h4>
+                        </div>
+                        <div class="col-5 noPadding col-sm-offset-2">
+                            <div class="row">
+                                <div class="col-3 noPadding text-right">
+                                    <h4>€</h4>
+                                </div>
+                                <div class="col-9 noPadding text-right">
+                                    <h4><?=number_format($waarvoorTotalUitgaven,2,',', '.')?></h4>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                <div class="row borderBottom">
                     <h2 class="contentCenter ">BTW</h2>
                 </div>
                     <div class="row" id="uitgavenBtwHeight">
                         <div class="col-sm-12 noPadding" >
                             <?php foreach($BtwValue[2] as $row => $stawki_vat): ?>
                                 <div class="row borderBottom margin-top-8">
-                                    <div class="col-5">
+                                    <div class="col-7">
                                         <h4><?=$row?> %</h4>
                                     </div>
-                                    <div class="col-7 noPadding col-sm-offset-2">
+                                    <div class="col-5 noPadding col-sm-offset-2">
                                         <div class="row">
                                             <div class="col-3 noPadding text-right">
                                                 <h4>€</h4>
@@ -176,10 +262,10 @@ $dOd->modify('first day of this month');
                         </div>
                     </div>
                     <div class="row borderTop">
-                        <div class="col-5">
+                        <div class="col-7">
                             <h4>Totaal</h4>
                         </div>
-                        <div class="col-7 noPadding col-sm-offset-2">
+                        <div class="col-5 noPadding col-sm-offset-2">
                             <div class="row">
                                 <div class="col-3 noPadding text-right">
                                     <h4>€</h4>
@@ -393,7 +479,17 @@ var randomScalingFactor = function() {
                 inkomsten.height = uitgavenBtwHeight.offsetHeight + "px";
             }
 
-            
+            var inkomstenWaarvoorHeight = document.getElementById('inkomstenWaarvoorHeight');
+            var uitgavenWaarvoorHeight = document.getElementById('uitgavenWaarvoorHeight');
+
+            var inkomsten = inkomstenWaarvoorHeight.style;
+            var uitgaven = uitgavenWaarvoorHeight.style;
+
+            if(inkomstenWaarvoorHeight.offsetHeight >= uitgavenWaarvoorHeight.offsetHeight){
+                uitgaven.height = inkomstenWaarvoorHeight.offsetHeight + "px";
+            } else {
+                inkomsten.height = uitgavenWaarvoorHeight.offsetHeight + "px";
+            }
 
 			var ctx = document.getElementById('inkomstenCanvas').getContext('2d');
             var ctx2 = document.getElementById('uitgavenCanvas').getContext('2d');

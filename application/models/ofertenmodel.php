@@ -155,18 +155,25 @@ class ofertenmodel
 			unset($_SESSION['tot']);
 			unset($_SESSION['word']);
 		}
-	}
+    }
 
     private function getBedgar($id) {
 
-        $this->bedrag = $this->__db->querymy("SELECT quantity, price FROM `bouw_oferten_details` WHERE oferten_nr = $id");
+        $this->bedrag = $this->__db->querymy("SELECT bouw_oferten_details.quantity, bouw_oferten_details.price, bouw_waarvoor.btw 
+		FROM 
+		`bouw_oferten_details` 
+		INNER JOIN bouw_waarvoor ON bouw_waarvoor.id = bouw_oferten_details.waarvoor_id 
+		WHERE bouw_oferten_details.oferten_nr = $id");
 
         $bedgarSum = 0;
 
         foreach($this->bedrag->fetch_all() as $q){
-            $result = $q[0]*$q[1];
+			$sum = $q[0]*$q[1];
+			$btw = ($q[0]*$q[1]) * ($q[2] * 0.01);
+			$result = $sum + $btw;
             $bedgarSum += $result;
         }
+		// array_push($bedgarSum, $result);
         return $bedgarSum;
     }
 
