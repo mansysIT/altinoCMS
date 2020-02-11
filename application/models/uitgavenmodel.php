@@ -104,9 +104,9 @@ class uitgavenmodel
 		} else if($waarvoor != null){
 			$type = 'waarvoor.id';
 		} else if($oferten_id != null){
-			$type = 'bouw_factur.oferten_id';
+			$type = 'bouw_uitgaven.oferten_id';
 		} else {
-			$type = 'bouw_factur.adres_id';
+			$type = 'bouw_uitgaven.adres_id';
 		}
 
 		if($word != null && $id != null){
