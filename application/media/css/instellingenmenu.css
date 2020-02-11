@@ -1,11 +1,11 @@
 .stedenlijstholder .bg-primary {
-    background-color: #ddd!important;
+    background-color: #eee!important;
     color: #000!important;
     padding: 0;
 }
 
 .active {
-	background-color: #eee;
+	background-color: #fff;
 	color: #000;
 }
 

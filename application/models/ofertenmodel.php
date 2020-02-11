@@ -540,9 +540,9 @@ class ofertenmodel
         klanten.private_tel,
         klanten.private_geboortedatum,
         klanten.bedrijf_bedrijf,
-        klanten.bedrijf_adres,
-        klanten.bedrijf_postcode,
-        klanten.bedrijf_stad,
+        klanten.adres,
+        klanten.postcode,
+        klanten.stad,
         klanten.bedrijf_kvk,
         klanten.bedrijf_btw,
         klanten.bedrijf_tel,
@@ -622,13 +622,11 @@ class ofertenmodel
 
             $pocztaKlient = str_replace(' ', '', $email);
 
+            $mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $oferten_pdf);
+
             $this->__db->execute("INSERT INTO `bouw_oferten_mail`(`oferten_id`, `data_czas`) VALUES (" . $oferten_id . ", '" . date('Y-m-d H:i:s') . "') ");
 
             $msg = 'E-mail was verstuurd.';
-
-            print_r('send');
-
-            $mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $oferten_pdf);
     }
 
     public function createoferten($oferten_numer = null) {

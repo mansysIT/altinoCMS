@@ -191,9 +191,9 @@ class facturmodel
         klanten.private_tel,
         klanten.private_geboortedatum,
         klanten.bedrijf_bedrijf,
-        klanten.bedrijf_adres,
-        klanten.bedrijf_postcode,
-        klanten.bedrijf_stad,
+        klanten.adres,
+        klanten.postcode,
+        klanten.stad,
         klanten.bedrijf_kvk,
         klanten.bedrijf_btw,
         klanten.bedrijf_tel,
@@ -278,11 +278,11 @@ class facturmodel
             
 			$pocztaKlient = str_replace(' ', '', $email);
 
+        $mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $proforma_pdf);
+
         $this->__db->execute("INSERT INTO `bouw_factur_mail`(`factur_id`, `data_czas`) VALUES (" . $factur_id . ", '" . date('Y-m-d H:i:s') . "') ");
 
         $msg = 'E-mail was verstuurd.';
-
-        $mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $proforma_pdf);
 
     
     }

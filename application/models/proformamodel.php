@@ -601,6 +601,7 @@ class proformamodel
     }
 
     public function sendproforma($request = null){
+        
         if($request[0] == null || $request[1] == null){
             $proforma_numer = $this->__params[1];
             $proforma_id =  $this->__params[2];
@@ -620,9 +621,9 @@ class proformamodel
         klanten.private_tel,
         klanten.private_geboortedatum,
         klanten.bedrijf_bedrijf,
-        klanten.bedrijf_adres,
-        klanten.bedrijf_postcode,
-        klanten.bedrijf_stad,
+        klanten.adres,
+        klanten.postcode,
+        klanten.stad,
         klanten.bedrijf_kvk,
         klanten.bedrijf_btw,
         klanten.bedrijf_tel,
@@ -759,24 +760,11 @@ class proformamodel
 
 			//$mail -> wyslij_email(str_replace(' ', '', $email), $temat, $tresc);
 			$pocztaKlient = str_replace(' ', '', $email);
-			
-		
-		
-		
-		
-		
-        
-		
 
-
+        $mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $proforma_pdf);
         $this->__db->execute("INSERT INTO `bouw_proforma_mail`(`proforma_id`, `data_czas`) VALUES (" . $proforma_id . ", '" . date('Y-m-d H:i:s') . "') ");
 
         $msg = 'E-mail was verstuurd.';
-
-        
-
-        $mail->wyslij_maila_smtp($pocztaKlient, $temat, $tresc, $proforma_pdf);
-
         print_r('send');
         //header('Location:proformy.php?msg=' . $msg);
     
