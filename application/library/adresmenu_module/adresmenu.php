@@ -20,6 +20,7 @@ function ActiveClassIfRequestMatches($requestUri)
           <li><a <?php ActiveClassIfRequestMatches('adres')?> href="administrator/adressen/adres/<?php echo $getAdresId ?>">ADRESS</a></li>
           <li><a <?php ActiveClassIfRequestMatches('bestanden')?> href="administrator/adressen/bestanden/<?php echo $getAdresId ?>">BESTANDEN</a></li>
           <li><a <?php ActiveClassIfRequestMatches('offerten')?> href="administrator/oferten/index/<?php echo $getAdresId ?>">OFFERTEN</a></li>
+          <li><a <?php ActiveClassIfRequestMatches('adressen_statistiek')?> href="administrator/adressen/adressen_statistiek/<?php echo $getAdresId ?>">INKOMSTEN/UITGAVEN</a></li>
         </ul>	
         <ul class="nav navbar-nav navbar-right">
 

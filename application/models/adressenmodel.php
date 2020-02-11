@@ -234,6 +234,61 @@ class adressenmodel
 			mkdir('application/storage/adres/'.$adres_id.'', 0777);
 		}
 	}
+
+	private function getBtwData() {
+
+        $dataWarfor = $this->__db->execute("SELECT 
+        warfor.btw,
+        details.quantity,
+        details.price,
+		warfor.name,
+		warfor.id
+        FROM bouw_factur_details AS details 
+		INNER JOIN bouw_waarvoor AS warfor ON details.waarvoor_id = warfor.id
+		INNER JOIN bouw_factur AS factur ON details.factur_nr = factur.factur_numer
+		WHERE factur.adres_id = ".$this->__params[1]."
+		ORDER BY warfor.btw
+		");
+
+        $y = array();
+        foreach($dataWarfor as $q){
+            array_push($y, $q);
+
+        }
+
+        return $y;
+
+	}
+
+	private function getBtwDataUitgaven() {
+
+        $dataWarfor = $this->__db->execute("SELECT 
+        warfor.btw,
+        uitgaven.price,
+		warfor.name
+        FROM bouw_uitgaven AS uitgaven 
+		INNER JOIN bouw_waarvoor AS warfor ON uitgaven.waarvoor_id = warfor.id
+		WHERE uitgaven.adres_id = ".$this->__params[1]."
+		ORDER BY warfor.btw
+		");
+
+        $y = array();
+        foreach($dataWarfor as $q){
+            array_push($y, $q);
+
+        }
+
+        return $y;
+
+    }
+	
+	public function AllWaarfoor() {
+		return $this->mainModel->getAllWaarvoor($this->getBtwData());
+	}
+
+	public function AllWaarfoorUitgaven() {
+		return $this->mainModel->getAllWaarvoorUitgaven($this->getBtwDataUitgaven());
+	}
 	
 }
 
