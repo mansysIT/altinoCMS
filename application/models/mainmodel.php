@@ -7,6 +7,7 @@ class mainmodel
     public $query;
     public $cityArray = array();
     public $klantenArray = array();
+    public $ZZPArray = array();
 
     private $__config;
     private $__router;
@@ -37,6 +38,15 @@ class mainmodel
             array_push($this->klantenArray, $q);
         }
         return $this->klantenArray;
+    }
+
+    public function getAllZZP()
+    {
+        $this->query = $this->__db->querymy("SELECT * FROM bouw_zzp");
+        foreach ($this->query->fetch_all() as $q) {
+            array_push($this->ZZPArray, $q);
+        }
+        return $this->ZZPArray;
     }
     
     public function getAllFilesInDirectory($dir)
