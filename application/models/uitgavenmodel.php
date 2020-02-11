@@ -46,7 +46,7 @@ class uitgavenmodel
 		} else {
 			$d = new DateTime(date("Y-m-d"));
 			$dOd = new DateTime(date("Y-m-d"));
-			$dOd->modify('-12 month');
+			$dOd->modify('first day of this month');
 
 			$this->od = $dOd->format('Y-m-d');
 			$this->do = $d->format('Y-m-d');
