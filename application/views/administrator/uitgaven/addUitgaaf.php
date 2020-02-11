@@ -11,6 +11,7 @@
 <?php $oferten = model_load('mainmodel', 'getOferten', '')?>
 <?php model_load('uitgavenmodel', 'removeFileFromUitgaven', $uitgavenModelData[0]['uitgaven_id'])?>
 <?php $files = model_load('uitgavenmodel', 'getAllFilesFromUitgaven', $uitgavenModelData[0]['uitgaven_id'])?>
+<?php $getAllZZP=model_load('mainmodel', 'getAllZZP', '')?>
 
 <?=add_metatags()?>
 
@@ -26,6 +27,8 @@
 
 <?php 
 $d = new DateTime(date($uitgavenModelData[0]['data']));
+
+// print_r($uitgavenModelData);
 
 ?>
 
@@ -77,7 +80,16 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                     <?php endforeach; ?> 
                     </select>
                 </div>
-                
+                <div class="RekeningInside">
+                    <p class="rekaningText">ZZP-res</p>
+                    <select name="zzp_id" class="form-control" id="exampleFormControlSelect1">
+                    <option value="">KIEZ ZZP-res</option>
+                    <?php foreach($getAllZZP as $row): ?>
+                        <?php print_r($row) ?>
+                        <option value="<?php echo $row[0]; ?>" <?php if($row[0] == $uitgavenModelData[0]['zzp_id']) echo" selected" ?>><?php if(!empty($row[1]) && !empty($row[3])){ echo $row[4]." id = ".$row[0];} else if(!empty($row[6])) {echo $row[6]." ".$row[0];} else {echo $row[0];} ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                </div>  
                 <div class="RekeningInside">
                     <p class="rekaningText">Offerten</p> 
                     <select name="oferte_id" class="oferty form-control wybor_liczb" id="exampleFormControlSelect1">

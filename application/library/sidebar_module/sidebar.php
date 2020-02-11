@@ -41,10 +41,15 @@
             <li>
                 <a href="administrator/klanten/index/1">Klanten</a>
             </li>
+            <?php if(true): ?>
+            <li>
+                <a href="administrator/ZZP/index/1">ZZP-res</a>
+            </li>
+            <?php endif; ?>
             <li>
                 <a href="administrator/instellingen/stedenlijst">Instellingen</a>
             </li>
-
+            
         </ul>
     </nav>
     <button id="sidebarCollapse" class="btn  mb-2 sidebarGray"><p>X</p></button>

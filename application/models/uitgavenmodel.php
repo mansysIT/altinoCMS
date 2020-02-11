@@ -60,6 +60,8 @@ class uitgavenmodel
 				return $this->adres($this->od, $this->do, $this->word, null, null, $this->__params[2]);
 			} else if($this->__params[1] == "waarvoor") {
 				return $this->adres($this->od, $this->do, $this->word, $this->__params[2], null,null,  $this->__params[2]);
+			} else if($this->__params[1] == "zzp") {
+				return $this->adres($this->od, $this->do, $this->word, $this->__params[2], null, null ,null,  $this->__params[2]);
 			} else {
                 if (isset($this->__params[2])) {
                     return $this->adres($this->od, $this->do, $this->word, $this->__params[1], $this->__params[2]);
@@ -95,10 +97,11 @@ class uitgavenmodel
 		}
 	}
 
-    public function adres($od, $do, $word, $id = null, $oferten_id = null, $warvoorBTW = null, $waarvoor = null) {
-
-
-		if($waarvoor != null){
+    public function adres($od, $do, $word, $id = null, $oferten_id = null, $warvoorBTW = null, $waarvoor = null, $zzp = null) {
+		
+		if ($zzp != null) {
+			$type = 'bouw_uitgaven.zzp_id';
+		} else if($waarvoor != null){
 			$type = 'waarvoor.id';
 		} else if($oferten_id != null){
 			$type = 'bouw_factur.oferten_id';
@@ -284,14 +287,16 @@ class uitgavenmodel
 				oferte_numer, 
 				waarvoor_id, 
 				price,
-				data
+				data,
+				zzp_id
 				) 
 				VALUES (
 				'".$this->__params['POST']['adres']."', 
 				'".$this->__params['POST']['oferte_id']."',
 				'".$this->__params['POST']['waarvoor']."',
 				'".$price."',
-				'".$data."' 
+				'".$data."',
+				'".$this->__params['POST']['zzp_id']."' 
 				)");
 
 				$id = $this->__db->getLastInsertedId();
@@ -305,7 +310,8 @@ class uitgavenmodel
 				`oferte_numer`=".$this->__params['POST']['oferte_id'].", 
 				`waarvoor_id`=".$this->__params['POST']['waarvoor'].", 
 				`price`=".$price.", 
-				`data`= '".$data."'
+				`data`= '".$data."',
+				`zzp_id`=".$this->__params['POST']['zzp_id']."
 				WHERE id = ".$this->__params[1]); 
 				$this->uploadUitgavenFiles($this->__params[1]);
 			}

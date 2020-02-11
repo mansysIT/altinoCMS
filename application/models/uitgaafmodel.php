@@ -30,7 +30,8 @@ class uitgaafmodel
         uitgaven.waarvoor_id,
         uitgaven.price,
         uitgaven.oferte_numer,
-        adresy.id
+        adresy.id,
+        uitgaven.zzp_id
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
         INNER JOIN bouw_uitgaven AS uitgaven ON adresy.id = uitgaven.adres_id 
