@@ -58,6 +58,8 @@ class uitgavenmodel
 		if(isset($this->__params[1])){
 			if($this->__params[1] == "statistiek") {
 				return $this->adres($this->od, $this->do, $this->word, null, null, $this->__params[2]);
+			} else if($this->__params[1] == "waarvoor") {
+				return $this->adres($this->od, $this->do, $this->word, $this->__params[2], null,null,  $this->__params[2]);
 			} else {
                 if (isset($this->__params[2])) {
                     return $this->adres($this->od, $this->do, $this->word, $this->__params[1], $this->__params[2]);
@@ -93,12 +95,15 @@ class uitgavenmodel
 		}
 	}
 
-    public function adres($od, $do, $word, $id = null, $oferten_id = null, $warvoorBTW = null) {
+    public function adres($od, $do, $word, $id = null, $oferten_id = null, $warvoorBTW = null, $waarvoor = null) {
 
-		if($oferten_id != null){
-			$type = 'bouw_uitgaven.oferte_numer';
+
+		if($waarvoor != null){
+			$type = 'waarvoor.id';
+		} else if($oferten_id != null){
+			$type = 'bouw_factur.oferten_id';
 		} else {
-			$type = 'bouw_uitgaven.adres_id';
+			$type = 'bouw_factur.adres_id';
 		}
 
 		if($word != null && $id != null){
@@ -118,6 +123,7 @@ class uitgavenmodel
        		INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
        		INNER JOIN bouw_uitgaven ON bouw_uitgaven.adres_id = bouw_adresy.id  
 			LEFT JOIN bouw_oferten ON  bouw_uitgaven.oferte_numer = bouw_oferten.id 
+			INNER JOIN  bouw_waarvoor AS waarvoor ON bouw_uitgaven.waarvoor_id = waarvoor.id
 			WHERE 
 			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_city.city LIKE '%".$word."%' AND ".$type." = '".$id."' OR
 			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND  bouw_uitgaven.id = '".$word."' AND ".$type." = '".$id."' OR 
@@ -163,6 +169,7 @@ class uitgavenmodel
        		INNER JOIN bouw_city ON bouw_adresy.city = bouw_city.city_id 
        		INNER JOIN bouw_uitgaven ON bouw_uitgaven.adres_id = bouw_adresy.id  
 			LEFT JOIN bouw_oferten ON  bouw_uitgaven.oferte_numer = bouw_oferten.id 
+			INNER JOIN  bouw_waarvoor AS waarvoor ON bouw_uitgaven.waarvoor_id = waarvoor.id
 			WHERE 
 			bouw_uitgaven.data BETWEEN '".$od."' AND '".$do."' AND ".$type." = '".$id."'
 			ORDER BY bouw_uitgaven.id DESC");

@@ -26,7 +26,8 @@ class dashboardmodel
         warfor.btw,
         details.quantity,
         details.price,
-		warfor.name
+		warfor.name,
+		warfor.id
         FROM bouw_factur_details AS details 
 		INNER JOIN bouw_waarvoor AS warfor ON details.waarvoor_id = warfor.id
 		INNER JOIN bouw_factur AS factur ON details.factur_nr = factur.factur_numer
@@ -53,7 +54,8 @@ class dashboardmodel
         $dataWarfor = $this->__db->execute("SELECT 
         warfor.btw,
         uitgaven.price,
-		warfor.name
+		warfor.name,
+		warfor.id
         FROM bouw_uitgaven AS uitgaven 
 		INNER JOIN bouw_waarvoor AS warfor ON uitgaven.waarvoor_id = warfor.id
 		WHERE uitgaven.data BETWEEN '".$this->od."' AND '".$this->do."'

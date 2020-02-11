@@ -100,8 +100,9 @@ $dOd->modify('first day of this month');
                     </div>
                     <div class="row" id="inkomstenWaarvoorHeight">
                         <div class="col-sm-12 noPadding" >
+                            <?php $x = 0 ?>
                             <?php foreach($waarvoorValue as $row => $stawki_vat): ?>
-                                
+                                <?php if($waarvoorValue[$x] != $stawki_vat): ?>
                                 <div class="row borderBottom margin-top-8">
                                     <div class="col-7">
                                         <h4><?=$row?></h4>
@@ -113,11 +114,14 @@ $dOd->modify('first day of this month');
                                             </div>
                                             <div class="col-9 noPadding text-right">
                                                 <?php $waarvoorTotalInkomsten += $stawki_vat; ?>
-                                                <h4><a style="color: black!important" href="administrator/inkomsten/index/statistiek/<?=$row?>"><?=number_format($stawki_vat,2,',', '.')?></a></h4>
+                                                <h4><a style="color: black!important" href="administrator/inkomsten/index/waarvoor/<?=$waarvoorValue[$x]?>"><?=number_format($stawki_vat,2,',', '.')?></a></h4>
                                             </div>
                                         </div> 
                                     </div>
                                 </div>
+                            <?php else : ?>
+
+                            <?php $x++; endif; ?>
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -202,7 +206,9 @@ $dOd->modify('first day of this month');
                     </div>
                     <div class="row" id="uitgavenWaarvoorHeight">
                         <div class="col-sm-12 noPadding" >
+                        <?php $z = 0 ?>
                             <?php foreach($waarvoorValueUitgaven as $row => $stawki_vat): ?>
+                                <?php if($waarvoorValueUitgaven[$z] != $stawki_vat): ?>
                                 <div class="row borderBottom margin-top-8">
                                     <div class="col-7">
                                         <h4><?=$row?></h4>
@@ -214,11 +220,14 @@ $dOd->modify('first day of this month');
                                             </div>
                                             <div class="col-9 noPadding text-right">
                                             <?php $waarvoorTotalUitgaven += $stawki_vat; ?>
-                                                <h4><a style="color: black!important" href="administrator/inkomsten/index/statistiek/<?=$row?>"><?=number_format($stawki_vat,2,',', '.')?></a></h4>
+                                                <h4><a style="color: black!important" href="administrator/uitgaven/index/waarvoor/<?=$waarvoorValueUitgaven[$z]?>"><?=number_format($stawki_vat,2,',', '.')?></a></h4>
                                             </div>
                                         </div> 
                                     </div>
                                 </div>
+                                <?php else : ?>
+
+                                <?php $z++; endif; ?>
                             <?php endforeach; ?>
                         </div>
                     </div>

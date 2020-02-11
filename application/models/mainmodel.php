@@ -255,16 +255,24 @@ class mainmodel
 			
             if(!in_array($x, $row['name'])) 
             $x += array($row['name']." (".$row['btw']."%)" => 0) ;
-			
+            // $x += array('id' => $row['id']) ;
+            
+            if(!in_array($row['id'], $x)){
+                array_push($x, $row['id']);
+            }
+
             foreach($x as $rows=>$val){
 				
-
-                if($rows == $row['name']." (".$row['btw']."%)"){
-                    // $x[$rows] += $z * ((int)$rows * 0.01);
-                    $btw = $z * ((int)$row['btw'] * 0.01);
-                    $x[$rows] += ($z + $btw);
+                if ($rows[0]) {
+                    if ($rows == $row['name']." (".$row['btw']."%)") {
+                        // $x[$rows] += $z * ((int)$rows * 0.01);
+                        $btw = $z * ((int)$row['btw'] * 0.01);
+                        $x[$rows] += $z;
+                    }
                 }
             }
+
+            
 		}
         return $x;
 
@@ -281,19 +289,32 @@ class mainmodel
 			
             $z = $row['quantity'] * $row['price'];
 			
-            if(!in_array($x, $row['name'])) 
-            $x += array($row['name']." (".$row['btw']."%)" => 0) ;
+            if (!in_array($row['name'], $x)) {
+                $x += array($row['name']." (".$row['btw']."%)" => 0) ;
+                // $x += array('id' => $row['id']) ;
+                // array_push($x, $row['id']);
+            }
+
+            if(!in_array($row['id'], $x)){
+                array_push($x, $row['id']);
+            }
 			
             foreach($x as $rows=>$val){
-				
-
-                if($rows == $row['name']." (".$row['btw']."%)"){
-                    // $x[$rows] += $z * ((int)$rows * 0.01);
-                                        $btw = $z * ((int)$row['btw'] * 0.01);
-                    $x[$rows] += ($z + $btw);
+                
+                if ($rows[0]) {
+                    if ($rows == $row['name']." (".$row['btw']."%)") {
+                        // $x[$rows] += $z * ((int)$rows * 0.01);
+                        $btw = $z * ((int)$row['btw'] * 0.01);
+                        $x[$rows] += ($z + $btw);
+                    }
                 }
             }
-		}
+
+            
+        }
+        
+        
+
         return $x;
 
     }
