@@ -104,8 +104,10 @@ class uitgavenmodel
 		} else if($waarvoor != null){
 			$type = 'waarvoor.id';
 		} else if($oferten_id != null){
-			$type = 'bouw_uitgaven.oferten_id';
+			print_r('aaa');
+			$type = 'bouw_uitgaven.oferte_numer';
 		} else {
+			print_r('bbb');
 			$type = 'bouw_uitgaven.adres_id';
 		}
 
