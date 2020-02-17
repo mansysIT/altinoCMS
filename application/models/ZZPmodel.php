@@ -12,6 +12,8 @@ class ZZPmodel
     public $__params;
 	private $__db;
 	private $mainModel;
+	private $od;
+	private $do;
 
 	private $elementsOnPage = 15;
 	
@@ -32,12 +34,26 @@ class ZZPmodel
 	public function getZZP() { 
 		$this->adressenModel = new adressenmodel();
 
-		if (isset($this->__params['POST']['zoeken'])) {
+		if (isset($this->__params['POST']['vanaf'])) {
+			$this->od = $this->__params['POST']['vanaf'];
+			$this->do = $this->__params['POST']['tot'];
 			$this->word = $this->__params['POST']['word'];
 			$_SESSION['word'] = $this->word; 
+			$_SESSION['vanafYear'] = $this->od; 
+			$_SESSION['totYear'] = $this->do; 
+		} else if(isset($_SESSION['vanafYear']) && $_SESSION['vanafYear'] != null) {
+			$this->od = $_SESSION['vanafYear'];
+            $this->do = $_SESSION['totYear'];
+			$this->word = $_SESSION['word'];
 		} else {
+			$d = new DateTime(date("Y-m-d"));
+			$dOd = new DateTime(date("Y-m-d"));
+			$dOd->modify('-12 month');
+
+			$this->od = $dOd->format('Y-m-d');
+			$this->do = $d->format('Y-m-d');
 			$this->word = '';
-			$this->private = 1;
+			$this->private = 0;
 		}
 
         $this->clear();
@@ -66,12 +82,22 @@ class ZZPmodel
 	
 	private function clear() {
 		if(isset($this->__params['POST']['clear'])){
+			$d = new DateTime(date("Y-m-d"));
+			
+			$dOd = new DateTime(date("Y-m-d"));
+			$dOd->modify('-12 month');
 
+			$this->od = $dOd->format('Y-m-d');
+			$this->do = $d->format('Y-m-d');
 			$this->word = '';
 			$this->private = 1;
 
+			unset($this->__params['POST']['vanaf']);
+			unset($this->__params['POST']['tot']);
 			unset($this->__params['POST']['word']);
 			unset($this->__params['POST']['private']);
+			unset($_SESSION['vanafYear']);
+			unset($_SESSION['totYear']);
 			unset($_SESSION['word']);
 			unset($_SESSION['private']);
 		}
@@ -96,9 +122,11 @@ class ZZPmodel
                 FROM bouw_zzp
                 WHERE 
                 private = ".$private." AND bedrijf_bedrijf LIKE '%".$word."%' OR 
-                private = ".$private." AND bedrijf_adres LIKE '%".$word."%' OR
-                private = ".$private." AND bedrijf_stad LIKE '%".$word."%' OR
+                private = ".$private." AND adres LIKE '%".$word."%' OR
+                private = ".$private." AND stad LIKE '%".$word."%' OR
                 private = ".$private." AND bedrijf_tel LIKE '%".$word."%' OR
+				private = ".$private." AND bedrijf_kvk LIKE '%".$word."%' OR
+				private = ".$private." AND bedrijf_btw LIKE '%".$word."%' OR
                 private = ".$private." AND email LIKE '%".$word."%'
 				ORDER BY id DESC
 				LIMIT $offset, $this->elementsOnPage");
@@ -118,18 +146,19 @@ class ZZPmodel
         $x = 2;
         foreach($this->query->fetch_all() as $q){
             array_push($this->ZZPArray, $q);
-            array_push($this->ZZPArray[$x], $this->getBedgar($q[0])); 
+            array_push($this->ZZPArray[$x], $this->getBedgar($q[0], $this->od, $this->do)); 
             $x++;
 		}
 
        return $this->ZZPArray;
     }
 
-    private function getBedgar($id) {
+    private function getBedgar($id, $od, $do) {
 
         $bedrag = $this->__db->querymy("SELECT price
 		FROM `bouw_uitgaven`
-		WHERE zzp_id = $id");
+		WHERE
+		data BETWEEN '".$od."' AND '".$do."' AND  zzp_id = $id");
 
         $bedgarSum = 0;
 
