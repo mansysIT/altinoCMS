@@ -7,10 +7,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <?php $getDataFromZZP=model_load('ZZPmodel', 'getZZPById', '')?>
+<?php model_load('ZZPmodel', 'ZZPActionType', '')?>
 
+<?php $files = model_load('ZZPmodel', 'getAllFilesFromZZP', $getDataFromZZP['id'])?>
+<?php model_load('ZZPmodel', 'removeFileFromZZP', $getDataFromZZP['id'])?>
 <?php $getAllCityName=model_load('mainmodel', 'getCityName', '')?>
 
-<?php model_load('ZZPmodel', 'ZZPActionType', '')?>
+
 
 <?php if(empty($getDataFromKlantens)) {
 $getDataFromKlantens['private'] = 0;
@@ -31,6 +34,7 @@ $getDataFromKlantens['private'] = 0;
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<link href="/application/media/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
 </head>
 
 
@@ -49,7 +53,7 @@ $getDataFromKlantens['private'] = 0;
         </h1> 
     </div>
     <div class="row mainContainer"> 
-    <form style="width: 100%" action="" method="post">
+    <form style="width: 100%" action="" method="post" enctype="multipart/form-data">
         <input style="display: none" type="text" name="id" value="<?=$getDataFromZZP['id']?>">
         <div class="row fullWidth smallMarginBottom"  id="nieuweadressbedrijf">
             <div class="col-sm-2  my-auto">
@@ -130,6 +134,31 @@ $getDataFromKlantens['private'] = 0;
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-6 columnAlignText">
+                <h3 style="margin: 15px 0 15px 0;">Bestanden</h3>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="fileContainer col-sm-6">
+                <ul class="list-group list-group-flush">
+                <?php if($files[1] != null): ?>
+                <?php foreach($files[1] as $file): ?>
+                    <li class="list-group-item"><a style="color: black!important;" href="application/storage/ZZP/<?=$getDataFromZZP['id']?>/<?=$file?>"><?=$file?></a>
+                        <button style="width: 10%; float: right; padding: 0;" class="btnCityRemove" type="submit" name="removefile" value="<?php echo $file; ?>"><span class="oi oi-delete" title="delete" aria-hidden="true">
+                        </span></button>
+                    </li>
+                <?php endforeach; ?>
+                <?php endif; ?>
+                </ul>
+            </div>
+        </div>      
+        <div class="row">
+            <div class="col-sm-4 addFiles">
+                <input type="file" name="fileToUpload" id="fileToUpload">
+                <input style="display: none;"name="id_factur" value="" >
+            </div>
+        </div>  
         <div class="row fullWidth">
             <div class="col-sm-2 my-auto">
                 <button type="submit" class="btn btn-danger mb-2 btn-small" style="margin-left: 0.8%; margin-top: 10px;" name="toevoegen">Opslaan</button>

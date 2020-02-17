@@ -54,11 +54,9 @@ class smtpmailer {
         
         if(!$mail->Send()) 
         {
-            print_r('aaa');
             return 0;
         } else 
         {
-            print_r('bbb');
             return 1;
         }
         

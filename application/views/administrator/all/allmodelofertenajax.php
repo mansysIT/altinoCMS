@@ -1,3 +1,3 @@
-<?=model_load('allmodel', 'getOffertenActive', '')?>
+<?=model_load('mainmodel', 'getOffertenActive', '')?>
 
  
