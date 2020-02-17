@@ -1,6 +1,6 @@
 <?php
 
-// error_reporting(E_ERROR | E_PARSE);
+ error_reporting(E_ERROR | E_PARSE);
 
 class ZZPmodel
 {
@@ -198,6 +198,8 @@ class ZZPmodel
 			WHERE id = ".$this->__params[1]);
 		}
 
+		$this->uploadZZPFiles($this->__params[1]);
+
 		header("Location: ".SERVER_ADDRESS."administrator/ZZP/index/".$_COOKIE['page']);
 	}
 
@@ -223,8 +225,43 @@ class ZZPmodel
                 VALUES (
 				'$bedrijf_bedrijf' , '$adres' , '$postcode' , '$stad' , '$bedrijf_kvk' , '$bedrijf_btw' , '$bedrijf_tel' , '$email' , '$rekening', 0)");
 		}
+
+		$id = $this->__db->getLastInsertedId();
+
+		$this->uploadZZPFiles($id);
+
 		header("Location: ".SERVER_ADDRESS."administrator/ZZP/ZZP/".$this->__db->getLastInsertedId()."");
 	}
+
+	public function uploadZZPFiles($id) {
+        if (isset($this->__params['POST']['toevoegen'])) {
+			$dir = 'application/storage/ZZP';
+			if($id != null){
+                $dirName = $id;
+            } else {
+                $dirName = $this->__params['POST']['id_factur'];
+            }
+            $this->mainModel->createNewFolder($dir, $dirName);
+			$x = $dir."/".$dirName.'/';
+            $this->mainModel->uploadFile($x);		
+        }			
+    }
+    
+    public function getAllFilesFromZZP($id) {
+        if ($id != null) {
+            $dir = 'application/storage/ZZP/'.$id.'/';
+            return $this->mainModel->getAllFilesInDirectory($dir);
+        }
+    }
+    
+    public function removeFileFromZZP($id) {
+        if(isset($this->__params['POST']['removefile']) && $this->__params['POST']['removefile'] != null){
+            $dir = 'application/storage/ZZP/'.$id.'/';
+			$this->mainModel->remove($dir);	
+			header("Refresh:0");
+        }
+
+    }
 }
 
 ?>

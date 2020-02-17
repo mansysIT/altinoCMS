@@ -71,10 +71,24 @@ header('Cache-Control: max-age=900');
 							<th onclick="sortTable(0)">BEDRAG</th>
 							<th onclick="sortTable(4)">TELEFOON</th>
 							<th onclick="sortTable(5)">E-MAIL</th>
+							<th>FILE</th>
 						</tr>
 					</thead>
 					<tbody>
+						<?php $total = 0; ?>
 						<?php foreach(array_slice($zzpData, 2) as $row): ?>
+						<?php $files = model_load('ZZPmodel', 'getAllFilesFromZZP', $row[0]); 
+							$file = $files[1][0];
+
+							if(isset($file)){
+								$fileRow = " <a style='color: #000!important;' href='/application/storage/ZZP/$row[0]/$file'><span class='oi oi-image' title='image' aria-hidden='true'></span></a>";
+							} else {
+								$fileRow = "";
+							}
+
+							$total += $row[9];
+						?>
+						
 						<tr id="<?=$row[0]?>">
 							<?="<td><a style='color: #000!important;' href='administrator/ZZP/ZZP/$row[0]'>$row[0]</a>" ?></td>
 							<?="<td><a style='color: #000!important;' href='administrator/ZZP/ZZP/$row[0]'>$row[6]</a>" ?></td>
@@ -86,7 +100,7 @@ header('Cache-Control: max-age=900');
 							<?="<td><a style='color: #000!important;' href='administrator/uitgaven/index/zzp/$row[0]'>€ ".number_format($row[9],2,',', '.')."</a>" ?></td>
 							<?="<td><a style='color: #000!important;' href='administrator/ZZP/ZZP/$row[0]'>$row[4]</a>" ?></td>
 							<?="<td><a style='color: #000!important;' href='administrator/ZZP/ZZP/$row[0]'>$row[5]</a>" ?></td>
-
+							<td><?=$fileRow?></td>
 						</tr>
 						<?php endforeach; ?>
 						<tr class="suma">
@@ -97,6 +111,7 @@ header('Cache-Control: max-age=900');
 							<td></td>
 							<td></td>
 							<td></td>
+							<td><?="€ ".number_format($total,2,',', '.') ?></td>
 							<td></td>
 							<td></td>
 							<td></td>
