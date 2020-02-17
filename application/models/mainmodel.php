@@ -267,9 +267,10 @@ class mainmodel
             if(!in_array($x, $row['name'])) 
             $x += array($row['name']." (".$row['btw']."%)" => 0) ;
             // $x += array('id' => $row['id']) ;
-            
-            if(!in_array($row['id'], $x)){
-                array_push($x, $row['id']);
+            if ($this->__params[1] == null) {
+                if (!in_array($row['id'], $x)) {
+                    array_push($x, $row['id']);
+                }
             }
 
             foreach($x as $rows=>$val){
@@ -306,8 +307,10 @@ class mainmodel
                 // array_push($x, $row['id']);
             }
 
-            if(!in_array($row['id'], $x)){
-                array_push($x, $row['id']);
+            if ($this->__params[1] == null) {
+                if (!in_array($row['id'], $x)) {
+                    array_push($x, $row['id']);
+                }
             }
 			
             foreach($x as $rows=>$val){
