@@ -24,6 +24,11 @@
 $id = model_load('mainmodel', 'getScroolPosition', '');
 $zzpData=model_load('ZZPmodel', 'getZZP', '');
 
+$d = new DateTime(date("Y-m-d"));
+			
+$dOd = new DateTime(date("Y-m-d"));
+$dOd->modify('-12 month'); 
+
 // $pageno = 
 header("Cache-Control: no-cache, must-revalidate");
 header('Cache-Control: max-age=900');
@@ -48,8 +53,16 @@ header('Cache-Control: max-age=900');
 			<form class="form-inline klantenForm" method="post" action="">
 					<button type="submit" class="btn btn-danger mb-2" name="clear">Clear</button> 
 					<div class="form-group mx-sm-3 mb-2">
-						<h4>Woord</h4>
+						<label class="sr-only">Woord</label>
 						<input type="text" class="form-control" id="inputPassword2" name="word" placeholder="Key Word" value= <?php if(isset($sidebarController->__params['POST']['clear'])){echo '';} else if(isset($sidebarController->__params['POST']['word'])){echo $sidebarController->__params['POST']['word']; } else if(isset($_SESSION['word'])){echo $_SESSION['word']; } else {echo '';}?> >
+					</div>
+					<div class="form-group mx-sm-3 mb-2">
+						<label class="sr-only">Vanaf</label>
+						<input type="date" class="form-control" id="inputPassword2" style="line-height: 20px;" name="vanaf" value=<?php if(isset($sidebarController->__params['POST']['clear'])){echo $dOd->format('Y-m-d');} else if(isset($sidebarController->__params['POST']['vanaf'])){echo $sidebarController->__params['POST']['vanaf']; } else if(isset($_SESSION['vanafYear'])){echo $_SESSION['vanafYear']; } else {echo $dOd->format('Y-m-d'); }?>>
+					</div>
+					<div class="form-group mx-sm-3 mb-2">
+						<label class="sr-only">Tot</label>
+						<input type="date" class="form-control aaa" id="inputPassword2" style="line-height: 20px;" name="tot" value= <?php if(isset($sidebarController->__params['POST']['clear'])){echo $d->format('Y-m-d');} else if(isset($sidebarController->__params['POST']['tot'])){echo $sidebarController->__params['POST']['tot']; } else if(isset($_SESSION['totYear'])){echo $_SESSION['totYear']; } else {echo $d->format('Y-m-d'); }?>>
 					</div>
 					<button type="submit" class="btn btn-danger mb-2" name="zoeken">Zoeken</button>
 					<a class="btn btn-danger mb-2" href="administrator/ZZP/ZZP" role="button">Nieuwe</a>
