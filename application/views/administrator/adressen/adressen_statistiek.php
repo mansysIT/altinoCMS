@@ -73,7 +73,6 @@ $dOd->modify('first day of this month');
                     <div class="row" id="inkomstenWaarvoorHeight">
                         <div class="col-sm-12 noPadding" >
                             <?php foreach($waarvoorValue as $row => $stawki_vat): ?>
-                                
                                 <div class="row borderBottom margin-top-8">
                                     <div class="col-7">
                                         <h4><?=$row?></h4>
@@ -90,6 +89,7 @@ $dOd->modify('first day of this month');
                                         </div> 
                                     </div>
                                 </div>
+                                
                             <?php endforeach; ?>
                         </div>
                     </div>
