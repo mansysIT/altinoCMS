@@ -62,7 +62,6 @@ a:focus {
 
 #sidebarCollapse {
     transition: all 0.3s;
-    margin-left: 250px;
     display: flex;
     min-height: 100vh;
     padding-top: 50vh;
@@ -80,8 +79,8 @@ a:focus {
     background: #ee8500;
     color: #fff;
     transition: all 0.3s;
-    position: fixed;
-    height: 100%;
+    position: sticky;
+    top: 0;
 }
 
 #sidebar.active {
@@ -248,6 +247,5 @@ ul ul a {
 
     #sidebarCollapse.active {
         transition: all 0.3s;
-        margin-left: 250px;
     }
 }
