@@ -48,8 +48,7 @@
             <?php endif; ?>
             <li>
                 <a href="administrator/instellingen/stedenlijst">Instellingen</a>
-            </li>
-            
+            </li>   
         </ul>
     </nav>
     <button id="sidebarCollapse" class="btn  mb-2 sidebarGray"><p>X</p></button>
