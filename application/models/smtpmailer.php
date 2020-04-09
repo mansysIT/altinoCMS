@@ -33,7 +33,7 @@ class smtpmailer {
         $mail->Port       = '587';                    
         $mail->Host       = 'khbemiddeling.e-kei.pl'; 
         $mail->Username   = 'info@aguiarbouw.nl';     
-        $mail->Password   = '28Altino28!';
+        $mail->Password   = 'Altino28';
         
         if(!empty($plik))
         $mail -> AddAttachment($plik); 	
