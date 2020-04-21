@@ -58,7 +58,7 @@ foreach($o61_86->tablica61Asoc($nowaNazwaPliku) as $row) {
 	
 }
 foreach($wrongData as $row) {
-echo "<li style='padding: 5px;'>Datum: ".$row[0]." Titel: ".$row[1]." Bedrag: € ".$row[2]."</li>";
+echo "<li style='padding: 5px;'>Datum: ".$row[0]." Titel: ".substr($row[1], 1, -1)." Bedrag: € ".$row[2]."</li>";
 }
 
 ?>

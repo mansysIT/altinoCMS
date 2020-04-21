@@ -101,14 +101,14 @@ class importmodel
 							
 							if ( $aktu_mktime > $this->max_mktime )
 							{
-								//return $aktu_mktime." - ".mktime(1,1,1,$miesiacStop,$dzienStop,$rokStop); 
+								// return $aktu_mktime." - ".mktime(1,1,1,$miesiacStop,$dzienStop,$rokStop); 
 								
 							}
 							
 							
 						}
 					}
-		$dzis = date('Y-m-d');
+
 				if ($_FILES["fileToUpload"]['error'] == 0) 
 				{
 					
@@ -147,6 +147,7 @@ class importmodel
 							
 							if ($DanePlikAsoc[$numer]['blok3']=='D')
 							{
+								$konto = 0;
 								$konto = $DanePlikAsoc[$numer]['blok6'];
 							
 								$konto = preg_replace('/\s{1,}/','',$konto);
@@ -156,6 +157,8 @@ class importmodel
 								$tytul = $DanePlikAsoc[$numer]['blok10'];
 									
 								$tytul = str_replace("'", "", $tytul);
+
+								$tytul = substr($tytul, 1, -1);
 								
 								$blok8 = $DanePlikAsoc[$numer]['blok8'];
 									
@@ -175,36 +178,42 @@ class importmodel
 								}else if(strpos($tytul, "EKC") || strpos($tytul, "Ekc") || strpos($tytul, "ekc"))
 								{
 									$waarvoorId = 26;
-								} else if(strpos($blok8, "HOMBACH") || strpos($blok8, "Hombach") || strpos($blok8, "hombach"))
-								{
-									$waarvoorId = 27;
-								}else if(strpos($blok8, "BOUWMAAT") || strpos($blok8, "Bouwmaat") || strpos($blok8, "bouwmaat"))
-								{
-									$waarvoorId = 28;
-								}else if(strpos($blok8, "EKC") || strpos($blok8, "Ekc") || strpos($blok8, "ekc"))
-								{
-									$waarvoorId = 26;
 								} else 
+								// if(strpos($blok8, "HOMBACH") || strpos($blok8, "Hombach") || strpos($blok8, "hombach"))
+								// {
+								// 	$waarvoorId = 27;
+								// }else if(strpos($blok8, "BOUWMAAT") || strpos($blok8, "Bouwmaat") || strpos($blok8, "bouwmaat"))
+								// {
+								// 	$waarvoorId = 28;
+								// }else if(strpos($blok8, "EKC") || strpos($blok8, "Ekc") || strpos($blok8, "ekc"))
+								// {
+								// 	$waarvoorId = 26;
+								// } else 
 								{
 									$waarvoorId = 25;
 								}
 
-								$x = $this->__db->execute("SELECT * FROM bouw_zzp WHERE rekening = '".$konto."'");
+								$x = $this->__db->execute("SELECT * FROM bouw_zzp");
 
-								if($x[0]['id'] == NULL)
-								{
-									$zzpId = 0;
-								} else {
-									$zzpId = $x[0]['id'];
-								}
+                                foreach ($x as $row) {          
+                                    if ($konto == preg_replace('/\s+/', '', $row['rekening'])&& $row['rekening'] !=null) {
+                                        if ($row['id'] == null) {
+                                            $zzpId = 0;
+                                        } else {
+											$zzpId = $row['id'];
+										break;
+                                        }
+                                    } else {
+										$zzpId = 0;
+									}
+                                }
 
 
 								$kwota = $DanePlikAsoc[$numer]['blok4'];
 								
 								$kwota = $zm->zmiana_przecinka($kwota);
 								
-								//var_dump($kwota);
-								//die;
+								
 								$data_cala = $DanePlikAsoc[$numer]['blok2'];
 								$data = '20'.substr($data_cala,0,2).'-'.substr($data_cala,2,2).'-'.substr($data_cala,4,2);
 

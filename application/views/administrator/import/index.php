@@ -105,9 +105,9 @@ $dOd->modify('first day of this month');
 			</div>
 			<div class="modal-footer">
 
-					<button style=" padding: 8px 10px;background-color: black; border: none; color: white"  type="button" data-dismiss="modal" class="dodaj">Discard</button>
+					<button style=" padding: 8px 10px;background-color: #333; border: none; color: white"  type="button" data-dismiss="modal" class="dodaj">Discard</button>
 					</a>
-					<input name="importen" value="IMPORTEEREN" type="submit">
+					<input class="importButton" name="importen" value="IMPORTEEREN" type="submit">
 			</div>
 		  </div>
 		  
