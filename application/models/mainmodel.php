@@ -158,9 +158,7 @@ class mainmodel
         $dod = '';
         if ($params != 0) {
             $dod = 'WHERE id = '.$params;
-        } else {
-            return null;
-        }
+        } 
 
 
         // if(isset($params[1]))
