@@ -158,7 +158,7 @@ class importmodel
 									
 								$tytul = str_replace("'", "", $tytul);
 
-								$tytul = substr($tytul, 1, -1);
+								
 								
 								$blok8 = $DanePlikAsoc[$numer]['blok8'];
 									
@@ -216,6 +216,8 @@ class importmodel
 								
 								$data_cala = $DanePlikAsoc[$numer]['blok2'];
 								$data = '20'.substr($data_cala,0,2).'-'.substr($data_cala,2,2).'-'.substr($data_cala,4,2);
+
+								$tytul = substr($tytul, 1, -1);
 
 								$this->__db->execute("INSERT INTO bouw_uitgaven (adres_id, price, oferte_numer, waarvoor_id, data, zzp_id, description) VALUES (0, ".$kwota.", 0, ".$waarvoorId.", '".$data."', ".$zzpId.", '".$tytul."')");
 
