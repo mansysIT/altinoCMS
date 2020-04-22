@@ -217,7 +217,6 @@ class uitgavenmodel
 		}
 
         foreach($this->query->fetch_all() as $q){
-
             array_push($this->cityArray, $q);
          
         }
@@ -288,7 +287,8 @@ class uitgavenmodel
 				waarvoor_id, 
 				price,
 				data,
-				zzp_id
+				zzp_id,
+				description
 				) 
 				VALUES (
 				'".$this->__params['POST']['adres']."', 
@@ -296,7 +296,8 @@ class uitgavenmodel
 				'".$this->__params['POST']['waarvoor']."',
 				'".$price."',
 				'".$data."',
-				'".$this->__params['POST']['zzp_id']."' 
+				'".$this->__params['POST']['zzp_id']."',
+				'".$this->__params['POST']['description']."' 
 				)");
 
 				$id = $this->__db->getLastInsertedId();
@@ -304,14 +305,42 @@ class uitgavenmodel
 			}
 			else{
 
-	
+
+				$x = $this->__params['POST']['oferte_id'];
+				if($x == "")
+				{
+					$oferten = 0;
+				} else {
+					$oferten = $x;
+				}
+
+				$y = $this->__params['POST']['waarvoor'];
+				if($y == "")
+				{
+					$waarvoor = 0;
+				}else {
+					$waarvoor = $y;
+				}
+
+				$z = $this->__params['POST']['zzp_id'];
+				if($z == "")
+				{
+					$zzp = 0;
+				}else {
+					$zzp = $z;
+				}
+
+	// var_dump($zzp);
+	// die;
+
 				$this->__db->execute("
 				UPDATE `bouw_uitgaven` SET `adres_id`=".$this->__params['POST']['adres'].", 
-				`oferte_numer`=".$this->__params['POST']['oferte_id'].", 
-				`waarvoor_id`=".$this->__params['POST']['waarvoor'].", 
+				`oferte_numer`=".$oferten.", 
+				`waarvoor_id`=".$waarvoor.", 
 				`price`=".$price.", 
 				`data`= '".$data."',
-				`zzp_id`=".$this->__params['POST']['zzp_id']."
+				`zzp_id`=".$zzp.",
+				`description`='".$this->__params['POST']['description']."'
 				WHERE id = ".$this->__params[1]); 
 				$this->uploadUitgavenFiles($this->__params[1]);
 			}

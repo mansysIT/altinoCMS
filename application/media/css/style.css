@@ -862,6 +862,12 @@ input {
     border: none!important;
 }
 
+.importButton
+{
+    background-color: #ee8500!important;
+    color: white;
+}
+
 @media only screen and (max-width: 768px) {
     .btn-small{
         width: 100%!important;

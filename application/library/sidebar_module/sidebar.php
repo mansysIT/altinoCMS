@@ -47,6 +47,9 @@
             </li>
             <?php endif; ?>
             <li>
+                <a href="administrator/import/index">Importen</a>
+            </li>
+            <li>
                 <a href="administrator/instellingen/stedenlijst">Instellingen</a>
             </li>   
         </ul>

@@ -108,9 +108,12 @@ model_load('uitgavenmodel', 'saveUitgaaf', '');
                 <div class="RekeningInside">
                     <p class="rekaningText">Datum</p>
                     <input class="inputNewHuurder" type="date" name="datum" value="<?=$d->format('Y-m-d'); ?>">
-                </div>       
-                
-            
+                </div>     
+                <div class="RekeningInside">
+                    <p class="rekaningText">Beschrijving</p>
+                    <textarea name="description" class="inputNewHuurder warforTextArea" style="height: 80px" cols="30" rows="60"><?php if(!empty($uitgavenModelData)) echo $uitgavenModelData[0]['description']; ?></textarea>
+                </div>      
+
             <?php if($uitgavenModelData[0] != null): ?>
                
                 <div class="container-fluid">

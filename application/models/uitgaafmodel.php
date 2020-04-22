@@ -31,7 +31,8 @@ class uitgaafmodel
         uitgaven.price,
         uitgaven.oferte_numer,
         adresy.id,
-        uitgaven.zzp_id
+        uitgaven.zzp_id,
+        uitgaven.description
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
         INNER JOIN bouw_uitgaven AS uitgaven ON adresy.id = uitgaven.adres_id 
@@ -55,6 +56,7 @@ class uitgaafmodel
             $adres = $this->__params['POST']['adres'];
             $factur =$this->__params['POST']['facturnumer'];
             $data = $this->__params['POST']['facturdata'];
+            $description = $this->__params['POST']['description'];
             
             
 
@@ -63,7 +65,7 @@ class uitgaafmodel
 			adres_id = $adres,
 			oferten_id = 6, 
 			factur_numer = $factur,
-			data = '$data' 
+			data = '$data'
             WHERE factur_numer = $factur
             ");
 //print_r($this->__params['POST']);

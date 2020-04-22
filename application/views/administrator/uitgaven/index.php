@@ -92,7 +92,12 @@ $dOd->modify('first day of this month');
 			foreach($adress as $k=>$row): 
 				$files = model_load('uitgavenmodel', 'getAllFilesFromUitgaven', $row[0]);
 				$w = model_load('mainmodel', 'getwaarvoor', $row[6]); 
-				$waar = $w[0][1]; 
+
+                if ($row[6] != 0) {
+                    $waar = $w[0][1];
+                } else {
+					$waar = null;
+				}
 				$total += $row[4];
 
 				$file = $files[1][0];

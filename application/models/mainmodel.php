@@ -96,11 +96,11 @@ class mainmodel
 
     public function uploadFile($target_dir)
     {
-        
+
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]); 
         $uploadOk = 1;
         $message = '';
-        
+
         // Check if file already exists
         if (file_exists($target_file)) {
             $message = "Sorry, file already exists.";
@@ -158,7 +158,7 @@ class mainmodel
         $dod = '';
         if ($params != 0) {
             $dod = 'WHERE id = '.$params;
-        }
+        } 
 
 
         // if(isset($params[1]))
@@ -362,7 +362,17 @@ class mainmodel
 					return $this->adresArray;
 			}
 		}
-	} 
+    } 
+    
+    function zmiana_przecinka($liczba) {
+
+        if (strstr($liczba, ",") !== False)
+            $kwota = str_replace(",", ".", $liczba);
+        else
+            $kwota = $liczba;
+
+        return $kwota;
+    }
 
 }
 
