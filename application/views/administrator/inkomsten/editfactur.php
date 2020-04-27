@@ -49,11 +49,10 @@ $d = new DateTime($facturaModelData[0]['data']);
     <form action="" method="post" id="myForm" enctype="multipart/form-data">
         <input style="display: none" type="text" name="id" value="<?=$facturaModelData[0]['id']?>">
             <div class="bottomHolder">
-            <div class="rekaning">
+            <div class="rekaning facturRekering">
                 <div class="RekeningInside">
                     <p class="rekaningText">Stad</p>
                     <select name="city" class="miasta form-control" id="exampleFormControlSelect1">
-                    <option value="">KIES EEN STAD</option>
                     
                     <?php foreach($getCityId as $row): ?>
                         <li>
@@ -64,12 +63,120 @@ $d = new DateTime($facturaModelData[0]['data']);
                 </div>  
                 <div class="RekeningInside">
                     <p class="rekaningText">Adres</p>
-                    <select name="adres" class="adresy form-control" id="exampleFormControlSelect1">
-                        <option>KIES EEN ADRES</option>
+                    <select name="adresId" class="adresy form-control" id="exampleFormControlSelect1">
                     </select>
                 </div>
 
-                
+                <div id="externalData">
+                    <div class="row fullWidth smallMarginBottom <?php if($facturaModelData[0]['private'] != 1) echo "active"; ?>" id="nieuweadressprivate">
+                        <div class="col-sm-2  my-auto">
+                            <div class="row ">
+                                <div class="col-sm ">
+                                    <button type="button" onclick="bedrijf()" id="privatetoogler" class="btn btn-danger mb-2">Private</button>	
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-10 noPadding text-center">
+                            <div class="row facturDataRowEdit">
+                                <div class="col-sm-3 colWidth facturData">
+                                    <p class="info pFirstChild text-center">Naam</p>  
+                                    <input class="inputKlanten" type="text" name="private_naam" value='<?php echo $facturaModelData[0]['private_naam']?>' >
+                                </div>
+                                <div class="col-sm-3 colWidth facturData">
+                                    <p class="info p text-center">Achternaam</p>   
+                                    <input class="inputKlanten" type="text" name="private_achternaam" value='<?php echo $facturaModelData[0]['private_achternaam']?>'>
+                                </div>
+                                <!-- <div class="col-sm-3 colWidth facturData">
+                                    <p class="info p">ID-kaart</p>  
+                                    <input class="inputKlanten" type="text" name="private_id_kaart" value='<?php //if(!empty($getDataFromKlantens['id'])) echo $getDataFromKlantens['private_id_kaart']?>' >
+                                </div> -->
+                                <div class="col-sm-3 colWidth facturData">
+                                    <p class="info p">Telefoon</p>  
+                                    <input class="inputKlanten" type="text" name="private_tel" value='<?php echo $facturaModelData[0]['private_tel']?>' >
+                                </div>
+                                <div class="col-sm-3 colWidth facturData" style="visibility: hidden">
+                                    <p class="info p">Telefoon</p>  
+                                    <input  type="text" >
+                                </div>
+                                <!-- <div class="col-sm-3 colWidth facturData">
+                                    <p class="info p">Geboortedatum</p>
+                                    <input class="inputKlanten" sty type="date" name="private_geboortedatum" value='<?php //if(!empty($getDataFromKlantens['id'])) echo $getDataFromKlantens['private_geboortedatum']?>' >
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row fullWidth smallMarginBottom <?php if($facturaModelData[0]['private'] != 0) echo "active"; ?>"  id="nieuweadressbedrijf">
+                        <div class="col-sm-2  my-auto">
+                            <div class="row">
+                                <div class="col-sm  my-auto">
+                                <button type="button" onclick="private()" id="bedrijftoogler" style="margin-top: auto; margin-left: 0.8%" class="btn btn-danger mb-2">Bedrijf</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-10 noPadding text-center">
+                            <div class="row facturDataRowBedrijfEdit">
+                                <div class="col-sm-3 colWidth facturData">
+                                    <p class="info ">Bedrijf</p>  
+                                    <input class="inputKlanten" type="text" name="bedrijf_bedrijf" value='<?php echo $facturaModelData[0]['bedrijf_bedrijf']?>'>
+                                </div>
+                                <div class="col-sm-3 colWidth facturData">
+                                    <p class="info p">KvK</p>
+                                    <input class="inputKlanten" sty type="text" name="bedrijf_kvk" value='<?php echo $facturaModelData[0]['bedrijf_kvk']?>' >
+                                </div>
+                                <div class="col-sm-3 colWidth facturData">
+                                    <p class="info p">BTW</p>
+                                    <input class="inputKlanten" sty type="text" name="bedrijf_btw" value='<?php echo $facturaModelData[0]['bedrijf_btw']?>' >
+                                </div>
+                                <div class="col-sm-3 colWidth facturData">
+                                    <p class="info p">Tel</p>
+                                    <input class="inputKlanten" sty type="text" name="bedrijf_tel" value='<?php echo $facturaModelData[0]['bedrijf_tel']?>' >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input style="display: none" id="toogler"  type="text" name="privateBedrijfToogler" value='<?php if($facturaModelData[0]['private'] == 0) echo "bedrijf"; else echo "private"; ?>' >
+                    <div class="row fullWidth">
+                        <div class="col-sm-2 my-auto ">
+                            <p class="info p">Adres</p>     
+                        </div>
+                        <div class="col-sm-10 noPadding">
+                            <div class="col-sm-3 colWidth text-center facturDataRowBedrijfEdit">
+                                <input class="inputKlanten" type="text" name="adres" value='<?php echo $facturaModelData[0]['adresadres']?>'>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row fullWidth">
+                        <div class="col-sm-2 my-auto ">
+                            <p class="info p">Stad</p> 
+                        </div>
+                        <div class="col-sm-10 noPadding">
+                            <div class="col-sm-3 colWidth text-center facturDataRowBedrijfEdit">
+                                <input class="inputKlanten" type="text" name="stad" value='<?php echo $facturaModelData[0]['stad']?>' >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row fullWidth">
+                        <div class="col-sm-2 my-auto ">
+                            <p class="info p">Post code</p>  
+                        </div>
+                        <div class="col-sm-10 noPadding">
+                            <div class="col-sm-3 colWidth text-center facturDataRowBedrijfEdit">
+                                <input class="inputKlanten" type="text" name="postcode" value='<?php echo $facturaModelData[0]['postcode']?>' >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row fullWidth">
+                        <div class="col-sm-2 my-auto ">
+                            <p class="info p">Email</p>
+                        </div>
+                        <div class="col-sm-10 noPadding ">
+                            <div class="col-sm-3 colWidth text-center facturDataRowBedrijfEdit">
+                                <input class="inputKlanten" type="text" name="email" value='<?php echo $facturaModelData[0]['email']?>' >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="RekeningInside">
                     <p class="rekaningText">Offerten</p> 
                     <select name="oferten" class="oferty form-control wybor_liczb" id="exampleFormControlSelect1">
@@ -259,12 +366,32 @@ $d = new DateTime($facturaModelData[0]['data']);
 </html>
 
 <script type="text/javascript" >
+
+function bedrijf() {
+    document.getElementById("toogler").value = "bedrijf";
+};
+
+function private() {
+    document.getElementById("toogler").value = "private";
+};
+
 var res = "";
 $(document).ready(function()
 {
+    var id_adres1;
     $(".miasta").change(
         function() {    
     var id_miasto = $(this).val();
+    if(id_miasto == 0)
+        {
+            id_adres1 = 0;
+            if(id_adres1 != 0)
+            {
+            document.getElementById("externalData").style.display = "none";
+            } else {
+            document.getElementById("externalData").style.display = "block";
+            }
+        }
     var dataString = {
         action: "miasta",
         id_miasto: id_miasto
@@ -288,7 +415,13 @@ $(document).ready(function()
         $(".adresy").change(function()
         {
        
-        var id_adres1 = $(this).val();
+        id_adres1 = $(this).val();
+        if(id_adres1 != 0)
+        {
+            document.getElementById("externalData").style.display = "none";
+        } else {
+            document.getElementById("externalData").style.display = "block";
+        }
         var dataString = {
             action: "oferty",
             id_adres: id_adres1
@@ -331,7 +464,10 @@ window.onload = function() {
                 $(".adresy").html(html);
             }
         });
-
+        if(id_adres != 0)
+        {
+            document.getElementById("externalData").style.display = "none";
+        }
         sum();
   
         var id_adres = <?=$facturaModelData[0]["adres_id"]?>;

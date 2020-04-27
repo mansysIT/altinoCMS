@@ -242,7 +242,7 @@ class inkomstenmodel
 		if($this->__params['POST']['action'] == 'miasta') {
 			$adresy = $this->__db->querymy("SELECT id, adres FROM `bouw_adresy` WHERE city = ".$this->__params['POST']['id_miasto']);
 			
-			echo "<option value=''>Kiez een adres</option>";
+			echo "<option value='0'>Kiez een adres</option>";
 			foreach($adresy->fetch_all() as $q){
 				// array_push($this->adresArray, $q);
 				if(isset($this->__params['POST']['id_adres'])){
@@ -281,18 +281,96 @@ class inkomstenmodel
 	{
 		if(isset($this->__params['POST']['savewarfor'])) {
 			// print_r($this->__params['POST']['adres']);
+			if($this->__params['POST']['privateBedrijfToogler'] == "private")
+			{
+				$x = 1;
+			} else {
+				$x = 0;
+			}
+
 			$facturNr = $this->getLastFacturNr();
-			$this->__db->execute("INSERT INTO bouw_factur 
-			(adres_id, 
-			oferten_id, 
-			factur_numer,
-			data) 
-			VALUES (
-				'".$this->__params['POST']['adres']."',
-				'".$this->__params['POST']['oferten']."',
-				'".$facturNr."',
-				'".$this->__params['POST']['facturdata']."'
-				)");
+			if($x == 1)
+			{
+
+				$this->__db->execute("INSERT INTO bouw_factur 
+				(adres_id, 
+				oferten_id, 
+				factur_numer,
+				data,
+				private_naam,
+				private_achternaam,
+				private_tel,
+				bedrijf_bedrijf,
+				adres,
+				postcode,
+				stad,
+				bedrijf_kvk,
+				bedrijf_btw,
+				bedrijf_tel,
+				email,
+				private
+				) 
+				VALUES (
+					'".$this->__params['POST']['adresId']."',
+					'".$this->__params['POST']['oferten']."',
+					'".$facturNr."',
+					'".$this->__params['POST']['facturdata']."',
+					'".$this->__params['POST']['private_naam']."',
+					'".$this->__params['POST']['private_achternaam']."',
+					'".$this->__params['POST']['private_tel']."',
+					'',
+					'".$this->__params['POST']['adres']."',
+					'".$this->__params['POST']['postcode']."',
+					'".$this->__params['POST']['stad']."',
+					'',
+					'',
+					'',
+					'".$this->__params['POST']['email']."',
+					'".$x."'
+					)");
+
+			} else {
+
+				$this->__db->execute("INSERT INTO bouw_factur 
+				(adres_id, 
+				oferten_id, 
+				factur_numer,
+				data,
+				private_naam,
+				private_achternaam,
+				private_tel,
+				bedrijf_bedrijf,
+				adres,
+				postcode,
+				stad,
+				bedrijf_kvk,
+				bedrijf_btw,
+				bedrijf_tel,
+				email,
+				private
+				) 
+				VALUES (
+					'".$this->__params['POST']['adresId']."',
+					'".$this->__params['POST']['oferten']."',
+					'".$facturNr."',
+					'".$this->__params['POST']['facturdata']."',
+					'',
+					'',
+					'',
+					'".$this->__params['POST']['bedrijf_bedrijf']."',
+					'".$this->__params['POST']['adres']."',
+					'".$this->__params['POST']['postcode']."',
+					'".$this->__params['POST']['stad']."',
+					'".$this->__params['POST']['bedrijf_kvk']."',
+					'".$this->__params['POST']['bedrijf_btw']."',
+					'".$this->__params['POST']['bedrijf_tel']."',
+					'".$this->__params['POST']['email']."',
+					'".$x."'
+					)");
+
+			}
+			
+
             
         
 
@@ -353,6 +431,8 @@ class inkomstenmodel
             $proforma_numer = $request;
         }
 
+		
+
         $data = $this->__db->execute("SELECT 
         city.city_id,
         klanten.stad,
@@ -377,7 +457,33 @@ class inkomstenmodel
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
         INNER JOIN bouw_factur AS factur ON adresy.id = factur.adres_id 
 		INNER JOIN bouw_klanten AS klanten ON klanten.id = adresy.klanten_id 
-        WHERE factur.factur_numer = ".$proforma_numer);
+		WHERE factur.factur_numer = ".$proforma_numer);
+
+		if($data == null)
+		{
+			$data = $this->__db->execute("SELECT 
+			city.city_id,
+			factur.stad,
+			factur.adres, 
+			factur.postcode,
+			factur.private_naam,
+			factur.private_achternaam,
+			factur.private_tel,
+			factur.bedrijf_bedrijf,
+			factur.bedrijf_kvk,
+			factur.bedrijf_btw,
+			factur.bedrijf_tel,
+			factur.email,
+			factur.data,
+			factur.factur_numer,
+			factur.id,
+			factur.proforma_nr
+			
+			FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
+			INNER JOIN bouw_factur AS factur ON adresy.id = factur.adres_id 
+			WHERE factur.factur_numer = ".$proforma_numer);
+		}
+
         $x = array();
         foreach($data as $q){
             array_push($x, $q);
