@@ -868,6 +868,43 @@ input {
     color: white;
 }
 
+.facturData
+{
+    margin-right: auto;
+}
+
+.facturDataRow
+{
+    margin-left: 1.8rem!important;
+}
+
+.facturDataRowBedrijf
+{
+    margin-left: 1.8rem!important;
+}
+
+.facturDataRowEdit
+{
+    margin-left: 1.8em!important;
+}
+
+.facturDataRowBedrijfEdit
+{
+    margin-left: 1.8em!important;
+}
+
+.facturRekering
+{
+    width: auto!important;
+}
+
+#externalData
+{
+    margin-left: 15px;
+    width: 60vw;
+}
+
+
 @media only screen and (max-width: 768px) {
     .btn-small{
         width: 100%!important;

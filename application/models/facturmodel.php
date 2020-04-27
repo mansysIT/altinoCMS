@@ -34,7 +34,19 @@ class facturmodel
         factur.factur_numer,
         adresy.id as adres_id,
         factur.oferten_id,
-        factur.id
+        factur.id,
+        factur.stad,
+        factur.adres as adresadres, 
+        factur.postcode,
+        factur.private_naam,
+        factur.private_achternaam,
+        factur.private_tel,
+        factur.bedrijf_bedrijf,
+        factur.bedrijf_kvk,
+        factur.bedrijf_btw,
+        factur.bedrijf_tel,
+        factur.email,
+        factur.private
         
         FROM bouw_city AS city INNER JOIN bouw_adresy  AS adresy ON city.city_id = adresy.city 
         INNER JOIN bouw_factur AS factur ON adresy.id = factur.adres_id 
@@ -81,13 +93,19 @@ class facturmodel
 	{
 		if(isset($this->__params['POST']['editwarfor'])) {
 
-            $adres = $this->__params['POST']['adres'];
+            $adres = $this->__params['POST']['adresId'];
             $factur =$this->__params['POST']['facturnumer'];
             $data = $this->__params['POST']['facturdata'];
             $oferten = $this->__params['POST']['oferten'];
             $facturId = $this->__params['POST']['facturId'];
             $opmerkingen = $this->__params['POST']['opmerkingen'];
             
+            if($this->__params['POST']['privateBedrijfToogler'] == "private")
+			{
+				$x = 1;
+			} else {
+				$x = 0;
+			}
             
             // $_SESSION['id'] =  $this->__params['POST']['id'];
 
@@ -95,14 +113,56 @@ class facturmodel
                 $oferten = 0;
             }
 
-			$this->__db->execute("UPDATE bouw_factur 
-            SET
-			adres_id = $adres,
-			oferten_id = $oferten, 
-			factur_numer = $factur,
-			data = '$data'   
-            WHERE factur_numer = $factur
-            ");
+            if($x == 1)
+            {
+
+                $this->__db->execute("UPDATE bouw_factur 
+                SET
+                adres_id = $adres,
+                oferten_id = $oferten, 
+                factur_numer = $factur,
+                data = '$data',
+                private_naam = '".$this->__params['POST']['private_naam']."',
+                private_achternaam = '".$this->__params['POST']['private_achternaam']."',
+                private_tel = '".$this->__params['POST']['private_tel']."',
+                bedrijf_bedrijf = '',
+                adres = '".$this->__params['POST']['adres']."',
+                postcode = '".$this->__params['POST']['postcode']."',
+                stad = '".$this->__params['POST']['stad']."',
+                bedrijf_kvk = '',
+                bedrijf_btw = '',
+                bedrijf_tel = '',
+                email = '".$this->__params['POST']['email']."',
+                private = $x
+                WHERE factur_numer = $factur
+                ");
+
+            } else {
+                
+                $this->__db->execute("UPDATE bouw_factur 
+                SET
+                adres_id = $adres,
+                oferten_id = $oferten, 
+                factur_numer = $factur,
+                data = '$data',
+                private_naam = '',
+                private_achternaam = '',
+                private_tel = '',
+                bedrijf_bedrijf = '".$this->__params['POST']['bedrijf_bedrijf']."',
+                adres = '".$this->__params['POST']['adres']."',
+                postcode = '".$this->__params['POST']['postcode']."',
+                stad = '".$this->__params['POST']['stad']."',
+                bedrijf_kvk = '".$this->__params['POST']['bedrijf_kvk']."',
+                bedrijf_btw = '".$this->__params['POST']['bedrijf_btw']."',
+                bedrijf_tel = '".$this->__params['POST']['bedrijf_tel']."',
+                email = '".$this->__params['POST']['email']."',
+                private = $x
+                WHERE factur_numer = $factur
+                ");
+
+            }
+
+
 
             $i = 1;
 
@@ -349,27 +409,24 @@ class facturmodel
                         $pdf->Cell(0,5,''.$data[0]['bedrijf_btw'],0,1);
                         $pdf->SetX(130);
                     }
-                    if($data[0]['adres']){
-                        $pdf->Cell(0,5,''.$data[0]['adres'],0,1);
+                    if($data[0]['adres'] && $data[0]['stad']){
+                        $pdf->Cell(0,5,''.$data[0]['adres'].' '.$data[0]['stad'],0,1);
                         $pdf->SetX(130);
-                        }
-                
-                        if($data[0]['postcode']){
-                        $pdf->Cell(0,5,$data[0]['postcode'],0,1);
-                        $pdf->SetX(130);
-                        }
-                
-                        if($data[0]['stad']){
-                            $pdf->Cell(0,5,''.$data[0]['stad'],0,1);
-                            $pdf->SetX(130);
-                        }
+                    }
+            
+                    if($data[0]['postcode']){
+                    $pdf->Cell(0,5,$data[0]['postcode'],0,1);
+                    $pdf->SetX(130);
+                    }
             
                     if($data[0]['email']){
                     $pdf->Cell(0,5,''.$data[0]['email'],0,1);
+                    $pdf->SetX(130);
                     }
                     
                     if($data[0]['bedrijf_tel']){
-                        $pdf->Cell(0,5,''.$data[0]['private_tel'],0,1);
+                        $pdf->Cell(0,5,''.$data[0]['bedrijf_tel'],0,1);
+                        $pdf->SetX(130);
                     }
             } else {
         
