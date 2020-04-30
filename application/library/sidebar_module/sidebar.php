@@ -10,7 +10,7 @@
 
         <ul class="list-unstyled components">
             <li>
-                <a href="administrator/home/index">Dashboard</a>
+                <a href="administrator/klanten/index/1">Klanten</a>
             </li>
             <li>
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Adressen</a>
@@ -27,27 +27,25 @@
                 </ul>
            </li>
             <li>
-                <a href="administrator/inkomsten/index">Inkomsten</a>
-            </li>
-            <li>
-                <a href="administrator/uitgaven/index">Uitgaven</a> 
+                <a href="administrator/oferten/index">Offerten</a>
             </li>
             <li>
                 <a href="administrator/proforma/index">Proforma</a> 
             </li>
             <li>
-                <a href="administrator/oferten/index">Offerten</a>
+                <a href="administrator/inkomsten/index">Inkomsten</a>
             </li>
-            <li>
-                <a href="administrator/klanten/index/1">Klanten</a>
-            </li>
-            <?php if(true): ?>
             <li>
                 <a href="administrator/ZZP/index/1">ZZP-res</a>
             </li>
-            <?php endif; ?>
+            <li>
+                <a href="administrator/uitgaven/index">Uitgaven</a> 
+            </li>
             <li>
                 <a href="administrator/import/index">Importen</a>
+            </li>
+            <li>
+                <a href="administrator/home/index">Dashboard</a>
             </li>
             <li>
                 <a href="administrator/instellingen/stedenlijst">Instellingen</a>
