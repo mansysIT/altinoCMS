@@ -335,11 +335,12 @@ class mainmodel
 
     public function getOffertenActive() {  
 
-		//echo 'jest';
 		if(isset($this->__params['POST']['action'])){
 			if($this->__params['POST']['action'] == 'oferty') {
-					$adresy = $this->__db->querymy("SELECT id, oferten_numer FROM bouw_oferten WHERE data_end = '0000-00-00' AND `adres_id` = ".$this->__params['POST']['id_adres']);
-					//$adresy = $this->__db->querymy("SELECT id, oferten_numer FROM bouw_oferten WHERE `adres_id` = 32");
+					$adresy = $this->__db->querymy("SELECT id, oferten_numer FROM bouw_oferten WHERE (data_end = '0000-00-00' AND `adres_id` = ".$this->__params['POST']['id_adres'].") OR (id = ".$this->__params['POST']['oferte_id'].")");
+                    
+
+                    //$adresy = $this->__db->querymy("SELECT id, oferten_numer FROM bouw_oferten WHERE `adres_id` = 32");
 					//echo 'numer'.$adresy->num_rows;
 					if($adresy->num_rows > 0){  
 						foreach($adresy->fetch_all() as $q){ 

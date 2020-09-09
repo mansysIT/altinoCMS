@@ -18,6 +18,9 @@
 <?php $mailhistory=model_load('proformamodel', 'getproformaidbynumer', '')?>
 
 <?php
+
+
+
 // if($facturaModelData[0]['data']));
 $d = new DateTime($facturaModelData[0]['data']);
 ?>
@@ -257,9 +260,11 @@ $(document).ready(function()
         {
        
         var id_adres1 = $(this).val();
+        var oferten_id1 = <?=$facturaModelData[0]["oferten_id"]?>;
         var dataString = {
             action: "oferty",
-            id_adres: id_adres1
+            id_adres: id_adres1,
+            oferten_id: oferten_id1
             };
             
             $.ajax
